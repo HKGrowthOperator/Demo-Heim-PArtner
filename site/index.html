@@ -403,7 +403,7 @@ body.read .iconbtn .bdg{display:none}
   <aside class="side">
     <div class="ws"><div class="logo">H&amp;P</div><div><b>Heim &amp; Partner</b><span>Bauplattform</span></div></div>
     <nav class="nav" id="nav" aria-label="Hauptnavigation"></nav>
-    <div class="me"><span class="av" id="meAv">DE</span><div style="min-width:0;flex:1"><label for="roleSel" class="xs t3">Ansicht als</label><select id="roleSel" class="rolesel"><option value="dennis">Dennis · Geschäftsführung</option><option value="lorenz">M. Lorenz · Einkauf</option><option value="schuster">M. Schuster · Bauleitung</option><option value="wagner">K. Wagner · Bauleitung</option><option value="neumann">J. Neumann · Controlling</option><option value="krause">S. Krause · Vertrieb</option><option value="becker">T. Becker · Vermietung</option><option value="richter">L. Richter · Assistenz</option></select></div></div>
+    <div class="me"><span class="av" id="meAv">DE</span><div style="min-width:0;flex:1"><label for="roleSel" class="xs t3">Ansicht als</label><select id="roleSel" class="rolesel"><option value="dennis">Dennis · Geschäftsführung</option><option value="lorenz">M. Lorenz · Einkauf</option><option value="schuster">M. Schuster · Bauleitung</option><option value="wagner">K. Wagner · Bauleitung</option><option value="neumann">J. Neumann · Controlling</option><option value="krause">S. Krause · Vertrieb</option><option value="becker">T. Becker · Vermietung</option><option value="richter">L. Richter · Assistenz</option></select><a id="offerLink" href="/angebot/" class="xs" style="display:none;margin-top:6px;color:var(--accent)">Angebot ansehen</a></div></div>
   </aside>
   <div style="min-width:0">
     <header class="top">
@@ -1603,6 +1603,7 @@ document.addEventListener('click',e=>{
   case 'inv-save':{const n=document.getElementById('iv-n').value.trim();if(!n){document.getElementById('iv-n').focus();break;}const r=document.getElementById('iv-r').value;const ini=n.split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase();const id='x'+(++invN);TEAM.push([id,n,ini,r,ROLES[r].r,'nach Rolle','nach Freigabegrenze','noch offen','Laptop']);const sel=document.getElementById('roleSel');if(sel)sel.insertAdjacentHTML('beforeend',`<option value="${id}">${esc(n)} · ${ROLES[r].r}</option>`);closeModal();render();toast('Einladung an '+n+' gesendet, '+TEAM.length+' Zugänge');break;}
  }});
 
+(function(){try{if(/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname)){const l=document.getElementById('offerLink');if(l)l.style.display='block';}}catch(e){}})();
 /* ===== Render ===== */
 function render(){
   nav();
