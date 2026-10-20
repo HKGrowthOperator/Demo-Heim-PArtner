@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>html{box-sizing:border-box}body{margin:0;padding:0}</style>
+<title>Angebot Komplett Heim &amp; Partner</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Angebotsdokument: ruhige Lesespalte, nummerierte Abschnitte, gleiche Tokens wie der Prototyp (Petrol, getönte Neutrale) */
+:root{
+  --bg:oklch(0.982 0.003 200); --panel:oklch(0.997 0.002 200); --sunk:oklch(0.955 0.006 200);
+  --line:oklch(0.9 0.006 200); --line-2:oklch(0.84 0.008 200);
+  --ink:oklch(0.23 0.014 220); --ink-2:oklch(0.43 0.013 220); --ink-3:oklch(0.57 0.011 220);
+  --primary:oklch(0.27 0.02 220); --on-primary:oklch(0.98 0.003 200);
+  --accent:oklch(0.5 0.095 205); --accent-soft:oklch(0.95 0.025 205); --accent-line:oklch(0.83 0.05 205);
+  --ok:oklch(0.52 0.12 152); --crit:oklch(0.53 0.17 28);
+  --f:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:oklch(0.175 0.008 220); --panel:oklch(0.205 0.009 220); --sunk:oklch(0.16 0.008 220);
+  --line:oklch(0.29 0.01 220); --line-2:oklch(0.36 0.012 220);
+  --ink:oklch(0.94 0.005 200); --ink-2:oklch(0.77 0.01 210); --ink-3:oklch(0.63 0.01 210);
+  --primary:oklch(0.92 0.01 200); --on-primary:oklch(0.2 0.01 220);
+  --accent:oklch(0.74 0.09 200); --accent-soft:oklch(0.27 0.04 205); --accent-line:oklch(0.45 0.06 205); --ok:oklch(0.75 0.13 152); --crit:oklch(0.72 0.15 28); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:oklch(0.175 0.008 220); --panel:oklch(0.205 0.009 220); --sunk:oklch(0.16 0.008 220);
+  --line:oklch(0.29 0.01 220); --line-2:oklch(0.36 0.012 220);
+  --ink:oklch(0.94 0.005 200); --ink-2:oklch(0.77 0.01 210); --ink-3:oklch(0.63 0.01 210);
+  --primary:oklch(0.92 0.01 200); --on-primary:oklch(0.2 0.01 220);
+  --accent:oklch(0.74 0.09 200); --accent-soft:oklch(0.27 0.04 205); --accent-line:oklch(0.45 0.06 205); --ok:oklch(0.75 0.13 152); --crit:oklch(0.72 0.15 28); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--f);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding-block:48px 96px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:64px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance;font-weight:600}
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1}
+h2{font-size:1.5rem;line-height:1.2}
+h3{font-size:1.02rem}
+p{margin:0}
+.lead{font-size:1.1rem;color:var(--ink-2);max-width:62ch}
+.lbl{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.t2{color:var(--ink-2)}.t3{color:var(--ink-3)}.sm{font-size:.875rem}.xs{font-size:.78rem}
+section{display:flex;flex-direction:column;gap:20px}
+.sec-h{display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;align-items:baseline}
+.sec-h .n{font:500 .85rem var(--mono);color:var(--ink-3)}
+.sec-h p{margin-top:8px;color:var(--ink-2);max-width:64ch}
+.sec-b{margin-left:72px;display:flex;flex-direction:column;gap:18px;min-width:0}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{width:30px;height:30px;border-radius:7px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font:700 11px var(--f)}
+
+/* Preisblock */
+.price{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.price>div{padding:18px 20px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.price>div+div{border-left:1px solid var(--line)}
+.price>div:first-child{background:var(--accent-soft)}
+.price .big{font:600 2.2rem/1 var(--mono);letter-spacing:-.04em}
+.price b{font-weight:500}
+
+/* Leistungen */
+.feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;border-top:1px solid var(--line)}
+.feat>div{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}
+.feat .k{width:28px;height:28px;border-radius:7px;background:var(--sunk);display:grid;place-items:center;font:600 .8rem var(--mono);color:var(--ink-2)}
+.feat b{font-weight:600;display:block;margin-bottom:4px}
+.feat p{font-size:.9rem;color:var(--ink-2)}
+.feat>div.wide{grid-column:1/-1}
+.link-note{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;border-radius:10px;background:var(--accent-soft);border:1px solid var(--accent-line);padding:14px 16px;font-size:.9rem}
+.link-note svg{color:var(--accent);margin-top:3px}
+
+/* Prozess */
+.proc{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.proc-rail{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.proc-rail button{all:unset;cursor:pointer;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-size:.8rem;color:var(--ink-3);border-right:1px solid var(--line);min-width:0}
+.proc-rail button:last-child{border-right:0}
+.proc-rail button:hover{background:var(--sunk)}
+.proc-rail button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.proc-rail i{height:3px;border-radius:2px;background:var(--line)}
+.proc-rail button.done i{background:var(--ink-2)} .proc-rail button.done{color:var(--ink-2)}
+.proc-rail button.on i{background:var(--accent)} .proc-rail button.on{color:var(--ink);font-weight:500}
+.proc-rail span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proc-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:260px}
+.proc-body>div{padding:22px 24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.proc-body>div+div{border-left:1px solid var(--line);background:var(--sunk)}
+.proc-body h3{font-size:1.25rem}
+.who{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 14px;font-size:.88rem}
+.who dt{color:var(--ink-3)} .who dd{margin:0}
+.sys{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.88rem}
+.sys li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px}
+.sys li svg{color:var(--accent);margin-top:3px}
+.proc-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.btn{cursor:pointer;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line-2);background:var(--panel);font:500 .85rem var(--f);color:var(--ink);text-decoration:none}
+.btn:hover{background:var(--sunk)}
+.btn.pri{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Tabellen */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tfoot td{border-bottom:0;border-top:1px solid var(--line-2)}
+td.r,th.r{text-align:right;white-space:nowrap}
+.bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;min-width:80px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+
+/* Zeitplan */
+.phases{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.phases>div{padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.phases>div+div{border-left:1px solid var(--line)}
+.phases>div:nth-child(2){background:var(--accent-soft)}
+.phases b{font-weight:600;font-size:.92rem}
+
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;font-size:.92rem;color:var(--ink-2)}
+.list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px}
+.list li svg{margin-top:3px;color:var(--ink-3)}
+.list.ok li svg{color:var(--ok)}
+.list.no li svg{color:var(--crit)}
+.note{border-radius:10px;background:var(--sunk);padding:14px 16px;font-size:.88rem;color:var(--ink-2)}
+.care{display:grid;grid-template-columns:240px minmax(0,1fr);border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.care>div{padding:20px;min-width:0}
+.care>div:first-child{border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px;justify-content:center}
+.care .big{font:600 1.8rem/1 var(--mono);letter-spacing:-.03em}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+.steps div{padding:16px 16px 0 0;display:flex;flex-direction:column;gap:6px;counter-increment:s}
+.steps div+div{padding-left:16px;border-left:1px solid var(--line)}
+.steps div::before{content:counter(s);font:500 .8rem var(--mono);color:var(--accent)}
+footer{border-top:1px solid var(--line);padding-top:18px;font-size:.78rem;color:var(--ink-3);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .sec-h{grid-template-columns:minmax(0,1fr)}.sec-h .n{display:none}.sec-b{margin-left:0}
+  .price{grid-template-columns:repeat(2,minmax(0,1fr))}.price>div:first-child{grid-column:1/-1}.price>div:nth-child(2){border-left:0}.price>div:nth-child(n+2){border-top:1px solid var(--line)}
+  .feat,.two{grid-template-columns:minmax(0,1fr)}
+  .proc-rail{grid-template-columns:repeat(6,minmax(0,1fr))}.proc-rail span{display:none}
+  .proc-body{grid-template-columns:minmax(0,1fr)}.proc-body>div+div{border-left:0;border-top:1px solid var(--line)}
+  .phases{grid-template-columns:minmax(0,1fr)}.phases>div+div{border-left:0;border-top:1px solid var(--line)}
+  .care{grid-template-columns:minmax(0,1fr)}.care>div:first-child{border-right:0;border-bottom:1px solid var(--line)}
+  .steps{grid-template-columns:minmax(0,1fr)}.steps div+div{padding-left:0;border-left:0;border-top:1px solid var(--line);padding-top:14px}
+}
+
+.mods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.mod{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.mod .h{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.mod b{font-weight:600}
+.mod.new{border-color:var(--accent-line);background:var(--accent-soft)}
+.tag{display:inline-block;font:500 .68rem var(--f);letter-spacing:.04em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-line);border-radius:99px;padding:1px 8px;margin-left:8px;vertical-align:middle}
+.tests{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tests>div{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--panel);display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:.88rem}
+.tests .k{font:600 .8rem var(--mono);color:var(--accent)}
+.link-note{overflow-wrap:anywhere;display:block}
+.up{border:1px dashed var(--line-2);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+@media (max-width:860px){.mods,.tests{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head><body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">HK</div><div><b style="font-weight:600">HK Growth Operator</b><div class="xs t3">für Heim &amp; Partner</div></div></div>
+    <div class="xs t3" id="meta"></div>
+  </header>
+  <section id="hero"></section>
+  <section><div class="sec-h"><span class="n">01</span><div><h2>Was ihr bekommt</h2><p>Alle Bereiche greifen auf dieselben Projekte, Firmen und Dokumente zu. Zu jedem Bereich gibt es den klickbaren Prototyp.</p></div></div>
+    <div class="sec-b"><div class="mods" id="mods"></div>
+    <div class="link-note"><span><b>Prototyp ansehen:</b> <a href="/" style="color:var(--accent)">/</a>. Dort lässt sich alles anklicken, auch die Ansicht der 8 Personen.</span></div><p class="xs t3" id="pnote"></p></div></section>
+  <section><div class="sec-h"><span class="n">02</span><div><h2>So funktioniert es im Alltag</h2><p>Beispiel: Ausschreibung für ein neues Bauprojekt.</p></div></div><div class="sec-b"><div class="proc" id="proc"></div></div></section>
+  <section><div class="sec-h"><span class="n">03</span><div><h2>Preis und Zahlung</h2><p>Festpreis für den im Pflichtenheft bestätigten Umfang der Version 1.0.</p></div></div>
+    <div class="sec-b"><div class="tw"><table id="pt"></table></div><div class="tw"><table id="pay"></table></div></div></section>
+  <section><div class="sec-h"><span class="n">04</span><div><h2>Ablauf</h2><p>Erst prüfen wir eure echten Unterlagen, dann wird gebaut. So bleibt der Festpreis belastbar.</p></div></div>
+    <div class="sec-b"><div class="phases" id="phases"></div>
+    <div class="note"><b style="color:var(--ink)">Pflichtenheft vor Entwicklungsbeginn.</b> Darin halten wir mit euren Beispieldokumenten fest: Rollen und Freigabegrenzen, Prozessschritte, Dokument- und LV-Formate, Abnahmekriterien. Zeigt die Prüfung einen wesentlich anderen Umfang, passen wir Preis oder Umfang vor Entwicklungsbeginn gemeinsam an. Änderungen nach Freigabe des Pflichtenhefts laufen als Änderungsauftrag.</div></div></section>
+  <section><div class="sec-h"><span class="n">05</span><div><h2>Abnahmekriterien</h2><p>Die Version gilt als abnahmebereit, wenn diese Szenarien mit euren Testdaten bestehen.</p></div></div><div class="sec-b"><div class="tests" id="tests"></div></div></section>
+  <section><div class="sec-h"><span class="n">06</span><div><h2>Leistungsgrenzen</h2><p>Die Version soll im Alltag tragen. Sie muss nicht jede denkbare Funktion enthalten.</p></div></div>
+    <div class="sec-b"><div class="two"><div><h3 style="margin-bottom:12px">Enthalten</h3><ul class="list ok" id="inc"></ul></div><div><h3 style="margin-bottom:12px">Nicht enthalten</h3><ul class="list no" id="exc"></ul></div></div></div></section>
+  <section><div class="sec-h"><span class="n">07</span><div><h2>Betreuung</h2><p>Damit die Software sicher und zuverlässig läuft.</p></div></div>
+    <div class="sec-b"><div class="care"><div id="carebig"></div><div><ul class="list ok" id="care"></ul><p class="xs t3" style="margin-top:12px">Verbrauchsabhängige KI-Kosten und Gebühren von Drittanbietern berechnen wir transparent nach Vereinbarung weiter. Neue Funktionen sind nicht Teil der Betreuung und werden separat angeboten.</p></div></div></div></section>
+  <section id="upsec"></section>
+  <section><div class="sec-h"><span class="n">08</span><div><h2>Vertraglicher Rahmen</h2></div></div>
+    <div class="sec-b"><ul class="list ok" id="frame"></ul><div class="note">Die KI erstellt ausschließlich Entwürfe und Empfehlungen. Vergaben und rechtlich relevante Schreiben bleiben bei berechtigten Mitarbeitern von Heim &amp; Partner und werden protokolliert. Alle Namen, Firmen und Zahlen im Prototyp sind Beispieldaten.</div></div></section>
+  <section><div class="sec-h"><span class="n">09</span><div><h2>Nächste Schritte</h2></div></div>
+    <div class="sec-b"><div class="steps">
+      <div><b style="font-weight:600">Unterlagen sichten</b><span class="sm t2">2 bis 3 echte Vergaben einer abgeschlossenen Maßnahme: LV, Angebote, Nachweise.</span></div>
+      <div><b style="font-weight:600">Klärungstermin</b><span class="sm t2">Rollen, Freigabegrenzen, bestehende Systeme, Mengengerüst.</span></div>
+      <div><b style="font-weight:600">Vertrag und Anzahlung</b><span class="sm t2">Projektvertrag mit Leistungsbeschreibung, Preisblatt und Auftragsverarbeitungsvertrag.</span></div>
+      <div><b style="font-weight:600">Start Prozessanalyse</b><span class="sm t2">Workshop bei euch vor Ort, danach das Pflichtenheft zur Freigabe.</span></div></div></div></section>
+  <footer><span>HK Growth Operator · [Anschrift] · info@hkgrowth-operator.de</span><span>Alle Preise netto zzgl. gesetzlicher USt., Festpreis vorbehaltlich Pflichtenheft.</span></footer>
+</div>
+<script>
+(function(){
+const V={"key": "voll", "name": "Komplett", "code": "B", "h1": "Eure eigene KI-Plattform für Vergabe, Baustelle und Vertrieb", "pnote": "Der Prototyp zeigt zusätzlich Recherche und Akquise neuer Firmen, Veranstaltungsplanung und Terminplanung. Diese gehören zur Ausbaustufe Premium und sind im Paket Komplett nicht enthalten.", "title": "Angebot Komplett Heim & Partner", "lead": "Die ganze Plattform für Vergabe, Baustelle und Vertrieb: eine gemeinsame Datenbasis, 8 Personen mit eigener Sicht, KI-Agenten und Workflows mit Freigabe an den richtigen Stellen. Version 1.0, die ihr im Tagesgeschäft einsetzt.", "mods": [["pf", 3000], ["plat", 7000], ["nu", 7500], ["aus", 9000], ["ki", 8000], ["bau", 8000], ["sv", 5000], ["crm", 5500], ["sich", 6500]], "weeks": "12 bis 16 Wochen", "pay": [["Anzahlung", "bei Auftragserteilung", 40], ["Zwischenzahlung", "nach Abnahme Vergabe-Bereich", 30], ["Schlusszahlung", "nach Gesamtabnahme", 30]], "care": 990, "hours": 3, "tests": ["A", "B", "C", "D", "E", "F", "G"], "phases": ["ca. 2 Wochen", "10 bis 14 Wochen · Zwischenstand alle 2 Wochen auf einem Testsystem"], "proc": 6, "inc": ["Alle Funktionen der Demo in Version 1.0", "8 Zugänge, Rollen, Freigabegrenzen, Vertretung", "Vergabe, Baucontrolling und Vertrieb auf einer Datenbasis", "Agenten, Workflows und Regeln", "Schulung, Einführung, Abnahme"], "exc": ["GAEB-Import und Export", "Terminplan mit Kapazitätsplanung", "Recherche-Agent mit Akquise-Pipeline (manuelle Aufnahme neuer Firmen bleibt möglich)", "ERP- und DATEV-Anbindung, native Apps, ImmoScout-Schnittstelle"], "up": ["Ausbaustufe Premium", "Recherche und Akquise, GAEB, Terminplan und Kapazität, Vertriebsauswertung, Wirkungsmessung und 2 Monate Begleitung: 20.000 € netto, einzeln oder als Paket."]},MOD={"pf": ["Prozessanalyse und Pflichtenheft", ["Prozessworkshop vor Ort mit euren echten Unterlagen", "Rollen, Freigabegrenzen, Dokumentformate und Abnahmekriterien festgelegt", "Verbindlicher Umsetzungsplan, Grundlage für den Festpreis"]], "plat": ["Plattform, Rollen und Freigabe-Zentrale", ["Cockpit mit Entscheidungen, Warnungen und Aufgaben", "8 Zugänge mit Rollen, Freigabegrenzen und Vertretung", "Freigabe-Zentrale: die KI bereitet vor, der Mensch bestätigt", "Protokoll: wer hat was wann freigegeben"]], "nu": ["Nachunternehmer-Stamm und Ranking", ["Firmenakte mit Nachweisen, Referenzen und Ablaufwarnung", "Ranking nach Preis, Qualität, Referenzen und Termintreue", "Qualität kommt aus euren eigenen Baustellen", "Bestehende und neue Firmen in einer Liste"]], "aus": ["Ausschreibung und Bieterportal", ["LV-Vorlage laden, nur die Mengen anpassen", "Versand an alle gewählten Firmen per Knopfdruck nach Freigabe", "Eigenes Portal: Firmen laden Angebot und Nachweise selbst hoch", "Erinnerungen nach euren Regeln, Übergang in das Projekt"]], "ki": ["KI-Angebotsvergleich", ["Angebote auslesen, Positionen dem LV zuordnen, Preisspiegel", "Ausreißer, fehlende Positionen und abgelaufene Nachweise markiert", "Begründeter Vergabevorschlag mit Belegstellen", "Vergabe erst nach Freigabe durch Berechtigte"]], "bau": ["Baucontrolling und Bautagebuch", ["Tagesbericht am Handy: Besetzung, Fotos, Mängel", "Abgleich mit dem Vertrag: 10 Mann zugesagt, 2 da", "Terminprognose und Folgegewerke rutschen sichtbar mit", "Budget, Nachträge und Mängel im Projekt"]], "sv": ["Schriftverkehr, Agenten und Workflows", ["Schreiben zu Qualität, Zeit und Budget als Entwurf mit Belegen", "6 Workflows von Auslöser bis Ergebnis, Mensch nur an Freigabepunkten", "Regeln, was ohne Freigabe laufen darf", "Agenten-Übersicht mit Protokoll, jeder Agent anhaltbar"]], "crm": ["Immobilien-CRM und Interessenten-Funnel", ["Objekte, Einheiten und Interessentenakte mit Zuständigkeit und Entscheider", "Eigener Funnel mit 5 Fragen, erreichbar über ImmoScout-Link, Instagram und Flyer-QR", "Priorität A, B, C und Nachfassen zum richtigen Zeitpunkt", "Pipeline von der Anfrage bis zur Reservierung"]], "sich": ["Sicherheit, Tests und Einführung", ["Serverseitige Rechteprüfung, Verschlüsselung, Backups", "Tests der Kernprozesse, Schulung der 8 Mitarbeiter", "Begleitete Einführung und Abnahme"]], "rech": ["Recherche-Agent und Akquise", ["Sucht neue Nachunternehmer je Gewerk und Region, mit Fundstelle", "Anschreiben mit euren Anforderungen nach Freigabe, Kontaktweg nach § 7 UWG", "Qualifizierungsbogen: die Firma füllt aus und trägt die Verantwortung", "Akquise-Pipeline bis zur Aufnahme in den Stamm"]], "gaeb": ["GAEB-Import und Export", ["LV im Format GAEB X83 einlesen, Angebote X84 zurückführen", "Für die im Pflichtenheft festgelegten Formate"]], "term": ["Terminplan und Kapazität", ["Bauzeitenplan als Soll, Folgegewerke automatisch verschoben", "Kapazitätsübersicht je Gewerk und Firma"]], "ver": ["Vertriebsauswertung und Veranstaltungen", ["Tag der offenen Tür planen: Einladung, Flyer mit QR, Nachfassen", "Kanalauswertung mit Abbrüchen je Funnel-Schritt"]], "wirk": ["Wirkungsmessung", ["Ausgangswerte vor dem Start erfassen", "Dashboard: gesparte Zeit und früher erkannte Abweichungen"]], "hyper": ["Begleitung nach Go-live", ["2 Monate engere Betreuung", "Feinjustierung von Ranking, Regeln und Texten"]]},TESTS={"A": ["Ausschreibung", "Aus Vorlage ausschreiben, Mengen ändern, nach Freigabe an Testempfänger versenden."], "B": ["Dokumentenrücklauf", "Firma lädt per Portal Unterlagen hoch, Zuordnung und fehlende Nachweise werden erkannt."], "C": ["KI-Angebotsvergleich", "3 bis 5 echte Angebote einer abgeschlossenen Vergabe: überprüfbarer Vergleich mit Belegstellen."], "G": ["Benutzerrechte", "Jede Person sieht und darf nur, was ihre Rolle erlaubt, auch serverseitig."], "D": ["Baustellenabweichung", "Zugesagte gegen gemeldete Besetzung wird erkannt, dem Projekt zugeordnet und aufbereitet."], "E": ["Schriftverkehr", "Entwurf erzeugen, ändern, freigeben, an Testempfänger versenden."], "F": ["Interessent", "Anfrage über den Funnel, Anlage im CRM, Zuständigkeit und Folgeaufgabe."], "H": ["GAEB", "LV im definierten Format einlesen, Angebot zurückführen."], "I": ["Akquise", "Recherche, Freigabe, Anschreiben, Bogen, Aufnahme in den Stamm."]};
+const CHK='<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg>';
+const X='<svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>';
+const $=id=>document.getElementById(id),li=(a,ic)=>a.map(t=>`<li>${ic}<span>${t}</span></li>`).join('');
+const eur=n=>n.toLocaleString('de-DE',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2})+' €';
+const net=V.mods.reduce((s,m)=>s+m[1],0),vat=Math.round(net*.19),gross=net+vat;
+$('meta').textContent=`Angebot Nr. HKG-2026-041-${V.code} · Stand 20.10.2026 · gültig 30 Tage`;
+$('hero').innerHTML=`<span class="lbl">Individuelle Softwareentwicklung · Paket ${V.name}</span><h1>${V.h1}</h1><p class="lead">${V.lead}</p>
+ <div class="price"><div><span class="lbl">Festpreis Version 1.0 · ${V.name}</span><span class="big">${eur(net)}</span><span class="sm t2">netto · <span class="num">${eur(gross)}</span> brutto inkl. 19 % USt.</span></div>
+ <div><span class="lbl">Entwicklung</span><b>${V.weeks}</b><span class="xs t3">ab Freigabe Pflichtenheft</span></div>
+ <div><span class="lbl">Zahlung</span><b>${V.pay.map(p=>p[2]).join(' / ')} %</b><span class="xs t3">in ${V.pay.length} Raten</span></div>
+ <div><span class="lbl">Betreuung</span><b class="num">${eur(V.care)} / Monat</b><span class="xs t3">ab Go-live, netto</span></div></div>`;
+const newFrom=V.key==='prem'?9:99;
+$('mods').innerHTML=V.mods.map((m,i)=>{const d=MOD[m[0]];return `<div class="mod ${i>=newFrom?'new':''}"><div class="h"><b>${d[0]}${i>=newFrom?'<span class="tag">Premium</span>':''}</b><span class="num t2">${eur(m[1])}</span></div><ul class="list ok">${li(d[1],CHK)}</ul></div>`;}).join('');
+$('pnote').textContent=V.pnote;
+$('pt').innerHTML=`<thead><tr><th>Entwicklungsbereich</th><th style="width:28%"></th><th class="r">Netto</th></tr></thead><tbody>${V.mods.map(m=>`<tr><td>${MOD[m[0]][0]}</td><td style="vertical-align:middle"><div class="bar"><i style="width:${m[1]/9500*100}%"></i></div></td><td class="r num">${eur(m[1])}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="2" class="t2">Gesamtentwicklung netto</td><td class="r num"><b style="font-weight:600">${eur(net)}</b></td></tr><tr><td colspan="2" class="t2">zzgl. 19 % USt.</td><td class="r num t2">${eur(vat)}</td></tr><tr><td colspan="2"><b style="font-weight:600">Gesamt brutto</b></td><td class="r num"><b style="font-weight:600">${eur(gross)}</b></td></tr></tfoot>`;
+$('pay').innerHTML=`<thead><tr><th>Zahlungsplan</th><th>Fällig</th><th class="r">Netto</th><th class="r">Brutto</th></tr></thead><tbody>${V.pay.map(p=>{const n=Math.round(net*p[2]/100);return `<tr><td>${p[0]}, ${p[2]} %</td><td class="t2">${p[1]}</td><td class="r num">${eur(n)}</td><td class="r num">${eur(Math.round(n*1.19*100)/100)}</td></tr>`;}).join('')}</tbody>`;
+$('phases').innerHTML=`<div><span class="lbl">Phase 1</span><b>Prozessanalyse und Pflichtenheft</b><span class="xs t3">${V.phases[0]}</span></div><div><span class="lbl">Phase 2</span><b>Entwicklung in Etappen</b><span class="xs t3">${V.phases[1]}</span></div><div><span class="lbl">Phase 3</span><b>Einführung und Abnahme</b><span class="xs t3">Schulung, Go-live</span></div>`;
+$('tests').innerHTML=V.tests.map(k=>`<div><span class="k">${k}</span><div><b style="font-weight:600">${TESTS[k][0]}</b><div class="t2">${TESTS[k][1]}</div></div></div>`).join('');
+$('inc').innerHTML=li(V.inc,CHK);$('exc').innerHTML=li(V.exc,X);
+$('carebig').innerHTML=`<span class="lbl">Betreuungspauschale</span><span class="big">${eur(V.care)}</span><span class="sm t2">pro Monat netto, ab Go-live</span>`;
+$('care').innerHTML=li(['Hosting in der EU, tägliche Backups, Monitoring','Wartung und Sicherheitsupdates','Support im vereinbarten Rahmen, bis zu '+V.hours+' Stunden pro Monat enthalten','Anpassung kleiner Texte, Regeln und Rollen'],CHK);
+$('upsec').innerHTML=V.up?`<div class="sec-h"><span class="n">&nbsp;</span><div><h2>Wie es weitergehen kann</h2></div></div><div class="sec-b"><div class="up"><b style="font-weight:600">${V.up[0]}</b><span class="sm t2">${V.up[1]}</span></div></div>`:'';
+$('frame').innerHTML=li(['Datenschutz nach DSGVO mit Auftragsverarbeitungsvertrag, Hosting in der EU','Klare Regeln zu Datenzugriff, Quellcode und Nutzungsrechten an der Individualsoftware','Änderungswünsche nach Freigabe des Pflichtenhefts als Änderungsauftrag mit Preis vorab','Abnahme gegen die vereinbarten Kriterien, 12 Monate Gewährleistung'],CHK);
+const S=[
+ {t:'Ausschreibung anlegen',who:'Einkauf',in:'Projekt, Gewerk, LV-Vorlage, Mengen',sys:['Vorlage laden, nur Mengen anpassen','Geforderte Nachweise je Gewerk vorbelegt','Frist und Leistungszeitraum festlegen']},
+ {t:'Firmen einladen',who:'Einkauf',in:'Auswahl aus dem Ranking',sys:['Passende Firmen nach Gewerk, Region und Qualität vorgeschlagen','Persönliche E-Mail mit eigenem Portal-Link, nach Freigabe','Versand und Öffnung protokolliert']},
+ {t:'Unterlagen einsammeln',who:'Nachunternehmer im Portal',in:'Angebot, Nachweise, Referenzen',sys:['Uploads landen automatisch in der Vergabe','Fehlende oder abgelaufene Nachweise erkannt','Erinnerungen vor Fristende nach euren Regeln']},
+ {t:'Angebote vergleichen',who:'KI, geprüft durch Einkauf',in:'Alle eingegangenen Angebote',sys:['Preise und Positionen ausgelesen und gegenübergestellt','Ausreißer und fehlende Leistungen markiert','Begründeter Vergabevorschlag mit Belegstellen']},
+ {t:'Vergabe freigeben',who:'Geschäftsführung',in:'Vorschlag mit Begründung',sys:['Freigabe mit Name, Datum und Begründung protokolliert','Auftragsschreiben und Absagen laufen automatisch','Zusagen wandern als Soll ins Projekt']},
+ {t:'Ausführung kontrollieren',who:'Bauleitung vor Ort',in:'Bautagebuch, Fotos, Besetzung',sys:['Ist-Besetzung gegen Vertrag geprüft: 10 Mann zugesagt, 2 da','Terminprognose und Folgegewerke automatisch gerechnet','Schreiben als Entwurf, Versand nach Freigabe']}].slice(0,V.proc);
+let i=0;
+function draw(){const s=S[i];$('proc').innerHTML=`<div class="proc-rail" role="tablist" style="grid-template-columns:repeat(${S.length},minmax(0,1fr))">${S.map((x,k)=>`<button role="tab" aria-selected="${k===i}" class="${k===i?'on':k<i?'done':''}" data-k="${k}"><i></i><span>${k+1} · ${x.t}</span></button>`).join('')}</div>
+ <div class="proc-body"><div><span class="lbl">Schritt ${i+1} von ${S.length}</span><h3>${s.t}</h3><dl class="who"><dt>Wer</dt><dd>${s.who}</dd><dt>Eingabe</dt><dd>${s.in}</dd></dl></div><div><span class="lbl">Was die Software dabei erledigt</span><ul class="sys">${s.sys.map(x=>`<li>${CHK}<span>${x}</span></li>`).join('')}</ul></div></div>
+ <div class="proc-foot"><span class="xs t3">Digitaler Workflow</span><div style="display:flex;gap:8px"><button class="btn" data-a="prev" ${i===0?'disabled':''}>Zurück</button>${i<S.length-1?'<button class="btn pri" data-a="next">Weiter</button>':'<button class="btn pri" data-a="reset">Neustart</button>'}</div></div>`;}
+$('proc').addEventListener('click',ev=>{const b=ev.target.closest('[data-k],[data-a]');if(!b)return;if(b.dataset.k)i=+b.dataset.k;else if(b.dataset.a==='prev')i--;else if(b.dataset.a==='next')i++;else i=0;draw();});
+draw();
+})();
+</script>
+</body></html>
+
+</html>
