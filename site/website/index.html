@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>html{box-sizing:border-box}body{margin:0;padding:0}</style>
+<title>Heim &amp; Partner Website-Entwurf</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap">
+<style>
+/* Ruhiges Bauträger-Editorial: Schiefer, warmes Papier, Bronze als einziger Akzent. Projekte und Anfrage sind die Hauptsache. */
+:root{
+  --paper:#F6F4EF; --card:#FFFDF8; --ink:#1F2A2E; --ink-2:#4A5560; --ink-3:#6B7378; --line:#E2DCCF;
+  --slate:#1F2A2E; --on-slate:#F6F4EF; --bronze:#8A6A3E; --bronze-soft:#EFE6D6; --ok:#2F6B4F; --warn:#9A6A12; --sold:#7A3B2E;
+  --display:"Cormorant Garamond",Georgia,serif; --body:"Rubik",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#161D20; --card:#1E272B; --ink:#EDEAE3; --ink-2:#BFC6C4; --ink-3:#98A1A3; --line:#33403F;
+  --slate:#0F1517; --on-slate:#EDEAE3; --bronze:#D2B07D; --bronze-soft:#3A3226; --ok:#7CC3A0; --warn:#E3B45C; --sold:#E39A86; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#161D20; --card:#1E272B; --ink:#EDEAE3; --ink-2:#BFC6C4; --ink-3:#98A1A3; --line:#33403F;
+  --slate:#0F1517; --on-slate:#EDEAE3; --bronze:#D2B07D; --bronze-soft:#3A3226; --ok:#7CC3A0; --warn:#E3B45C; --sold:#E39A86; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+.w{max-width:1140px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.01em;line-height:1.08;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.6rem,6vw,4.6rem)} h2{font-size:clamp(2rem,4vw,3rem)} h3{font-size:1.7rem}
+p{margin:0}
+.lbl{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);font-weight:500}
+.t2{color:var(--ink-2)} .t3{color:var(--ink-3)} .num{font-variant-numeric:tabular-nums}
+.demo{background:var(--bronze-soft);color:var(--ink);font-size:.82rem;text-align:center;padding-block:8px}
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+.nav .w{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px;flex-wrap:wrap}
+.logo{font-family:var(--display);font-size:1.5rem;font-weight:700;letter-spacing:.06em;color:var(--ink);text-decoration:none}
+.links{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.links a{color:var(--ink-2);text-decoration:none;font-size:.95rem}
+.links a:hover,.links a[aria-current="page"]{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:12px 22px;font:500 .95rem var(--body);border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+section{padding-block:72px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:end;padding-block:72px 40px}
+.hero p.lead{font-size:1.15rem;max-width:52ch;margin-top:20px}
+.facts{display:flex;gap:40px;flex-wrap:wrap;margin-top:36px}
+.facts div{display:flex;flex-direction:column}
+.facts b{font-family:var(--display);font-size:2.8rem;font-weight:600;line-height:1;font-variant-numeric:lining-nums}
+.ph{border-radius:14px;background:linear-gradient(160deg,#C9BCA4 0%,#8F8573 55%,#4E5559 100%);position:relative;overflow:hidden;min-height:180px}
+.ph::after{content:attr(data-cap);position:absolute;left:14px;bottom:12px;font-size:.78rem;color:#F6F4EF;letter-spacing:.06em}
+.ph .bld{position:absolute;left:12%;right:12%;bottom:0;top:22%;background:repeating-linear-gradient(90deg,rgba(246,244,239,.85) 0 18%,rgba(246,244,239,.55) 18% 20%);clip-path:polygon(0 18%,50% 0,100% 18%,100% 100%,0 100%);opacity:.55}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.pc .ph{border-radius:0;min-height:240px}
+.pc .bd{padding:22px 24px;display:flex;flex-direction:column;gap:8px}
+.pill{display:inline-block;font-size:.76rem;font-weight:500;border-radius:999px;padding:3px 10px;border:1px solid var(--line);color:var(--ink-2)}
+.pill.ok{color:var(--ok);border-color:currentColor}.pill.warn{color:var(--warn);border-color:currentColor}.pill.sold{color:var(--sold);border-color:currentColor}
+.band{background:var(--slate);color:var(--on-slate)}
+.band .t2{color:#BFC6C4}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:32px}
+.steps div{border-top:2px solid var(--bronze);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:.95rem;min-width:620px}
+th,td{padding:14px 16px;border-bottom:1px solid var(--line);text-align:left}
+th{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+tbody tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+.lnk{all:unset;cursor:pointer;color:var(--bronze);font-weight:500;font-size:.9rem}
+.lnk:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+.grid2{display:grid;grid-template-columns:1.4fr .8fr;gap:32px;align-items:start}
+.side{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px;position:sticky;top:96px}
+.av{width:56px;height:56px;border-radius:50%;background:var(--bronze-soft);display:grid;place-items:center;font-family:var(--display);font-size:1.4rem;font-weight:600;color:var(--bronze)}
+.tl{display:grid;grid-template-columns:110px 14px 1fr;gap:12px;padding-block:10px;border-bottom:1px solid var(--line);font-size:.95rem}
+.tl i{width:10px;height:10px;border-radius:50%;background:var(--bronze);margin-top:7px}
+.tl.f i{background:transparent;border:2px solid var(--bronze)}
+/* Funnel */
+.fn{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:18px;max-width:640px}
+.prog{display:flex;gap:6px}.prog i{flex:1;height:4px;border-radius:2px;background:var(--line)}.prog i.on{background:var(--bronze)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-size:.95rem;background:var(--paper)}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.chip:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+.fld{display:flex;flex-direction:column;gap:6px;font-size:.9rem;color:var(--ink-2)}
+.fld input{height:46px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit;padding:0 14px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+footer{border-top:1px solid var(--line);padding-block:40px;font-size:.88rem;color:var(--ink-3)}
+footer .w{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media (max-width:860px){.hero,.grid2,.cards,.steps,footer .w{grid-template-columns:minmax(0,1fr)}.side{position:static}.links{gap:14px}.slots{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head><body>
+
+<div class="demo">Entwurf für den Relaunch von heimundpartner.com · Einheiten, Flächen und Preise sind Beispielwerte</div>
+<header class="nav"><div class="w">
+  <a class="logo" href="#start" data-view="start">HEIM &amp; PARTNER</a>
+  <nav class="links" aria-label="Hauptnavigation">
+    <a href="#projekte" data-view="start" data-jump="projekte">Projekte</a>
+    <a href="#referenzen" data-view="start" data-jump="referenzen">Referenzen</a>
+    <a href="#ueber" data-view="start" data-jump="ueber">Über uns</a>
+    <button class="btn" data-open="anfrage">Termin anfragen</button>
+  </nav>
+</div></header>
+<main id="view"></main>
+<footer><div class="w">
+  <div><b style="color:var(--ink)">Heim &amp; Partner Immobilien GmbH</b><br>Im Rod 35, 64569 Nauheim<br>Telefon <span class="num">06152 1870725</span><br>info@heimundpartner.com</div>
+  <div>Geschäftsführung: Frank Heim, Dennis [Nachname]<br>Amtsgericht Darmstadt, HRB 106755<br>USt-IdNr. DE451023615</div>
+  <div>Impressum · Datenschutz<br>Grundstücksentwicklung, Projektentwicklung, Beratung im Rhein-Main-Gebiet</div>
+</div></footer>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const P={
+ beethoven:{name:'Haus Beethoven',ort:'Wiesbaden-Südost',we:7,art:'Neubau, gehobene Eigentumswohnungen',status:['warn','in Vermarktung'],bezug:'[Bezug]',cap:'Visualisierung folgt',
+  text:'Sieben Eigentumswohnungen in ruhiger Lage im Wiesbadener Südosten. Großzügige Grundrisse, Aufzug, Tiefgarage, Gartenanteile im Erdgeschoss, Dachterrasse in der obersten Wohnung.',
+  units:[['WE 1','EG','3','94 m²','Garten','frei'],['WE 2','EG','2','68 m²','Garten','reserviert'],['WE 3','1. OG','4','112 m²','Balkon','frei'],['WE 4','1. OG','2','64 m²','Balkon','verkauft'],['WE 5','2. OG','3','96 m²','Loggia','frei'],['WE 6','2. OG','3','89 m²','Loggia','frei'],['WE 7','DG','4','128 m²','Dachterrasse','reserviert']],
+  bau:[['[Termin]','Baugenehmigung',0],['[Termin]','Baustart',0],['[Termin]','Rohbau',1],['[Termin]','Innenausbau',1],['[Termin]','Übergabe',1]]},
+ glueck:{name:'Villaglück',ort:'Wiesbaden, Komponistenviertel',we:4,art:'Neubau, Stadtvilla mit vier Wohnungen',status:['warn','in Vermarktung'],bezug:'[Bezug]',cap:'Visualisierung folgt',
+  text:'Eine Stadtvilla mit vier Wohnungen im Komponistenviertel. Kurze Wege in die Innenstadt, ruhige Wohnstraße, hochwertige Ausstattung.',
+  units:[['WE 1','EG','3','102 m²','Garten','frei'],['WE 2','1. OG','3','98 m²','Balkon','reserviert'],['WE 3','2. OG','3','97 m²','Balkon','frei'],['WE 4','DG','4','121 m²','Dachterrasse','frei']],
+  bau:[['[Termin]','Baugenehmigung',0],['[Termin]','Baustart',1],['[Termin]','Übergabe',1]]}};
+const ST={frei:'ok',reserviert:'warn',verkauft:'sold'};
+const S={view:'start',fn:{step:0,a:{}},open:false};
+function phx(cap,h){return `<div class="ph" data-cap="${cap}" style="min-height:${h}px"><div class="bld"></div></div>`;}
+function card(k){const p=P[k];return `<a class="pc" href="#${k}" data-view="${k}">${phx(p.cap,240).replace('class="ph"','class="ph" ')}<div class="bd"><span class="pill ${p.status[0]}">${p.status[1]}</span><h3>${p.name}</h3><p class="t2">${p.ort} · ${p.we} Wohnungen</p><span class="lnk">Projekt und Einheiten ansehen</span></div></a>`;}
+function vStart(){return `
+<section class="w hero"><div><span class="lbl">Wiesbaden und Rhein-Main</span><h1 style="margin-top:14px">Wenn Visionen Wände bekommen.</h1>
+ <p class="lead t2">Wir entwickeln Wohnungen mit Sorgfalt im Detail. Hier finden Sie alles, was Sie vor einem ersten Gespräch wissen möchten: Lage, Grundrisse, Preise, Stand der Arbeiten.</p>
+ <div class="row" style="margin-top:28px"><button class="btn" data-open="anfrage">Besichtigung anfragen</button><a class="btn ghost" href="#projekte" data-jump="projekte">Projekte ansehen</a></div>
+ <div class="facts"><div><b>2</b><span class="t3">Projekte in Vermarktung</span></div><div><b>11</b><span class="t3">Wohnungen in Wiesbaden</span></div><div><b>20+</b><span class="t3">Jahre Erfahrung am Bau</span></div></div></div>
+ <div>${phx('Visualisierung Haus Beethoven',420)}</div></section>
+<section class="w" id="projekte" style="padding-top:24px"><div class="row" style="justify-content:space-between;margin-bottom:24px"><h2>Aktuelle Projekte</h2><span class="t3">Status wird von uns laufend gepflegt</span></div><div class="cards">${card('beethoven')}${card('glueck')}</div></section>
+<section class="band"><div class="w"><span class="lbl" style="color:#D2B07D">So einfach geht der erste Kontakt</span><h2 style="margin-top:12px;max-width:22ch">In einer Minute zum Besichtigungstermin, ohne Warteschleife.</h2>
+ <div class="steps"><div><b>Wohnung wählen</b><span class="t2">Alle Einheiten mit Fläche, Preis und Status.</span></div><div><b>Fünf kurze Fragen</b><span class="t2">Zeitpunkt, Haushalt, Finanzierung, wer mitentscheidet.</span></div><div><b>Termin buchen</b><span class="t2">Bestätigung sofort per E-Mail, mit Ansprechpartner.</span></div></div>
+ <div class="row" style="margin-top:32px"><button class="btn" style="background:var(--on-slate);color:var(--slate);border-color:var(--on-slate)" data-open="anfrage">Jetzt Termin anfragen</button></div></div></section>
+<section class="w" id="referenzen"><h2>Referenzen</h2><p class="t2" style="margin-top:8px;max-width:60ch">Gemeinsam mit unserer Schwesterfirma Heim &amp; Richter Immobilien realisiert.</p>
+ <div class="cards" style="margin-top:24px">
+  <div class="pc">${phx('Foto folgt',200)}<div class="bd"><span class="pill sold">alle Einheiten verkauft</span><h3>Seniorenwohnanlage Weingarten</h3><p class="t2">Nauheim · Neubau</p></div></div>
+  <div class="pc">${phx('Foto folgt',200)}<div class="bd"><span class="pill warn">Baubeginn 2025</span><h3>Seniorenwohnanlage Worfelden II</h3><p class="t2">Büttelborn-Worfelden · Neubau</p></div></div>
+ </div></section>
+<section class="w" id="ueber"><div class="grid2"><div><h2>Über uns</h2><p class="t2" style="margin-top:14px;max-width:62ch">Heim &amp; Partner ist inhabergeführt und entwickelt besondere Wohnprojekte im Rhein-Main-Gebiet, von der Grundstücksentwicklung über den Bau bis zum Verkauf. Qualität heißt für uns: durchdachte Grundrisse, verlässliche Partner, klare Kommunikation.</p></div>
+ <div class="side" style="position:static"><span class="lbl">Ihre Ansprechpartner</span>
+  <div class="row"><div class="av">FH</div><div><b>Frank Heim</b><div class="t3">Geschäftsführer</div></div></div>
+  <div class="row"><div class="av">D</div><div><b>Dennis [Nachname]</b><div class="t3">Geschäftsführer, Vertrieb</div></div></div></div></div></section>`;}
+function vProj(k){const p=P[k];return `
+<section class="w" style="padding-bottom:32px"><a class="lnk" href="#start" data-view="start">Alle Projekte</a>
+ <div class="row" style="justify-content:space-between;margin-top:16px;align-items:end"><div><span class="lbl">${p.ort}</span><h1 style="margin-top:10px">${p.name}</h1></div><span class="pill ${p.status[0]}">${p.status[1]}</span></div>
+ <div style="margin-top:28px">${phx(p.cap,360)}</div></section>
+<section class="w" style="padding-top:0"><div class="grid2"><div style="display:flex;flex-direction:column;gap:40px">
+ <div class="facts" style="margin-top:0"><div><b>${p.we}</b><span class="t3">Wohnungen</span></div><div><b>${p.units.filter(u=>u[5]==='frei').length}</b><span class="t3">noch frei</span></div><div><b style="font-size:1.4rem">${p.bezug}</b><span class="t3">Bezug</span></div></div>
+ <p style="font-size:1.08rem;max-width:62ch">${p.text}</p>
+ <div><div class="row" style="justify-content:space-between;margin-bottom:12px"><h2 style="font-size:2rem">Wohnungen</h2><span class="t3" style="font-size:.85rem">Beispielwerte · Preise auf Anfrage</span></div>
+  <div class="tw"><table><thead><tr><th>Einheit</th><th>Lage</th><th class="r">Zimmer</th><th class="r">Fläche</th><th>Außen</th><th>Status</th><th></th></tr></thead><tbody>
+  ${p.units.map(u=>`<tr><td><b>${u[0]}</b></td><td>${u[1]}</td><td class="r num">${u[2]}</td><td class="r num">${u[3]}</td><td>${u[4]}</td><td><span class="pill ${ST[u[5]]}">${u[5]}</span></td><td class="r">${u[5]==='verkauft'?'':`<button class="lnk" data-open="anfrage" data-unit="${p.name} · ${u[0]}">Grundriss und Preis</button>`}</td></tr>`).join('')}
+  </tbody></table></div></div>
+ <div><h2 style="font-size:2rem;margin-bottom:8px">Baufortschritt</h2>${p.bau.map(b=>`<div class="tl ${b[2]?'f':''}"><span class="t3 num">${b[0]}</span><i></i><span>${b[1]}</span></div>`).join('')}</div>
+ </div>
+ <aside class="side"><span class="lbl">Ihr Ansprechpartner</span><div class="row"><div class="av">D</div><div><b>Dennis [Nachname]</b><div class="t3">Vertrieb ${p.name}</div></div></div>
+  <p class="t2" style="font-size:.95rem">Exposé, Grundrisse und Preise schicken wir nach einer kurzen Anfrage sofort per E-Mail.</p>
+  <button class="btn" data-open="anfrage" data-unit="${p.name}">Besichtigung anfragen</button>
+  <p class="t3" style="font-size:.85rem">Oder anrufen: <span class="num">06152 1870725</span></p></aside></div></section>`;}
+const Q=[['Welche Wohnung interessiert Sie?','unit',()=>Object.values(P).flatMap(p=>[p.name].concat(p.units.filter(u=>u[5]!=='verkauft').map(u=>p.name+' · '+u[0]))).slice(0,10)],
+ ['Wann möchten Sie einziehen, und wer zieht ein?','when',()=>['so bald wie möglich','in 6 bis 12 Monaten','später','Paar','Familie','allein','als Kapitalanlage']],
+ ['Wie ist die Finanzierung geplant?','fin',()=>['Finanzierung steht','Gespräch mit der Bank läuft','noch offen','Eigenkapital ohne Kredit']],
+ ['Wer entscheidet mit?','mit',()=>['nur ich','Partner oder Partnerin','Familie','Bank oder Berater']]];
+const SL=['Di 10:00','Di 16:30','Mi 11:00','Do 17:00','Fr 09:30','Sa 11:00'];
+function vFunnel(){const f=S.fn;const st=f.step;
+ if(st===5)return `<div class="fn" id="anfrage"><span class="lbl">Vielen Dank</span><h2 style="font-size:2.2rem">Ihr Termin ${f.a.slot?'am '+f.a.slot+' ':''}ist angefragt.</h2>
+  <div style="display:flex;flex-direction:column;gap:10px"><div class="tl"><span class="t3">sofort</span><i></i><span>Bestätigung mit Exposé und Grundriss per E-Mail</span></div><div class="tl"><span class="t3">sofort</span><i></i><span>Dennis [Nachname] sieht Ihre Angaben und meldet sich persönlich</span></div><div class="tl f"><span class="t3">am Termin</span><i></i><span>Besichtigung oder Beratung, auf Wunsch mit Ihrer Bank</span></div></div>
+  <p class="t3" style="font-size:.85rem">Im Entwurf wird nichts versendet.</p><div class="row"><button class="btn ghost" data-act="restart">Noch einmal</button></div></div>`;
+ const prog=`<div class="prog" aria-hidden="true">${[0,1,2,3,4].map(i=>`<i class="${i<=st?'on':''}"></i>`).join('')}</div>`;
+ if(st<4){const q=Q[st];const multi=st===1;const cur=f.a[q[1]]||(multi?[]:'');
+  return `<div class="fn" id="anfrage">${prog}<span class="lbl">Frage ${st+1} von 5</span><h3>${q[0]}</h3>
+   <div class="chips">${q[2]().map(o=>`<button class="chip" aria-pressed="${multi?cur.includes(o):cur===o}" data-pick="${q[1]}" data-val="${o}" data-multi="${multi?1:0}">${o}</button>`).join('')}</div>
+   <div class="row" style="justify-content:space-between">${st?`<button class="btn ghost" data-act="back">Zurück</button>`:'<span></span>'}<button class="btn" data-act="next" ${(multi?cur.length:cur)?'':'disabled style="opacity:.45"'}>Weiter</button></div></div>`;}
+ return `<form class="fn" id="anfrage">${prog}<span class="lbl">Frage 5 von 5</span><h3>Wann passt ein Termin?</h3>
+  <div class="slots">${SL.map(s=>`<button type="button" class="chip" style="text-align:center" aria-pressed="${f.a.slot===s}" data-pick="slot" data-val="${s}" data-multi="0">${s}</button>`).join('')}</div>
+  <label class="fld" for="fn-name">Name<input id="fn-name" autocomplete="name" required value="${f.a.name||''}"></label>
+  <label class="fld" for="fn-mail">E-Mail<input id="fn-mail" type="email" autocomplete="email" required value="${f.a.mail||''}"></label>
+  <label class="row t2" for="fn-ok" style="font-size:.88rem;gap:10px;flex-wrap:nowrap;align-items:flex-start"><input id="fn-ok" type="checkbox" required style="margin-top:4px;accent-color:var(--bronze)"> Ich bin einverstanden, dass Heim &amp; Partner mich zu diesem Projekt kontaktiert.</label>
+  <div class="row" style="justify-content:space-between"><button type="button" class="btn ghost" data-act="back">Zurück</button><button class="btn" type="submit">Termin anfragen</button></div></form>`;}
+function render(){const v=$('#view');
+ if(S.open){v.innerHTML=`<section class="w"><div class="grid2"><div>${vFunnel()}</div><aside class="side"><span class="lbl">Warum diese Fragen?</span><p class="t2" style="font-size:.95rem">Damit wir beim ersten Gespräch schon wissen, welche Wohnung passt, und Sie nicht alles am Telefon erklären müssen.</p><button class="lnk" data-act="close" style="align-self:flex-start">Zurück zur Seite</button></aside></div></section>`;}
+ else v.innerHTML=S.view==='start'?vStart():vProj(S.view);
+ document.querySelectorAll('.links a').forEach(a=>a.removeAttribute('aria-current'));}
+function go(view,jump){S.open=false;S.view=view;render();if(jump){const el=document.getElementById(jump);if(el)el.scrollIntoView({behavior:'smooth'});}else window.scrollTo({top:0});}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-view],[data-open],[data-pick],[data-act],[data-jump]');if(!t)return;
+ if(t.dataset.open){e.preventDefault();S.open=true;S.fn={step:0,a:{}};if(t.dataset.unit){S.fn.a.unit=t.dataset.unit;S.fn.step=1;}render();window.scrollTo({top:0});return;}
+ if(t.dataset.pick){const k=t.dataset.pick,v=t.dataset.val;if(t.dataset.multi==='1'){const a=S.fn.a[k]=S.fn.a[k]||[];const i=a.indexOf(v);i<0?a.push(v):a.splice(i,1);}else S.fn.a[k]=v;
+  const n=document.getElementById('fn-name'),m=document.getElementById('fn-mail');if(n){S.fn.a.name=n.value;S.fn.a.mail=m.value;}render();return;}
+ if(t.dataset.act){const a=t.dataset.act;if(a==='next')S.fn.step++;else if(a==='back')S.fn.step--;else if(a==='restart'){S.fn={step:0,a:{}};}else if(a==='close'){S.open=false;}render();return;}
+ if(t.dataset.view){e.preventDefault();go(t.dataset.view,t.dataset.jump);return;}
+ if(t.dataset.jump){e.preventDefault();go('start',t.dataset.jump);}});
+document.addEventListener('submit',e=>{e.preventDefault();S.fn.a.name=$('#fn-name').value;S.fn.step=5;render();});
+const h=(location.hash||'').slice(1);if(P[h])S.view=h;
+render();
+})();
+</script>
+
+</html>

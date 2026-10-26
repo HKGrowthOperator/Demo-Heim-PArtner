@@ -436,47 +436,47 @@ function wdBetween(a,b){let n=0;const x=new Date(a);while(x<b){x.setDate(x.getDa
 const DOCS=['Freistellung § 48b','BG BAU','SOKA-BAU','Haftpflicht','HR-Auszug','Referenzen'];
 const mk=(name,city,price,docs,refs,cap,quali,risks,status,ago)=>({name,city,price,docs,refs,cap,quali,risks:risks||[],status,ago:ago||'',asked:false});
 const TENDERS=[
- {id:'t1',gewerk:'Trockenbau',project:'Lindenhof BA 2',lv:214,deadline:'23.10.2026',need:8,bidders:[
-  mk('TBS Trockenbau Sachsen GmbH','Leipzig',412300,[1,1,1,1,1,1],5,9,88,[],'angebot','14.10.'),
-  mk('Bauteam Nowak','Halle (Saale)',368900,[1,0,0,1,1,1],2,4,61,['Pos. 03.02.0010 F90-Bekleidung 38 % unter Median','4 Monteure verfügbar, benötigt 8'],'angebot','15.10.'),
-  mk('Ausbau Kretschmer GmbH','Leipzig',429800,[1,1,1,1,1,1],6,8,91,[],'angebot','13.10.'),
-  mk('Mitteldeutsche Ausbau GmbH','Chemnitz',398500,[1,1,1,0,1,1],4,10,79,['Haftpflichtnachweis abgelaufen (08/2026)'],'angebot','16.10.'),
-  mk('Hansa Akustik- und Trockenbau','Dresden',451200,[1,1,1,1,1,1],3,7,84,[],'angebot','12.10.'),
-  mk('Elbe Trockenbau KG','Riesa',386700,[1,1,1,1,1,0],1,6,66,['Nur 1 vergleichbare Referenz'],'angebot','16.10.'),
-  mk('Innenausbau Wolff & Söhne','Leipzig',474900,[1,1,1,1,1,1],7,12,93,[],'angebot','09.10.'),
-  mk('Prokop Innenausbau','Markkleeberg',405600,[1,1,1,1,0,1],4,6,77,[],'angebot','17.10.'),
-  mk('Ruhland Ausbau','Delitzsch',null,[1,1,0,1,1,0],0,0,0,[],'unterlagen','15.10.'),
-  mk('Schreiber & Partner Innenausbau','Leipzig',null,[0,0,0,0,0,0],0,0,0,[],'geoeffnet','18.10.'),
-  mk('Krüger Bau-Service','Schkeuditz',null,[0,0,0,0,0,0],0,0,0,[],'eingeladen',''),
-  mk('Brandt Montagebau','Torgau',null,[0,0,0,0,0,0],0,0,0,[],'abgesagt','11.10.')]},
- {id:'t2',gewerk:'Elektroinstallation',project:'Stadtvillen Mühlbach',lv:168,deadline:'30.10.2026',need:5,bidders:[
-  mk('Elektro Fuchs GmbH','Leipzig',null,[1,1,1,1,1,1],0,0,0,[],'unterlagen','17.10.'),
-  mk('Voltwerk Sachsen','Leipzig',null,[0,0,0,0,0,0],0,0,0,[],'geoeffnet','16.10.'),
-  mk('E-Technik Lorenz','Grimma',null,[0,0,0,0,0,0],0,0,0,[],'eingeladen',''),
-  mk('Seidel Elektro KG','Borna',null,[0,0,0,0,0,0],0,0,0,[],'eingeladen',''),
-  mk('Elektro Hahn','Wurzen',null,[0,0,0,0,0,0],0,0,0,[],'eingeladen','')]},
- {id:'t3',gewerk:'Dachdeckerarbeiten',project:'Gartenstraße 14',lv:72,deadline:'02.10.2026',need:4,awarded:'Dachbau Engelmann GmbH',bidders:[]}
+ {id:'t1',gewerk:'Trockenbau',project:'Haus Beethoven',lv:96,deadline:'23.10.2026',need:8,bidders:[
+  mk('TBS Trockenbau Rhein-Main GmbH','Wiesbaden',127800,[1,1,1,1,1,1],5,9,88,[],'angebot','14.10.'),
+  mk('Bauteam Nowak','Offenbach am Main',114400,[1,0,0,1,1,1],2,4,61,['Pos. 03.02.0010 F90-Bekleidung 38 % unter Median','4 Monteure verfügbar, benötigt 8'],'angebot','15.10.'),
+  mk('Ausbau Kretschmer GmbH','Mainz',133200,[1,1,1,1,1,1],6,8,91,[],'angebot','13.10.'),
+  mk('Rhein-Neckar Ausbau GmbH','Mannheim',123500,[1,1,1,0,1,1],4,10,79,['Haftpflichtnachweis abgelaufen (08/2026)'],'angebot','16.10.'),
+  mk('Hansa Akustik- und Trockenbau','Koblenz',139900,[1,1,1,1,1,1],3,7,84,[],'angebot','12.10.'),
+  mk('Main Trockenbau KG','Aschaffenburg',119900,[1,1,1,1,1,0],1,6,66,['Nur 1 vergleichbare Referenz'],'angebot','16.10.'),
+  mk('Innenausbau Wolff & Söhne','Wiesbaden',147200,[1,1,1,1,1,1],7,12,93,[],'angebot','09.10.'),
+  mk('Prokop Innenausbau','Hochheim am Main',125700,[1,1,1,1,0,1],4,6,77,[],'angebot','17.10.'),
+  mk('Ruhland Ausbau','Bad Homburg',null,[1,1,0,1,1,0],0,0,0,[],'unterlagen','15.10.'),
+  mk('Schreiber & Partner Innenausbau','Frankfurt am Main',null,[0,0,0,0,0,0],0,0,0,[],'geoeffnet','18.10.'),
+  mk('Krüger Bau-Service','Groß-Gerau',null,[0,0,0,0,0,0],0,0,0,[],'eingeladen',''),
+  mk('Brandt Montagebau','Darmstadt',null,[0,0,0,0,0,0],0,0,0,[],'abgesagt','11.10.')]},
+ {id:'t2',gewerk:'Elektroinstallation',project:'Villaglück',lv:74,deadline:'30.10.2026',need:3,bidders:[
+  mk('Elektro Fuchs GmbH','Mainz',null,[1,1,1,1,1,1],0,0,0,[],'unterlagen','17.10.'),
+  mk('Voltwerk Rhein-Main','Frankfurt am Main',null,[0,0,0,0,0,0],0,0,0,[],'geoeffnet','16.10.'),
+  mk('E-Technik Lorenz','Hanau',null,[0,0,0,0,0,0],0,0,0,[],'eingeladen',''),
+  mk('Seidel Elektro KG','Ginsheim-Gustavsburg',null,[0,0,0,0,0,0],0,0,0,[],'eingeladen',''),
+  mk('Elektro Hahn','Bischofsheim',null,[0,0,0,0,0,0],0,0,0,[],'eingeladen','')]},
+ {id:'t3',gewerk:'Dachdeckerarbeiten',project:'Worfelden II',lv:72,deadline:'02.10.2026',need:4,awarded:'Dachbau Engelmann GmbH',bidders:[]}
 ];
-const POOL=[['Fliesen Pohl GmbH','Leipzig',5,'Lindenhof BA 1'],['Sachsen Fliesen & Naturstein','Dresden',5,'Mühlbach Vorprojekt'],['Baukeramik Lehmann','Zwenkau',5,'Lindenhof BA 1'],['Keramik Weidner','Halle',4,'Gartenstraße 9'],['Fliesenwerk Mitte','Leipzig',4,''],['Fliesen Krause & Sohn','Taucha',4,'Lindenhof BA 1'],['FKT Fliesen Kleinert','Markranstädt',4,'Gartenstraße 9'],['Erdmann Fliesen GmbH','Leipzig',4,''],['Fliesenteam Arnold','Schkeuditz',4,''],['Bodenwelt Ziegler','Wurzen',3,''],['Mosaik Bau Kühn','Leipzig',3,''],['Plattenleger Ostrowski','Halle',3,''],['Hanse Fliesenbau','Magdeburg',3,''],['Fliesen Schuster','Delitzsch',2,'']];
+const POOL=[['Fliesen Pohl GmbH','Rüsselsheim',5,'Worfelden I'],['Hessen Fliesen & Naturstein','Darmstadt',5,'Villaglück Vorprojekt'],['Baukeramik Lehmann','Hochheim am Main',5,'Worfelden I'],['Keramik Weidner','Mainz',4,'Sanierung Nauheim'],['Fliesenwerk Mitte','Wiesbaden',4,''],['Fliesen Krause & Sohn','Groß-Gerau',4,'Worfelden I'],['FKT Fliesen Kleinert','Bischofsheim',4,'Sanierung Nauheim'],['Erdmann Fliesen GmbH','Frankfurt am Main',4,''],['Fliesenteam Arnold','Offenbach am Main',4,''],['Bodenwelt Ziegler','Hanau',3,''],['Mosaik Bau Kühn','Wiesbaden',3,''],['Plattenleger Ostrowski','Mainz',3,''],['Hanse Fliesenbau','Bad Kreuznach',3,''],['Fliesen Schuster','Bensheim',2,'']];
 const PP=[
- ['01.03.0010','Metallständerwand CW 100, 2-lagig','1.840 m²',[48.9,46.2,51.4,44.8],48.1],
- ['02.01.0020','GK-Decke abgehängt, CD 60/27','2.120 m²',[41.5,39.9,43.0,38.6],41.0],
- ['03.02.0010','Brandschutzbekleidung Stahlträger F90','310 m',[96.0,91.5,104.2,58.9],95.2],
- ['04.01.0030','Revisionsöffnung 60 × 60, F30','48 St',[132,168,129,121],131]];
-const PPN=['TBS','Mitteldt.','Kretschmer','Nowak'];
+ ['01.03.0010','Metallständerwand CW 100, 2-lagig','560 m²',[48.9,46.2,51.4,44.8],48.1],
+ ['02.01.0020','GK-Decke abgehängt, CD 60/27','650 m²',[41.5,39.9,43.0,38.6],41.0],
+ ['03.02.0010','Brandschutzbekleidung Stahlträger F90','96 m',[96.0,91.5,104.2,58.9],95.2],
+ ['04.01.0030','Revisionsöffnung 60 × 60, F30','15 St',[132,168,129,121],131]];
+const PPN=['TBS','Rh.-Neckar','Kretschmer','Nowak'];
 let LEADS=[
- {id:1,n:'Familie Hartmann',u:'Mühlbach · WE 2',a:'Kauf',src:'ImmoScout24',st:0,next:'Erstkontakt heute',score:'B'},
- {id:2,n:'Jonas Reuter',u:'Lindenhof · 2.07',a:'Miete',src:'Instagram',st:0,next:'Selbstauskunft anfordern',score:'B'},
- {id:3,n:'Dr. Sabine Lerch',u:'Mühlbach · WE 5',a:'Kauf',src:'Makler Brückner',st:1,next:'Finanzierungsnachweis prüfen',score:'A'},
- {id:4,n:'M. & T. Vogt',u:'Lindenhof · 1.03',a:'Miete',src:'Website',st:1,next:'Unterlagen vollständig',score:'A'},
- {id:5,n:'Familie Aydın',u:'Mühlbach · WE 3',a:'Kauf',src:'Tag der offenen Tür',st:2,next:'Besichtigung Sa 24.10.',score:'A'},
- {id:6,n:'Paul Wendt',u:'Lindenhof · 3.11',a:'Miete',src:'ImmoScout24',st:2,next:'Besichtigung Do 22.10.',score:'B'},
- {id:7,n:'Claudia Behrens',u:'Mühlbach · WE 1',a:'Kauf',src:'Tag der offenen Tür',st:3,next:'Reservierungsvereinbarung',score:'A'},
- {id:8,n:'Henrik Sommer',u:'Lindenhof · 2.02',a:'Miete',src:'Instagram',st:3,next:'Mietvertrag zur Unterschrift',score:'A'},
- {id:9,n:'Familie Kowalski',u:'Mühlbach · WE 6',a:'Kauf',src:'Makler Brückner',st:4,next:'Notartermin 06.11.',score:'A'},
- {id:10,n:'Tobias Meinhardt',u:'Lindenhof · 1.08',a:'Miete',src:'ImmoScout24',st:0,next:'Keine Antwort seit 5 Tagen',score:'C'}];
+ {id:1,n:'Familie Hartmann',u:'Villaglück · WE 2',a:'Kauf',src:'ImmoScout24',st:0,next:'Erstkontakt heute',score:'B'},
+ {id:2,n:'Jonas Reuter',u:'Worfelden II · WE 7',a:'Miete',src:'Instagram',st:0,next:'Selbstauskunft anfordern',score:'B'},
+ {id:3,n:'Dr. Sabine Lerch',u:'Villaglück · WE 3',a:'Kauf',src:'Makler Brückner',st:1,next:'Finanzierungsnachweis prüfen',score:'A'},
+ {id:4,n:'M. & T. Vogt',u:'Haus Beethoven · WE 5',a:'Kauf',src:'Website',st:1,next:'Unterlagen vollständig',score:'A'},
+ {id:5,n:'Familie Aydın',u:'Villaglück · WE 3',a:'Kauf',src:'Tag der offenen Tür',st:2,next:'Besichtigung Sa 24.10.',score:'A'},
+ {id:6,n:'Paul Wendt',u:'Haus Beethoven · WE 7',a:'Kauf',src:'ImmoScout24',st:2,next:'Besichtigung Do 22.10.',score:'B'},
+ {id:7,n:'Claudia Behrens',u:'Villaglück · WE 1',a:'Kauf',src:'Tag der offenen Tür',st:3,next:'Reservierungsvereinbarung',score:'A'},
+ {id:8,n:'Henrik Sommer',u:'Worfelden II · WE 12',a:'Miete',src:'Instagram',st:3,next:'Mietvertrag zur Unterschrift',score:'A'},
+ {id:9,n:'Familie Kowalski',u:'Villaglück · WE 4',a:'Kauf',src:'Makler Brückner',st:4,next:'Notartermin 06.11.',score:'A'},
+ {id:10,n:'Tobias Meinhardt',u:'Worfelden II · WE 3',a:'Miete',src:'ImmoScout24',st:0,next:'Keine Antwort seit 5 Tagen',score:'C'}];
 const STAGES=['Neu','Qualifiziert','Besichtigung','Reserviert','Abschluss'];
-const CH=[['ImmoScout24',64,4,'1.240 €'],['Tag der offenen Tür',31,6,'2.100 €'],['Instagram',38,3,'860 €'],['Makler',17,4,'Provision'],['Flyer-QR / Website',22,2,'390 €']];
+const CH=[['ImmoScout24',64,2,'1.240 €'],['Tag der offenen Tür',31,3,'2.100 €'],['Instagram',38,1,'860 €'],['Makler',17,2,'Provision'],['Flyer-QR / Website',22,1,'390 €']];
 
 /* ===== Zustand ===== */
 const S={route:'cockpit',tid:'t1',ttab:'bieter',ana:'idle',run:0,w:{p:40,q:25,c:20,v:15},awarded:false,expand:null,
@@ -488,7 +488,7 @@ const PLAN={rest:560,soll:10,h:8,puffer:15};
 const NAV=[
  ['','Übersicht'],['cockpit','Cockpit','squares-four'],['freigaben','Freigaben','check-circle',()=>queue().length],['auto','Agenten & Workflows','sparkle'],['team','Team & Rechte','users'],
  ['','Vergabe'],['vergabe','Ausschreibungen','gavel',()=>TENDERS.filter(t=>!t.awarded&&!(t.id==='t1'&&S.awarded)).length],['nu','Nachunternehmer','list-checks'],['portal','Bieterportal','arrow-square-out'],
- ['','Projekte'],['projekt','Lindenhof BA 2','hard-hat',()=>S.saved&&S.letter!=='sent'?'!':'',(S)=>S.saved&&S.letter!=='sent'?'crit':'warn'],['p2','Stadtvillen Mühlbach','buildings',null,()=>'ok'],['p3','Gartenstraße 14','house-line',null,()=>'ok'],
+ ['','Projekte'],['projekt','Haus Beethoven','hard-hat',()=>S.saved&&S.letter!=='sent'?'!':'',(S)=>S.saved&&S.letter!=='sent'?'crit':'warn'],['p2','Villaglück','buildings',null,()=>'ok'],['p3','Worfelden II','house-line',null,()=>'ok'],
  ['','Vertrieb'],['crm','Interessenten','users-three',()=>LEADS.filter(l=>l.st<4).length],['objekt','Objekte & Einheiten','buildings'],['events','Veranstaltungen','calendar-blank'],['kanaele','Kanäle','chart-bar']];
 function nav(){
   const vis=NAV.filter((n,i)=>{if(n[0])return allowed(n[0]==='p2'||n[0]==='p3'?'projekt':n[0]);for(let j=i+1;j<NAV.length&&NAV[j][0];j++)if(allowed(NAV[j][0]==='p2'||NAV[j][0]==='p3'?'projekt':NAV[j][0]))return true;return false;});
@@ -497,7 +497,7 @@ function nav(){
     const c=cnt?cnt():'';const on=S.route===r||(r==='vergabe'&&S.route==='neu')||(r==='nu'&&S.route==='quali')||(r==='crm'&&S.route==='lead');
     const proj=r==='p2'||r==='p3';
     return `<a href="#${r}" data-go="${proj?'projekt':r}" class="${on?'on':''} ${proj?'proj':''}" ${on?'aria-current="page"':''}>${dotf?`<span class="dot ${dotf(S)}"></span>`:I(ic)}<span>${l}</span>${c!==''&&c!==0?`<span class="cnt ${c==='!'?'alert':''}">${c==='!'?I('warning-circle','s'):c}</span>`:''}</a>`;}).join('');
-  const C={cockpit:['Cockpit'],freigaben:['Übersicht','Freigabe-Zentrale'],vergabe:['Vergabe','Ausschreibungen'],neu:['Vergabe','Neue Ausschreibung'],portal:['Vergabe','Bieterportal (Ansicht Nachunternehmer)'],projekt:['Projekte','Wohnquartier Lindenhof · BA 2'],crm:['Vertrieb','Interessenten'],objekt:['Vertrieb','Stadtvillen am Mühlbach'],kanaele:['Vertrieb','Kanäle'],nu:['Vergabe','Nachunternehmer'],quali:['Vergabe','Qualifizierungsbogen (Ansicht neue Firma)'],lead:['Vertrieb','Interessentenakte'],auto:['Übersicht','Agenten & Workflows'],team:['Übersicht','Team & Rechte'],events:['Vertrieb','Veranstaltungen']}[S.route];
+  const C={cockpit:['Cockpit'],freigaben:['Übersicht','Freigabe-Zentrale'],vergabe:['Vergabe','Ausschreibungen'],neu:['Vergabe','Neue Ausschreibung'],portal:['Vergabe','Bieterportal (Ansicht Nachunternehmer)'],projekt:['Projekte','Haus Beethoven · Wiesbaden'],crm:['Vertrieb','Interessenten'],objekt:['Vertrieb','Villaglück'],kanaele:['Vertrieb','Kanäle'],nu:['Vergabe','Nachunternehmer'],quali:['Vergabe','Qualifizierungsbogen (Ansicht neue Firma)'],lead:['Vertrieb','Interessentenakte'],auto:['Übersicht','Agenten & Workflows'],team:['Übersicht','Team & Rechte'],events:['Vertrieb','Veranstaltungen']}[S.route];
   $('#crumbs').innerHTML=C.map((c,i)=>i===C.length-1?`<b>${c}</b>`:`<span>${c}</span>${I('caret-right','s')}`).join('');
 }
 
@@ -506,23 +506,23 @@ function vCockpit(){
   const t=TENDERS[0],offers=t.bidders.filter(b=>b.price).length;
   const crit=S.saved&&S.letter!=='sent';
   const items=[];
-  if(!S.saved) items.push(['warn','warning','Innenputz Lindenhof: Tagesbericht von heute fehlt','Putzwerk Hoffmann war Freitag mit 6 statt 10 Arbeitskräften vor Ort. Bauleitung erfasst gerade.','Projekt öffnen','projekt']);
-  else if(S.letter!=='sent') items.push(['crit','warning-circle',`Innenputz Lindenhof: ${S.ist} statt 10 Arbeitskräfte, dritter Tag unter Soll`,`Prognose +${impact(S.assume).delay} Arbeitstage. Aufforderung nach § 5 Abs. 3 VOB/B liegt zur Freigabe bereit.`,'Prüfen','projekt']);
+  if(!S.saved) items.push(['warn','warning','Innenputz Haus Beethoven: Tagesbericht von heute fehlt','Putzwerk Hoffmann war Freitag mit 6 statt 10 Arbeitskräften vor Ort. Bauleitung erfasst gerade.','Projekt öffnen','projekt']);
+  else if(S.letter!=='sent') items.push(['crit','warning-circle',`Innenputz Haus Beethoven: ${S.ist} statt 10 Arbeitskräfte, dritter Tag unter Soll`,`Prognose +${impact(S.assume).delay} Arbeitstage. Aufforderung nach § 5 Abs. 3 VOB/B liegt zur Freigabe bereit.`,'Prüfen','projekt']);
   else items.push(['ok','check-circle','Aufforderung an Putzwerk Hoffmann versendet','Frist 21.10.2026 · Wiedervorlage ist eingetragen.','Ansehen','projekt']);
-  if(!S.awarded) items.push(['acc','sparkle',`Trockenbau Lindenhof: ${offers} Angebote ausgewertet, Vergabevorschlag bereit`,'Frist endet Freitag. 4 Bieter haben unvollständige Nachweise, Rückfragen sind vorbereitet.','Vergleich öffnen','vergabe']);
-  else items.push(['ok','check-circle','Trockenbau Lindenhof vergeben an TBS Trockenbau Sachsen','Auftragsschreiben und 10 Absagen als Entwurf vorbereitet.','Ansehen','vergabe']);
-  items.push(['warn','currency-eur','Nachtrag N-06 Lindenhof seit 12 Tagen in Prüfung','Geänderte Fensterformate Haus C, 18.400 €. Frist zur Stellungnahme 26.10.','Ansehen','projekt']);
-  items.push(['acc','users-three','3 Anfragen vom Tag der offenen Tür ohne Rückmeldung','Mühlbach WE 1, 3, 5. Follow-up-Mails sind vorbereitet.','Zum Vertrieb','crm']);
+  if(!S.awarded) items.push(['acc','sparkle',`Trockenbau Haus Beethoven: ${offers} Angebote ausgewertet, Vergabevorschlag bereit`,'Frist endet Freitag. 4 Bieter haben unvollständige Nachweise, Rückfragen sind vorbereitet.','Vergleich öffnen','vergabe']);
+  else items.push(['ok','check-circle','Trockenbau Haus Beethoven vergeben an TBS Trockenbau Rhein-Main','Auftragsschreiben und 10 Absagen als Entwurf vorbereitet.','Ansehen','vergabe']);
+  items.push(['warn','currency-eur','Nachtrag N-06 Haus Beethoven seit 12 Tagen in Prüfung','Geänderte Fensterformate DG, 18.400 €. Frist zur Stellungnahme 26.10.','Ansehen','projekt']);
+  items.push(['acc','users-three','3 Anfragen vom Tag der offenen Tür ohne Rückmeldung','Villaglück WE 2 und WE 3. Follow-up-Mails sind vorbereitet.','Zum Vertrieb','crm']);
   {const keep=items.filter(it=>allowed(it[5]));items.length=0;keep.forEach(x=>items.push(x));}
   const act=[
     ['09:12','acc','KI hat 2 neue Angebote gelesen und dem LV zugeordnet (Prokop, Elbe)'],
     ['08:47','ok','Elektro Fuchs: Leerrohre 2. OG abgenommen, 6 Fotos'],
-    ['08:30','acc','Haftpflichtnachweis Mitteldeutsche Ausbau ist abgelaufen, Rückfrage vorbereitet'],
-    ['07:58','neutral','Neue Anfrage über ImmoScout24: Lindenhof 1.08, Miete'],
+    ['08:30','acc','Haftpflichtnachweis Rhein-Neckar Ausbau ist abgelaufen, Rückfrage vorbereitet'],
+    ['07:58','neutral','Neue Anfrage über ImmoScout24: Worfelden II WE 3, Miete'],
     ['Fr','neutral','Bauzeitenplan Rev. 4 hochgeladen von M. Schuster']];
-  const PR=[['Wohnquartier Lindenhof · BA 2','24 WE · Innenausbau','warn',crit?'crit':'warn','ok','6,84 Mio. €','+1,4 %','30.04.2027','projekt'],
-    ['Stadtvillen am Mühlbach','6 WE · Rohbau','ok','ok','warn','3,12 Mio. €','+3,8 %','15.09.2027','projekt'],
-    ['Sanierung Gartenstraße 14','9 WE Bestand · Dach','ok','ok','ok','1,46 Mio. €','−0,6 %','28.02.2027','projekt']];
+  const PR=[['Haus Beethoven · Wiesbaden','7 WE · Innenausbau','warn',crit?'crit':'warn','ok','4,20 Mio. €','+1,4 %','30.04.2027','projekt'],
+    ['Villaglück · Wiesbaden','4 WE · Rohbau','ok','ok','warn','2,85 Mio. €','+3,8 %','15.09.2027','projekt'],
+    ['Seniorenwohnen Worfelden II','18 WE · Dach','ok','ok','ok','4,60 Mio. €','−0,6 %','30.06.2027','projekt']];
   return `
   <div class="ph"><div><div class="lbl">Montag, 19. Oktober 2026</div><h1 style="margin-top:4px">Guten Morgen, ${cur()[1].replace(/^[A-Z]\. /,'')}</h1>
     <p class="t2" style="margin-top:4px">${items.filter(i=>i[0]==='crit'||i[0]==='warn').length} Punkte brauchen heute eine Entscheidung, ${items.filter(i=>i[0]==='acc').length} hat das System vorbereitet.</p></div>
@@ -568,7 +568,7 @@ function vVergabe(){
   </div>`;
 }
 function tDone(t){return `<section class="box"><div class="bh"><div><div class="lbl">${t.project}</div><h2 style="font-size:1.05rem;margin-top:2px">${t.gewerk}</h2></div><span class="st"><span class="dot ok"></span>Vergeben 06.10.2026</span></div>
-  <div class="bb stack"><p>Vergeben an <b>${t.awarded}</b> für ${eur(184600)}. Auftrag, Soll-Besetzung (4 Monteure) und Termine stehen im Baucontrolling von Gartenstraße 14.</p></div>
+  <div class="bb stack"><p>Vergeben an <b>${t.awarded}</b> für ${eur(184600)}. Auftrag, Soll-Besetzung (4 Monteure) und Termine stehen im Baucontrolling von Worfelden II.</p></div>
   <div>${[['15.09.','acc','9 Dachdecker eingeladen'],['30.09.','acc','KI-Vergleich über 7 Angebote erstellt'],['06.10.','ok','Vergabe durch Dennis freigegeben, 6 Absagen versendet']].map(a=>`<div class="tl"><span class="d">${a[0]}</span><span class="p"><span class="dot ${a[1]}"></span></span><span>${a[2]}</span></div>`).join('')}</div></section>`;}
 function tDetail(t){
   const b=t.bidders,n=b.length,open=b.filter(x=>x.status!=='eingeladen').length,up=b.filter(x=>x.status==='angebot'||x.status==='unterlagen').length,of=b.filter(x=>x.price).length;
@@ -610,7 +610,7 @@ Heim &amp; Partner · Einkauf</div>
 }
 function tVergleich(t){
   if(S.ana==='idle') return `<div class="empty" id="anaStart">${I('sparkle','l')}<h2>Angebote automatisch auswerten</h2><p>Die KI liest alle ${t.bidders.filter(b=>b.price).length} Angebote, ordnet jede Position den ${t.lv} LV-Positionen zu, bildet den Preisspiegel und prüft Nachweise, Referenzen und Kapazitäten gegen eure Kriterien. Entschieden wird von euch.</p><button class="btn acc" data-act="analyze">${I('sparkle','s')}Auswertung starten</button></div>`;
-  const steps=[['8 Angebots-PDFs gelesen','214 Seiten'],['Positionen dem LV zugeordnet','1.712 Einheitspreise'],['Preisspiegel und Ausreißer','Median je Position'],['Nachweise, Referenzen, Kapazität','48 Dokumente'],['Bewertung nach euren Kriterien','4 Kriterien']];
+  const steps=[['8 Angebots-PDFs gelesen','104 Seiten'],['Positionen dem LV zugeordnet','768 Einheitspreise'],['Preisspiegel und Ausreißer','Median je Position'],['Nachweise, Referenzen, Kapazität','48 Dokumente'],['Bewertung nach euren Kriterien','4 Kriterien']];
   if(S.ana==='run') return `<div class="processing">${steps.map((s,i)=>`<div class="${i<S.run?'ok':i===S.run?'on':''}"><span class="sp">${i<S.run?I('check','s'):''}</span><span>${s[0]}</span><span class="xs t3 num">${i<S.run?s[1]:''}</span></div>`).join('')}</div>`;
   const {list}=scoreT(t);const top=list[0],cheap=[...list].sort((a,b)=>a.price-b.price)[0];
   const why=[`${eur(top.price)}, ${top.dev<0?de(-top.dev)+' % unter':de(top.dev)+' % über'} dem Median`,`${top.refs} vergleichbare Referenzen im Wohnungsbau`,`${top.cap} Monteure verfügbar, benötigt ${t.need}`,top.docs.every(Boolean)&&!top.risks.length?'Alle 6 Nachweise vorhanden und gültig':'Nachweise vor Vergabe nachfordern'];
@@ -643,29 +643,29 @@ function tVergabe(t){
    </div>
    <div class="row"><button class="btn pri" data-act="award">${I('signature','s')}Vergabe freigeben</button><span class="xs t3">als Dennis · 19.10.2026</span></div></div>`;
   return `<div class="bb stack" id="award"><div class="callout neutral">${I('check-circle','s')}<span><b style="color:var(--ink)">Vergeben an ${top.name}</b> für ${eur(top.price)}. Freigegeben durch Dennis am 19.10.2026, 10:14.</span></div></div>
-   <div>${[['10:14','ok','Vergabe freigegeben, Begründung in der Vergabeakte'],['10:14','acc','Auftragsschreiben als Entwurf: 8 Monteure ab KW 47, Fertigstellung KW 7/2027'],['10:14','acc',`${rej} Absageschreiben vorbereitet, Versand nach Durchsicht`],['10:15','acc','Soll-Besetzung, Termine und Auftragssumme im Projekt Lindenhof angelegt']].map(a=>`<div class="tl"><span class="d">${a[0]}</span><span class="p"><span class="dot ${a[1]}"></span></span><span>${a[2]}</span></div>`).join('')}</div>
-   <div class="bb"><button class="btn pri" data-go="projekt">Zum Projekt Lindenhof ${I('arrow-right','s')}</button></div>`;
+   <div>${[['10:14','ok','Vergabe freigegeben, Begründung in der Vergabeakte'],['10:14','acc','Auftragsschreiben als Entwurf: 8 Monteure ab KW 47, Fertigstellung KW 7/2027'],['10:14','acc',`${rej} Absageschreiben vorbereitet, Versand nach Durchsicht`],['10:15','acc','Soll-Besetzung, Termine und Auftragssumme im Projekt Haus Beethoven angelegt']].map(a=>`<div class="tl"><span class="d">${a[0]}</span><span class="p"><span class="dot ${a[1]}"></span></span><span>${a[2]}</span></div>`).join('')}</div>
+   <div class="bb"><button class="btn pri" data-go="projekt">Zum Projekt Haus Beethoven ${I('arrow-right','s')}</button></div>`;
 }
 
 /* ===== Neue Ausschreibung ===== */
-function initNew(){S.nw={step:0,gewerk:'Fliesenarbeiten',project:'Wohnquartier Lindenhof · BA 2',frist:'2026-11-06',sel:new Set(POOL.map((p,i)=>p[2]>=4?i:-1).filter(i=>i>=0)),sending:-1,found:false,
-  lv:[['01.01.0010','Untergrund prüfen, Haftbrücke auftragen','m²',1180,1420],['01.02.0020','Verbundabdichtung Duschbereiche, 2-lagig','m²',260,310],['02.01.0010','Bodenfliesen 60 × 60 cm, Dünnbett','m²',840,980],['02.03.0040','Wandfliesen Bad 30 × 60 cm','m²',960,null],['03.01.0010','Sockelleisten Fliese, h = 6 cm','m',1040,1890]]};}
+function initNew(){S.nw={step:0,gewerk:'Fliesenarbeiten',project:'Haus Beethoven',frist:'2026-11-06',sel:new Set(POOL.map((p,i)=>p[2]>=4?i:-1).filter(i=>i>=0)),sending:-1,found:false,
+  lv:[['01.01.0010','Untergrund prüfen, Haftbrücke auftragen','m²',355,425],['01.02.0020','Verbundabdichtung Duschbereiche, 2-lagig','m²',78,93],['02.01.0010','Bodenfliesen 60 × 60 cm, Dünnbett','m²',250,295],['02.03.0040','Wandfliesen Bad 30 × 60 cm','m²',290,null],['03.01.0010','Sockelleisten Fliese, h = 6 cm','m',310,565]]};}
 function vNeu(){
   if(!S.nw) initNew();const w=S.nw;
   const ST=[['Projekt & Gewerk','Was wird vergeben'],['Leistungsverzeichnis','LV hochladen und prüfen'],['Nachunternehmer','Wer wird eingeladen'],['Anschreiben','Prüfen und versenden']];
   let body='';
   if(w.step===0) body=`<div class="grid2">
-    <label class="fld full" for="n-p"><span>Projekt</span><select id="n-p" data-nw="project"><option>Wohnquartier Lindenhof · BA 2</option><option>Stadtvillen am Mühlbach</option><option>Sanierung Gartenstraße 14</option></select></label>
+    <label class="fld full" for="n-p"><span>Projekt</span><select id="n-p" data-nw="project"><option>Haus Beethoven</option><option>Villaglück</option><option>Seniorenwohnen Worfelden II</option></select></label>
     <label class="fld" for="n-g"><span>Gewerk</span><select id="n-g" data-nw="gewerk">${['Fliesenarbeiten','Malerarbeiten','Estrich','Bodenbelag','Schlosserarbeiten'].map(g=>`<option ${g===w.gewerk?'selected':''}>${g}</option>`).join('')}</select></label>
     <label class="fld" for="n-f"><span>Angebotsfrist</span><input id="n-f" type="date" value="${w.frist}" data-nw="frist"><span class="hint">Erinnerung automatisch 3 Tage vorher</span></label>
     <div class="fld full"><span>Geforderte Nachweise</span><div class="row" style="gap:6px">${DOCS.map(d=>`<span class="tag">${I('check','s')}${d}</span>`).join('')}</div><span class="hint">Vorlage „Ausbaugewerke“. Bereits gültige Nachweise aus dem Stamm werden nicht erneut angefordert.</span></div>
-    <div class="fld full"><span>Leistungszeitraum (aus Bauzeitenplan Rev. 4)</span><div class="row"><span class="tag">${I('calendar-blank','s')}KW 6 bis KW 9 / 2027</span><span class="tag">${I('hard-hat','s')}Bedarf geschätzt 5 Fliesenleger</span></div></div></div>`;
-  if(w.step===1) body=`<div class="stack"><div class="row" style="border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:12px 14px;gap:12px">${I('file-text','l')}<div style="flex:1;min-width:0"><div class="nm">Vorlage: LV ${w.gewerk} · Standard H&amp;P</div><div class="xs t3">zuletzt verwendet in Lindenhof BA 1 · 86 Positionen · Texte bleiben gleich, nur Mengen ändern sich</div></div><span class="tag ok">Vorlage geladen</span></div>
-    <div class="tw box"><table><thead><tr><th>OZ</th><th>Kurztext</th><th class="r">BA 1</th><th class="r">Menge neu</th><th>Einheit</th><th>Prüfung</th></tr></thead><tbody>
-    ${w.lv.map((p,k)=>{const d=p[4]?Math.abs(p[4]-p[3])/p[3]:0;return `<tr><td class="num t3">${p[0]}</td><td>${p[1]}</td><td class="r num t3">${p[3].toLocaleString('de-DE')}</td><td class="r"><input class="qty" data-qty="${k}" inputmode="decimal" value="${p[4]??''}" aria-label="Menge ${p[0]}" placeholder="fehlt"></td><td>${p[2]}</td><td>${p[4]==null?'<span class="tag warn">Menge fehlt</span>':d>.3?'<span class="tag warn">±'+Math.round(d*100)+' % zu BA 1</span>':'<span class="st"><span class="dot ok"></span>ok</span>'}</td></tr>`;}).join('')}
-    <tr><td colspan="6" class="t3 xs">… 81 weitere Positionen, Mengen aus dem Raumbuch BA 2 übernommen</td></tr></tbody></table></div>
-    ${w.lv[3][4]==null?`<div class="callout acc">${I('sparkle','s')}<span>Mengen gegen die Grundrisse plausibilisiert. Bei 02.03.0040 fehlt die Menge, Vorschlag aus dem Raumbuch: <b>1.150 m²</b>. <button class="lnk" data-act="lvfill">Übernehmen</button></span></div>`:''}</div>`;
-  if(w.step===2) body=`<div class="row sb" style="margin-bottom:8px"><span class="sm"><b>${w.sel.size}</b> von ${POOL.length} ausgewählt</span><span class="row" style="gap:10px"><span class="xs t3">Vorauswahl: Region Leipzig, Bewertung ab 4</span>${w.found?'':`<button class="btn sm" data-act="nufind">${I('magnifying-glass','s')}Neue Firmen gewinnen</button>`}</span></div>
+    <div class="fld full"><span>Leistungszeitraum (aus Bauzeitenplan Rev. 4)</span><div class="row"><span class="tag">${I('calendar-blank','s')}KW 6 bis KW 9 / 2027</span><span class="tag">${I('hard-hat','s')}Bedarf geschätzt 3 Fliesenleger</span></div></div></div>`;
+  if(w.step===1) body=`<div class="stack"><div class="row" style="border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:12px 14px;gap:12px">${I('file-text','l')}<div style="flex:1;min-width:0"><div class="nm">Vorlage: LV ${w.gewerk} · Standard H&amp;P</div><div class="xs t3">zuletzt verwendet in Worfelden I · 86 Positionen · Texte bleiben gleich, nur Mengen ändern sich</div></div><span class="tag ok">Vorlage geladen</span></div>
+    <div class="tw box"><table><thead><tr><th>OZ</th><th>Kurztext</th><th class="r">Vorplanung</th><th class="r">Menge neu</th><th>Einheit</th><th>Prüfung</th></tr></thead><tbody>
+    ${w.lv.map((p,k)=>{const d=p[4]?Math.abs(p[4]-p[3])/p[3]:0;return `<tr><td class="num t3">${p[0]}</td><td>${p[1]}</td><td class="r num t3">${p[3].toLocaleString('de-DE')}</td><td class="r"><input class="qty" data-qty="${k}" inputmode="decimal" value="${p[4]??''}" aria-label="Menge ${p[0]}" placeholder="fehlt"></td><td>${p[2]}</td><td>${p[4]==null?'<span class="tag warn">Menge fehlt</span>':d>.3?'<span class="tag warn">±'+Math.round(d*100)+' % zu Vorplanung</span>':'<span class="st"><span class="dot ok"></span>ok</span>'}</td></tr>`;}).join('')}
+    <tr><td colspan="6" class="t3 xs">… 81 weitere Positionen, Mengen aus dem Raumbuch Haus Beethoven übernommen</td></tr></tbody></table></div>
+    ${w.lv[3][4]==null?`<div class="callout acc">${I('sparkle','s')}<span>Mengen gegen die Grundrisse plausibilisiert. Bei 02.03.0040 fehlt die Menge, Vorschlag aus dem Raumbuch: <b>345 m²</b>. <button class="lnk" data-act="lvfill">Übernehmen</button></span></div>`:''}</div>`;
+  if(w.step===2) body=`<div class="row sb" style="margin-bottom:8px"><span class="sm"><b>${w.sel.size}</b> von ${POOL.length} ausgewählt</span><span class="row" style="gap:10px"><span class="xs t3">Vorauswahl: Region Rhein-Main, Bewertung ab 4</span>${w.found?'':`<button class="btn sm" data-act="nufind">${I('magnifying-glass','s')}Neue Firmen gewinnen</button>`}</span></div>
     ${w.found?`<div class="callout acc" style="margin-bottom:8px">${I('sparkle','s')}<span>3 neue Firmen aus euren früheren Anfragen und Kontakten vorgeschlagen. Sie bekommen zusätzlich den Qualifizierungsbogen und die Nachweisliste zum Ausfüllen.</span></div>`:''}
     <div class="box tw"><table><thead><tr><th style="width:36px"></th><th>Firma</th><th>Bewertung</th><th>Zuletzt</th></tr></thead><tbody>
     ${POOL.map((p,i)=>`<tr><td><input type="checkbox" id="pl${i}" data-pool="${i}" ${w.sel.has(i)?'checked':''} aria-label="${p[0]} auswählen" style="accent-color:var(--accent);width:15px;height:15px"></td><td><label for="pl${i}" class="nm" style="cursor:pointer">${p[0]}</label><span class="sub">${p[1]}</span></td><td><div class="meter ${p[2]>=4?'ok':p[2]===3?'warn':'crit'}" style="width:80px">${[1,2,3,4,5].map(k=>`<i class="${k<=p[2]?'f':''}"></i>`).join('')}</div></td><td class="t2">${p[4]?'<span class="tag acc">neu · Qualifizierung</span>':p[3]||'<span class="t3">noch kein Auftrag</span>'}</td></tr>`).join('')}</tbody></table></div>`;
@@ -699,13 +699,13 @@ function vPortal(){
   const docs=[['Freistellungsbescheinigung § 48b EStG','gültig bis 31.12.2027','ok'],['Unbedenklichkeitsbescheinigung BG BAU','hochgeladen 18.10.','ok'],['SOKA-BAU Bescheinigung','fehlt','miss'],['Betriebshaftpflicht','hochgeladen 18.10.','ok'],['Handelsregisterauszug','aus Stammdaten übernommen','ok'],['3 Referenzen vergleichbarer Größe','1 von 3','part']];
   return `
   <div class="ph"><div><h1>Bieterportal</h1><div class="meta"><span>${I('eye','s')}So sieht ein eingeladener Nachunternehmer seine Ausschreibung. Kein Login, persönlicher Link je Firma.</span></div></div><button class="btn" data-go="vergabe">${I('arrow-left','s')}Zurück zur Vergabe</button></div>
-  <div class="frame" id="portalFrame"><div class="bar"><span><i></i><i></i><i></i></span><div class="url">${I('shield-check','s')}angebote.heim-partner.de/t/7Kx2-Q9mf</div></div>
+  <div class="frame" id="portalFrame"><div class="bar"><span><i></i><i></i><i></i></span><div class="url">${I('shield-check','s')}angebote.heimundpartner.com/t/7Kx2-Q9mf</div></div>
    <div style="padding:24px clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:20px">
     <div class="row sb"><div class="row"><div class="logo">H&amp;P</div><div><div class="nm">Heim &amp; Partner</div><div class="xs t3">Einkauf · Angebotsanfrage</div></div></div><span class="tag warn">${I('clock','s')}noch 4 Tage · Frist 23.10.2026, 12:00</span></div>
-    <div><div class="lbl">Schreiber &amp; Partner Innenausbau</div><h1 style="margin-top:4px">Trockenbau · Wohnquartier Lindenhof BA 2</h1><p class="t2" style="margin-top:6px;max-width:70ch">24 Wohneinheiten, Leipzig-Gohlis. Leistungszeitraum KW 47/2026 bis KW 7/2027, Bedarf ca. 8 Monteure.</p></div>
+    <div><div class="lbl">Schreiber &amp; Partner Innenausbau</div><h1 style="margin-top:4px">Trockenbau · Haus Beethoven, Wiesbaden</h1><p class="t2" style="margin-top:6px;max-width:70ch">7 gehobene Eigentumswohnungen, Wiesbaden-Südost. Leistungszeitraum KW 47/2026 bis KW 7/2027, Bedarf ca. 8 Monteure.</p></div>
     <div class="cols c-1-1">
      <div class="stack"><h3>1 · Unterlagen herunterladen</h3>
-      <div class="box divide">${[['LV_Trockenbau_Lindenhof_BA2.x83','GAEB, 214 Positionen'],['LV_Trockenbau_Lindenhof_BA2.pdf','zum Lesen, 38 Seiten'],['Grundrisse_Haus_A-C.pdf','12 Pläne'],['Bauzeitenplan_Rev4.pdf','Auszug Ausbau']].map(f=>`<div class="row" style="padding:10px 14px;gap:10px">${I('file-text','t3')}<div style="flex:1;min-width:0"><div class="sm nm" style="overflow:hidden;text-overflow:ellipsis">${f[0]}</div><div class="xs t3">${f[1]}</div></div><button class="btn sm ghost" data-act="doc-dl">${I('download-simple','s')}</button></div>`).join('')}</div>
+      <div class="box divide">${[['LV_Trockenbau_Haus_Beethoven.x83','GAEB, 96 Positionen'],['LV_Trockenbau_Haus_Beethoven.pdf','zum Lesen, 18 Seiten'],['Grundrisse_EG-DG.pdf','6 Pläne'],['Bauzeitenplan_Rev4.pdf','Auszug Ausbau']].map(f=>`<div class="row" style="padding:10px 14px;gap:10px">${I('file-text','t3')}<div style="flex:1;min-width:0"><div class="sm nm" style="overflow:hidden;text-overflow:ellipsis">${f[0]}</div><div class="xs t3">${f[1]}</div></div><button class="btn sm ghost" data-act="doc-dl">${I('download-simple','s')}</button></div>`).join('')}</div>
       <h3 style="margin-top:8px">2 · Angebot hochladen</h3>
       <div style="border:1.5px dashed var(--line-2);border-radius:10px;padding:22px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center" class="t2">${I('upload-simple','l')}<span class="sm">Ausgefülltes LV (GAEB X84) oder PDF hierher ziehen</span><span class="xs t3">Die Preise werden automatisch übernommen</span></div></div>
      <div class="stack"><h3>3 · Nachweise</h3>
@@ -759,8 +759,8 @@ function vProjekt(){
   else if(S.ptab==='budget') body=pBudget();
   else body=`<section class="box"><div class="empty">${I('files','l')}<p>312 Dokumente in der Projektakte: Verträge, Pläne, Tagesberichte, Fotos, Schriftverkehr. Volltextsuche über alle Inhalte.</p></div></section>`;
   return `
-  <div class="ph"><div><div class="lbl">Projekt</div><h1 style="margin-top:3px">Wohnquartier Lindenhof · BA 2</h1>
-   <div class="meta"><span>${I('map-pin','s')}Leipzig-Gohlis</span><span>${I('buildings','s')}24 WE, 3 Häuser</span><span>${I('hard-hat','s')}Bauleitung M. Schuster</span><span>${I('flag','s')}Übergabe 30.04.2027</span></div></div>
+  <div class="ph"><div><div class="lbl">Projekt</div><h1 style="margin-top:3px">Haus Beethoven</h1>
+   <div class="meta"><span>${I('map-pin','s')}Wiesbaden-Südost</span><span>${I('buildings','s')}7 WE, EG bis DG</span><span>${I('hard-hat','s')}Bauleitung M. Schuster</span><span>${I('flag','s')}Übergabe 30.04.2027</span></div></div>
    <div class="row"><span class="tag">Bauzeitenplan Rev. 4</span></div></div>
   <div class="tabs">${tabs.map(([k,l,c])=>`<button class="${S.ptab===k?'on':''}" data-ptab="${k}">${l}${c!==''&&c!==undefined?`<span class="c">${c}</span>`:''}</button>`).join('')}</div>
   ${body}`;
@@ -770,15 +770,15 @@ function pUebersicht(im,crit){
   <section class="box qzb" id="qzb">
    <div><div class="row sb"><span class="lbl">Qualität</span><span class="st"><span class="dot warn"></span>beobachten</span></div><span class="v">7 offene Mängel</span><div class="meter warn">${[1,2,3,4,5].map(k=>`<i class="${k<=3?'f':''}"></i>`).join('')}</div><span class="xs t3">2 überfällig · Abnahme Rohbau erfolgt · 212 Fotobelege</span></div>
    <div><div class="row sb"><span class="lbl">Zeit</span><span class="st"><span class="dot ${crit?'crit':'warn'}"></span>${crit?'kritisch':'beobachten'}</span></div><span class="v" style="${crit?'color:var(--crit)':''}">${crit?`+${im.delay} AT Prognose`:'15 AT Puffer'}</span><div class="meter ${crit?'crit':'warn'}">${[1,2,3,4,5].map(k=>`<i class="${k<=(crit?5:3)?'f':''}"></i>`).join('')}</div><span class="xs t3">${crit?`Innenputz unterbesetzt · Übergabe ${im.over?'um '+im.over+' AT gefährdet':'hält knapp'}`:'Innenputz Freitag 6 von 10 Arbeitskräften'}</span></div>
-   <div><div class="row sb"><span class="lbl">Budget</span><span class="st"><span class="dot ok"></span>im Rahmen</span></div><span class="v">+1,4 % Prognose</span><div class="meter ok">${[1,2,3,4,5].map(k=>`<i class="${k<=1?'f':''}"></i>`).join('')}</div><span class="xs t3">6,84 Mio. € · beauftragt 5,91 Mio. € · 2 Nachträge offen</span></div>
+   <div><div class="row sb"><span class="lbl">Budget</span><span class="st"><span class="dot ok"></span>im Rahmen</span></div><span class="v">+1,4 % Prognose</span><div class="meter ok">${[1,2,3,4,5].map(k=>`<i class="${k<=1?'f':''}"></i>`).join('')}</div><span class="xs t3">4,20 Mio. € · beauftragt 3,63 Mio. € · 2 Nachträge offen</span></div>
   </section>
   <section class="box" id="gantt"><div class="bh"><h2>Terminplan Ausbau</h2><div class="lg"><span><i style="background:var(--line-2)"></i>erledigt</span><span><i style="background:var(--accent)"></i>läuft</span><span><i style="border:1.5px dashed var(--ink-3)"></i>Plan</span><span><i style="background:var(--crit)"></i>Prognose verspätet</span></div></div>
    <div class="tw">${gantt()}</div></section>
   <div class="cols c-1-1">
    <section class="box"><div class="bh"><h2>Abweichungen</h2></div><div class="divide">
     ${S.saved?`<div class="ag"><span class="ic crit">${I('users-three','s')}</span><div><b>Innenputz: ${S.ist} von 10 Arbeitskräften</b><div class="why">Tagesbericht Nr. 47 · dritter Tag unter Soll · Prognose +${im.delay} AT</div></div><button class="btn sm" data-ptab="tagebuch">Details</button></div>`:`<div class="ag"><span class="ic warn">${I('clock','s')}</span><div><b>Tagesbericht Innenputz für heute fehlt</b><div class="why">Bauleitung erfasst vor Ort per Handy</div></div><button class="btn sm" data-ptab="tagebuch">Öffnen</button></div>`}
-    <div class="ag"><span class="ic warn">${I('warning','s')}</span><div><b>Mangel M-31: Fensteranschluss 2.07 undicht</b><div class="why">Fenster Pietsch · Frist 23.10.</div></div><button class="btn sm" data-ptab="maengel">Öffnen</button></div>
-    <div class="ag"><span class="ic warn">${I('currency-eur','s')}</span><div><b>Nachtrag N-06 seit 12 Tagen in Prüfung</b><div class="why">Geänderte Fensterformate Haus C · 18.400 €</div></div><button class="btn sm" data-ptab="budget">Öffnen</button></div>
+    <div class="ag"><span class="ic warn">${I('warning','s')}</span><div><b>Mangel M-31: Fensteranschluss WE 5 undicht</b><div class="why">Fenster Pietsch · Frist 23.10.</div></div><button class="btn sm" data-ptab="maengel">Öffnen</button></div>
+    <div class="ag"><span class="ic warn">${I('currency-eur','s')}</span><div><b>Nachtrag N-06 seit 12 Tagen in Prüfung</b><div class="why">Geänderte Fensterformate DG · 18.400 €</div></div><button class="btn sm" data-ptab="budget">Öffnen</button></div>
    </div></section>
    <section class="box"><div class="bh"><h2>Nachunternehmer auf der Baustelle</h2><span class="xs t3">heute</span></div><div class="tw"><table><thead><tr><th>Gewerk</th><th class="r">Soll</th><th class="r">Ist</th><th>Leistungsstand</th></tr></thead><tbody>
     <tr><td><span class="nm">Innenputz</span><span class="sub">Putzwerk Hoffmann GmbH</span></td><td class="r num">10</td><td class="r num" style="${S.saved?'color:var(--crit);font-weight:600':''}">${S.saved?S.ist:'—'}</td><td><div class="bar-s"><div class="tr"><i style="width:62%"></i></div><span class="num xs">62 %</span></div></td></tr>
@@ -789,14 +789,14 @@ function pUebersicht(im,crit){
 }
 function pTagebuch(im){
   const phone=`<div class="phone" id="phone"><div class="scr"><div class="sbar"><span>07:52</span><span class="row" style="gap:4px">${I('wifi-slash','s')}offline</span></div>
-    <div class="app-h"><div class="xs t3">Lindenhof BA 2 · Tagesbericht</div><div class="nm">Mo, 19.10.2026</div></div>
+    <div class="app-h"><div class="xs t3">Haus Beethoven · Tagesbericht</div><div class="nm">Mo, 19.10.2026</div></div>
     <div class="body">${S.saved?`<div class="callout ${S.ist<10?'crit':'neutral'}">${I(S.ist<10?'warning-circle':'check-circle','s')}<span>${S.ist<10?`Gespeichert. Abweichung zum Vertrag erkannt, Projektleitung ist informiert.`:'Gespeichert. Besetzung entspricht dem Vertrag.'}</span></div>`:''}
      <div class="fld"><span>Gewerk</span><select ${S.saved?'disabled':''}><option>Innenputz · Putzwerk Hoffmann</option></select></div>
      <div class="fld"><span>Arbeitskräfte vor Ort <span class="t3">(Soll laut Auftrag: 10)</span></span>
       <div class="stepper"><button data-act="ist-" ${S.saved?'disabled':''} aria-label="weniger">−</button><output id="istOut">${S.ist}</output><button data-act="ist+" ${S.saved?'disabled':''} aria-label="mehr">+</button></div></div>
      <div class="grid2" style="gap:8px"><div class="fld"><span>Beginn</span><input value="07:00" ${S.saved?'disabled':''}></div><div class="fld"><span>Wetter</span><input value="11 °C, trocken" ${S.saved?'disabled':''}></div></div>
      <div class="fld"><span>Fotos</span><div class="thumbs"><div class="thumb"><span>07:42</span></div><div class="thumb"><span>07:44</span></div><div class="thumb"><span>07:49</span></div><div class="thumb add">${I('camera')}</div></div></div>
-     <div class="fld"><span>Bemerkung</span><textarea rows="3" ${S.saved?'disabled':''}>Nur Vorarbeiter und 1 Helfer. Haus B, Wohnungen 2.01 bis 2.06 ohne Fortschritt.</textarea></div>
+     <div class="fld"><span>Bemerkung</span><textarea rows="3" ${S.saved?'disabled':''}>Nur Vorarbeiter und 1 Helfer. 1. und 2. OG, WE 3 bis WE 6 ohne Fortschritt.</textarea></div>
      ${S.saved?'':`<button class="btn pri" data-act="save" style="height:42px;justify-content:center">Tagesbericht speichern</button><span class="xs t3" style="text-align:center">Wird synchronisiert, sobald wieder Netz da ist</span>`}
     </div></div></div>`;
   const right=!S.saved?`<section class="box"><div class="empty">${I('device-mobile','l')}<h2>Erfassung vor Ort</h2><p>Der Bauleiter erfasst den Tagesbericht am Handy, auch ohne Netz. Beim Speichern gleicht das System die Ist-Besetzung mit dem Vertrag ab und rechnet die Auswirkung auf den Terminplan.</p><p class="xs t3">Probier es aus: Arbeitskräfte links einstellen und speichern.</p></div></section>`:
@@ -807,19 +807,19 @@ function pTagebuch(im){
      <p class="sm">${im.over?`<b style="color:var(--crit)">Übergabe am 30.04.2027 um ca. ${im.over} Arbeitstage gefährdet.</b> Estrich, Trockenbau, Maler und Bodenbelag verschieben sich.`:im.delay?`Verzug liegt noch im Puffer. Folgegewerke verschieben sich um ${im.delay} AT.`:'Mit dieser Besetzung hält der Plan.'}</p>
      <div class="row">${S.letter==='none'?`<button class="btn acc" data-act="letter">${I('sparkle','s')}Aufforderung vorbereiten</button>`:`<button class="btn" data-ptab="schrift">Zum Schreiben ${I('arrow-right','s')}</button>`}<button class="btn" data-ptab="uebersicht">Im Terminplan ansehen</button></div>
    </div></section>`;
-  const log=[...(S.saved?[['19.10.',S.ist<10?'crit':'ok',`Innenputz: ${S.ist} von 10 AK · 3 Fotos · M. Schuster`]]:[]),['16.10.','crit','Innenputz: 6 von 10 AK · „Krankheitsfälle“'],['16.10.','ok','Elektro: Leerrohre 2. OG abgenommen · 6 Fotos'],['15.10.','warn','Mangel M-31 aufgenommen: Fensteranschluss 2.07'],['15.10.','crit','Innenputz: 7 von 10 AK'],['14.10.','neutral','E-Mail Putzwerk Hoffmann: „Personalengpass bis Ende KW 42“ (automatisch zugeordnet)']];
+  const log=[...(S.saved?[['19.10.',S.ist<10?'crit':'ok',`Innenputz: ${S.ist} von 10 AK · 3 Fotos · M. Schuster`]]:[]),['16.10.','crit','Innenputz: 6 von 10 AK · „Krankheitsfälle“'],['16.10.','ok','Elektro: Leerrohre 2. OG abgenommen · 6 Fotos'],['15.10.','warn','Mangel M-31 aufgenommen: Fensteranschluss WE 5'],['15.10.','crit','Innenputz: 7 von 10 AK'],['14.10.','neutral','E-Mail Putzwerk Hoffmann: „Personalengpass bis Ende KW 42“ (automatisch zugeordnet)']];
   return `<div class="cols" style="grid-template-columns:minmax(0,320px) minmax(0,1fr);align-items:start">${phone}<div class="stack" style="gap:16px">${right}
    <section class="box"><div class="bh"><h2>Bautagebuch</h2><span class="xs t3">Nr. 42 bis ${S.saved?47:46}</span></div><div>${log.map(a=>`<div class="tl"><span class="d">${a[0]}</span><span class="p"><span class="dot ${a[1]}"></span></span><span>${a[2]}</span></div>`).join('')}</div></section></div></div>`;
 }
 function pSchrift(im){
   if(S.letter==='none') return `<section class="box"><div class="bh"><h2>Schriftverkehr aus Abweichungen</h2><span class="xs t3">Qualität · Zeit · Budget</span></div><div class="divide">
-   ${[['zeit','users-three','Zeit','Unterbesetzung Innenputz','Aufforderung nach § 5 Abs. 3 VOB/B',S.saved?'':'erst Tagesbericht speichern'],['qualitaet','warning','Qualität','Mangel M-29 überfällig, Putzrisse Treppenhaus 2','Mängelrüge mit Nachfrist, § 4 Abs. 7 VOB/B',''],['budget','currency-eur','Budget','Nachtrag N-06, 18.400 € ohne Nachweis','Anforderung der Urkalkulation, § 2 Abs. 5 VOB/B','']].map(c=>`<div class="ag"><span class="ic ${c[0]==='zeit'?'crit':'warn'}">${I(c[1],'s')}</span><div><b>${c[2]}: ${c[3]}</b><div class="why">${c[4]}</div></div>${c[5]?`<button class="btn sm" data-ptab="tagebuch">${c[5]}</button>`:`<button class="btn sm acc" data-letter="${c[0]}">${I('sparkle','s')}Entwurf vorbereiten</button>`}</div>`).join('')}
+   ${[['zeit','users-three','Zeit','Unterbesetzung Innenputz','Aufforderung nach § 5 Abs. 3 VOB/B',S.saved?'':'erst Tagesbericht speichern'],['qualitaet','warning','Qualität','Mangel M-29 überfällig, Putzrisse Treppenhaus','Mängelrüge mit Nachfrist, § 4 Abs. 7 VOB/B',''],['budget','currency-eur','Budget','Nachtrag N-06, 18.400 € ohne Nachweis','Anforderung der Urkalkulation, § 2 Abs. 5 VOB/B','']].map(c=>`<div class="ag"><span class="ic ${c[0]==='zeit'?'crit':'warn'}">${I(c[1],'s')}</span><div><b>${c[2]}: ${c[3]}</b><div class="why">${c[4]}</div></div>${c[5]?`<button class="btn sm" data-ptab="tagebuch">${c[5]}</button>`:`<button class="btn sm acc" data-letter="${c[0]}">${I('sparkle','s')}Entwurf vorbereiten</button>`}</div>`).join('')}
   </div></section>`;
   const st=S.letter;
   return `<div class="cols" style="grid-template-columns:minmax(0,1fr) 320px;align-items:start" id="letterWrap">
-   <article class="letter"><div class="lh"><span><b style="color:var(--ink)">Heim &amp; Partner</b><br>Bauleitung · Leipzig</span><span style="text-align:right">${LCASE[S.ai.letter.anlass].an}<br>Geschäftsführung<br>per E-Mail und Einschreiben</span></div>
-    <div class="xs t3" style="text-align:right">Leipzig, 19.10.2026</div>
-    ${S.ai.letter.text||S.ai.letter.status==='run'||S.ai.letter.anlass!=='zeit'?`<div id="letterBody" class="ltext">${S.ai.letter.status==='run'&&!S.ai.letter.text?'KI formuliert den Entwurf …':esc(S.ai.letter.text||LCASE[S.ai.letter.anlass].fallback(im))}</div>`:`<div class="betr">BV Wohnquartier Lindenhof, BA 2 · Gewerk Innenputz<br>Aufforderung zur Verstärkung der Arbeitskräfte gemäß § 5 Abs. 3 VOB/B</div>
+   <article class="letter"><div class="lh"><span><b style="color:var(--ink)">Heim &amp; Partner</b><br>Bauleitung · Nauheim</span><span style="text-align:right">${LCASE[S.ai.letter.anlass].an}<br>Geschäftsführung<br>per E-Mail und Einschreiben</span></div>
+    <div class="xs t3" style="text-align:right">Nauheim, 19.10.2026</div>
+    ${S.ai.letter.text||S.ai.letter.status==='run'||S.ai.letter.anlass!=='zeit'?`<div id="letterBody" class="ltext">${S.ai.letter.status==='run'&&!S.ai.letter.text?'KI formuliert den Entwurf …':esc(S.ai.letter.text||LCASE[S.ai.letter.anlass].fallback(im))}</div>`:`<div class="betr">BV Haus Beethoven, Wiesbaden · Gewerk Innenputz<br>Aufforderung zur Verstärkung der Arbeitskräfte gemäß § 5 Abs. 3 VOB/B</div>
     <p>Sehr geehrte Damen und Herren,</p>
     <p>gemäß <mark>Auftrag vom 02.09.2026 (§ 3)</mark> und <mark>Bauzeitenplan Rev. 4</mark> ist für KW 42 bis KW 44 eine Besetzung von 10 Arbeitskräften vereinbart. Am 15.10. waren 7, am 16.10. 6 und am 19.10.2026 lediglich ${S.ist} Arbeitskräfte auf der Baustelle (<mark>Tagesberichte Nr. 45 bis 47</mark>, <mark>Fotodokumentation</mark>).</p>
     <p>Bei unveränderter Besetzung ist die Fertigstellung Ihrer Leistung zum vereinbarten Termin ${fD(im.planEnd)} nicht einzuhalten. Nach unserer Berechnung verschiebt sie sich auf den ${fD(im.progEnd)}. Die nachfolgenden Gewerke sind unmittelbar betroffen.</p>
@@ -840,15 +840,15 @@ function pSchrift(im){
    </aside></div>`;
 }
 function pMaengel(){
-  const M=[['M-31','Fensteranschluss 2.07 undicht','Fenster Pietsch','23.10.','warn','offen'],['M-29','Putzrisse Treppenhaus 2, EG','Putzwerk Hoffmann','16.10.','crit','überfällig'],['M-27','Steckdose Küche 1.04 fehlt','Elektro Fuchs','20.10.','warn','offen'],['M-25','Brandschutzmanschette TG fehlt','Haustechnik Böhm','14.10.','crit','überfällig'],['M-22','Kratzer Fensterbank 3.11','Fenster Pietsch','30.10.','warn','offen'],['M-18','Gefälle Balkon 2.03','Baufirma Richter','—','ok','behoben']];
+  const M=[['M-31','Fensteranschluss WE 5 undicht','Fenster Pietsch','23.10.','warn','offen'],['M-29','Putzrisse Treppenhaus, EG','Putzwerk Hoffmann','16.10.','crit','überfällig'],['M-27','Steckdose Küche WE 3 fehlt','Elektro Fuchs','20.10.','warn','offen'],['M-25','Brandschutzmanschette TG fehlt','Haustechnik Böhm','14.10.','crit','überfällig'],['M-22','Kratzer Fensterbank WE 7','Fenster Pietsch','30.10.','warn','offen'],['M-18','Gefälle Balkon WE 4','Baufirma Richter','—','ok','behoben']];
   return `<section class="box"><div class="bh"><h2>Mängel</h2><button class="btn sm" data-act="mg-new">${I('plus','s')}Mangel erfassen</button></div><div class="tw"><table><thead><tr><th>Nr.</th><th>Mangel</th><th>Verantwortlich</th><th>Frist</th><th>Status</th><th></th></tr></thead><tbody>
   ${(S.mg||[]).concat(M).map(m=>`<tr><td class="num t3">${m[0]}</td><td class="nm">${m[1]}</td><td class="t2">${m[2]}</td><td class="num">${m[3]}</td><td><span class="st"><span class="dot ${m[4]}"></span>${m[5]}</span></td><td class="r">${m[5]==='überfällig'?`<button class="btn sm" data-act="mg-ruege">${I('sparkle','s')}Mängelrüge</button>`:''}</td></tr>`).join('')}</tbody></table></div></section>`;
 }
 function pBudget(){
-  const N=[['N-04','Zusätzliche Brandschutzklappen TG',21800,'ok','genehmigt'],['N-05','Mehrmengen Bodenaushub, Bodenklasse 5',29800,'warn','in Prüfung'],['N-06','Geänderte Fensterformate Haus C',18400,'warn','in Prüfung'],['N-03','Beschleunigung Rohbau',34000,'','abgelehnt']];
-  const G=[['Rohbau',2410000,2398000],['Dach & Fenster',812000,826500],['Haustechnik',1086000,1092000],['Ausbau',1340000,1380000],['Außenanlagen',420000,0]];
+  const N=[['N-04','Zusätzliche Brandschutzklappen TG',9600,'ok','genehmigt'],['N-05','Mehrmengen Bodenaushub, Bodenklasse 5',14200,'warn','in Prüfung'],['N-06','Geänderte Fensterformate DG',18400,'warn','in Prüfung'],['N-03','Beschleunigung Rohbau',16500,'','abgelehnt']];
+  const G=[['Rohbau',1480000,1472600],['Dach & Fenster',498000,516400],['Haustechnik',667000,670600],['Ausbau',823000,847500],['Außenanlagen',258000,0]];
   return `<div class="cols c-1-1"><section class="box"><div class="bh"><h2>Kosten nach Gewerkgruppe</h2><span class="xs t3">Budget · Prognose</span></div><div class="bb">
-   ${G.map(g=>{const p=g[2]||g[1],d=(p-g[1])/g[1]*100;return `<div class="hb" style="grid-template-columns:120px minmax(0,1fr) 120px"><span>${g[0]}</span><div class="tr"><i style="width:${g[1]/2500000*100}%"></i><b style="width:${p/2500000*100}%;background:${d>2?'var(--warn-dot)':'var(--accent)'}"></b></div><span class="num r">${(p/1e6).toLocaleString('de-DE',{maximumFractionDigits:2})} Mio. <span class="${d>0?'':'t3'}" style="${d>2?'color:var(--warn)':''}">${g[2]?(d>0?'+':'−')+de(Math.abs(d))+' %':'offen'}</span></span></div>`;}).join('')}
+   ${G.map(g=>{const p=g[2]||g[1],d=(p-g[1])/g[1]*100;return `<div class="hb" style="grid-template-columns:120px minmax(0,1fr) 120px"><span>${g[0]}</span><div class="tr"><i style="width:${g[1]/1600000*100}%"></i><b style="width:${p/1600000*100}%;background:${d>2?'var(--warn-dot)':'var(--accent)'}"></b></div><span class="num r">${(p/1e6).toLocaleString('de-DE',{maximumFractionDigits:2})} Mio. <span class="${d>0?'':'t3'}" style="${d>2?'color:var(--warn)':''}">${g[2]?(d>0?'+':'−')+de(Math.abs(d))+' %':'offen'}</span></span></div>`;}).join('')}
    <div class="lg" style="margin-top:8px"><span><i style="background:var(--line-2)"></i>Budget</span><span><i style="background:var(--accent)"></i>Prognose</span></div></div></section>
    <section class="box"><div class="bh"><h2>Nachträge</h2></div><div class="tw"><table><thead><tr><th>Nr.</th><th>Nachtrag</th><th class="r">Betrag</th><th>Status</th></tr></thead><tbody>
    ${N.map(n=>`<tr><td class="num t3">${n[0]}</td><td>${n[1]}</td><td class="r num">${eur(n[2])}</td><td><span class="st"><span class="dot ${n[3]}"></span>${n[4]}</span></td></tr>`).join('')}</tbody></table></div></section></div>`;
@@ -862,8 +862,8 @@ function vCRM(){
   const f=S.lf,ls=LEADS.filter(l=>f==='alle'||l.a.toLowerCase()===f);
   const q=S.qr;let ph='';
   if(q.step===0) ph=`<div class="empty" style="flex:1;justify-content:center">${I('qr-code','l')}<p class="sm">Flyer-QR scannen, um die Objektseite zu öffnen</p></div>`;
-  if(q.step===1) ph=`<div style="height:130px;background:linear-gradient(170deg,oklch(0.62 0.03 210),oklch(0.8 0.02 200) 55%,oklch(0.88 0.03 80));position:relative;flex:none"><span style="position:absolute;left:14px;bottom:10px;color:oklch(0.99 0 0);font-weight:600;text-shadow:0 1px 6px oklch(0 0 0 / .4)">Stadtvillen am Mühlbach</span></div>
-   <div class="body" style="gap:10px"><div><div class="nm">WE 3 · 4 Zimmer · 118 m² · Garten</div><div class="xs t3">589.000 € · KfW 40 · Fertigstellung 09/2027</div></div>
+  if(q.step===1) ph=`<div style="height:130px;background:linear-gradient(170deg,oklch(0.62 0.03 210),oklch(0.8 0.02 200) 55%,oklch(0.88 0.03 80));position:relative;flex:none"><span style="position:absolute;left:14px;bottom:10px;color:oklch(0.99 0 0);font-weight:600;text-shadow:0 1px 6px oklch(0 0 0 / .4)">Villaglück · Wiesbaden</span></div>
+   <div class="body" style="gap:10px"><div><div class="nm">WE 3 · 4 Zimmer · 131 m² · Balkon</div><div class="xs t3">879.000 € · KfW 40 · Fertigstellung 09/2027</div></div>
     <label class="fld" for="qn"><span>Name</span><input id="qn" data-qr="name" value="${esc(q.name)}"></label>
     <label class="fld" for="qm"><span>E-Mail</span><input id="qm" data-qr="mail" value="${esc(q.mail)}"></label>
     <label class="fld" for="qt"><span>Telefon</span><input id="qt" data-qr="tel" value="${esc(q.tel)}"></label>
@@ -883,14 +883,14 @@ function vCRM(){
   ${aiLeadView()}`;
 }
 function vObjekt(){
-  const U=[['WE 1','EG · 3 Zi · 92 m²','412.000 €','res','reserviert · Behrens'],['WE 2','EG · 4 Zi · 121 m²','598.000 €','free','3 Interessenten'],['WE 3','OG · 4 Zi · 118 m²','589.000 €','free','4 Interessenten'],['WE 4','OG · 3 Zi · 94 m²','438.000 €','sold','verkauft 09/2026'],['WE 5','DG · 5 Zi · 138 m²','712.000 €','free','2 Interessenten'],['WE 6','DG · 4 Zi · 126 m²','649.000 €','sold','Notar 06.11.']];
-  return `<div class="ph"><div><div class="lbl">Objekt</div><h1 style="margin-top:3px">Stadtvillen am Mühlbach</h1><div class="meta"><span>${I('map-pin','s')}Markkleeberg</span><span>6 Eigentumswohnungen</span><span>Fertigstellung 09/2027</span></div></div><div class="row"><button class="btn" data-go="crm">${I('qr-code','s')}QR-Seite</button></div></div>
+  const U=[['WE 1','EG · 4 Zi · 128 m² · Garten','865.000 €','res','reserviert · Behrens'],['WE 2','EG · 4 Zi · 124 m² · Garten','849.000 €','free','3 Interessenten'],['WE 3','OG · 4 Zi · 131 m² · Balkon','879.000 €','free','4 Interessenten'],['WE 4','DG · 5 Zi · 152 m² · Dachterrasse','1.140.000 €','sold','verkauft · Notar 06.11.']];
+  return `<div class="ph"><div><div class="lbl">Objekt</div><h1 style="margin-top:3px">Villaglück</h1><div class="meta"><span>${I('map-pin','s')}Wiesbaden-Komponistenviertel</span><span>4 Eigentumswohnungen</span><span>Fertigstellung 09/2027</span></div></div><div class="row"><button class="btn" data-go="crm">${I('qr-code','s')}QR-Seite</button></div></div>
   <div class="cols c-2-1"><section class="box"><div class="bh"><h2>Einheiten</h2><div class="lg"><span><i style="background:var(--sunk);border:1px solid var(--line)"></i>verkauft</span><span><i style="border:1px solid var(--warn-dot)"></i>reserviert</span><span><i style="border:1px solid var(--line)"></i>frei</span></div></div><div class="bb units">
    ${U.map(u=>`<div class="unit ${u[3]==='sold'?'sold':u[3]==='res'?'res':''}"><div class="row sb"><b>${u[0]}</b><span class="num">${u[2]}</span></div><span class="t3">${u[1]}</span><span style="${u[3]==='res'?'color:var(--warn)':''}">${u[4]}</span></div>`).join('')}</div></section>
    <section class="box"><div class="bh"><h2>Vermarktung</h2></div><div class="bb stack">
-    <div class="row sb"><span class="t2">Verkaufsstand</span><span class="num">2 von 6 · 1 reserviert</span></div>
-    <div class="row sb"><span class="t2">Volumen verkauft</span><span class="num">${eur(1087000)}</span></div>
-    <div class="row sb"><span class="t2">Offene Anfragen</span><span class="num">9</span></div>
+    <div class="row sb"><span class="t2">Verkaufsstand</span><span class="num">1 von 4 · 1 reserviert</span></div>
+    <div class="row sb"><span class="t2">Volumen verkauft</span><span class="num">${eur(1140000)}</span></div>
+    <div class="row sb"><span class="t2">Offene Anfragen</span><span class="num">7</span></div>
     <div class="row sb"><span class="t2">Besichtigungen nächste 7 Tage</span><span class="num">4</span></div>
     <div class="row sb"><span class="t2">Portale</span><span class="row" style="gap:4px"><span class="tag ok">ImmoScout24</span><span class="tag ok">Website</span></span></div></div></section></div>`;
 }
@@ -901,8 +901,8 @@ function vKanaele0(){
   <section class="box" id="channels"><div class="bh"><h2>Anfragen und Abschlüsse je Kanal</h2><div class="lg"><span><i style="background:var(--line-2)"></i>Anfragen</span><span><i style="background:var(--accent)"></i>Abschlüsse</span></div></div>
    <div class="bb">${CH.map(c=>`<div class="hb"><span>${c[0]}</span><div class="tr"><i style="width:${c[1]/max*100}%"></i><b style="width:${c[2]/max*100}%"></b></div><span class="num r">${c[1]} · ${c[2]}</span></div>`).join('')}</div></section>
   <section class="box"><div class="tw"><table><thead><tr><th>Kanal</th><th class="r">Anfragen</th><th class="r">Abschlüsse</th><th class="r">Quote</th><th class="r">Kosten</th></tr></thead><tbody>
-   ${CH.map(c=>`<tr><td class="nm">${c[0]}</td><td class="r num">${c[1]}</td><td class="r num">${c[2]}</td><td class="r num" style="${c[2]/c[1]>.15?'color:var(--ok);font-weight:600':''}">${de(c[2]/c[1]*100)} %</td><td class="r num t2">${c[3]}</td></tr>`).join('')}</tbody></table></div></section>
-  <div class="callout acc">${I('sparkle','s')}<span>Veranstaltungen bringen halb so viele Anfragen wie ImmoScout24, schließen aber dreimal so oft ab (19,4 % gegenüber 6,3 %). Empfehlung: nächsten Tag der offenen Tür für Lindenhof Haus C planen.</span></div>`;
+   ${CH.map(c=>`<tr><td class="nm">${c[0]}</td><td class="r num">${c[1]}</td><td class="r num">${c[2]}</td><td class="r num" style="${c[2]/c[1]>.08?'color:var(--ok);font-weight:600':''}">${de(c[2]/c[1]*100)} %</td><td class="r num t2">${c[3]}</td></tr>`).join('')}</tbody></table></div></section>
+  <div class="callout acc">${I('sparkle','s')}<span>Veranstaltungen bringen halb so viele Anfragen wie ImmoScout24, schließen aber dreimal so oft ab (9,7 % gegenüber 3,1 %). Empfehlung: nächsten Tag der offenen Tür für Haus Beethoven planen.</span></div>`;
 }
 
 /* ===== Tour ===== */
@@ -912,7 +912,7 @@ const TOUR=[
  {t:'Agenten arbeiten im Hintergrund',x:'Acht Agenten lesen Post, prüfen Nachweise, gleichen das Bautagebuch ab und antworten Interessenten, auch nachts. Jeder lässt sich anhalten, entschieden wird in der Freigabe-Zentrale.',go:()=>{S.route='auto';},f:'#agents'},
  {t:'Nachunternehmer-Ranking',x:'Nicht nur nach Preis: Qualität aus euren eigenen Baustellen (Termintreue, Besetzung, Mängel), passende Referenzen, Nachweise, Kapazität. Nowak ist billig, hält aber Besetzungszusagen nicht ein.',go:()=>{S.route='nu';S.nu.tab='ranking';},f:'#nurank'},
  {t:'Neue Firmen finden und qualifizieren',x:'Der Recherche-Agent sucht neue Firmen, ihr wählt aus, die Ansprache geht nach Freigabe raus. Die Firma füllt den Qualifizierungsbogen selbst aus.',go:()=>{S.route='nu';S.nu.tab='akquise';},f:'#nuakq'},
- {t:'Ausschreibung per Knopfdruck',x:'Die Leistungsbeschreibung ist immer dieselbe, nur die Mengen ändern sich. Vorlage laden, Mengen anpassen, die KI prüft Ausreißer gegen das letzte Projekt.',go:()=>{S.route='neu';initNew();S.nw.step=1;},f:'#newbox'},
+ {t:'Ausschreibung per Knopfdruck',x:'Die Leistungsbeschreibung ist immer dieselbe, nur die Mengen ändern sich. Vorlage laden, Mengen anpassen, die KI prüft Ausreißer gegen die Vorplanung.',go:()=>{S.route='neu';initNew();S.nw.step=1;},f:'#newbox'},
  {t:'Nachunternehmer auswählen und gewinnen',x:'Stammfirmen sind vorausgewählt. Neue Firmen bekommen zusätzlich Qualifizierungsbogen und Nachweisliste zum Ausfüllen. Ein Klick verschickt alles an 10 bis 20 Firmen.',go:()=>{S.route='neu';if(!S.nw)initNew();S.nw.step=2;},f:'#newbox'},
  {t:'Was der Nachunternehmer sieht',x:'Jede Firma bekommt einen persönlichen Link: Unterlagen laden, Angebot und Nachweise hochladen. Kein Login, kein Hinterhertelefonieren.',go:()=>{S.route='portal';},f:'#portalFrame'},
  {t:'Rücklauf und Nachweise',x:'Der Ablauf zeigt, wo die Vergabe steht. Fehlende oder abgelaufene Nachweise werden erkannt, die Rückfragen sind fertig formuliert.',go:()=>{S.route='vergabe';S.tid='t1';S.ttab='bieter';},f:'#funnel'},
@@ -970,24 +970,24 @@ const thinking=(txt,key)=>`<div class="processing" style="margin:18px 0"><div cl
 
 /* A · Angebot einlesen */
 const OFFER_TXT=`Angebot Nr. 2026-1187
-Krüger Bau-Service GmbH · Industriestraße 14 · 04435 Schkeuditz
+Krüger Bau-Service GmbH · Industriestraße 14 · 64521 Groß-Gerau
 An: Heim & Partner, Einkauf
-Bauvorhaben: Wohnquartier Lindenhof BA 2, Trockenbauarbeiten
+Bauvorhaben: Haus Beethoven, Wiesbaden, Trockenbauarbeiten
 Datum: 18.10.2026 · Bindefrist: 6 Wochen
 
 Pos. 01.03.0010 Metallständerwand CW 100, 2-lagig beplankt
-  1.840 m² à 47,20 € = 86.848,00 €
+  560 m² à 47,20 € = 26.432,00 €
 Pos. 02.01.0020 GK-Decke abgehängt, CD 60/27
-  2.120 m² à 40,10 € = 85.012,00 €
+  650 m² à 40,10 € = 26.065,00 €
 Pos. 03.02.0010 Brandschutzbekleidung Stahlträger F90
-  310 m à 97,50 € = 30.225,00 €
+  96 m à 97,50 € = 9.360,00 €
 Pos. 04.01.0030 Revisionsöffnung 60 x 60, F30
-  48 St à 138,00 € = 6.624,00 €
+  15 St à 138,00 € = 2.070,00 €
 Pos. 05.01.0010 Vorsatzschale Installationswand
-  640 m² à 39,80 € = 25.472,00 €
-Übrige Positionen gemäß beiliegendem LV: 171.430,00 €
+  200 m² à 39,80 € = 7.960,00 €
+Übrige Positionen gemäß beiliegendem LV: 53.143,00 €
 
-Angebotssumme netto: 405.611,00 €
+Angebotssumme netto: 125.030,00 €
 2 % Skonto bei Zahlung innerhalb 14 Tagen.
 
 Anmerkungen:
@@ -995,18 +995,18 @@ Anmerkungen:
 - Ausführung ab KW 48 möglich, wir setzen 7 Monteure ein.
 - Preise vorbehaltlich Materialpreisgleitklausel Gipskarton (+/- 5 %).
 
-Anlagen: Freistellungsbescheinigung § 48b EStG, Unbedenklichkeitsbescheinigung BG BAU, Betriebshaftpflicht (gültig bis 03/2027), 2 Referenzen (MFH Taucha 2024, Pflegeheim Delitzsch 2025).`;
-const OFFER_FALLBACK={firma:'Krüger Bau-Service GmbH',angebotsnummer:'2026-1187',datum:'18.10.2026',angebotssumme_netto:405611,skonto:'2 % bei Zahlung in 14 Tagen',
- positionen:[{oz:'01.03.0010',text:'Metallständerwand CW 100, 2-lagig',menge:1840,einheit:'m²',ep:47.2,gp:86848,status:'angeboten'},{oz:'02.01.0020',text:'GK-Decke abgehängt, CD 60/27',menge:2120,einheit:'m²',ep:40.1,gp:85012,status:'angeboten'},{oz:'03.02.0010',text:'Brandschutzbekleidung Stahlträger F90',menge:310,einheit:'m',ep:97.5,gp:30225,status:'angeboten'},{oz:'04.01.0030',text:'Revisionsöffnung 60 × 60, F30',menge:48,einheit:'St',ep:138,gp:6624,status:'angeboten'},{oz:'05.01.0010',text:'Vorsatzschale Installationswand',menge:640,einheit:'m²',ep:39.8,gp:25472,status:'angeboten'}],
+Anlagen: Freistellungsbescheinigung § 48b EStG, Unbedenklichkeitsbescheinigung BG BAU, Betriebshaftpflicht (gültig bis 03/2027), 2 Referenzen (MFH Rüsselsheim 2024, Pflegeheim Groß-Gerau 2025).`;
+const OFFER_FALLBACK={firma:'Krüger Bau-Service GmbH',angebotsnummer:'2026-1187',datum:'18.10.2026',angebotssumme_netto:125030,skonto:'2 % bei Zahlung in 14 Tagen',
+ positionen:[{oz:'01.03.0010',text:'Metallständerwand CW 100, 2-lagig',menge:560,einheit:'m²',ep:47.2,gp:26432,status:'angeboten'},{oz:'02.01.0020',text:'GK-Decke abgehängt, CD 60/27',menge:650,einheit:'m²',ep:40.1,gp:26065,status:'angeboten'},{oz:'03.02.0010',text:'Brandschutzbekleidung Stahlträger F90',menge:96,einheit:'m',ep:97.5,gp:9360,status:'angeboten'},{oz:'04.01.0030',text:'Revisionsöffnung 60 × 60, F30',menge:15,einheit:'St',ep:138,gp:2070,status:'angeboten'},{oz:'05.01.0010',text:'Vorsatzschale Installationswand',menge:200,einheit:'m²',ep:39.8,gp:7960,status:'angeboten'}],
  summe_geprueft:true,vorbehalte:['Materialpreisgleitklausel Gipskarton ±5 %, laut Ausschreibung nicht zulässig','Bindefrist 6 Wochen statt geforderter 8 Wochen'],
  leistungsabweichungen:['Oberflächen nur Q2 kalkuliert, LV fordert Q3. Aufpreis 3,10 €/m² ist nicht in der Summe enthalten'],
  termin:{start:'KW 48',passt:false,hinweis:'Beginn eine Woche nach dem geforderten Start KW 47'},kapazitaet:{monteure:7,passt:false},
  nachweise_vorhanden:['Freistellung § 48b','BG BAU','Haftpflicht'],nachweise_fehlend:['SOKA-BAU','HR-Auszug','Referenzen (nur 2 von 3)'],referenzen:2,
- risiken:[{stufe:'hoch',text:'Q3-Aufpreis fehlt in der Summe, Vergleichspreis rund 13.500 € höher'},{stufe:'mittel',text:'Preisgleitklausel macht den Preis nicht fest'},{stufe:'mittel',text:'7 statt 8 Monteure und Start eine Woche später'}],
+ risiken:[{stufe:'hoch',text:'Q3-Aufpreis fehlt in der Summe, Vergleichspreis rund 4.200 € höher'},{stufe:'mittel',text:'Preisgleitklausel macht den Preis nicht fest'},{stufe:'mittel',text:'7 statt 8 Monteure und Start eine Woche später'}],
  zusammenfassung:'Preislich im Mittelfeld, aber nicht vergleichbar: Q2 statt Q3, Preisgleitklausel und kürzere Bindefrist. Vor einer Wertung Q3-Preis, Festpreis und fehlende Nachweise nachfordern.'};
 function offerPrompt(txt){
   const med=PP.map(p=>`${p[0]} ${p[1]}: ${de(p[4],2)} €`).join('\n');
-  return `Du prüfst im Einkauf eines Bauträgers ein Nachunternehmer-Angebot für die Ausschreibung „Trockenbau, Wohnquartier Lindenhof BA 2“.
+  return `Du prüfst im Einkauf eines Bauträgers ein Nachunternehmer-Angebot für die Ausschreibung „Trockenbau, Haus Beethoven, Wiesbaden“.
 Vorgaben der Ausschreibung:
 - Ausführungsbeginn KW 47/2026, benötigt mindestens 8 Monteure
 - Oberflächenqualität Q3 gemäß LV
@@ -1062,15 +1062,15 @@ function applyOffer(){
 /* B · Nachweis per Bild prüfen */
 function musterBlob(){return new Promise(res=>{const c=document.createElement('canvas');c.width=900;c.height=1180;const g=c.getContext('2d');
   g.fillStyle='#fbfbf8';g.fillRect(0,0,900,1180);g.fillStyle='#1e2a33';g.font='600 30px Helvetica, Arial, sans-serif';g.fillText('Muster Versicherung AG',70,100);
-  g.font='16px Helvetica, Arial, sans-serif';g.fillStyle='#55626b';g.fillText('Direktion Mitteldeutschland · Postfach 10 22 · 04008 Leipzig',70,128);
+  g.font='16px Helvetica, Arial, sans-serif';g.fillStyle='#55626b';g.fillText('Direktion Südwest · Postfach 10 22 · 65008 Wiesbaden',70,128);
   g.fillStyle='#1e2a33';g.font='600 34px Helvetica, Arial, sans-serif';g.fillText('Versicherungsbestätigung',70,230);g.font='600 26px Helvetica, Arial, sans-serif';g.fillText('Betriebshaftpflichtversicherung',70,270);
-  const rows=[['Versicherungsnehmer','Mitteldeutsche Ausbau GmbH'],['','Zwickauer Straße 88, 09112 Chemnitz'],['Versicherungsschein-Nr.','BH-4471-2093'],['Versicherte Tätigkeit','Trockenbau, Akustikbau, Innenausbau'],['Versicherungszeitraum','01.09.2025 bis 31.08.2026'],['Deckungssumme Personen- und Sachschäden','5.000.000 EUR'],['Deckungssumme Vermögensschäden','500.000 EUR'],['Selbstbeteiligung','1.000 EUR je Schadenfall']];
+  const rows=[['Versicherungsnehmer','Rhein-Neckar Ausbau GmbH'],['','Industriestraße 88, 68169 Mannheim'],['Versicherungsschein-Nr.','BH-4471-2093'],['Versicherte Tätigkeit','Trockenbau, Akustikbau, Innenausbau'],['Versicherungszeitraum','01.09.2025 bis 31.08.2026'],['Deckungssumme Personen- und Sachschäden','5.000.000 EUR'],['Deckungssumme Vermögensschäden','500.000 EUR'],['Selbstbeteiligung','1.000 EUR je Schadenfall']];
   let y=360;g.font='20px Helvetica, Arial, sans-serif';rows.forEach(r=>{g.fillStyle='#55626b';g.fillText(r[0],70,y);g.fillStyle='#1e2a33';g.fillText(r[1],470,y);y+=50;});
-  g.fillStyle='#1e2a33';g.fillText('Hiermit bestätigen wir den Versicherungsschutz im oben genannten Umfang.',70,y+40);g.fillText('Chemnitz, 02.09.2025',70,y+120);
+  g.fillStyle='#1e2a33';g.fillText('Hiermit bestätigen wir den Versicherungsschutz im oben genannten Umfang.',70,y+40);g.fillText('Mannheim, 02.09.2025',70,y+120);
   g.strokeStyle='#1e2a33';g.beginPath();g.moveTo(560,y+120);g.lineTo(830,y+100);g.stroke();g.font='15px Helvetica, Arial, sans-serif';g.fillText('Muster Versicherung AG',600,y+150);
   g.save();g.translate(450,640);g.rotate(-0.5);g.font='700 150px Helvetica, Arial, sans-serif';g.fillStyle='rgba(190,60,40,.13)';g.textAlign='center';g.fillText('MUSTER',0,0);g.restore();
   c.toBlob(b=>res(b),'image/png');});}
-const DOC_FALLBACK={dokumenttyp:'Versicherungsbestätigung Betriebshaftpflicht',kategorie:'Haftpflicht',firma:'Mitteldeutsche Ausbau GmbH',aussteller:'Muster Versicherung AG',nummer:'BH-4471-2093',gueltig_von:'01.09.2025',gueltig_bis:'31.08.2026',gueltig_am_stichtag:false,deckungssummen:'5 Mio. € Personen- und Sachschäden, 500.000 € Vermögensschäden',hinweise:['Versicherungszeitraum am Stichtag 19.10.2026 abgelaufen','Neue Bestätigung für den Zeitraum ab 01.09.2026 anfordern','Deckungssumme entspricht der Mindestanforderung von 5 Mio. €']};
+const DOC_FALLBACK={dokumenttyp:'Versicherungsbestätigung Betriebshaftpflicht',kategorie:'Haftpflicht',firma:'Rhein-Neckar Ausbau GmbH',aussteller:'Muster Versicherung AG',nummer:'BH-4471-2093',gueltig_von:'01.09.2025',gueltig_bis:'31.08.2026',gueltig_am_stichtag:false,deckungssummen:'5 Mio. € Personen- und Sachschäden, 500.000 € Vermögensschäden',hinweise:['Versicherungszeitraum am Stichtag 19.10.2026 abgelaufen','Neue Bestätigung für den Zeitraum ab 01.09.2026 anfordern','Deckungssumme entspricht der Mindestanforderung von 5 Mio. €']};
 function docPrompt(){return `Das Bild zeigt einen Nachweis, den ein Nachunternehmer im Bieterportal hochgeladen hat. Stichtag der Prüfung: 19.10.2026.
 Ordne ihn genau einer Kategorie zu: ${DOCS.join(', ')}, Sonstiges. Lies Firma, Aussteller, Nummer und Gültigkeit ab und prüfe, ob er am Stichtag gültig ist. Für Haftpflicht gilt eine Mindestdeckung von 5 Mio. € für Personen- und Sachschäden.
 Antworte ausschließlich mit JSON in diesem Schema, unleserliche Felder als null:
@@ -1099,11 +1099,11 @@ async function runDoc(blob){
 /* C · Schriftverkehr für Qualität, Zeit, Budget */
 const LCASE={
  zeit:{an:'Putzwerk Hoffmann GmbH',label:'Zeit · Unterbesetzung Innenputz',facts:im=>`Anlass: Unterbesetzung. Gewerk Innenputz, Nachunternehmer Putzwerk Hoffmann GmbH. Laut Auftrag vom 02.09.2026 (§ 3) und Bauzeitenplan Rev. 4 sind für KW 42 bis 44 10 Arbeitskräfte vereinbart. Ist laut Bautagebuch: 15.10. 7, 16.10. 6, 19.10.2026 ${S.ist} (Tagesberichte Nr. 45 bis 47, Fotos). Vereinbarte Fertigstellung ${fD(im.planEnd)}, Prognose bei gleicher Besetzung ${fD(im.progEnd)}, Folgegewerke Estrich, Trockenbau, Maler betroffen. Forderung: Besetzung bis 21.10.2026 auf 10 erhöhen und schriftlich darlegen, wie die Fristen gehalten werden. Rechtsgrundlage § 5 Abs. 3 VOB/B, Rechte aus § 5 Abs. 4 VOB/B vorbehalten.`,
-  fallback:im=>`Betreff: BV Wohnquartier Lindenhof, BA 2 · Gewerk Innenputz · Aufforderung zur Verstärkung der Arbeitskräfte gemäß § 5 Abs. 3 VOB/B\n\nSehr geehrte Damen und Herren,\n\ngemäß Auftrag vom 02.09.2026 (§ 3) und Bauzeitenplan Rev. 4 ist für KW 42 bis KW 44 eine Besetzung von 10 Arbeitskräften vereinbart. Am 15.10. waren 7, am 16.10. 6 und am 19.10.2026 lediglich ${S.ist} Arbeitskräfte auf der Baustelle (Tagesberichte Nr. 45 bis 47, Fotodokumentation).\n\nBei unveränderter Besetzung ist die Fertigstellung zum vereinbarten Termin ${fD(im.planEnd)} nicht einzuhalten. Nach unserer Berechnung verschiebt sie sich auf den ${fD(im.progEnd)}.\n\nWir fordern Sie auf, die Besetzung unverzüglich, spätestens bis zum 21.10.2026, auf die vereinbarte Stärke zu erhöhen und uns schriftlich mitzuteilen, wie Sie die Vertragsfristen einhalten.\n\nAlle Rechte aus § 5 Abs. 4 VOB/B behalten wir uns ausdrücklich vor.\n\nMit freundlichen Grüßen\nHeim & Partner`},
- qualitaet:{an:'Putzwerk Hoffmann GmbH',label:'Qualität · Mangel M-29',facts:()=>`Anlass: Qualitätsmangel vor Abnahme. Mangel M-29: Putzrisse im Treppenhaus 2, Erdgeschoss, Haus B, Länge ca. 4,5 m, Rissbreite bis 0,4 mm, festgestellt am 02.10.2026 bei der Begehung, 6 Fotos, Frist zur Beseitigung war der 16.10.2026, bisher nicht behoben. Abnahme des Treppenhauses geplant am 28.10.2026, Maler beginnt danach. Forderung: Mangel bis 26.10.2026 fachgerecht beseitigen, sonst Ersatzvornahme nach Fristablauf ankündigen. Rechtsgrundlage § 4 Abs. 7 VOB/B (Mangel während der Ausführung), Hinweis auf Kündigungsandrohung nach § 4 Abs. 7 Satz 3 i. V. m. § 8 Abs. 3 VOB/B.`,
-  fallback:()=>`Betreff: BV Wohnquartier Lindenhof, BA 2 · Gewerk Innenputz · Mangel M-29 · Aufforderung zur Mängelbeseitigung mit Nachfrist gemäß § 4 Abs. 7 VOB/B\n\nSehr geehrte Damen und Herren,\n\nbei der Begehung am 02.10.2026 haben wir im Treppenhaus 2, Erdgeschoss, Haus B, Risse im Innenputz auf einer Länge von ca. 4,5 m mit einer Breite bis 0,4 mm festgestellt (Mangel M-29, 6 Fotos). Die Frist zur Beseitigung bis zum 16.10.2026 ist ohne Ergebnis abgelaufen.\n\nWir fordern Sie auf, den Mangel bis spätestens 26.10.2026 fachgerecht zu beseitigen und uns die Fertigstellung anzuzeigen. Die Abnahme des Treppenhauses ist für den 28.10.2026 vorgesehen.\n\nNach fruchtlosem Ablauf der Frist behalten wir uns vor, den Auftrag für diesen Teil gemäß § 4 Abs. 7 in Verbindung mit § 8 Abs. 3 VOB/B zu entziehen und den Mangel auf Ihre Kosten beseitigen zu lassen.\n\nMit freundlichen Grüßen\nHeim & Partner`},
- budget:{an:'Fenster Pietsch GmbH',label:'Budget · Nachtrag N-06',facts:()=>`Anlass: Budget, Nachtragsforderung. Nachunternehmer Fenster Pietsch GmbH stellt mit Nachtrag N-06 vom 07.10.2026 Mehrkosten von 18.400 € netto für geänderte Fensterformate Haus C in Rechnung. Grundlage Planstand Index C vom 12.08.2026. Prüfung der Bauleitung: Formatänderung betrifft 6 von 14 Fenstern, eine Kalkulation bzw. Urkalkulation wurde nicht vorgelegt, Einheitspreise nicht nachvollziehbar. Budget Gewerk Fenster läge mit dem Nachtrag 1,8 % über Plan. Forderung: Nachtrag dem Grunde nach prüfbar machen, Urkalkulation und Mengenermittlung bis 30.10.2026 vorlegen, bis dahin Nachtrag nicht anerkannt. Rechtsgrundlage § 2 Abs. 5 VOB/B (Preisanpassung auf Basis der Urkalkulation).`,
-  fallback:()=>`Betreff: BV Wohnquartier Lindenhof, BA 2 · Gewerk Fenster · Nachtrag N-06 vom 07.10.2026 · Anforderung prüffähiger Unterlagen\n\nSehr geehrte Damen und Herren,\n\nmit Nachtrag N-06 machen Sie für geänderte Fensterformate in Haus C Mehrkosten von 18.400 € netto geltend. Nach unserer Prüfung betrifft die Formatänderung gemäß Planstand Index C vom 12.08.2026 lediglich 6 der 14 Fenster.\n\nDem Nachtrag liegt keine Kalkulation bei, die Einheitspreise sind nicht nachvollziehbar. Eine Preisanpassung nach § 2 Abs. 5 VOB/B ist auf Grundlage Ihrer Urkalkulation vorzunehmen.\n\nWir bitten Sie, uns die Urkalkulation sowie eine Mengenermittlung je Fensterposition bis zum 30.10.2026 vorzulegen. Bis dahin ist der Nachtrag weder dem Grunde noch der Höhe nach anerkannt.\n\nMit freundlichen Grüßen\nHeim & Partner`}};
+  fallback:im=>`Betreff: BV Haus Beethoven, Wiesbaden · Gewerk Innenputz · Aufforderung zur Verstärkung der Arbeitskräfte gemäß § 5 Abs. 3 VOB/B\n\nSehr geehrte Damen und Herren,\n\ngemäß Auftrag vom 02.09.2026 (§ 3) und Bauzeitenplan Rev. 4 ist für KW 42 bis KW 44 eine Besetzung von 10 Arbeitskräften vereinbart. Am 15.10. waren 7, am 16.10. 6 und am 19.10.2026 lediglich ${S.ist} Arbeitskräfte auf der Baustelle (Tagesberichte Nr. 45 bis 47, Fotodokumentation).\n\nBei unveränderter Besetzung ist die Fertigstellung zum vereinbarten Termin ${fD(im.planEnd)} nicht einzuhalten. Nach unserer Berechnung verschiebt sie sich auf den ${fD(im.progEnd)}.\n\nWir fordern Sie auf, die Besetzung unverzüglich, spätestens bis zum 21.10.2026, auf die vereinbarte Stärke zu erhöhen und uns schriftlich mitzuteilen, wie Sie die Vertragsfristen einhalten.\n\nAlle Rechte aus § 5 Abs. 4 VOB/B behalten wir uns ausdrücklich vor.\n\nMit freundlichen Grüßen\nHeim & Partner`},
+ qualitaet:{an:'Putzwerk Hoffmann GmbH',label:'Qualität · Mangel M-29',facts:()=>`Anlass: Qualitätsmangel vor Abnahme. Mangel M-29: Putzrisse im Treppenhaus, Erdgeschoss, Länge ca. 4,5 m, Rissbreite bis 0,4 mm, festgestellt am 02.10.2026 bei der Begehung, 6 Fotos, Frist zur Beseitigung war der 16.10.2026, bisher nicht behoben. Abnahme des Treppenhauses geplant am 28.10.2026, Maler beginnt danach. Forderung: Mangel bis 26.10.2026 fachgerecht beseitigen, sonst Ersatzvornahme nach Fristablauf ankündigen. Rechtsgrundlage § 4 Abs. 7 VOB/B (Mangel während der Ausführung), Hinweis auf Kündigungsandrohung nach § 4 Abs. 7 Satz 3 i. V. m. § 8 Abs. 3 VOB/B.`,
+  fallback:()=>`Betreff: BV Haus Beethoven, Wiesbaden · Gewerk Innenputz · Mangel M-29 · Aufforderung zur Mängelbeseitigung mit Nachfrist gemäß § 4 Abs. 7 VOB/B\n\nSehr geehrte Damen und Herren,\n\nbei der Begehung am 02.10.2026 haben wir im Treppenhaus, Erdgeschoss, Risse im Innenputz auf einer Länge von ca. 4,5 m mit einer Breite bis 0,4 mm festgestellt (Mangel M-29, 6 Fotos). Die Frist zur Beseitigung bis zum 16.10.2026 ist ohne Ergebnis abgelaufen.\n\nWir fordern Sie auf, den Mangel bis spätestens 26.10.2026 fachgerecht zu beseitigen und uns die Fertigstellung anzuzeigen. Die Abnahme des Treppenhauses ist für den 28.10.2026 vorgesehen.\n\nNach fruchtlosem Ablauf der Frist behalten wir uns vor, den Auftrag für diesen Teil gemäß § 4 Abs. 7 in Verbindung mit § 8 Abs. 3 VOB/B zu entziehen und den Mangel auf Ihre Kosten beseitigen zu lassen.\n\nMit freundlichen Grüßen\nHeim & Partner`},
+ budget:{an:'Fenster Pietsch GmbH',label:'Budget · Nachtrag N-06',facts:()=>`Anlass: Budget, Nachtragsforderung. Nachunternehmer Fenster Pietsch GmbH stellt mit Nachtrag N-06 vom 07.10.2026 Mehrkosten von 18.400 € netto für geänderte Fensterformate im Dachgeschoss in Rechnung. Grundlage Planstand Index C vom 12.08.2026. Prüfung der Bauleitung: Formatänderung betrifft 6 von 14 Fenstern im Dachgeschoss, eine Kalkulation bzw. Urkalkulation wurde nicht vorgelegt, Einheitspreise nicht nachvollziehbar. Budget Dach & Fenster läge mit dem Nachtrag 3,7 % über Plan. Forderung: Nachtrag dem Grunde nach prüfbar machen, Urkalkulation und Mengenermittlung bis 30.10.2026 vorlegen, bis dahin Nachtrag nicht anerkannt. Rechtsgrundlage § 2 Abs. 5 VOB/B (Preisanpassung auf Basis der Urkalkulation).`,
+  fallback:()=>`Betreff: BV Haus Beethoven, Wiesbaden · Gewerk Fenster · Nachtrag N-06 vom 07.10.2026 · Anforderung prüffähiger Unterlagen\n\nSehr geehrte Damen und Herren,\n\nmit Nachtrag N-06 machen Sie für geänderte Fensterformate im Dachgeschoss Mehrkosten von 18.400 € netto geltend. Nach unserer Prüfung betrifft die Formatänderung gemäß Planstand Index C vom 12.08.2026 lediglich 6 der 14 Fenster im Dachgeschoss.\n\nDem Nachtrag liegt keine Kalkulation bei, die Einheitspreise sind nicht nachvollziehbar. Eine Preisanpassung nach § 2 Abs. 5 VOB/B ist auf Grundlage Ihrer Urkalkulation vorzunehmen.\n\nWir bitten Sie, uns die Urkalkulation sowie eine Mengenermittlung je Fensterposition bis zum 30.10.2026 vorzulegen. Bis dahin ist der Nachtrag weder dem Grunde noch der Höhe nach anerkannt.\n\nMit freundlichen Grüßen\nHeim & Partner`}};
 const TONES={sachlich:'sachlich und kooperativ',bestimmt:'bestimmt und klar, aber höflich',letzte:'als letzte Frist vor weiteren Schritten, sehr bestimmt'};
 function aiLetterControls(){
   const st=S.ai.letter;
@@ -1115,7 +1115,7 @@ function aiLetterControls(){
    <span class="xs t3">Die Fakten kommen aus Bautagebuch, Mängeln und Nachträgen. Die KI formuliert, ihr gebt frei.</span></div></section>`;
 }
 function letterPrompt(){const st=S.ai.letter,c=LCASE[st.anlass];
-  return `Schreibe als Bauleitung des Bauträgers Heim & Partner (Leipzig) ein Schreiben an ${c.an} zum Bauvorhaben Wohnquartier Lindenhof, BA 2.
+  return `Schreibe als Bauleitung des Bauträgers Heim & Partner Immobilien (Nauheim) ein Schreiben an ${c.an} zum Bauvorhaben Haus Beethoven, Wiesbaden-Südost (7 Eigentumswohnungen).
 Ton: ${TONES[st.ton]}. Deutsch, VOB/B-konform, juristisch sauber, ohne Übertreibung. Nenne konkrete Daten und Belege aus den Fakten, erfinde keine zusätzlichen Tatsachen.
 Format: erste Zeile „Betreff: …“, dann eine Leerzeile, dann Anrede, 3 bis 5 kurze Absätze, getrennt durch Leerzeilen, Grußformel „Mit freundlichen Grüßen“ und „Heim & Partner“. Kein Markdown, keine Platzhalter in eckigen Klammern, keine Gedankenstriche.
 Fakten:
@@ -1126,19 +1126,19 @@ async function runLetter(){const st=S.ai.letter;st.text='';
 
 /* D · Anfrage einlesen (Vertrieb) */
 const LEAD_TXT=`Von: ImmoScout24 Kontaktanfrage
-Betreff: Anfrage zu Ihrem Exposé „Stadtvillen am Mühlbach, 4 Zimmer mit Garten“
+Betreff: Anfrage zu Ihrem Exposé „Villaglück, 4 Zimmer mit Garten“
 
 Name: Markus Teichmann
 E-Mail: m.teichmann@beispiel.de
 Telefon: 0151 234 56 78
 
 Nachricht:
-Guten Tag, wir sind eine vierköpfige Familie aus Leipzig und suchen ab Sommer 2027 eine Wohnung mit Garten. Die WE 3 gefällt uns sehr. Eine Finanzierungsbestätigung der Sparkasse über 560.000 € liegt vor, Eigenkapital etwa 80.000 €. Wäre eine Besichtigung am Samstag möglich? Und kann man bei der Badausstattung noch mitentscheiden?`;
-const LEAD_FALLBACK={name:'Markus Teichmann',email:'m.teichmann@beispiel.de',telefon:'0151 234 56 78',quelle:'ImmoScout24',art:'Kauf',objekt:'Stadtvillen am Mühlbach',einheit:'WE 3',haushalt:'Familie, 4 Personen',budget:'bis ca. 640.000 € (560.000 € Finanzierung + 80.000 € EK)',finanzierung:'Bestätigung Sparkasse liegt vor',einzug:'Sommer 2027',wunschtermin:'Samstag',prioritaet:'A',begruendung:'Konkrete Einheit, Finanzierung bestätigt, Budget deckt den Kaufpreis von 589.000 € inklusive Nebenkosten knapp.',naechster_schritt:'Besichtigung Sa 24.10., 11:00 anbieten, Finanzierungsbestätigung anfordern',fragen:['Mitsprache bei der Badausstattung (Sonderwünsche)'],
- antwort:'Sehr geehrter Herr Teichmann,\n\nvielen Dank für Ihr Interesse an der WE 3 in den Stadtvillen am Mühlbach. Gern zeigen wir Ihnen die Wohnung am Samstag, 24.10., um 11:00 Uhr vor Ort. Den Termin können Sie direkt hier bestätigen oder verschieben: heim-partner.de/muehlbach\n\nZur Badausstattung: Bis zum Abschluss der Bemusterung im Frühjahr 2027 können Sie aus unserer Ausstattungslinie wählen, Sonderwünsche stimmen wir gern individuell ab.\n\nDamit wir die Reservierung vorbereiten können, senden Sie uns bitte Ihre Finanzierungsbestätigung.\n\nFreundliche Grüße\nHeim & Partner Vertrieb'};
-function leadPrompt(txt){return `Du qualifizierst im Vertrieb eines Bauträgers eine Immobilienanfrage. Freie Einheiten: Mühlbach WE 2 (4 Zi, 121 m², 598.000 €), WE 3 (4 Zi, 118 m², Garten, 589.000 €), WE 5 (5 Zi, 138 m², 712.000 €); Lindenhof Mietwohnungen 1.08 und 3.11. Besichtigungstermine: Sa 24.10. 11:00 oder 13:00, Di 27.10. 17:30. Bemusterung bis Frühjahr 2027.
+Guten Tag, wir sind eine vierköpfige Familie aus Mainz und suchen ab Sommer 2027 eine Wohnung mit Garten in Wiesbaden. Die WE 2 gefällt uns sehr. Eine Finanzierungsbestätigung der Nassauischen Sparkasse über 800.000 € liegt vor, Eigenkapital etwa 140.000 €. Wäre eine Besichtigung am Samstag möglich? Und kann man bei der Badausstattung noch mitentscheiden?`;
+const LEAD_FALLBACK={name:'Markus Teichmann',email:'m.teichmann@beispiel.de',telefon:'0151 234 56 78',quelle:'ImmoScout24',art:'Kauf',objekt:'Villaglück',einheit:'WE 2',haushalt:'Familie, 4 Personen',budget:'bis ca. 940.000 € (800.000 € Finanzierung + 140.000 € EK)',finanzierung:'Bestätigung Sparkasse liegt vor',einzug:'Sommer 2027',wunschtermin:'Samstag',prioritaet:'A',begruendung:'Konkrete Einheit, Finanzierung bestätigt, Budget deckt den Kaufpreis von 849.000 € inklusive Nebenkosten knapp.',naechster_schritt:'Besichtigung Sa 24.10., 11:00 anbieten, Finanzierungsbestätigung anfordern',fragen:['Mitsprache bei der Badausstattung (Sonderwünsche)'],
+ antwort:'Sehr geehrter Herr Teichmann,\n\nvielen Dank für Ihr Interesse an der WE 2 im Villaglück. Gern zeigen wir Ihnen die Wohnung am Samstag, 24.10., um 11:00 Uhr vor Ort. Den Termin können Sie direkt hier bestätigen oder verschieben: heimundpartner.com/villaglueck\n\nZur Badausstattung: Bis zum Abschluss der Bemusterung im Frühjahr 2027 können Sie aus unserer Ausstattungslinie wählen, Sonderwünsche stimmen wir gern individuell ab.\n\nDamit wir die Reservierung vorbereiten können, senden Sie uns bitte Ihre Finanzierungsbestätigung.\n\nFreundliche Grüße\nHeim & Partner Vertrieb'};
+function leadPrompt(txt){return `Du qualifizierst im Vertrieb eines Bauträgers eine Immobilienanfrage. Freie Einheiten: Villaglück (Wiesbaden-Komponistenviertel) WE 2 (EG, 4 Zi, 124 m², Garten, 849.000 €), WE 3 (OG, 4 Zi, 131 m², Balkon, 879.000 €); Haus Beethoven (Wiesbaden-Südost) WE 5 (2. OG, 3 Zi, 98 m², 689.000 €) und WE 7 (Penthouse, 4 Zi, 142 m², 1.190.000 €); Seniorenwohnen Worfelden II, Mietwohnungen WE 3 und WE 7. Besichtigungstermine: Sa 24.10. 11:00 oder 13:00, Di 27.10. 17:30. Bemusterung bis Frühjahr 2027.
 Priorität: A = konkrete Einheit und Finanzierung passt, B = interessiert aber offen, C = unpassend oder unklar.
-Antworte nur mit JSON: {"name":"","email":"","telefon":"","quelle":"","art":"Kauf|Miete","objekt":"","einheit":"","haushalt":"","budget":"","finanzierung":"","einzug":"","wunschtermin":"","prioritaet":"A|B|C","begruendung":"","naechster_schritt":"","fragen":[""],"antwort":"kurzer, freundlicher Antwortentwurf per E-Mail mit konkretem Terminvorschlag und dem Link heim-partner.de/muehlbach zur eigenen Objektseite mit Terminbuchung, ohne Platzhalter"}
+Antworte nur mit JSON: {"name":"","email":"","telefon":"","quelle":"","art":"Kauf|Miete","objekt":"","einheit":"","haushalt":"","budget":"","finanzierung":"","einzug":"","wunschtermin":"","prioritaet":"A|B|C","begruendung":"","naechster_schritt":"","fragen":[""],"antwort":"kurzer, freundlicher Antwortentwurf per E-Mail mit konkretem Terminvorschlag und dem Link heimundpartner.com/villaglueck zur eigenen Objektseite mit Terminbuchung, ohne Platzhalter"}
 Anfrage:
 """
 ${txt.slice(0,8000)}
@@ -1164,12 +1164,12 @@ function applyLead(){const r=S.ai.lead.res;if(!r)return;const id=Date.now();
   S.newLead=id;S.ai.lead.applied=true;S.lf='alle';render();toast('Interessent in der Pipeline');}
 
 /* E · Frag die Plattform */
-const ASKS=['Welche Nachunternehmer haben fehlende oder abgelaufene Nachweise?','Was gefährdet die Übergabe in Lindenhof?','Welche Interessenten sollten wir heute anrufen?'];
-const ASK_FALLBACK=['Vier Bieter im Trockenbau Lindenhof: Bauteam Nowak (BG BAU, SOKA-BAU fehlen), Mitteldeutsche Ausbau (Haftpflicht seit 08/2026 abgelaufen), Elbe Trockenbau (Referenzen fehlen), Prokop Innenausbau (HR-Auszug fehlt). Ruhland Ausbau hat noch kein Angebot, SOKA-BAU und Referenzen fehlen ebenfalls. Rückfragen sind vorbereitet.',
- 'Vor allem der Innenputz: Putzwerk Hoffmann ist seit drei Tagen unterbesetzt. Bleibt es bei der aktuellen Besetzung, verschiebt sich die Fertigstellung deutlich, Estrich, Trockenbau, Maler und Bodenbelag rutschen mit, und der Puffer von 15 Arbeitstagen reicht nicht. Dazu kommt Mangel M-29 im Treppenhaus 2, dessen Frist abgelaufen ist. Die Trockenbau-Vergabe muss diese Woche entschieden werden.',
- 'Zuerst Familie Hartmann (Mühlbach WE 2, neu, Erstkontakt offen) und Tobias Meinhardt (Lindenhof 1.08, seit 5 Tagen ohne Antwort). Danach Dr. Sabine Lerch (WE 5): Finanzierungsnachweis prüfen. Familie Aydın und Paul Wendt haben bereits Besichtigungstermine.'];
+const ASKS=['Welche Nachunternehmer haben fehlende oder abgelaufene Nachweise?','Was gefährdet die Übergabe im Haus Beethoven?','Welche Interessenten sollten wir heute anrufen?'];
+const ASK_FALLBACK=['Vier Bieter im Trockenbau Haus Beethoven: Bauteam Nowak (BG BAU, SOKA-BAU fehlen), Rhein-Neckar Ausbau (Haftpflicht seit 08/2026 abgelaufen), Main Trockenbau (Referenzen fehlen), Prokop Innenausbau (HR-Auszug fehlt). Ruhland Ausbau hat noch kein Angebot, SOKA-BAU und Referenzen fehlen ebenfalls. Rückfragen sind vorbereitet.',
+ 'Vor allem der Innenputz: Putzwerk Hoffmann ist seit drei Tagen unterbesetzt. Bleibt es bei der aktuellen Besetzung, verschiebt sich die Fertigstellung deutlich, Estrich, Trockenbau, Maler und Bodenbelag rutschen mit, und der Puffer von 15 Arbeitstagen reicht nicht. Dazu kommt Mangel M-29 im Treppenhaus, dessen Frist abgelaufen ist. Die Trockenbau-Vergabe muss diese Woche entschieden werden.',
+ 'Zuerst Familie Hartmann (Villaglück WE 2, neu, Erstkontakt offen) und Tobias Meinhardt (Worfelden II WE 3, seit 5 Tagen ohne Antwort). Danach Dr. Sabine Lerch (Villaglück WE 3): Finanzierungsnachweis prüfen. Familie Aydın und Paul Wendt haben bereits Besichtigungstermine.'];
 function platformData(){const t=TENDERS[0];return JSON.stringify({heute:'19.10.2026',vergaben:TENDERS.map(x=>({gewerk:x.gewerk,projekt:x.project,frist:x.deadline,vergeben:x.awarded||(x.id==='t1'&&S.awarded)||false,bieter:x.bidders.map(b=>({name:b.name,status:b.status,angebot:b.price,fehlende_nachweise:missOf(b),hinweise:b.risks,monteure:b.cap}))})),
-  projekt_lindenhof:{uebergabe:'30.04.2027',puffer_AT:PLAN.puffer,innenputz:{nu:'Putzwerk Hoffmann',soll_AK:10,ist_AK_letzte_tage:[7,6].concat(S.saved?[S.ist]:[]),prognose_verzug_AT:S.saved?impact(S.assume).delay:'noch nicht erfasst'},maengel_offen:['M-31 Fensteranschluss 2.07, Frist 23.10.','M-29 Putzrisse Treppenhaus 2, überfällig seit 16.10.','M-25 Brandschutzmanschette TG, überfällig seit 14.10.','M-27 Steckdose Küche 1.04, Frist 20.10.'],nachtraege_offen:['N-05 Bodenaushub 29.800 €','N-06 Fensterformate Haus C 18.400 €, seit 12 Tagen in Prüfung'],budget_prognose:'+1,4 %'},
+  projekt_haus_beethoven:{uebergabe:'30.04.2027',puffer_AT:PLAN.puffer,innenputz:{nu:'Putzwerk Hoffmann',soll_AK:10,ist_AK_letzte_tage:[7,6].concat(S.saved?[S.ist]:[]),prognose_verzug_AT:S.saved?impact(S.assume).delay:'noch nicht erfasst'},maengel_offen:['M-31 Fensteranschluss WE 5, Frist 23.10.','M-29 Putzrisse Treppenhaus, überfällig seit 16.10.','M-25 Brandschutzmanschette TG, überfällig seit 14.10.','M-27 Steckdose Küche WE 3, Frist 20.10.'],nachtraege_offen:['N-05 Bodenaushub 14.200 €','N-06 Fensterformate DG 18.400 €, seit 12 Tagen in Prüfung'],budget_prognose:'+1,4 %'},
   interessenten:LEADS.map(l=>({name:l.n,einheit:l.u,art:l.a,kanal:l.src,phase:STAGES[l.st],naechster_schritt:l.next,bonitaet:l.score})),kanaele_90_tage:CH.map(c=>({kanal:c[0],anfragen:c[1],abschluesse:c[2]}))});}
 function aiAskView(){const st=S.ai.ask;
   return `<section class="box" id="aiask"><div class="bh" style="gap:10px"><div class="row" style="gap:8px">${I('sparkle','s')}<h2>Frag die Plattform</h2></div><span class="xs t3">antwortet aus euren Projekt-, Vergabe- und Vertriebsdaten</span></div>
@@ -1188,11 +1188,11 @@ function queue(){
   const t=TENDERS.find(x=>x.id==='t1'),q=[];const isDone=k=>S.ap.done.some(d=>d.k===k);
   const need=t.bidders.filter(b=>(b.status==='angebot'||b.status==='unterlagen')&&missOf(b).length&&!b.asked);
   if(need.length) q.push({k:'rueck',ic:'envelope-simple',cls:'acc',t:`${need.length} Rückfragen an Bieter Trockenbau`,d:need.map(b=>b.name.split(' ').slice(0,2).join(' ')).join(', ')+' · fehlende oder abgelaufene Nachweise',after:'Versand per E-Mail, Erinnerung nach 3 Tagen automatisch',go:'vergabe',tab:'bieter'});
-  if(!S.awarded) q.push({k:'vergabe',ic:'gavel',cls:'acc',t:'Vergabevorschlag Trockenbau: TBS Trockenbau Sachsen',d:'412.300 € · Wertung 82,9 von 100 · alle Nachweise gültig',after:'Auftragsschreiben, 10 Absagen und Übernahme ins Baucontrolling laufen automatisch',go:'vergabe',tab:'vergabe'});
+  if(!S.awarded) q.push({k:'vergabe',ic:'gavel',cls:'acc',t:'Vergabevorschlag Trockenbau: TBS Trockenbau Rhein-Main',d:'127.800 € · Wertung 82,9 von 100 · alle Nachweise gültig',after:'Auftragsschreiben, 10 Absagen und Übernahme ins Baucontrolling laufen automatisch',go:'vergabe',tab:'vergabe'});
   if(S.awarded&&!isDone('absagen')) q.push({k:'absagen',ic:'paper-plane-tilt',cls:'acc',t:'Auftragsschreiben an TBS und 10 Absagen',d:'aus der Vergabe vom 19.10. vorbereitet',after:'Versand, Ablage in der Vergabeakte'});
   if(S.saved&&S.letter!=='sent') q.push({k:'brief',ic:'warning-circle',cls:'crit',t:'Aufforderung an Putzwerk Hoffmann (§ 5 Abs. 3 VOB/B)',d:`${S.ist} statt 10 Arbeitskräfte · Frist 21.10. · Belege verknüpft`,after:'Versand per E-Mail und Einschreiben, Wiedervorlage 21.10.',go:'projekt',ptab:'schrift'});
   if(!isDone('remind')&&!S.ap.rules.remind) q.push({k:'remind',ic:'clock',cls:'warn',t:'Erinnerung an 3 Bieter ohne Angebot',d:'Schreiber & Partner, Krüger Bau-Service, Ruhland Ausbau · Frist Freitag',after:'Versand per E-Mail'});
-  if(!isDone('lead')) q.push({k:'lead',ic:'users-three',cls:'acc',t:'Antworten an 3 Interessenten vom Tag der offenen Tür',d:'Mühlbach WE 1, 3, 5 · mit Link zur Objektseite und Terminbuchung',after:'Versand, Follow-up nach 2 Tagen automatisch',go:'crm'});
+  if(!isDone('lead')) q.push({k:'lead',ic:'users-three',cls:'acc',t:'Antworten an 3 Interessenten vom Tag der offenen Tür',d:'Villaglück WE 2 und WE 3 · mit Link zur Objektseite und Terminbuchung',after:'Versand, Follow-up nach 2 Tagen automatisch',go:'crm'});
   if(!isDone('nachtrag')) q.push({k:'nachtrag',ic:'currency-eur',cls:'warn',t:'Anforderung Urkalkulation zu Nachtrag N-06',d:'Fenster Pietsch · 18.400 € ohne prüfbare Kalkulation',after:'Versand, Nachtrag bleibt bis zur Prüfung offen',go:'projekt',ptab:'schrift',letter:'budget'});
   S.ap.extra.filter(x=>!isDone(x.k)).forEach(x=>q.push(x));
   return S.role==='gf'?q:q.filter(x=>qRoles(x.k).includes(S.role));
@@ -1223,7 +1223,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-approve],[
   if(t.dataset.approve){approve(t.dataset.approve);return;}
   if(t.dataset.qgo){const x=queue().find(y=>y.k===t.dataset.qgo);if(!x)return;if(x.tab){S.tid='t1';S.ttab=x.tab;if(x.tab==='vergabe')S.ana='done';}if(x.ptab)S.ptab=x.ptab;if(x.letter){S.ai.letter.anlass=x.letter;S.letter='draft';}if(x.k==='brief'&&S.letter==='none')S.letter='draft';go(x.go);return;}
   if(t.dataset.act==='approve-all'){queue().forEach(x=>approve(x.k));}});
-document.addEventListener('change',e=>{const t=e.target;if(t.dataset.wrule!==undefined){S.wf.rules[+t.dataset.wrule]=t.checked;render();toast(t.checked?'Regel aktiv':'Regel ausgeschaltet');return;}if(t.dataset.vac){S.vac=t.checked;render();toast(S.vac?'Vertretung aktiv: K. Wagner übernimmt Lindenhof':'Vertretung beendet');return;}if(t.dataset.rule){S.ap.rules[t.dataset.rule]=t.checked;render();}});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.wrule!==undefined){S.wf.rules[+t.dataset.wrule]=t.checked;render();toast(t.checked?'Regel aktiv':'Regel ausgeschaltet');return;}if(t.dataset.vac){S.vac=t.checked;render();toast(S.vac?'Vertretung aktiv: K. Wagner übernimmt Haus Beethoven':'Vertretung beendet');return;}if(t.dataset.rule){S.ap.rules[t.dataset.rule]=t.checked;render();}});
 
 
 /* ===== Rollen: dieselbe Plattform, je Rolle die passende Sicht ===== */
@@ -1237,8 +1237,8 @@ const ROLES={gf:{r:'Geschäftsführung',routes:null},
 const TEAM=[
  ['dennis','Dennis','DE','gf','Geschäftsführung','alles, inkl. Wirkung und Team','Vergaben über 25.000 €, Schreiben mit Fristsetzung, Nachträge über 20.000 €, Kaufverträge','M. Lorenz','Laptop, Handy'],
  ['lorenz','M. Lorenz','ML','einkauf','Einkauf & Vergabe','Ausschreibungen, Nachunternehmer, Agenten','Vergaben bis 25.000 €, Rückfragen, Absagen, Ansprache neuer Firmen','Dennis','Laptop'],
- ['schuster','M. Schuster','MS','bau','Bauleitung Lindenhof','Baustelle Lindenhof BA 2','Tagesberichte, Mängelanzeigen, Nachträge bis 5.000 €','K. Wagner','Handy, Tablet'],
- ['wagner','K. Wagner','KW','bau','Bauleitung Mühlbach, Gartenstraße','Baustellen Mühlbach und Gartenstraße','Tagesberichte, Mängelanzeigen, Nachträge bis 5.000 €','M. Schuster','Handy, Tablet'],
+ ['schuster','M. Schuster','MS','bau','Bauleitung Haus Beethoven','Baustelle Haus Beethoven','Tagesberichte, Mängelanzeigen, Nachträge bis 5.000 €','K. Wagner','Handy, Tablet'],
+ ['wagner','K. Wagner','KW','bau','Bauleitung Villaglück, Worfelden II','Baustellen Villaglück und Worfelden II','Tagesberichte, Mängelanzeigen, Nachträge bis 5.000 €','M. Schuster','Handy, Tablet'],
  ['neumann','J. Neumann','JN','kfm','Kaufmännisch & Controlling','Budgets, Nachträge, Vergaben, Rechnungen','Nachträge bis 20.000 €, Rechnungsprüfung','Dennis','Laptop'],
  ['krause','S. Krause','SK','vertrieb','Vertrieb Kauf','Interessenten, Objekte, Kanäle','Antworten, Termine, Reservierungen','T. Becker','Laptop, Handy'],
  ['becker','T. Becker','TB','vertrieb','Vermietung','Interessenten Miete, Objekte, Kanäle','Antworten, Termine, Mietangebote','S. Krause','Laptop, Handy'],
@@ -1255,23 +1255,23 @@ function roleSync(){const a=$('#meAv');if(a)a.textContent=cur()[2];const s=$('#r
 /* ===== Nachunternehmer: Ranking, Stamm, Akquise ===== */
 // [Name, Ort, km, Termintreue %, Besetzungstreue %, Mängel je Auftrag, passende Referenzen, gültige Nachweise /6, Kapazität AK, Preisniveau % zum Median, Aufträge bei H&P, Hinweis]
 const NUS=[
- ['TBS Trockenbau Sachsen GmbH','Leipzig',6,96,98,0.8,5,6,9,1,4,''],
- ['Ausbau Kretschmer GmbH','Leipzig',9,93,95,1.1,6,6,8,5,3,''],
- ['Innenausbau Wolff & Söhne','Leipzig',4,97,99,0.6,7,6,12,16,2,'Preis deutlich über Median'],
- ['Mitteldeutsche Ausbau GmbH','Chemnitz',78,88,90,1.9,4,5,10,-3,2,'Haftpflicht abgelaufen'],
- ['Prokop Innenausbau','Markkleeberg',11,90,85,1.4,4,5,6,-1,1,'HR-Auszug fehlt'],
- ['Hansa Akustik- und Trockenbau','Dresden',112,91,92,1.2,3,6,7,10,1,''],
- ['Elbe Trockenbau KG','Riesa',64,84,80,2.4,1,5,6,-5,1,'nur 1 passende Referenz'],
- ['Bauteam Nowak','Halle (Saale)',38,72,61,3.1,2,4,4,-10,2,'Besetzung in 2 Aufträgen deutlich unter Zusage']];
-const NUMISS={'Bauteam Nowak':[1,2],'Mitteldeutsche Ausbau GmbH':[3],'Prokop Innenausbau':[4],'Elbe Trockenbau KG':[5]};
+ ['TBS Trockenbau Rhein-Main GmbH','Wiesbaden',6,96,98,0.8,5,6,9,1,4,''],
+ ['Ausbau Kretschmer GmbH','Mainz',9,93,95,1.1,6,6,8,5,3,''],
+ ['Innenausbau Wolff & Söhne','Wiesbaden',4,97,99,0.6,7,6,12,16,2,'Preis deutlich über Median'],
+ ['Rhein-Neckar Ausbau GmbH','Mannheim',88,88,90,1.9,4,5,10,-3,2,'Haftpflicht abgelaufen'],
+ ['Prokop Innenausbau','Hochheim am Main',12,90,85,1.4,4,5,6,-1,1,'HR-Auszug fehlt'],
+ ['Hansa Akustik- und Trockenbau','Koblenz',101,91,92,1.2,3,6,7,10,1,''],
+ ['Main Trockenbau KG','Aschaffenburg',76,84,80,2.4,1,5,6,-5,1,'nur 1 passende Referenz'],
+ ['Bauteam Nowak','Offenbach am Main',42,72,61,3.1,2,4,4,-10,2,'Besetzung in 2 Aufträgen deutlich unter Zusage']];
+const NUMISS={'Bauteam Nowak':[1,2],'Rhein-Neckar Ausbau GmbH':[3],'Prokop Innenausbau':[4],'Main Trockenbau KG':[5]};
 const NUX=[
- ['Brück Trockenbau GmbH','Taucha',14,null,null,null,5,0,8,null,0,'Website, Referenzliste mit 3 MFH in Leipzig','Kontaktformular der Firma'],
- ['Trockenbau Meißner GmbH','Wurzen',27,null,null,null,4,0,10,null,0,'Website und Referenz Wohnpark Plagwitz','Telefon, Aufgabe für Einkauf'],
- ['Akustikbau Lindner','Leipzig',8,null,null,null,3,0,5,null,0,'Branchenverzeichnis','Telefon, Aufgabe für Einkauf'],
- ['Innenausbau Saale-Elster','Zeitz',48,null,null,null,2,0,6,null,0,'Handwerkskammer-Verzeichnis','E-Mail, Firma hat 2025 selbst angefragt']];
+ ['Brück Trockenbau GmbH','Bischofsheim',14,null,null,null,5,0,8,null,0,'Website, Referenzliste mit 3 MFH in Wiesbaden','Kontaktformular der Firma'],
+ ['Trockenbau Meißner GmbH','Groß-Gerau',26,null,null,null,4,0,10,null,0,'Website und Referenz Wohnpark Kastel','Telefon, Aufgabe für Einkauf'],
+ ['Akustikbau Lindner','Wiesbaden',8,null,null,null,3,0,5,null,0,'Branchenverzeichnis','Telefon, Aufgabe für Einkauf'],
+ ['Innenausbau Wetterau','Friedberg (Hessen)',58,null,null,null,2,0,6,null,0,'Handwerkskammer-Verzeichnis','E-Mail, Firma hat 2025 selbst angefragt']];
 S.nu={tab:'ranking',found:false,searching:-1,sel:new Set(),firm:null,akq:[
  {n:'Stuckateur Weise',g:'Innenputz',st:0,d:'angeschrieben 16.10.'},{n:'Fliesen Hoffmeister',g:'Fliesen',st:1,d:'Bogen offen seit 5 Tagen'},{n:'Elektro Hahn',g:'Elektro',st:1,d:'Bogen offen seit 2 Tagen'},
- {n:'Keramikbau Sauer GmbH',g:'Fliesen',st:2,d:'eingegangen 18.10.'},{n:'Fliesenprofi Brandis',g:'Fliesen',st:3,d:'2 Referenzen, BG BAU fehlt'},{n:'Trockenbau Engel KG',g:'Trockenbau',st:4,d:'qualifiziert 09.10.'}]};
+ {n:'Keramikbau Sauer GmbH',g:'Fliesen',st:2,d:'eingegangen 18.10.'},{n:'Fliesenprofi Taunus',g:'Fliesen',st:3,d:'2 Referenzen, BG BAU fehlt'},{n:'Trockenbau Engel KG',g:'Trockenbau',st:4,d:'qualifiziert 09.10.'}]};
 const AKQ=['Angeschrieben','Fragebogen offen','Eingegangen','In Prüfung','Qualifiziert'];
 function nuScore(x){const ext=x[3]==null;const q=ext?60:x[3]*.4+x[4]*.4+Math.max(0,100-x[5]*20)*.2;const rf=Math.min(x[6]/5,1)*100;const nw=ext?50:x[7]/6*100;const cp=Math.min(x[8]/8,1)*100;const pr=x[9]==null?70:Math.max(0,100-Math.max(0,x[9])*3-Math.max(0,-x[9])*1);const rg=Math.max(0,100-x[2]);
   return {q,rf,nw,cp,pr,rg,total:q*.3+rf*.2+nw*.15+cp*.15+pr*.15+rg*.05};}
@@ -1287,7 +1287,7 @@ function nuRanking(){
   const sel=S.nu.sel;const selExt=[...sel].filter(n=>NUX.some(x=>x[0]===n));
   const firm=S.nu.firm&&rows.find(r=>r.x[0]===S.nu.firm);
   return `<div class="stack" style="gap:16px">
-   <section class="box" id="nurank"><div class="bh"><div class="row" style="gap:10px"><label class="fld" for="nuG" style="flex-direction:row;align-items:center;gap:8px"><span>Gewerk</span><select id="nuG" style="width:auto"><option>Trockenbau</option><option disabled>Fliesen (in der Demo nicht befüllt)</option></select></label><span class="tag">${I('map-pin','s')}Lindenhof, bis 120 km</span></div>
+   <section class="box" id="nurank"><div class="bh"><div class="row" style="gap:10px"><label class="fld" for="nuG" style="flex-direction:row;align-items:center;gap:8px"><span>Gewerk</span><select id="nuG" style="width:auto"><option>Trockenbau</option><option disabled>Fliesen (in der Demo nicht befüllt)</option></select></label><span class="tag">${I('map-pin','s')}Haus Beethoven, bis 120 km</span></div>
     ${S.nu.found?`<span class="tag acc">${I('sparkle','s')}${NUX.length} neue Firmen gefunden</span>`:`<button class="btn sm acc" data-act="nu-search" ${S.nu.searching>=0?'disabled':''}>${I('magnifying-glass','s')}Recherche-Agent starten</button>`}</div>
     ${S.nu.searching>=0?`<div class="processing" style="margin:14px auto">${['Bestand nach Gewerk und Region filtern','Firmenwebsites und Verzeichnisse durchsuchen','Referenzen nach Objektart und Größe prüfen','Kontaktweg rechtlich einordnen'].map((t,i)=>`<div class="${i<S.nu.searching?'ok':i===S.nu.searching?'on':''}"><span class="sp">${i<S.nu.searching?I('check','s'):''}</span><span>${t}</span><span></span></div>`).join('')}</div>`:''}
     <div class="tw"><table><thead><tr><th style="width:34px"></th><th class="r">#</th><th style="min-width:230px">Firma</th><th style="min-width:200px">Qualität aus Baustellen</th><th class="r">Ref.</th><th class="r">Nachw.</th><th class="r">AK</th><th class="r">Preis</th><th class="r">km</th><th>Rang-Wert</th></tr></thead><tbody>
@@ -1306,15 +1306,15 @@ function nuRanking(){
 }
 function nuFirm(r){const x=r.x;
   if(r.ext) return `<section class="box"><div class="bh"><div><div class="nm">${x[0]}</div><div class="xs t3">${x[1]} · ${x[2]} km · noch nicht im Stamm</div></div><span class="tag acc">neu</span></div><div class="bb stack" style="gap:10px">
-   <dl class="who"><dt>Fundstelle</dt><dd>${x[11]}</dd><dt>Referenzen</dt><dd>${x[6]} passende Objekte (MFH, 20 bis 40 WE)</dd><dt>Kapazität</dt><dd>ca. ${x[8]} Monteure laut Website</dd><dt>Kontaktweg</dt><dd>${x[12]}</dd></dl>
+   <dl class="who"><dt>Fundstelle</dt><dd>${x[11]}</dd><dt>Referenzen</dt><dd>${x[6]} passende Objekte (MFH, 4 bis 20 WE)</dd><dt>Kapazität</dt><dd>ca. ${x[8]} Monteure laut Website</dd><dt>Kontaktweg</dt><dd>${x[12]}</dd></dl>
    <div class="callout acc">${I('sparkle','s')}<span>Nach Freigabe bekommt die Firma Anschreiben, Anforderungen und den Qualifizierungsbogen mit Nachweisliste zum Ausfüllen.</span></div></div></section>`;
-  const auf=[['Lindenhof BA 1','Trockenbau',x[4],x[5]],['Gartenstraße 9','Innenausbau',Math.min(100,x[4]+3),Math.max(0,x[5]-0.4)]].slice(0,Math.max(1,Math.min(2,x[10])));
+  const auf=[['Worfelden I','Trockenbau',x[4],x[5]],['Sanierung Nauheim','Innenausbau',Math.min(100,x[4]+3),Math.max(0,x[5]-0.4)]].slice(0,Math.max(1,Math.min(2,x[10])));
   return `<section class="box"><div class="bh"><div><div class="nm">${x[0]}</div><div class="xs t3">${x[1]} · ${x[2]} km · ${x[10]} Aufträge bei Heim &amp; Partner</div></div><button class="btn sm ghost" data-firm="" aria-label="Schließen">${I('x','s')}</button></div><div class="bb stack" style="gap:12px">
    <div><div class="lbl" style="margin-bottom:6px">Aus euren Baustellen</div><div class="tw"><table><thead><tr><th>Projekt</th><th class="r">Besetzung</th><th class="r">Mängel</th></tr></thead><tbody>${auf.map(a=>`<tr><td>${a[0]}<span class="sub">${a[1]}</span></td><td class="r num" style="${a[2]<80?'color:var(--crit)':''}">${a[2]} %</td><td class="r num">${de(a[3])}</td></tr>`).join('')}</tbody></table></div></div>
    <div><div class="lbl" style="margin-bottom:6px">Nachweise</div>${DOCS.map((d,j)=>{const bad=(NUMISS[x[0]]||[]).includes(j);return `<div class="row sb sm" style="padding:3px 0"><span>${d}</span><span class="st"><span class="dot ${bad?'crit':'ok'}"></span>${bad?'fehlt oder abgelaufen':'gültig'}</span></div>`;}).join('')}</div>
    ${x[11]?`<div class="callout warn">${I('warning','s')}<span>${x[11]}</span></div>`:''}</div></section>`;}
 function nuStamm(){
-  const all=NUS.map(x=>[x[0],x[1],'Trockenbau',x[7]===6?'ok':x[7]===5?'warn':'crit',x[7]===6?'alle gültig':x[7]===5?'1 läuft ab oder fehlt':'2 fehlen',x[10],Math.round(nuScore(x).q/20)]).concat([['Putzwerk Hoffmann GmbH','Leipzig','Innenputz','warn','BG BAU läuft am 30.10. ab',3,3],['Elektro Fuchs GmbH','Leipzig','Elektro','ok','alle gültig',5,5],['Fliesen Pohl GmbH','Leipzig','Fliesen','ok','alle gültig',2,5]]);
+  const all=NUS.map(x=>[x[0],x[1],'Trockenbau',x[7]===6?'ok':x[7]===5?'warn':'crit',x[7]===6?'alle gültig':x[7]===5?'1 läuft ab oder fehlt':'2 fehlen',x[10],Math.round(nuScore(x).q/20)]).concat([['Putzwerk Hoffmann GmbH','Wiesbaden','Innenputz','warn','BG BAU läuft am 30.10. ab',3,3],['Elektro Fuchs GmbH','Mainz','Elektro','ok','alle gültig',5,5],['Fliesen Pohl GmbH','Rüsselsheim','Fliesen','ok','alle gültig',2,5]]);
   return `<section class="box"><div class="tw"><table><thead><tr><th>Firma</th><th>Gewerk</th><th>Qualität</th><th>Nachweise</th><th class="r">Aufträge</th></tr></thead><tbody>
    ${all.map(a=>`<tr><td><span class="nm">${a[0]}</span><span class="sub">${a[1]}</span></td><td class="t2">${a[2]}</td><td><div class="meter ${a[6]>=4?'ok':a[6]===3?'warn':'crit'}" style="width:80px">${[1,2,3,4,5].map(k=>`<i class="${k<=a[6]?'f':''}"></i>`).join('')}</div></td><td><span class="st"><span class="dot ${a[3]}"></span>${a[4]}</span></td><td class="r num">${a[5]}</td></tr>`).join('')}
    </tbody></table></div><div class="bh" style="border-top:1px solid var(--line);border-bottom:0"><span class="xs t3">11 von 186 Firmen gezeigt · Erinnerungen an ablaufende Nachweise gehen automatisch raus</span></div></section>`;}
@@ -1325,36 +1325,36 @@ function nuAkquise(){const A=S.nu.akq;
 function vQuali(){const n=S.nu.qfirm||'Fliesen Hoffmeister';
   const steps=[['Firmendaten','erledigt'],['Gewerke und Region','erledigt'],['Mitarbeiter und Kapazität','erledigt'],['Referenzen','2 von 3'],['Nachweise','4 von 6'],['Bestätigung','offen']];
   return `<div class="ph"><div><h1>Qualifizierungsbogen</h1><div class="meta"><span>${I('eye','s')}So sieht es die neue Firma über ihren persönlichen Link</span></div></div><button class="btn" data-go="nu">${I('arrow-left','s')}Zurück zu Nachunternehmer</button></div>
-  <div class="frame"><div class="bar"><span><i></i><i></i><i></i></span><div class="url">${I('shield-check','s')}partner.heim-partner.de/q/4Hn8-Lk2p</div></div>
+  <div class="frame"><div class="bar"><span><i></i><i></i><i></i></span><div class="url">${I('shield-check','s')}partner.heimundpartner.com/q/4Hn8-Lk2p</div></div>
    <div style="padding:24px clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:18px">
     <div class="row sb"><div class="row"><div class="logo">H&amp;P</div><div><div class="nm">Heim &amp; Partner</div><div class="xs t3">Nachunternehmer werden</div></div></div><span class="tag">${I('clock','s')}ca. 10 Minuten</span></div>
-    <div><div class="lbl">${esc(n)}</div><h2 style="font-size:1.3rem;margin-top:4px">Willkommen im Partnernetz von Heim &amp; Partner</h2><p class="t2" style="margin-top:6px;max-width:70ch">Wir bauen Wohnungen in Leipzig und Umgebung und suchen verlässliche Partner. Für eine Zusammenarbeit brauchen wir ein paar Angaben und die üblichen Nachweise. Danach bekommt ihr unsere Ausschreibungen direkt.</p></div>
+    <div><div class="lbl">${esc(n)}</div><h2 style="font-size:1.3rem;margin-top:4px">Willkommen im Partnernetz von Heim &amp; Partner</h2><p class="t2" style="margin-top:6px;max-width:70ch">Wir bauen Wohnungen in Wiesbaden und im Rhein-Main-Gebiet und suchen verlässliche Partner. Für eine Zusammenarbeit brauchen wir ein paar Angaben und die üblichen Nachweise. Danach bekommt ihr unsere Ausschreibungen direkt.</p></div>
     <div class="cols" style="grid-template-columns:240px minmax(0,1fr);align-items:start">
      <nav class="vsteps">${steps.map((s,i)=>`<button class="${i===3?'on':i<3?'done':''}"><span class="n">${i<3?I('check','s'):i+1}</span><span><b>${s[0]}</b><small>${s[1]}</small></span></button>`).join('')}</nav>
-     <div class="box bb stack"><h3>Referenzen vergleichbarer Objekte</h3><p class="sm t2">Bitte 3 Objekte der letzten 5 Jahre, möglichst Wohnungsbau ab 10 Einheiten.</p>
-      ${[['Wohnanlage Am Kanal, Leipzig','2024 · 28 WE · Fliesen komplett','Referenzschreiben hochgeladen'],['Seniorenwohnen Grimma','2023 · 42 WE · Bäder','Ansprechpartner angegeben'],['','','']].map((r,i)=>`<div class="grid2" style="gap:8px;padding:10px 0;border-top:1px solid var(--line)"><label class="fld"><span>Objekt ${i+1}</span><input value="${r[0]}" placeholder="Objekt, Ort"></label><label class="fld"><span>Jahr, Umfang</span><input value="${r[1]}" placeholder="Jahr, Einheiten, Leistung"></label>${r[2]?`<span class="xs" style="color:var(--ok)">${I('check-circle','s')} ${r[2]}</span>`:'<span class="xs t3">noch offen</span>'}</div>`).join('')}
+     <div class="box bb stack"><h3>Referenzen vergleichbarer Objekte</h3><p class="sm t2">Bitte 3 Objekte der letzten 5 Jahre, möglichst Wohnungsbau ab 4 Einheiten.</p>
+      ${[['Wohnanlage Am Rheinufer, Mainz','2024 · 12 WE · Fliesen komplett','Referenzschreiben hochgeladen'],['Seniorenwohnen Rüsselsheim','2023 · 24 WE · Bäder','Ansprechpartner angegeben'],['','','']].map((r,i)=>`<div class="grid2" style="gap:8px;padding:10px 0;border-top:1px solid var(--line)"><label class="fld"><span>Objekt ${i+1}</span><input value="${r[0]}" placeholder="Objekt, Ort"></label><label class="fld"><span>Jahr, Umfang</span><input value="${r[1]}" placeholder="Jahr, Einheiten, Leistung"></label>${r[2]?`<span class="xs" style="color:var(--ok)">${I('check-circle','s')} ${r[2]}</span>`:'<span class="xs t3">noch offen</span>'}</div>`).join('')}
       <div class="row sb" style="border-top:1px solid var(--line);padding-top:12px"><span class="xs t3">Zwischenspeichern ist jederzeit möglich</span><button class="btn pri" disabled>Weiter zu Nachweise</button></div></div>
     </div></div></div>`;}
 
 /* ===== Interessenten-Funnel und Interessentenakte ===== */
 S.fn={step:0,src:'qr',a:{einheit:'WE 3',art:'Kauf',wann:null,haus:null,fin:null,mit:new Set(),name:'',kontakt:'',ok:false,slot:null}};
 const FSRC={qr:['Flyer-QR','Tag der offenen Tür'],immo:['ImmoScout24','Link aus der automatischen Antwort'],insta:['Instagram','Link aus der Bio']};
-const OWN={Mühlbach:['Sabine Krause','Vertrieb Kauf','0341 555 210 4'],Lindenhof:['Tom Becker','Vermietung','0341 555 210 7']};
+const OWN={Kauf:['Sabine Krause','Vertrieb Kauf','06152 98 21 04'],Worfelden:['Tom Becker','Vermietung Seniorenwohnen','06152 98 21 07']};
 function fnChips(key,opts,multi){const a=S.fn.a;return `<div class="fchips">${opts.map(o=>{const on=multi?a[key].has(o):a[key]===o;return `<button class="${on?'on':''}" data-fn="${key}" data-v="${esc(o)}" ${multi?'data-multi="1"':''}>${o}</button>`;}).join('')}</div>`;}
 function funnelPhone(){const f=S.fn,a=f.a;const st=f.step;
-  if(st===0) return `<div style="height:150px;background:linear-gradient(170deg,oklch(0.62 0.03 210),oklch(0.8 0.02 200) 55%,oklch(0.88 0.03 80));position:relative;flex:none"><span style="position:absolute;left:14px;bottom:10px;color:oklch(0.99 0 0);font-weight:600;text-shadow:0 1px 6px oklch(0 0 0 / .4)">Stadtvillen am Mühlbach</span></div>
-   <div class="body" style="gap:10px"><div class="nm">6 Eigentumswohnungen mit Garten oder Dachterrasse</div><div class="xs t3">3 bis 5 Zimmer · ab 412.000 € · KfW 40 · Fertigstellung 09/2027</div>
-    <div class="row" style="gap:6px"><span class="tag">WE 2 · 598.000 €</span><span class="tag">WE 3 · 589.000 €</span><span class="tag">WE 5 · 712.000 €</span></div>
+  if(st===0) return `<div style="height:150px;background:linear-gradient(170deg,oklch(0.62 0.03 210),oklch(0.8 0.02 200) 55%,oklch(0.88 0.03 80));position:relative;flex:none"><span style="position:absolute;left:14px;bottom:10px;color:oklch(0.99 0 0);font-weight:600;text-shadow:0 1px 6px oklch(0 0 0 / .4)">Villaglück · Wiesbaden</span></div>
+   <div class="body" style="gap:10px"><div class="nm">4 Eigentumswohnungen mit Garten, Balkon oder Dachterrasse</div><div class="xs t3">4 bis 5 Zimmer · ab 849.000 € · KfW 40 · Fertigstellung 09/2027</div>
+    <div class="row" style="gap:6px"><span class="tag">WE 2 · 849.000 €</span><span class="tag">WE 3 · 879.000 €</span></div>
     <button class="btn pri" data-act="fn-next" style="height:42px;justify-content:center;margin-top:6px">Besichtigung anfragen</button><span class="xs t3" style="text-align:center">5 kurze Fragen, ca. 30 Sekunden</span></div>`;
-  if(st===6) return `<div class="empty" style="flex:1;justify-content:center"><span style="color:var(--ok)">${I('check-circle','l')}</span><h2>Danke${a.name?', '+esc(a.name.split(' ')[0]):''}</h2><p class="sm">${a.slot?`Ihr Termin ${a.slot} ist reserviert.`:'Wir melden uns heute.'} Ihre Ansprechpartnerin ist <b>Sabine Krause</b>, Vertrieb, 0341 555 210 4.</p></div>`;
-  const Q={1:['Welche Wohnung interessiert Sie?',fnChips('einheit',['WE 2','WE 3','WE 5','noch offen'])+`<div style="margin-top:10px"></div>`+fnChips('art',['Kauf','Kapitalanlage'])],
+  if(st===6) return `<div class="empty" style="flex:1;justify-content:center"><span style="color:var(--ok)">${I('check-circle','l')}</span><h2>Danke${a.name?', '+esc(a.name.split(' ')[0]):''}</h2><p class="sm">${a.slot?`Ihr Termin ${a.slot} ist reserviert.`:'Wir melden uns heute.'} Ihre Ansprechpartnerin ist <b>Sabine Krause</b>, Vertrieb, 06152 98 21 04.</p></div>`;
+  const Q={1:['Welche Wohnung interessiert Sie?',fnChips('einheit',['WE 2','WE 3','noch offen'])+`<div style="margin-top:10px"></div>`+fnChips('art',['Kauf','Kapitalanlage'])],
    2:['Wann und für wen?',`<div class="xs t3" style="margin-bottom:4px">Einzug</div>`+fnChips('wann',['2027','2028','flexibel'])+`<div class="xs t3" style="margin:10px 0 4px">Haushalt</div>`+fnChips('haus',['1 bis 2 Personen','Familie mit Kindern','3 oder mehr Erwachsene'])],
    3:['Wie steht es um die Finanzierung?',fnChips('fin',['Bestätigung liegt vor','in Klärung mit der Bank','noch offen','ohne Finanzierung'])+`<div class="xs t3" style="margin-top:8px">Nur eine grobe Einordnung, keine Zahlen nötig.</div>`],
    4:['Wer entscheidet mit?',fnChips('mit',['nur ich','Partner/in','Eltern','Finanzberater/Bank'],true)],
    5:['Wie erreichen wir Sie?',`<label class="fld" for="fnN"><span>Name</span><input id="fnN" data-fnin="name" value="${esc(a.name)}" placeholder="Vor- und Nachname"></label><label class="fld" for="fnK"><span>Telefon oder E-Mail</span><input id="fnK" data-fnin="kontakt" value="${esc(a.kontakt)}" placeholder="0170 … oder name@…"></label>
      <div class="xs t3" style="margin-top:4px">Besichtigung</div>`+fnChips('slot',['Sa 24.10. 11:00','Sa 24.10. 13:00','Di 27.10. 17:30'])+`<label class="row xs" style="gap:8px;flex-wrap:nowrap;margin-top:8px;cursor:pointer" for="fnOk"><input type="checkbox" id="fnOk" data-fnok ${a.ok?'checked':''} style="accent-color:var(--accent)"><span>Ich bin einverstanden, dass Heim &amp; Partner mich zu dieser Anfrage kontaktiert.</span></label>`]};
   const can={1:!!a.einheit,2:a.wann&&a.haus,3:!!a.fin,4:a.mit.size>0,5:a.name.trim()&&a.kontakt.trim()&&a.ok}[st];
-  return `<div class="app-h"><div class="row sb"><span class="xs t3">Frage ${st} von 5</span><span class="xs t3">Mühlbach</span></div><div class="fprog"><i style="width:${st/5*100}%"></i></div></div>
+  return `<div class="app-h"><div class="row sb"><span class="xs t3">Frage ${st} von 5</span><span class="xs t3">Villaglück</span></div><div class="fprog"><i style="width:${st/5*100}%"></i></div></div>
    <div class="body"><h3 style="font-size:1.05rem">${Q[st][0]}</h3>${Q[st][1]}
     <div class="row sb" style="margin-top:auto;padding-top:10px"><button class="btn ghost sm" data-act="fn-back">Zurück</button><button class="btn pri" data-act="fn-next" ${can?'':'disabled'}>${st===5?'Absenden':'Weiter'}</button></div></div>`;}
 function funnelBox(){const f=S.fn;
@@ -1365,10 +1365,10 @@ function funnelBox(){const f=S.fn;
    ${f.step===6?`<div class="callout acc">${I('sparkle','s')}<div><b>Automatisch erledigt</b><div class="xs" style="margin-top:4px;line-height:1.6">Interessent angelegt, Einheit und Kanal erfasst · Priorität vorgeschlagen · Sabine Krause zuständig · Entscheidungsträger erfasst · Bestätigung versendet</div><div class="row" style="margin-top:8px"><button class="btn sm pri" data-lead="${S.newLead}">Interessentenakte öffnen</button><button class="btn sm ghost" data-act="fn-reset">Noch einmal</button></div></div></div>`:''}
   </div></section>`;}
 function submitFunnel(){const a=S.fn.a;const id=Date.now();const pr=a.fin==='Bestätigung liegt vor'||a.fin==='ohne Finanzierung'?'A':a.fin==='in Klärung mit der Bank'?'B':'C';
-  LEADS.unshift({id,n:a.name.trim()||'Neuer Interessent',u:'Mühlbach · '+(a.einheit==='noch offen'?'offen':a.einheit),a:'Kauf',src:FSRC[S.fn.src][0],st:a.slot?2:1,next:a.slot?'Besichtigung '+a.slot:'Erstkontakt heute',score:pr,
+  LEADS.unshift({id,n:a.name.trim()||'Neuer Interessent',u:'Villaglück · '+(a.einheit==='noch offen'?'offen':a.einheit),a:'Kauf',src:FSRC[S.fn.src][0],st:a.slot?2:1,next:a.slot?'Besichtigung '+a.slot:'Erstkontakt heute',score:pr,
    d:{kontakt:a.kontakt,wann:a.wann,haus:a.haus,fin:a.fin,mit:[...a.mit],slot:a.slot,funnel:true}});
   S.newLead=id;S.fn.step=6;render();toast('Interessent im System, Sabine Krause informiert');}
-function leadInfo(l){const obj=/Mühlbach/.test(l.u)?'Mühlbach':'Lindenhof';const own=OWN[obj];const d=l.d||{};
+function leadInfo(l){const obj=/Worfelden/.test(l.u)?'Worfelden':'Kauf';const own=OWN[obj];const d=l.d||{};
   const mit=d.mit||({1:['Partner/in'],3:['nur ich','Finanzberater/Bank'],5:['Partner/in','Eltern'],7:['Partner/in'],9:['Partner/in','Finanzberater/Bank']}[l.id]||['nur ich']);
   const dm=mit.filter(m=>m!=='nur ich').map(m=>({'Partner/in':['Partner/in','entscheidet gleichberechtigt mit'],'Eltern':['Eltern','beteiligen sich am Eigenkapital'],'Finanzberater/Bank':['Bank / Finanzberater','prüft Finanzierung, braucht Exposé und Baubeschreibung']}[m]||[m,'']));
   return {obj,own,d,mit,dm};}
@@ -1399,8 +1399,8 @@ const AGENTS=[
  ['schrift','Schriftverkehr-Agent','entwirft Schreiben zu Qualität, Zeit, Budget mit Belegen','Baustelle',2,2],
  ['antwort','Antwort-Agent Vertrieb','antwortet in Minuten mit Link in den eigenen Funnel','Vertrieb',14,1],
  ['nachfass','Nachfass-Agent','meldet sich bei Interessenten zum richtigen Zeitpunkt','Vertrieb',9,0]];
-S.ag={on:Object.fromEntries(AGENTS.map(a=>[a[0],true])),log:[['09:41','angebot','Angebot Prokop Innenausbau gelesen, 214 Positionen zugeordnet'],['09:38','inbox','E-Mail von Elektro Fuchs dem Projekt Lindenhof zugeordnet'],['09:30','nachweis','BG BAU von Putzwerk Hoffmann läuft am 30.10. ab, Erinnerung versendet'],['09:12','antwort','Anfrage Tobias Meinhardt beantwortet, Link zur Objektseite']]};
-const TICKS=[['inbox','Rechnung Haustechnik Böhm erkannt und an Buchhaltung weitergeleitet'],['bautagebuch','Tagesbericht Elektro Lindenhof mit Soll abgeglichen, keine Abweichung'],['antwort','Instagram-Anfrage zu Lindenhof 3.11 beantwortet, Funnel-Link gesendet'],['nachweis','Freistellung § 48b von TBS geprüft, gültig bis 12/2027'],['angebot','Nachtrag N-05 gegen Auftrags-LV geprüft, 2 Positionen bereits beauftragt'],['nachfass','Familie Hartmann: Erinnerung für morgen 10:00 geplant'],['recherche','2 weitere Fliesenleger in 30 km gefunden, als Vorschlag abgelegt'],['schrift','Entwurf Mängelrüge M-25 vorbereitet, wartet auf Freigabe'],['inbox','Upload Ruhland Ausbau: Angebot erkannt, an Angebots-Analyst übergeben']];
+S.ag={on:Object.fromEntries(AGENTS.map(a=>[a[0],true])),log:[['09:41','angebot','Angebot Prokop Innenausbau gelesen, 96 Positionen zugeordnet'],['09:38','inbox','E-Mail von Elektro Fuchs dem Projekt Haus Beethoven zugeordnet'],['09:30','nachweis','BG BAU von Putzwerk Hoffmann läuft am 30.10. ab, Erinnerung versendet'],['09:12','antwort','Anfrage Tobias Meinhardt beantwortet, Link zur Objektseite']]};
+const TICKS=[['inbox','Rechnung Haustechnik Böhm erkannt und an Buchhaltung weitergeleitet'],['bautagebuch','Tagesbericht Elektro Haus Beethoven mit Soll abgeglichen, keine Abweichung'],['antwort','Instagram-Anfrage zu Worfelden II beantwortet, Funnel-Link gesendet'],['nachweis','Freistellung § 48b von TBS geprüft, gültig bis 12/2027'],['angebot','Nachtrag N-05 gegen Auftrags-LV geprüft, 2 Positionen bereits beauftragt'],['nachfass','Familie Hartmann: Erinnerung für morgen 10:00 geplant'],['recherche','2 weitere Fliesenleger in 30 km gefunden, als Vorschlag abgelegt'],['schrift','Entwurf Mängelrüge M-25 vorbereitet, wartet auf Freigabe'],['inbox','Upload Ruhland Ausbau: Angebot erkannt, an Angebots-Analyst übergeben']];
 let tickT=null,tickI=0,tickM=9*60+42;
 function agTick(){if(S.route!=='auto'){clearInterval(tickT);tickT=null;return;}const on=TICKS.filter(t=>S.ag.on[t[0]]);if(!on.length)return;const t=on[tickI++%on.length];const tm=String(Math.floor(tickM/60)).padStart(2,'0')+':'+String(tickM%60).padStart(2,'0');tickM+=1+tickI%3;S.ag.log.unshift([tm,t[0],t[1]]);S.ag.log=S.ag.log.slice(0,14);
   const el=$('#aglog');if(el){el.insertAdjacentHTML('afterbegin',agLogRow(S.ag.log[0],true));while(el.children.length>14)el.lastElementChild.remove();}}
@@ -1475,23 +1475,23 @@ function vAuto(){const t=S.wf.tab;if(t!=='agents'&&tickT){clearInterval(tickT);t
 /* ===== Veranstaltungen ===== */
 S.ev={planned:false,flyer:false};
 function vEvents(){const e=S.ev;
-  const fun=[['Besucher',46],['QR gescannt',38],['Anfragen',17],['Besichtigungen',9],['Reservierungen',2]];const mx=46;
+  const fun=[['Besucher',46],['QR gescannt',38],['Anfragen',17],['Besichtigungen',9],['Reservierungen',1]];const mx=46;
   return `<div class="ph"><div><h1>Veranstaltungen</h1><div class="meta"><span>${I('calendar-blank','s')}Tag der offenen Tür als eigener Vertriebskanal</span></div></div>${e.planned?'':`<button class="btn pri" data-act="ev-plan">${I('plus','s')}Nächsten Termin planen</button>`}</div>
   <div class="cols c-1-1" style="align-items:start" id="events">
-   <section class="box"><div class="bh"><div><div class="lbl">Rückblick</div><h2 style="margin-top:2px">Tag der offenen Tür · Stadtvillen am Mühlbach</h2></div><span class="xs t3">Sa 10.10.2026</span></div><div class="bb stack" style="gap:10px">
+   <section class="box"><div class="bh"><div><div class="lbl">Rückblick</div><h2 style="margin-top:2px">Tag der offenen Tür · Villaglück</h2></div><span class="xs t3">Sa 10.10.2026</span></div><div class="bb stack" style="gap:10px">
     ${fun.map(f=>`<div class="hb" style="grid-template-columns:120px minmax(0,1fr) 40px"><span>${f[0]}</span><div class="tr"><i style="width:${f[1]/mx*100}%"></i><b style="width:${f[1]/mx*100}%"></b></div><span class="num r">${f[1]}</span></div>`).join('')}
-    <div class="callout acc">${I('sparkle','s')}<span>Aus 17 Anfragen wurden 2 Reservierungen, das sind 12 % und doppelt so viel wie über ImmoScout24. Alle Anfragen kamen per QR direkt in den Funnel, nachgefasst wurde automatisch.</span></div></div></section>
-   <section class="box"><div class="bh"><div><div class="lbl">Geplant</div><h2 style="margin-top:2px">${e.planned?'Tag der offenen Tür · Lindenhof Haus C':'Noch kein nächster Termin'}</h2></div>${e.planned?'<span class="xs t3">Sa 14.11.2026, 11 bis 16 Uhr</span>':''}</div><div class="bb stack" style="gap:12px">
-    ${e.planned?`<div class="stack" style="gap:0">${[['Einladung an 214 frühere Interessenten mit Einwilligung',true,'nach Freigabe'],['Flyer mit QR-Code für Haus C',e.flyer,''],['Instagram-Beitrag mit Kanal-Link',true,'Entwurf fertig'],['Anmeldeseite mit Zeitfenstern',true,'live'],['Nachfassen am Montag danach',true,'automatisch']].map(c=>`<div class="row sb sm" style="padding:8px 0;border-bottom:1px solid var(--line)"><span class="row" style="gap:8px;flex-wrap:nowrap"><span style="color:${c[1]?'var(--ok)':'var(--ink-3)'}">${I(c[1]?'check-circle':'clock','s')}</span>${c[0]}</span><span class="xs t3">${c[2]}</span></div>`).join('')}</div>
-     ${e.flyer?`<div class="flyer"><div class="stack" style="gap:4px"><span class="lbl">Tag der offenen Tür · Sa 14.11.</span><b style="font-size:1.05rem">Wohnquartier Lindenhof, Haus C</b><span class="xs t2">8 Mietwohnungen, 2 bis 4 Zimmer, Bezug ab Mai 2027. Grundrisse und Zeitfenster per QR-Code.</span></div><div class="qr" style="width:84px">${qrSvg()}</div></div>`:`<button class="btn acc" data-act="ev-flyer">${I('sparkle','s')}Flyer erstellen</button>`}`
+    <div class="callout acc">${I('sparkle','s')}<span>Aus 17 Anfragen wurden 9 Besichtigungen und 1 Reservierung (WE 1). Pro Anfrage schließt der Tag der offenen Tür dreimal so oft ab wie ImmoScout24. Alle Anfragen kamen per QR direkt in den Funnel, nachgefasst wurde automatisch.</span></div></div></section>
+   <section class="box"><div class="bh"><div><div class="lbl">Geplant</div><h2 style="margin-top:2px">${e.planned?'Tag der offenen Tür · Haus Beethoven':'Noch kein nächster Termin'}</h2></div>${e.planned?'<span class="xs t3">Sa 14.11.2026, 11 bis 16 Uhr</span>':''}</div><div class="bb stack" style="gap:12px">
+    ${e.planned?`<div class="stack" style="gap:0">${[['Einladung an 126 frühere Interessenten mit Einwilligung',true,'nach Freigabe'],['Flyer mit QR-Code für Haus Beethoven',e.flyer,''],['Instagram-Beitrag mit Kanal-Link',true,'Entwurf fertig'],['Anmeldeseite mit Zeitfenstern',true,'live'],['Nachfassen am Montag danach',true,'automatisch']].map(c=>`<div class="row sb sm" style="padding:8px 0;border-bottom:1px solid var(--line)"><span class="row" style="gap:8px;flex-wrap:nowrap"><span style="color:${c[1]?'var(--ok)':'var(--ink-3)'}">${I(c[1]?'check-circle':'clock','s')}</span>${c[0]}</span><span class="xs t3">${c[2]}</span></div>`).join('')}</div>
+     ${e.flyer?`<div class="flyer"><div class="stack" style="gap:4px"><span class="lbl">Tag der offenen Tür · Sa 14.11.</span><b style="font-size:1.05rem">Haus Beethoven, Wiesbaden-Südost</b><span class="xs t2">7 gehobene Eigentumswohnungen, 2 bis 4 Zimmer, Bezug ab Mai 2027. Grundrisse und Zeitfenster per QR-Code.</span></div><div class="qr" style="width:84px">${qrSvg()}</div></div>`:`<button class="btn acc" data-act="ev-flyer">${I('sparkle','s')}Flyer erstellen</button>`}`
     :`<div class="empty" style="padding:20px 10px"><p>Plant den nächsten Termin: Einladung, Flyer mit QR, Anmeldeseite und Nachfassen laufen dann automatisch.</p></div>`}
    </div></section></div>`;}
 
 /* ===== Wirkung ===== */
-function impactStrip(){const r=[['Einkauf','11,5 Std','gespart beim Einsammeln und Vergleichen'],['Bauleitung','4 Std','gespart bei Tagesbericht und Schreiben'],['Vertrieb','12 Min','Antwortzeit statt 1,5 Tagen'],['Baustelle','3','Abweichungen am selben Tag erkannt'],['Nachträge','48.200 €','in Prüfung statt ungeprüft bezahlt']];
+function impactStrip(){const r=[['Einkauf','11,5 Std','gespart beim Einsammeln und Vergleichen'],['Bauleitung','4 Std','gespart bei Tagesbericht und Schreiben'],['Vertrieb','12 Min','Antwortzeit statt 1,5 Tagen'],['Baustelle','3','Abweichungen am selben Tag erkannt'],['Nachträge','32.600 €','in Prüfung statt ungeprüft bezahlt']];
   return `<section class="box"><div class="bh"><h2>Wirkung diese Woche</h2><span class="xs t3">Beispielwerte, gemessen wird ab Go-live</span></div><div class="impact5">${r.map(x=>`<div><span class="lbl">${x[0]}</span><b class="num">${x[1]}</b><span class="xs t3">${x[2]}</span></div>`).join('')}</div></section>`;}
 function funnelStats(){const s=[['Objektseite geöffnet',100],['Frage 1 Einheit',82],['Frage 2 Zeitpunkt',76],['Frage 3 Finanzierung',69],['Frage 4 Mitentscheider',66],['Kontakt und Termin',58]];
-  return `<section class="box"><div class="bh"><h2>Funnel Mühlbach · Abbrüche je Schritt</h2><span class="xs t3">Beispielwerte, 90 Tage</span></div><div class="bb">${s.map(x=>`<div class="hb" style="grid-template-columns:170px minmax(0,1fr) 50px"><span>${x[0]}</span><div class="tr"><i style="width:${x[1]}%"></i><b style="width:${x[1]}%"></b></div><span class="num r">${x[1]} %</span></div>`).join('')}<p class="xs t3" style="margin-top:8px">Größter Abbruch bei Frage 1. Vorschlag der Wunschkunden-Analyse: Einheit per Link vorbelegen, dann startet der Funnel bei Frage 2.</p></div></section>`;}
+  return `<section class="box"><div class="bh"><h2>Funnel Villaglück · Abbrüche je Schritt</h2><span class="xs t3">Beispielwerte, 90 Tage</span></div><div class="bb">${s.map(x=>`<div class="hb" style="grid-template-columns:170px minmax(0,1fr) 50px"><span>${x[0]}</span><div class="tr"><i style="width:${x[1]}%"></i><b style="width:${x[1]}%"></b></div><span class="num r">${x[1]} %</span></div>`).join('')}<p class="xs t3" style="margin-top:8px">Größter Abbruch bei Frage 1. Vorschlag der Wunschkunden-Analyse: Einheit per Link vorbelegen, dann startet der Funnel bei Frage 2.</p></div></section>`;}
 
 /* ===== Events für die neuen Bereiche ===== */
 document.addEventListener('click',e=>{
@@ -1518,7 +1518,7 @@ document.addEventListener('click',e=>{
    case 'fn-next':{if(S.fn.step===5){submitFunnel();break;}S.fn.step++;render();break;}
    case 'fn-back':S.fn.step=Math.max(0,S.fn.step-1);render();break;
    case 'fn-reset':S.fn={step:0,src:S.fn.src,a:{einheit:'WE 3',art:'Kauf',wann:null,haus:null,fin:null,mit:new Set(),name:'',kontakt:'',ok:false,slot:null}};render();break;
-   case 'ev-plan':S.ev.planned=true;S.ap.extra.push({k:'event',ic:'calendar-blank',cls:'acc',t:'Einladung zum Tag der offenen Tür Lindenhof Haus C',d:'an 214 frühere Interessenten mit Einwilligung · Sa 14.11.',after:'Versand, Anmeldungen landen im Funnel, Nachfassen automatisch'});render();toast('Termin angelegt, Einladung wartet auf Freigabe');break;
+   case 'ev-plan':S.ev.planned=true;S.ap.extra.push({k:'event',ic:'calendar-blank',cls:'acc',t:'Einladung zum Tag der offenen Tür Haus Beethoven',d:'an 126 frühere Interessenten mit Einwilligung · Sa 14.11.',after:'Versand, Anmeldungen landen im Funnel, Nachfassen automatisch'});render();toast('Termin angelegt, Einladung wartet auf Freigabe');break;
    case 'ev-flyer':S.ev.flyer=true;render();break;
    case 'lead-q':{const l=LEADS.find(x=>x.id===S.leadId)||LEADS[0];S.ap.extra.push({k:'lead'+l.id,ic:'envelope-simple',cls:'acc',t:`Nachricht an ${l.n}`,d:'nächster Schritt laut KI-Vorschlag',after:'Versand, Aufgabe für '+leadInfo(l).own[0]});render();toast('In der Freigabe-Zentrale');break;}
   }
@@ -1531,19 +1531,19 @@ document.addEventListener('change',e=>{const t=e.target;if(t.hasAttribute('data-
 /* ===== Team & Rechte: 8 Zugänge, klare Freigabegrenzen ===== */
 function qCount(role){const keep=S.role;S.role=role;const n=queue().length;S.role=keep;return n;}
 const LIMITS=[['Vergabe an Nachunternehmer','bis 25.000 €: Einkauf · darüber: Dennis'],['Nachtrag anerkennen','bis 5.000 €: Bauleitung · bis 20.000 €: Controlling · darüber: Dennis'],['Schreiben mit Fristsetzung oder Kündigungsandrohung','immer Dennis'],['Rückfragen, Absagen, Erinnerungen','Einkauf, oder automatisch nach euren Regeln'],['Antwort an Interessenten','Vertrieb oder Assistenz, Eingangsbestätigung automatisch'],['Reservierung, Kaufvertrag','Reservierung: Vertrieb · Kaufvertrag: Dennis']];
-const AUDIT=[['Fr 16:40','M. Lorenz','Rückfragen an 2 Bieter Dachdecker freigegeben'],['Fr 14:12','J. Neumann','Nachtrag N-04 Elektro Fuchs, 3.900 €, geprüft und anerkannt'],['Fr 11:05','S. Krause','Reservierung Mühlbach WE 4 bestätigt'],['Do 17:30','Dennis','Vergabe Dachdecker Gartenstraße freigegeben, 186.400 €'],['Do 09:20','M. Schuster','Mängelanzeige Estrich Haus B an Bodenbau Weber versendet']];
+const AUDIT=[['Fr 16:40','M. Lorenz','Rückfragen an 2 Bieter Dachdecker freigegeben'],['Fr 14:12','J. Neumann','Nachtrag N-04 Elektro Fuchs, 3.900 €, geprüft und anerkannt'],['Fr 11:05','S. Krause','Reservierung Villaglück WE 1 bestätigt'],['Do 17:30','Dennis','Vergabe Dachdecker Worfelden II freigegeben, 184.600 €'],['Do 09:20','M. Schuster','Mängelanzeige Estrich 1. OG an Bodenbau Weber versendet']];
 function vTeam(){
   const done=S.ap.done.map(d=>[d.tm,d.by,d.t]);
   return `<div class="ph"><div><h1>Team & Rechte</h1><div class="meta"><span>${I('users','s')}8 Zugänge · eine Plattform · jede Person sieht nur ihren Teil</span></div></div><button class="btn" data-act="inv-open">${I('plus','s')}Person einladen</button></div>
   <section class="box" id="team"><div class="tw"><table><thead><tr><th>Person</th><th>Sieht</th><th>Darf freigeben</th><th>Vertretung</th><th>Zugang</th><th class="r">Offen</th><th></th></tr></thead><tbody>
-   ${TEAM.map(u=>{const n=u[3]==='gf'?queue().filter(x=>qRoles(x.k)[0]==='gf').length:qCount(u[3]);const away=S.vac&&u[0]==='schuster';return `<tr class="${S.user===u[0]?'sel':''}"><td><div class="row" style="flex-wrap:nowrap;gap:10px"><span class="av">${u[2]}</span><div><span class="nm">${u[1]}</span><span class="sub">${u[4]}</span></div></div></td><td class="t2 sm">${u[5]}${S.vac&&u[0]==='wagner'?'<span class="sub">bis 30.10. auch Lindenhof</span>':''}</td><td class="t2 sm" style="min-width:220px">${u[6]}</td><td class="sm">${away?`<span class="tag warn">Urlaub · ${u[7]}</span>`:u[7]}</td><td class="t3 xs">${u[8]}</td><td class="r num">${n||'<span class="t3">0</span>'}</td><td class="r"><button class="btn sm ghost" data-asuser="${u[0]}">${I('user-switch','s')}Ansicht</button></td></tr>`;}).join('')}
+   ${TEAM.map(u=>{const n=u[3]==='gf'?queue().filter(x=>qRoles(x.k)[0]==='gf').length:qCount(u[3]);const away=S.vac&&u[0]==='schuster';return `<tr class="${S.user===u[0]?'sel':''}"><td><div class="row" style="flex-wrap:nowrap;gap:10px"><span class="av">${u[2]}</span><div><span class="nm">${u[1]}</span><span class="sub">${u[4]}</span></div></div></td><td class="t2 sm">${u[5]}${S.vac&&u[0]==='wagner'?'<span class="sub">bis 30.10. auch Haus Beethoven</span>':''}</td><td class="t2 sm" style="min-width:220px">${u[6]}</td><td class="sm">${away?`<span class="tag warn">Urlaub · ${u[7]}</span>`:u[7]}</td><td class="t3 xs">${u[8]}</td><td class="r num">${n||'<span class="t3">0</span>'}</td><td class="r"><button class="btn sm ghost" data-asuser="${u[0]}">${I('user-switch','s')}Ansicht</button></td></tr>`;}).join('')}
   </tbody></table></div><div class="bh" style="border-top:1px solid var(--line);border-bottom:0"><span class="xs t3">Namen und Rollen sind Beispiele. Die echten 8 Personen und ihre Grenzen legen wir gemeinsam fest.</span></div></section>
   <div class="cols c-2-1" style="margin-top:16px">
    <section class="box"><div class="bh"><h2>Freigabegrenzen</h2><span class="xs t3">von Dennis festgelegt, jederzeit änderbar</span></div><dl class="who" style="grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);padding:14px 16px">${LIMITS.map(l=>`<dt>${l[0]}</dt><dd>${l[1]}</dd>`).join('')}</dl></section>
    <div class="stack" style="gap:16px">
     <section class="box"><div class="bh"><h2>Vertretung</h2></div><div class="bb stack" style="gap:10px">
      <label class="row sb" style="flex-wrap:nowrap;cursor:pointer" for="vac"><span class="sm">M. Schuster im Urlaub, 26. bis 30.10.</span><input type="checkbox" id="vac" data-vac="1" ${S.vac?'checked':''} style="accent-color:var(--accent);width:16px;height:16px"></label>
-     <p class="xs t3" style="line-height:1.6">${S.vac?'K. Wagner bekommt in der Zeit die Tagesberichte, Warnungen und Freigaben der Baustelle Lindenhof. Danach geht alles automatisch zurück.':'Ist jemand abwesend, übernimmt die Vertretung automatisch Aufgaben und Freigaben. Nichts bleibt liegen.'}</p></div></section>
+     <p class="xs t3" style="line-height:1.6">${S.vac?'K. Wagner bekommt in der Zeit die Tagesberichte, Warnungen und Freigaben der Baustelle Haus Beethoven. Danach geht alles automatisch zurück.':'Ist jemand abwesend, übernimmt die Vertretung automatisch Aufgaben und Freigaben. Nichts bleibt liegen.'}</p></div></section>
     <section class="box"><div class="bh"><h2>Protokoll</h2><span class="xs t3">wer hat was freigegeben</span></div><div>${done.concat(AUDIT).slice(0,7).map(a=>`<div class="tl"><span class="d">${a[0]}</span><span class="p"><span class="dot ok"></span></span><span>${a[2]}<span class="sub">${a[1]}</span></span></div>`).join('')}</div></section>
    </div></div>`;}
 
@@ -1552,7 +1552,7 @@ function modal(title,html){closeModal();const o=document.createElement('div');o.
 function closeModal(){document.getElementById('ovl')?.remove();}
 function searchIdx(){const R=[];
  [['Cockpit','cockpit'],['Freigabe-Zentrale','freigaben'],['Agenten & Workflows','auto'],['Team & Rechte','team'],['Ausschreibungen','vergabe'],['Nachunternehmer','nu'],['Interessenten','crm'],['Veranstaltungen','events'],['Kanäle','kanaele'],['Objekte & Einheiten','objekt']].filter(x=>allowed(x[1])).forEach(x=>R.push({g:'Seiten',ic:'arrow-right',t:x[0],s:'',act:()=>go(x[1])}));
- [['Lindenhof BA 2','24 WE · Innenausbau'],['Stadtvillen Mühlbach','6 WE · Rohbau'],['Gartenstraße 14','9 WE Bestand · Dach']].filter(()=>allowed('projekt')).forEach(x=>R.push({g:'Projekte',ic:'hard-hat',t:x[0],s:x[1],act:()=>{S.ptab='uebersicht';go('projekt');}}));
+ [['Haus Beethoven','7 WE · Innenausbau · Wiesbaden'],['Villaglück','4 WE · Rohbau · Wiesbaden'],['Worfelden II','18 WE Seniorenwohnen · Dach']].filter(()=>allowed('projekt')).forEach(x=>R.push({g:'Projekte',ic:'hard-hat',t:x[0],s:x[1],act:()=>{S.ptab='uebersicht';go('projekt');}}));
  if(allowed('nu'))NUS.concat(NUX).forEach(x=>R.push({g:'Firmen',ic:'buildings',t:x[0],s:x[1]+(x[7]===undefined?'':''),act:()=>{S.nu.tab='ranking';S.nu.firm=x[0];go('nu');}}));
  if(allowed('nu'))['Putzwerk Hoffmann GmbH','Elektro Fuchs GmbH','Fliesen Pohl GmbH','Fenster Pietsch GmbH','Haustechnik Böhm'].forEach(n=>R.push({g:'Firmen',ic:'buildings',t:n,s:'Nachunternehmer im Stamm',act:()=>{S.nu.tab='stamm';S.nu.firm=null;go('nu');}}));
  if(allowed('crm'))LEADS.forEach(l=>R.push({g:'Interessenten',ic:'user',t:l.n,s:l.u+' · '+l.src,act:()=>{S.leadId=l.id;go('lead');}}));
@@ -1567,7 +1567,7 @@ function searchDraw(){const r=searchRes();SQ.i=Math.min(SQ.i,Math.max(0,r.length
 function openSearch(){SQ={q:'',i:0};modal('Suche',`<div class="sin">${I('magnifying-glass','s')}<input id="sq" placeholder="Firma, Projekt, Interessent, Ausschreibung" autocomplete="off" aria-label="Suche"><kbd class="xs t3">Esc</kbd></div><div id="sres" style="padding-bottom:6px"></div>`);searchDraw();document.getElementById('sq').focus();}
 function searchPick(i){const r=document.getElementById('sres')?._r;if(!r||!r[i])return;closeModal();r[i].act();}
 function bellItems(){const q=queue().map(x=>({ic:x.ic,cls:x.cls,t:x.t,s:'wartet auf Freigabe',go:()=>go('freigaben')}));
- const st=[{ic:'warning',cls:'warn',t:'BG BAU Putzwerk Hoffmann läuft am 30.10. ab',s:'Erinnerung vorbereitet',go:()=>{S.nu.tab='stamm';go('nu');},r:'nu'},{ic:'users-three',cls:'acc',t:'Neue Anfrage über ImmoScout24: Lindenhof 1.08',s:'vor 1 Std · Funnel-Link gesendet',go:()=>go('crm'),r:'crm'},{ic:'clock',cls:'warn',t:'Nachtrag N-06 seit 12 Tagen in Prüfung',s:'Frist zur Stellungnahme 26.10.',go:()=>{S.ptab='budget';go('projekt');},r:'projekt'}].filter(x=>allowed(x.r));
+ const st=[{ic:'warning',cls:'warn',t:'BG BAU Putzwerk Hoffmann läuft am 30.10. ab',s:'Erinnerung vorbereitet',go:()=>{S.nu.tab='stamm';go('nu');},r:'nu'},{ic:'users-three',cls:'acc',t:'Neue Anfrage über ImmoScout24: Worfelden II WE 3',s:'vor 1 Std · Funnel-Link gesendet',go:()=>go('crm'),r:'crm'},{ic:'clock',cls:'warn',t:'Nachtrag N-06 seit 12 Tagen in Prüfung',s:'Frist zur Stellungnahme 26.10.',go:()=>{S.ptab='budget';go('projekt');},r:'projekt'}].filter(x=>allowed(x.r));
  return q.concat(st);}
 function bellToggle(){const o=document.getElementById('pop');if(o){o.remove();return;}document.body.classList.add('read');const it=bellItems();const d=document.createElement('div');d.className='pop';d.id='pop';
  d.innerHTML=`<div class="hd" style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)"><b style="font-weight:600">Benachrichtigungen</b><span class="xs t3">${it.length} aktuell</span></div><div class="divide">${it.map((x,i)=>`<div class="ag" data-bi="${i}" style="cursor:pointer"><span class="ic ${x.cls}">${I(x.ic,'s')}</span><div><b>${esc(x.t)}</b><div class="why">${x.s}</div></div></div>`).join('')||'<div class="bb xs t3">Nichts Neues.</div>'}</div>`;
@@ -1590,7 +1590,7 @@ document.addEventListener('click',e=>{
   case 'search':openSearch();break;
   case 'bell':bellToggle();break;
   case 'modal-close':closeModal();break;
-  case 'mg-new':modal('Mangel erfassen',`<div class="hd"><b style="font-weight:600">Mangel erfassen</b><button class="btn sm ghost" data-act="modal-close" aria-label="Schließen">${I('x','s')}</button></div><div class="bd"><label class="fld">Mangel<input id="mg-t" placeholder="z. B. Estrich Haus B, Riss im Flur" autocomplete="off"></label><label class="fld">Verantwortlich<select id="mg-n"><option>Putzwerk Hoffmann</option><option>Elektro Fuchs</option><option>Fenster Pietsch</option><option>Haustechnik Böhm</option><option>TBS Trockenbau Sachsen</option></select></label><label class="fld">Frist<input id="mg-d" value="30.10." autocomplete="off"></label><div class="row" style="justify-content:flex-end"><button class="btn" data-act="modal-close">Abbrechen</button><button class="btn pri" data-act="mg-save">${I('check','s')}Erfassen</button></div></div>`);document.getElementById('mg-t').focus();break;
+  case 'mg-new':modal('Mangel erfassen',`<div class="hd"><b style="font-weight:600">Mangel erfassen</b><button class="btn sm ghost" data-act="modal-close" aria-label="Schließen">${I('x','s')}</button></div><div class="bd"><label class="fld">Mangel<input id="mg-t" placeholder="z. B. Estrich 1. OG, Riss im Flur" autocomplete="off"></label><label class="fld">Verantwortlich<select id="mg-n"><option>Putzwerk Hoffmann</option><option>Elektro Fuchs</option><option>Fenster Pietsch</option><option>Haustechnik Böhm</option><option>TBS Trockenbau Rhein-Main</option></select></label><label class="fld">Frist<input id="mg-d" value="30.10." autocomplete="off"></label><div class="row" style="justify-content:flex-end"><button class="btn" data-act="modal-close">Abbrechen</button><button class="btn pri" data-act="mg-save">${I('check','s')}Erfassen</button></div></div>`);document.getElementById('mg-t').focus();break;
   case 'mg-save':{const t=document.getElementById('mg-t').value.trim();if(!t){document.getElementById('mg-t').focus();break;}S.mg=S.mg||[];const nr=32+S.mg.length;S.mg.unshift(['M-'+nr,t,document.getElementById('mg-n').value,document.getElementById('mg-d').value||'offen','warn','offen']);closeModal();render();toast('Mangel M-'+nr+' erfasst, Verantwortlicher informiert');break;}
   case 'mg-ruege':S.ai.letter.anlass='qualitaet';S.ai.letter.text='';S.ai.letter.mode=null;S.letter='draft';S.ptab='schrift';render();toast('Entwurf Mängelrüge vorbereitet');break;
   case 'let-edit':{const b=document.getElementById('letterBody');if(b){b.contentEditable='true';b.focus();toast('Text direkt im Brief bearbeiten');}break;}
@@ -1646,7 +1646,7 @@ document.addEventListener('click',e=>{
    case 'send':S.letter='sent';render();toast('Freigegeben und versendet');break;
    case 'qrscan':S.qr.step=1;render();break;
    case 'qrreset':S.qr.step=0;S.qr.slot=null;render();break;
-   case 'qrsend':{const id=Date.now();LEADS.unshift({id,n:S.qr.name.trim()||'Neuer Interessent',u:'Mühlbach · WE 3',a:'Kauf',src:'Flyer-QR',st:S.qr.slot?2:0,next:S.qr.slot?'Besichtigung '+S.qr.slot:'Erstkontakt heute',score:'—'});S.newLead=id;S.qr.step=2;S.lf='alle';render();toast('Neuer Interessent in der Pipeline');break;}
+   case 'qrsend':{const id=Date.now();LEADS.unshift({id,n:S.qr.name.trim()||'Neuer Interessent',u:'Villaglück · WE 3',a:'Kauf',src:'Flyer-QR',st:S.qr.slot?2:0,next:S.qr.slot?'Besichtigung '+S.qr.slot:'Erstkontakt heute',score:'—'});S.newLead=id;S.qr.step=2;S.lf='alle';render();toast('Neuer Interessent in der Pipeline');break;}
    case 'noop':toast('In der Demo nicht ausgebaut');break;
   }
 });
@@ -1664,8 +1664,8 @@ document.addEventListener('click',e=>{
    case 'ai-letter':runLetter();break;
    case 'ai-lead':{const txt=$('#leadTxt').value;S.ai.lead.txt=txt;S.ai.lead.applied=false;kiRun('lead',{prompt:leadPrompt(txt),json:true,fallback:()=>LEAD_FALLBACK});break;}
    case 'ai-lead-apply':applyLead();break;
-   case 'lvfill':S.nw.lv[3][4]=1150;render();break;
-   case 'nufind':{const add=[['Fliesen Hoffmeister','Grimma',0,'',true],['Keramikbau Sauer GmbH','Leipzig',0,'',true],['Fliesenprofi Brandis','Brandis',0,'',true]];add.forEach(a=>{POOL.push(a);S.nw.sel.add(POOL.length-1);});S.nw.found=true;render();break;}
+   case 'lvfill':S.nw.lv[3][4]=345;render();break;
+   case 'nufind':{const add=[['Fliesen Hoffmeister','Ingelheim am Rhein',0,'',true],['Keramikbau Sauer GmbH','Wiesbaden',0,'',true],['Fliesenprofi Taunus','Taunusstein',0,'',true]];add.forEach(a=>{POOL.push(a);S.nw.sel.add(POOL.length-1);});S.nw.found=true;render();break;}
   }
 });
 document.addEventListener('submit',e=>{const f=e.target.closest('[data-askform]');if(!f)return;e.preventDefault();const q=$('#askQ').value.trim();if(!q)return;const i=ASKS.indexOf(q);runAsk(q,i<0?null:i);});

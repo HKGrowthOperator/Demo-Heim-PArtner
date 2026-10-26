@@ -8,6 +8,7 @@ Statische Seiten, ausgeliefert mit nginx. Alle Namen, Firmen und Zahlen in der D
 | `/` | Plattform-Demo (Demo-Führung oben rechts) |
 | `/angebot/` | Auswahl der drei Angebote |
 | `/angebot/start/`, `/angebot/komplett/`, `/angebot/premium/` | die Angebote |
+| `/website/` | Entwurf der neuen Website heimundpartner.com |
 
 Die KI-Funktionen laufen hier im Demo-Modus mit festen Beispielergebnissen.
 Die Live-KI gibt es nur in der Fassung bei claude.ai.
