@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>html{box-sizing:border-box}body{margin:0;padding:0}</style>
+<title>Angebot Website Heim &amp; Partner</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Angebotsdokument: ruhige Lesespalte, nummerierte Abschnitte, gleiche Tokens wie der Prototyp (Petrol, getönte Neutrale) */
+:root{
+  --bg:oklch(0.982 0.003 200); --panel:oklch(0.997 0.002 200); --sunk:oklch(0.955 0.006 200);
+  --line:oklch(0.9 0.006 200); --line-2:oklch(0.84 0.008 200);
+  --ink:oklch(0.23 0.014 220); --ink-2:oklch(0.43 0.013 220); --ink-3:oklch(0.57 0.011 220);
+  --primary:oklch(0.27 0.02 220); --on-primary:oklch(0.98 0.003 200);
+  --accent:oklch(0.5 0.095 205); --accent-soft:oklch(0.95 0.025 205); --accent-line:oklch(0.83 0.05 205);
+  --ok:oklch(0.52 0.12 152); --crit:oklch(0.53 0.17 28);
+  --f:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:oklch(0.175 0.008 220); --panel:oklch(0.205 0.009 220); --sunk:oklch(0.16 0.008 220);
+  --line:oklch(0.29 0.01 220); --line-2:oklch(0.36 0.012 220);
+  --ink:oklch(0.94 0.005 200); --ink-2:oklch(0.77 0.01 210); --ink-3:oklch(0.63 0.01 210);
+  --primary:oklch(0.92 0.01 200); --on-primary:oklch(0.2 0.01 220);
+  --accent:oklch(0.74 0.09 200); --accent-soft:oklch(0.27 0.04 205); --accent-line:oklch(0.45 0.06 205); --ok:oklch(0.75 0.13 152); --crit:oklch(0.72 0.15 28); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:oklch(0.175 0.008 220); --panel:oklch(0.205 0.009 220); --sunk:oklch(0.16 0.008 220);
+  --line:oklch(0.29 0.01 220); --line-2:oklch(0.36 0.012 220);
+  --ink:oklch(0.94 0.005 200); --ink-2:oklch(0.77 0.01 210); --ink-3:oklch(0.63 0.01 210);
+  --primary:oklch(0.92 0.01 200); --on-primary:oklch(0.2 0.01 220);
+  --accent:oklch(0.74 0.09 200); --accent-soft:oklch(0.27 0.04 205); --accent-line:oklch(0.45 0.06 205); --ok:oklch(0.75 0.13 152); --crit:oklch(0.72 0.15 28); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--f);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding-block:48px 96px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:64px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance;font-weight:600}
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1}
+h2{font-size:1.5rem;line-height:1.2}
+h3{font-size:1.02rem}
+p{margin:0}
+.lead{font-size:1.1rem;color:var(--ink-2);max-width:62ch}
+.lbl{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.t2{color:var(--ink-2)}.t3{color:var(--ink-3)}.sm{font-size:.875rem}.xs{font-size:.78rem}
+section{display:flex;flex-direction:column;gap:20px}
+.sec-h{display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;align-items:baseline}
+.sec-h .n{font:500 .85rem var(--mono);color:var(--ink-3)}
+.sec-h p{margin-top:8px;color:var(--ink-2);max-width:64ch}
+.sec-b{margin-left:72px;display:flex;flex-direction:column;gap:18px;min-width:0}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{width:30px;height:30px;border-radius:7px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font:700 11px var(--f)}
+
+/* Preisblock */
+.price{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.price>div{padding:18px 20px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.price>div+div{border-left:1px solid var(--line)}
+.price>div:first-child{background:var(--accent-soft)}
+.price .big{font:600 2.2rem/1 var(--mono);letter-spacing:-.04em}
+.price b{font-weight:500}
+
+/* Leistungen */
+.feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;border-top:1px solid var(--line)}
+.feat>div{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}
+.feat .k{width:28px;height:28px;border-radius:7px;background:var(--sunk);display:grid;place-items:center;font:600 .8rem var(--mono);color:var(--ink-2)}
+.feat b{font-weight:600;display:block;margin-bottom:4px}
+.feat p{font-size:.9rem;color:var(--ink-2)}
+.feat>div.wide{grid-column:1/-1}
+.link-note{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;border-radius:10px;background:var(--accent-soft);border:1px solid var(--accent-line);padding:14px 16px;font-size:.9rem}
+.link-note svg{color:var(--accent);margin-top:3px}
+
+/* Prozess */
+.proc{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.proc-rail{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.proc-rail button{all:unset;cursor:pointer;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-size:.8rem;color:var(--ink-3);border-right:1px solid var(--line);min-width:0}
+.proc-rail button:last-child{border-right:0}
+.proc-rail button:hover{background:var(--sunk)}
+.proc-rail button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.proc-rail i{height:3px;border-radius:2px;background:var(--line)}
+.proc-rail button.done i{background:var(--ink-2)} .proc-rail button.done{color:var(--ink-2)}
+.proc-rail button.on i{background:var(--accent)} .proc-rail button.on{color:var(--ink);font-weight:500}
+.proc-rail span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proc-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:260px}
+.proc-body>div{padding:22px 24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.proc-body>div+div{border-left:1px solid var(--line);background:var(--sunk)}
+.proc-body h3{font-size:1.25rem}
+.who{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 14px;font-size:.88rem}
+.who dt{color:var(--ink-3)} .who dd{margin:0}
+.sys{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.88rem}
+.sys li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px}
+.sys li svg{color:var(--accent);margin-top:3px}
+.proc-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.btn{cursor:pointer;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line-2);background:var(--panel);font:500 .85rem var(--f);color:var(--ink);text-decoration:none}
+.btn:hover{background:var(--sunk)}
+.btn.pri{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Tabellen */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tfoot td{border-bottom:0;border-top:1px solid var(--line-2)}
+td.r,th.r{text-align:right;white-space:nowrap}
+.bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;min-width:80px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+
+/* Zeitplan */
+.phases{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.phases>div{padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.phases>div+div{border-left:1px solid var(--line)}
+.phases>div:nth-child(2){background:var(--accent-soft)}
+.phases b{font-weight:600;font-size:.92rem}
+
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;font-size:.92rem;color:var(--ink-2)}
+.list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px}
+.list li svg{margin-top:3px;color:var(--ink-3)}
+.list.ok li svg{color:var(--ok)}
+.list.no li svg{color:var(--crit)}
+.note{border-radius:10px;background:var(--sunk);padding:14px 16px;font-size:.88rem;color:var(--ink-2)}
+.care{display:grid;grid-template-columns:240px minmax(0,1fr);border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.care>div{padding:20px;min-width:0}
+.care>div:first-child{border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px;justify-content:center}
+.care .big{font:600 1.8rem/1 var(--mono);letter-spacing:-.03em}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+.steps div{padding:16px 16px 0 0;display:flex;flex-direction:column;gap:6px;counter-increment:s}
+.steps div+div{padding-left:16px;border-left:1px solid var(--line)}
+.steps div::before{content:counter(s);font:500 .8rem var(--mono);color:var(--accent)}
+footer{border-top:1px solid var(--line);padding-top:18px;font-size:.78rem;color:var(--ink-3);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .sec-h{grid-template-columns:minmax(0,1fr)}.sec-h .n{display:none}.sec-b{margin-left:0}
+  .price{grid-template-columns:repeat(2,minmax(0,1fr))}.price>div:first-child{grid-column:1/-1}.price>div:nth-child(2){border-left:0}.price>div:nth-child(n+2){border-top:1px solid var(--line)}
+  .feat,.two{grid-template-columns:minmax(0,1fr)}
+  .proc-rail{grid-template-columns:repeat(6,minmax(0,1fr))}.proc-rail span{display:none}
+  .proc-body{grid-template-columns:minmax(0,1fr)}.proc-body>div+div{border-left:0;border-top:1px solid var(--line)}
+  .phases{grid-template-columns:minmax(0,1fr)}.phases>div+div{border-left:0;border-top:1px solid var(--line)}
+  .care{grid-template-columns:minmax(0,1fr)}.care>div:first-child{border-right:0;border-bottom:1px solid var(--line)}
+  .steps{grid-template-columns:minmax(0,1fr)}.steps div+div{padding-left:0;border-left:0;border-top:1px solid var(--line);padding-top:14px}
+}
+
+.mods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.mod{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.mod .h{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.mod b{font-weight:600}
+.mod.new{border-color:var(--accent-line);background:var(--accent-soft)}
+.tag{display:inline-block;font:500 .68rem var(--f);letter-spacing:.04em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-line);border-radius:99px;padding:1px 8px;margin-left:8px;vertical-align:middle}
+.tests{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tests>div{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--panel);display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:.88rem}
+.tests .k{font:600 .8rem var(--mono);color:var(--accent)}
+.link-note{overflow-wrap:anywhere;display:block}
+.up{border:1px dashed var(--line-2);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+
+.mx td.c,.mx th.c{text-align:center;white-space:nowrap}.mx td.y{color:var(--ok);font-weight:600}.mx td.n{color:var(--ink-3)}.mx .hl{background:var(--accent-soft)}.mx{table-layout:fixed;width:100%;min-width:620px}.mx th:first-child{width:34%}.mx th.c{width:10%}
+@media (max-width:860px){.mods,.tests{grid-template-columns:minmax(0,1fr)}}
+
+.pk3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.pk{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:20px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.pk.rec{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.pk .big{font:600 2rem/1 var(--mono);letter-spacing:-.04em}
+.mx{table-layout:fixed;width:100%;min-width:620px}.mx th:first-child{width:40%}.mx th.c,.mx td.c{width:12%;text-align:center}.mx td.y{color:var(--ok);font-weight:600}.mx td.n{color:var(--ink-3)}
+@media (max-width:860px){.pk3{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head><body>
+
+<div class="wrap">
+ <header class="top"><div class="brand"><div class="logo">HK</div><div><b style="font-weight:600">HK Growth Operator</b><div class="xs t3">für Heim &amp; Partner Immobilien GmbH</div></div></div><div class="xs t3">Angebot Nr. HKG-2026-042-W · Stand 26.10.2026 · gültig 30 Tage</div></header>
+ <section><span class="lbl">Relaunch heimundpartner.com</span><h1>Eine Website, die eure Wohnungen verkauft, bevor jemand anruft</h1>
+  <p class="lead">Projektseiten mit allen Fakten, eine Anfrage mit fünf kurzen Fragen und direkter Terminbuchung, Anfragen sortiert bei der zuständigen Person. Drei Pakete zum Festpreis, unabhängig von der Software.</p>
+  <div class="pk3"><div class="pk "><span class="lbl">Website Start</span><span class="big">8.900 €</span><span class="sm t2">netto · 10.591 € brutto</span><span class="sm">190 € im Monat · 4 bis 5 Wochen</span><span class="xs t3">Zahlung 50 / 50 %</span></div><div class="pk rec"><span class="lbl">Website Vertrieb · Empfehlung</span><span class="big">14.900 €</span><span class="sm t2">netto · 17.731 € brutto</span><span class="sm">290 € im Monat · 6 bis 8 Wochen</span><span class="xs t3">Zahlung 40 / 30 / 30 %</span></div><div class="pk "><span class="lbl">Website Premium</span><span class="big">24.900 €</span><span class="sm t2">netto · 29.631 € brutto</span><span class="sm">490 € im Monat · 8 bis 10 Wochen</span><span class="xs t3">Zahlung 40 / 30 / 30 %</span></div></div>
+  <div class="link-note" style="display:block;overflow-wrap:anywhere"><b>Entwurf ansehen:</b> <a href="/website/" style="color:var(--accent)">/website/</a>. Startseite, Projektseite Haus Beethoven, Anfrage mit Terminbuchung.</div></section>
+ <section><div class="sec-h"><span class="n">01</span><div><h2>Ausgangslage</h2><p>Was die heutige Website Interessenten zeigt.</p></div></div><div class="sec-b"><div class="tw"><table><thead><tr><th>Bereich</th><th>Befund</th></tr></thead><tbody><tr><td><b style="font-weight:500">Projektseiten</b></td><td class="t2">Haus Beethoven und Villaglück zeigen nur einen Satz und „Weitere Informationen folgen in Kürze“. Keine Einheiten, Flächen, Preise, Grundrisse, Exposés.</td></tr><tr><td><b style="font-weight:500">Erstkontakt</b></td><td class="t2">Nur allgemeines Kontaktformular, E-Mail und Telefon. Keine Terminbuchung, keine Rückfragen zu Budget, Zeitpunkt, Finanzierung.</td></tr><tr><td><b style="font-weight:500">Ansprechpartner</b></td><td class="t2">Kein Team, kein Ansprechpartner je Projekt. Auf „Über uns“ ist nur Frank Heim genannt.</td></tr><tr><td><b style="font-weight:500">Vertrauen</b></td><td class="t2">Keine Referenzen auf heimundpartner.com, obwohl Heim &amp; Richter realisierte Seniorenwohnanlagen zeigt.</td></tr><tr><td><b style="font-weight:500">Impressum</b></td><td class="t2">Firmenname uneinheitlich (Heim &amp; Partner GmbH / Heim &amp; Partner Immobilien GmbH), E-Mail-Link verweist auf heim-richter-immobilien.de.</td></tr><tr><td><b style="font-weight:500">Technik</b></td><td class="t2">WordPress mit doppelter Navigation, Bild-Alt-Texte teils nur Dateinamen, Bilder als Platzhalter nachgeladen.</td></tr></tbody></table></div><p class="xs t3">Geprüft am 26.10.2026, öffentlich sichtbare Seiten von heimundpartner.com.</p></div></section>
+ <section><div class="sec-h"><span class="n">02</span><div><h2>Preis je Paket</h2><p>Festpreis, aufgeteilt nach Bereichen.</p></div></div><div class="sec-b"><h3 style="margin-top:8px">Website Start</h3><div class="tw"><table><thead><tr><th>Bereich</th><th>Inhalt</th><th class="r">Netto</th></tr></thead><tbody><tr><td><b style='font-weight:500'>Analyse und Konzept</b></td><td class='t2'>Ist-Analyse, Seitenstruktur, Ziele je Seite</td><td class='r num'>1.200 €</td></tr><tr><td><b style='font-weight:500'>Design</b></td><td class='t2'>Neues Erscheinungsbild für Handy, Tablet und Laptop, 2 Korrekturschleifen</td><td class='r num'>2.200 €</td></tr><tr><td><b style='font-weight:500'>Seiten und Pflege</b></td><td class='t2'>Start, Projekte, Leistungen, Über uns mit Team, Kontakt, Impressum, Datenschutz, einfach selbst pflegbar</td><td class='r num'>2.400 €</td></tr><tr><td><b style='font-weight:500'>Projektseiten</b></td><td class='t2'>2 Projektseiten mit Lage, Beschreibung, Galerie</td><td class='r num'>900 €</td></tr><tr><td><b style='font-weight:500'>Erstkontakt</b></td><td class='t2'>Anfrage mit 5 kurzen Fragen, Terminbuchung, automatische Antwort, Benachrichtigung per E-Mail</td><td class='r num'>1.600 €</td></tr><tr><td><b style='font-weight:500'>Technik und Start</b></td><td class='t2'>SEO-Grundlagen, Weiterleitungen alter Adressen, Ladezeit, Livegang, Schulung</td><td class='r num'>600 €</td></tr></tbody><tfoot><tr><td colspan="2"><b style="font-weight:600">Festpreis netto</b></td><td class="r num"><b style="font-weight:600">8.900 €</b></td></tr></tfoot></table></div><p class="xs t3">Weitere Projektseite 450 € netto</p><h3 style="margin-top:8px">Website Vertrieb</h3><div class="tw"><table><thead><tr><th>Bereich</th><th>Inhalt</th><th class="r">Netto</th></tr></thead><tbody><tr><td><b style='font-weight:500'>Analyse und Konzept</b></td><td class='t2'>Ist-Analyse, Seitenstruktur, Zielgruppen je Projekt</td><td class='r num'>1.400 €</td></tr><tr><td><b style='font-weight:500'>Design</b></td><td class='t2'>Neues Erscheinungsbild, Vorlagen für Projekt- und Einheitenseiten, 2 Korrekturschleifen</td><td class='r num'>2.600 €</td></tr><tr><td><b style='font-weight:500'>Seiten und Pflege</b></td><td class='t2'>Alle Hauptseiten, Referenzen inklusive Heim &amp; Richter, einfach selbst pflegbar</td><td class='r num'>2.600 €</td></tr><tr><td><b style='font-weight:500'>Projekte und Einheiten</b></td><td class='t2'>4 Projektseiten, Einheitentabelle mit Fläche, Zimmern, Preis und Status, Grundrisse, Exposé nach Anfrage, Baufortschritt</td><td class='r num'>2.900 €</td></tr><tr><td><b style='font-weight:500'>Erstkontakt und Anfragen</b></td><td class='t2'>Anfrage mit 5 Fragen, Terminbuchung, automatische Antwort, Anfragenliste mit Zuständigkeit je Projekt, Links und QR-Codes für ImmoScout, Instagram, Flyer mit Auswertung je Kanal</td><td class='r num'>2.800 €</td></tr><tr><td><b style='font-weight:500'>Texte</b></td><td class='t2'>Texte für alle Seiten durch uns, Abstimmung mit euch</td><td class='r num'>1.600 €</td></tr><tr><td><b style='font-weight:500'>Technik und Start</b></td><td class='t2'>SEO-Grundlagen, Weiterleitungen, Ladezeit, datenschutzfreundliche Statistik, Livegang, Schulung</td><td class='r num'>1.000 €</td></tr></tbody><tfoot><tr><td colspan="2"><b style="font-weight:600">Festpreis netto</b></td><td class="r num"><b style="font-weight:600">14.900 €</b></td></tr></tfoot></table></div><p class="xs t3">Weitere Projektseite mit Einheiten 650 € netto</p><h3 style="margin-top:8px">Website Premium</h3><div class="tw"><table><thead><tr><th>Bereich</th><th>Inhalt</th><th class="r">Netto</th></tr></thead><tbody><tr><td><b style='font-weight:500'>Alles aus Website Vertrieb</b></td><td class='t2'>Analyse, Design, Seiten, 4 Projektseiten mit Einheiten, Erstkontakt, Anfragenliste, Kanäle, Texte, Technik</td><td class='r num'>14.900 €</td></tr><tr><td><b style='font-weight:500'>Markenauffrischung</b></td><td class='t2'>Feinschliff Logo, Farben, Schriften, Bildsprache als kurze Markenrichtlinie</td><td class='r num'>3.200 €</td></tr><tr><td><b style='font-weight:500'>Interessentenbereich</b></td><td class='t2'>Login für Interessenten mit Unterlagen, Grundrissen und Terminen</td><td class='r num'>2.600 €</td></tr><tr><td><b style='font-weight:500'>Englische Version</b></td><td class='t2'>Alle Hauptseiten und Projektseiten auf Englisch</td><td class='r num'>1.400 €</td></tr><tr><td><b style='font-weight:500'>Projekt-Updates</b></td><td class='t2'>E-Mail-Updates zum Baufortschritt an Interessenten mit Einwilligung</td><td class='r num'>900 €</td></tr><tr><td><b style='font-weight:500'>Kampagnen-Landingpages</b></td><td class='t2'>2 Landingpages für Instagram- oder Anzeigenkampagnen</td><td class='r num'>1.200 €</td></tr><tr><td><b style='font-weight:500'>Optimierung</b></td><td class='t2'>3 Monate Auswertung und Verbesserung der Anfrage-Strecke</td><td class='r num'>700 €</td></tr></tbody><tfoot><tr><td colspan="2"><b style="font-weight:600">Festpreis netto</b></td><td class="r num"><b style="font-weight:600">24.900 €</b></td></tr></tfoot></table></div><p class="xs t3">Weitere Projektseite mit Einheiten 650 € netto</p></div></section>
+ <section><div class="sec-h"><span class="n">03</span><div><h2>Was drin ist und was nicht</h2><p>Dieselbe Aufstellung steht als Anlage 3 im Vertrag.</p></div></div><div class="sec-b"><h3 style="margin-top:8px">Design und Struktur</h3><div class="tw"><table class="mx"><thead><tr><th>Leistung</th><th class="c">Start</th><th class="c">Vertrieb</th><th class="c">Premium</th><th>Grenze</th></tr></thead><tbody><tr><td>Neues Design für Handy, Tablet und Laptop</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>2 Korrekturschleifen, danach Änderungsauftrag</td></tr><tr><td>Hauptseiten: Start, Projekte, Leistungen, Über uns mit Team, Kontakt, Impressum, Datenschutz</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Anzahl Projektseiten</td><td class="c ">2</td><td class="c ">4</td><td class="c ">4</td><td class='t2 sm'>Weitere auf Wunsch zum Festpreis</td></tr><tr><td>Markenauffrischung: Logo-Feinschliff, Farben, Schriften, Bildsprache</td><td class="c n">–</td><td class="c n">–</td><td class="c y">✓</td><td class='t2 sm'>Kein komplett neues Logo</td></tr><tr><td>Englische Version</td><td class="c n">–</td><td class="c n">–</td><td class="c y">✓</td><td class='t2 sm'></td></tr></tbody></table></div><h3 style="margin-top:8px">Projekte und Einheiten</h3><div class="tw"><table class="mx"><thead><tr><th>Leistung</th><th class="c">Start</th><th class="c">Vertrieb</th><th class="c">Premium</th><th>Grenze</th></tr></thead><tbody><tr><td>Projektseite mit Lage, Beschreibung, Galerie</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Bilder und Renderings liefert ihr</td></tr><tr><td>Einheitentabelle mit Fläche, Zimmern, Preis, Status, selbst pflegbar</td><td class="c n">–</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Grundrisse je Einheit</td><td class="c n">–</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Als PDF oder Bild von euch</td></tr><tr><td>Exposé zum Download erst nach Anfrage</td><td class="c n">–</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Baufortschritt mit Fotos</td><td class="c n">–</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Referenzen, auch Projekte von Heim &amp; Richter</td><td class="c ">Basis</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Start: bis zu 3 Referenzen</td></tr></tbody></table></div><h3 style="margin-top:8px">Erstkontakt und Anfragen</h3><div class="tw"><table class="mx"><thead><tr><th>Leistung</th><th class="c">Start</th><th class="c">Vertrieb</th><th class="c">Premium</th><th>Grenze</th></tr></thead><tbody><tr><td>Anfrage mit 5 kurzen Fragen statt langem Formular</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Terminbuchung für Besichtigung oder Beratung</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Anbindung an einen Outlook- oder Google-Kalender</td></tr><tr><td>Automatische Antwort an den Interessenten</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Benachrichtigung der zuständigen Person</td><td class="c ">Basis</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Start: an eine E-Mail-Adresse. Ab Vertrieb: je Projekt</td></tr><tr><td>Anfragenliste mit Status und Zuständigkeit</td><td class="c n">–</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Kein vollständiges CRM, das ist Teil der Software</td></tr><tr><td>Links und QR-Codes für ImmoScout, Instagram, Flyer</td><td class="c ">Basis</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Start: ohne Auswertung</td></tr><tr><td>Auswertung der Anfragen je Kanal</td><td class="c n">–</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Interessentenbereich mit Login für Unterlagen</td><td class="c n">–</td><td class="c n">–</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Projekt-Updates per E-Mail an Interessenten</td><td class="c n">–</td><td class="c n">–</td><td class="c y">✓</td><td class='t2 sm'>Nur mit Einwilligung</td></tr><tr><td>2 Landingpages für Kampagnen</td><td class="c n">–</td><td class="c n">–</td><td class="c y">✓</td><td class='t2 sm'>Ohne Anzeigenbudget und Kampagnenbetreuung</td></tr></tbody></table></div><h3 style="margin-top:8px">Inhalte</h3><div class="tw"><table class="mx"><thead><tr><th>Leistung</th><th class="c">Start</th><th class="c">Vertrieb</th><th class="c">Premium</th><th>Grenze</th></tr></thead><tbody><tr><td>Übernahme der bestehenden Inhalte</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Texte</td><td class="c ">Basis</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Start: ihr liefert, wir lektorieren. Ab Vertrieb: wir schreiben</td></tr><tr><td>Optimierung vorhandener Bilder für das Web</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr></tbody></table></div><h3 style="margin-top:8px">Technik, Recht und Betrieb</h3><div class="tw"><table class="mx"><thead><tr><th>Leistung</th><th class="c">Start</th><th class="c">Vertrieb</th><th class="c">Premium</th><th>Grenze</th></tr></thead><tbody><tr><td>Einfache Pflege durch euch, Schulung</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>1 Stunde Schulung online</td></tr><tr><td>SEO-Grundlagen und Weiterleitungen alter Adressen</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Keine laufende SEO-Betreuung</td></tr><tr><td>Ladezeit und Barrierearmut (Alt-Texte, Kontraste)</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Datenschutzfreundliche Statistik ohne Cookie-Banner</td><td class="c n">–</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'></td></tr><tr><td>Impressum vervollständigen, Datenschutztexte einbinden</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>Texte von euch oder einem Generator, keine Rechtsberatung</td></tr><tr><td>Umzug der Domain auf das neue Hosting</td><td class="c y">✓</td><td class="c y">✓</td><td class="c y">✓</td><td class='t2 sm'>E-Mail-Postfächer bleiben beim bisherigen Anbieter</td></tr><tr><td>3 Monate Optimierung nach dem Start</td><td class="c n">–</td><td class="c n">–</td><td class="c y">✓</td><td class='t2 sm'></td></tr></tbody></table></div><h3 style="margin-top:8px">In keinem Paket enthalten</h3><ul class="list no"><li><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg><span>Fotografie, Drohnenaufnahmen, 3D-Renderings (Fremdkosten, auf Wunsch organisiert)</span></li><li><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg><span>Anzeigenbudget und laufende Kampagnenbetreuung</span></li><li><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg><span>Rechtsberatung und anwaltliche Prüfung der Rechtstexte</span></li><li><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg><span>CRM- und Vergabe-Software (eigener Vertrag)</span></li><li><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg><span>Weitere Sprachen außer Englisch</span></li><li><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg><span>Laufende Inhaltspflege durch uns über die Supportstunden hinaus</span></li><li><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg><span>E-Mail-Hosting und Postfächer</span></li></ul></div></section>
+ <section><div class="sec-h"><span class="n">04</span><div><h2>Ablauf</h2></div></div><div class="sec-b"><div class='phases'><div><span class='lbl'>Woche 1</span><b>Konzept</b><span class='xs t3'>Struktur, Inhalte-Liste</span></div><div><span class='lbl'>danach</span><b>Design und Umsetzung</b><span class='xs t3'>2 Korrekturschleifen, Testadresse</span></div><div><span class='lbl'>letzte Woche</span><b>Abnahme und Livegang</b><span class='xs t3'>Domain-Umzug, Schulung</span></div></div><div class='note'><b style='color:var(--ink)'>Von euch brauchen wir:</b> Bilder und Renderings, Grundrisse, Flächen und Preise, Teamfotos, Zugang zur Domain. Die Dauer hängt vor allem daran, wie schnell die Inhalte da sind.</div></div></section>
+ <section><div class="sec-h"><span class="n">05</span><div><h2>Abnahmetests</h2><p>Die Website gilt als fertig, wenn diese Prüfungen bestehen.</p></div></div><div class="sec-b"><div class="tests"><div><span class="k">W1</span><div><b style="font-weight:600">Darstellung</b><div class="t2">Alle Seiten auf Handy, Tablet und Laptop vollständig und ohne seitliches Scrollen.</div></div></div><div><span class="k">W2</span><div><b style="font-weight:600">Anfrage</b><div class="t2">Eine Testanfrage über die 5 Fragen erreicht die zuständige Person, der Interessent erhält die automatische Antwort.</div></div></div><div><span class="k">W3</span><div><b style="font-weight:600">Termin</b><div class="t2">Ein gebuchter Termin erscheint im angebundenen Kalender und in der Bestätigung.</div></div></div><div><span class="k">W4</span><div><b style="font-weight:600">Pflege</b><div class="t2">Ihr ändert selbst einen Text, ein Bild und (ab Vertrieb) den Status einer Einheit.</div></div></div><div><span class="k">W5</span><div><b style="font-weight:600">Ladezeit</b><div class="t2">Startseite mobil im Lighthouse-Test mit mindestens 85 Punkten für Leistung.</div></div></div><div><span class="k">W6</span><div><b style="font-weight:600">Weiterleitungen</b><div class="t2">Die bisherigen Adressen der alten Website führen auf die passenden neuen Seiten.</div></div></div><div><span class="k">W7</span><div><b style="font-weight:600">Exposé</b><div class="t2">Ab Vertrieb: Das Exposé ist erst nach einer Anfrage abrufbar, die Anfrage steht in der Anfragenliste.</div></div></div></div></div></section>
+ <section><div class="sec-h"><span class="n">06</span><div><h2>Betreuung</h2><p>Ab Livegang, monatlich.</p></div></div><div class="sec-b"><div class="tw"><table><thead><tr><th>Leistung</th><th>Start</th><th>Vertrieb</th><th>Premium</th></tr></thead><tbody><tr><td>Monatlich netto</td><td>190 €</td><td>290 €</td><td>490 €</td></tr><tr><td>Hosting</td><td>EU</td><td>EU</td><td>EU</td></tr><tr><td>Updates und Backups</td><td>ja</td><td>ja</td><td>ja</td></tr><tr><td>Supportstunden im Monat</td><td>1 Std.</td><td>2 Std.</td><td>4 Std.</td></tr></tbody></table></div><p class='xs t3'>Fremdkosten wie Fotografie, Bildlizenzen oder Anzeigenbudget nur nach Freigabe und zum Selbstkostenpreis.</p></div></section>
+ <section><div class="sec-h"><span class="n">07</span><div><h2>Verbindung zur Software</h2></div></div><div class="sec-b"><div class='up'><b style='font-weight:600'>Ohne Aufpreis ins CRM</b><span class='sm t2'>Beauftragt ihr innerhalb von 6 Monaten nach Livegang die Software im Paket Komplett oder Premium, übernehmen wir die Anfragen der Website ohne Aufpreis in das CRM der Plattform.</span></div></div></section>
+ <footer><span>HK Growth Operator · [Anschrift] · info@hkgrowth-operator.de</span><span>Alle Preise netto zzgl. gesetzlicher USt.</span></footer>
+</div>
+</body></html>
+
+</html>
