@@ -532,7 +532,7 @@ const NAV=[
  ['','Übersicht'],['cockpit','Cockpit','squares-four'],['freigaben','Freigaben','check-circle',()=>queue().length],['auto','Agenten & Workflows','sparkle'],['team','Team & Rechte','users'],
  ['','Vergabe'],['vergabe','Ausschreibungen','gavel',()=>TENDERS.filter(t=>!t.awarded&&!(t.id==='t1'&&S.awarded)).length],['nu','Nachunternehmer','list-checks'],['portal','Bieterportal','arrow-square-out'],
  ['','Projekte'],['projekt','Haus Beethoven','hard-hat',()=>S.saved&&S.letter!=='sent'?'!':'',(S)=>S.saved&&S.letter!=='sent'?'crit':'warn'],['p2','Villaglück','buildings',null,()=>'ok'],['p3','Worfelden II','house-line',null,()=>'ok'],
- ['','Angebot'],['praes','Präsentation','presentation-chart'],['leistung','Leistungen','list-checks'],['konfig','Angebot zusammenstellen','check-square',()=>S.cfg&&S.cfg.sel.size?S.cfg.sel.size:''],['roi','Return on Investment','chart-line-up'],['web','Website-Entwurf','browser'],
+ ['','Angebot'],['praes','Präsentation','presentation-chart'],['leistung','Leistungen','list-checks'],['konfig','Angebot zusammenstellen','check-square',()=>S.cfg&&S.cfg.sel.size?S.cfg.sel.size:''],['roi','Return on Investment','chart-line-up'],
  ['','Vertrieb'],['crm','Interessenten','users-three',()=>LEADS.filter(l=>l.st<4).length],['objekt','Objekte & Einheiten','buildings'],['events','Veranstaltungen','calendar-blank'],['kanaele','Kanäle','chart-bar']];
 function nav(){
   const vis=NAV.filter((n,i)=>{if(n[0])return allowed(n[0]==='p2'||n[0]==='p3'?'projekt':n[0]);for(let j=i+1;j<NAV.length&&NAV[j][0];j++)if(allowed(NAV[j][0]==='p2'||NAV[j][0]==='p3'?'projekt':NAV[j][0]))return true;return false;});
@@ -540,7 +540,6 @@ function nav(){
     if(!r) return `<div class="grp lbl">${l}</div>`;
     const c=cnt?cnt():'';const on=S.route===r||(r==='vergabe'&&S.route==='neu')||(r==='nu'&&S.route==='quali')||(r==='crm'&&S.route==='lead');
     const proj=r==='p2'||r==='p3';
-    if(r==='web')return `<a href="${/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname)?'/website/':'https://claude.ai/artifact/VMjkD6hPzqCzChetUknDdK'}" target="_blank" rel="noopener">${I(ic)}<span>${l}</span>${I('arrow-square-out','s')}</a>`;
     return `<a href="#${r}" data-go="${proj?'projekt':r}" class="${on?'on':''} ${proj?'proj':''}" ${on?'aria-current="page"':''}>${dotf?`<span class="dot ${dotf(S)}"></span>`:I(ic)}<span>${l}</span>${c!==''&&c!==0?`<span class="cnt ${c==='!'?'alert':''}">${c==='!'?I('warning-circle','s'):c}</span>`:''}</a>`;}).join('');
   const C={cockpit:['Cockpit'],freigaben:['Übersicht','Freigabe-Zentrale'],vergabe:['Vergabe','Ausschreibungen'],neu:['Vergabe','Neue Ausschreibung'],portal:['Vergabe','Bieterportal (Ansicht Nachunternehmer)'],projekt:['Projekte','Haus Beethoven · Wiesbaden'],crm:['Vertrieb','Interessenten'],objekt:['Vertrieb','Villaglück'],kanaele:['Vertrieb','Kanäle'],nu:['Vergabe','Nachunternehmer'],quali:['Vergabe','Qualifizierungsbogen (Ansicht neue Firma)'],lead:['Vertrieb','Interessentenakte'],auto:['Übersicht','Agenten & Workflows'],team:['Übersicht','Team & Rechte'],praes:['Angebot','Präsentation'],leistung:['Angebot','Leistungen'],konfig:['Angebot','Angebot zusammenstellen'],roi:['Angebot','Return on Investment'],events:['Vertrieb','Veranstaltungen']}[S.route];
   $('#crumbs').innerHTML=C.map((c,i)=>i===C.length-1?`<b>${c}</b>`:`<span>${c}</span>${I('caret-right','s')}`).join('');
@@ -1291,7 +1290,7 @@ const TEAM=[
 S.user='dennis';S.role='gf';S.vac=false;
 const cur=()=>TEAM.find(u=>u[0]===S.user);
 function asUser(id){S.user=id;S.role=cur()[3];}
-const allowed=r=>['praes','leistung','konfig','roi','web'].includes(r)||!ROLES[S.role].routes||ROLES[S.role].routes.includes(r);
+const allowed=r=>['praes','leistung','konfig','roi'].includes(r)||!ROLES[S.role].routes||ROLES[S.role].routes.includes(r);
 const QROLE={rueck:['einkauf'],vergabe:['gf'],absagen:['einkauf'],brief:['gf'],remind:['einkauf'],lead:['vertrieb','office'],nachtrag:['kfm','gf'],akq:['einkauf'],event:['vertrieb','office']};
 const qRoles=k=>QROLE[k]||QROLE[k.replace(/\d+$/,'')]||['gf'];
 const approver=k=>{if(S.role!=='gf'&&qRoles(k).includes(S.role))return cur()[1];const r=qRoles(k)[0];if(r==='bau'&&S.vac)return 'K. Wagner, Vertretung';return TEAM.find(u=>u[3]===r)[1];};
