@@ -395,6 +395,49 @@ input[type=range]{accent-color:var(--accent);width:100%}
 .sg{padding:10px 16px 4px;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
 .pop{position:fixed;top:56px;right:max(16px,env(safe-area-inset-right,0px));z-index:55;width:min(380px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
 body.read .iconbtn .bdg{display:none}
+/* ===== Angebot ===== */
+.of-sl{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:12px;aspect-ratio:16/9;padding:clamp(20px,4.5vw,56px);display:flex;flex-direction:column;gap:clamp(12px,2vw,24px);overflow:hidden;min-width:0}
+.of-sl.dark{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.of-sl.dark .t2,.of-sl.dark .lbl{color:color-mix(in oklch,var(--on-primary) 72%,transparent)}
+.of-sl h1{font-size:clamp(1.5rem,3.4vw,2.6rem);line-height:1.08;letter-spacing:-.02em;font-weight:600;max-width:24ch}
+.of-sl h2{font-size:clamp(1.25rem,2.6vw,2rem);line-height:1.12;letter-spacing:-.015em;font-weight:600;max-width:30ch}
+.of-sl .lead{font-size:clamp(.9rem,1.4vw,1.1rem);line-height:1.5;max-width:60ch}
+.of-cols{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:clamp(10px,1.6vw,18px)}
+.of-cols>div{border-top:2px solid var(--accent);padding-top:10px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.of-sl.dark .of-cols>div{border-color:color-mix(in oklch,var(--on-primary) 55%,transparent)}
+.of-cols b{font-size:clamp(.85rem,1.3vw,1rem);font-weight:600}
+.of-cols span{font-size:clamp(.78rem,1.15vw,.92rem);line-height:1.45}
+.of-steps{display:grid;grid-template-columns:repeat(var(--n,6),minmax(0,1fr));gap:8px}
+.of-steps>div{background:var(--sunk);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.of-steps .k{font:600 .72rem var(--mono);color:var(--accent)}
+.of-steps b{font-size:clamp(.8rem,1.15vw,.92rem);font-weight:600}
+.of-steps span{font-size:clamp(.72rem,1vw,.82rem);line-height:1.4;color:var(--ink-2)}
+.of-num{position:absolute;right:20px;bottom:14px;font:500 .72rem var(--mono);color:var(--ink-3)}
+.of-sl.dark .of-num{color:color-mix(in oklch,var(--on-primary) 60%,transparent)}
+.of-dots{display:flex;gap:4px;flex-wrap:wrap}
+.of-dots button{all:unset;cursor:pointer;width:22px;height:4px;border-radius:2px;background:var(--line-2)}
+.of-dots button.on{background:var(--accent)}
+.of-sl:fullscreen{border-radius:0;aspect-ratio:auto;justify-content:center;padding:6vw}
+.of-pick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.of-it{all:unset;box-sizing:border-box;cursor:pointer;border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:12px 14px;display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;align-items:start;min-width:0}
+.of-it:hover{border-color:var(--line-2)}
+.of-it:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.of-it.on{border-color:var(--accent);background:var(--accent-soft)}
+.of-it.dis{opacity:.45;cursor:not-allowed}
+.of-it .ck{color:var(--ink-3);margin-top:1px}.of-it.on .ck{color:var(--accent)}
+.of-it b{font-weight:600;font-size:.875rem}
+.of-it ul{margin:6px 0 0;padding-left:16px;font-size:.78rem;color:var(--ink-2);line-height:1.45}
+.of-it .lim{font-size:.72rem;color:var(--ink-3);margin-top:4px}
+.of-bar{position:sticky;bottom:0;z-index:5;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.of-tot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.of-tot>div{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.of-tot b{font:600 1.45rem/1.15 var(--mono);letter-spacing:-.03em}
+.of-tot .acc b{color:var(--accent)}
+.of-in{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 20px}
+.of-in label{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.8125rem;border-bottom:1px solid var(--line);padding:6px 0}
+.of-in input{width:84px;height:28px;border:1px solid var(--line-2);border-radius:6px;background:var(--panel);color:var(--ink);font:500 .8125rem var(--mono);padding:0 8px;text-align:right}
+.of-mx td.c,.of-mx th.c{text-align:center;white-space:nowrap}.of-mx td.y{color:var(--ok);font-weight:600}.of-mx td.n{color:var(--ink-3)}
+@media (max-width:860px){.of-pick,.of-in,.of-tot{grid-template-columns:minmax(0,1fr)}.of-cols{grid-template-columns:repeat(2,minmax(0,1fr))}.of-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.of-sl{aspect-ratio:auto}}
 </style>
 
 <div class="shell">
@@ -489,6 +532,7 @@ const NAV=[
  ['','Übersicht'],['cockpit','Cockpit','squares-four'],['freigaben','Freigaben','check-circle',()=>queue().length],['auto','Agenten & Workflows','sparkle'],['team','Team & Rechte','users'],
  ['','Vergabe'],['vergabe','Ausschreibungen','gavel',()=>TENDERS.filter(t=>!t.awarded&&!(t.id==='t1'&&S.awarded)).length],['nu','Nachunternehmer','list-checks'],['portal','Bieterportal','arrow-square-out'],
  ['','Projekte'],['projekt','Haus Beethoven','hard-hat',()=>S.saved&&S.letter!=='sent'?'!':'',(S)=>S.saved&&S.letter!=='sent'?'crit':'warn'],['p2','Villaglück','buildings',null,()=>'ok'],['p3','Worfelden II','house-line',null,()=>'ok'],
+ ['','Angebot'],['praes','Präsentation','presentation-chart'],['leistung','Leistungen','list-checks'],['konfig','Angebot zusammenstellen','check-square',()=>S.cfg&&S.cfg.sel.size?S.cfg.sel.size:''],['roi','Return on Investment','chart-line-up'],['web','Website-Entwurf','browser'],
  ['','Vertrieb'],['crm','Interessenten','users-three',()=>LEADS.filter(l=>l.st<4).length],['objekt','Objekte & Einheiten','buildings'],['events','Veranstaltungen','calendar-blank'],['kanaele','Kanäle','chart-bar']];
 function nav(){
   const vis=NAV.filter((n,i)=>{if(n[0])return allowed(n[0]==='p2'||n[0]==='p3'?'projekt':n[0]);for(let j=i+1;j<NAV.length&&NAV[j][0];j++)if(allowed(NAV[j][0]==='p2'||NAV[j][0]==='p3'?'projekt':NAV[j][0]))return true;return false;});
@@ -496,8 +540,9 @@ function nav(){
     if(!r) return `<div class="grp lbl">${l}</div>`;
     const c=cnt?cnt():'';const on=S.route===r||(r==='vergabe'&&S.route==='neu')||(r==='nu'&&S.route==='quali')||(r==='crm'&&S.route==='lead');
     const proj=r==='p2'||r==='p3';
+    if(r==='web')return `<a href="${/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname)?'/website/':'https://claude.ai/artifact/VMjkD6hPzqCzChetUknDdK'}" target="_blank" rel="noopener">${I(ic)}<span>${l}</span>${I('arrow-square-out','s')}</a>`;
     return `<a href="#${r}" data-go="${proj?'projekt':r}" class="${on?'on':''} ${proj?'proj':''}" ${on?'aria-current="page"':''}>${dotf?`<span class="dot ${dotf(S)}"></span>`:I(ic)}<span>${l}</span>${c!==''&&c!==0?`<span class="cnt ${c==='!'?'alert':''}">${c==='!'?I('warning-circle','s'):c}</span>`:''}</a>`;}).join('');
-  const C={cockpit:['Cockpit'],freigaben:['Übersicht','Freigabe-Zentrale'],vergabe:['Vergabe','Ausschreibungen'],neu:['Vergabe','Neue Ausschreibung'],portal:['Vergabe','Bieterportal (Ansicht Nachunternehmer)'],projekt:['Projekte','Haus Beethoven · Wiesbaden'],crm:['Vertrieb','Interessenten'],objekt:['Vertrieb','Villaglück'],kanaele:['Vertrieb','Kanäle'],nu:['Vergabe','Nachunternehmer'],quali:['Vergabe','Qualifizierungsbogen (Ansicht neue Firma)'],lead:['Vertrieb','Interessentenakte'],auto:['Übersicht','Agenten & Workflows'],team:['Übersicht','Team & Rechte'],events:['Vertrieb','Veranstaltungen']}[S.route];
+  const C={cockpit:['Cockpit'],freigaben:['Übersicht','Freigabe-Zentrale'],vergabe:['Vergabe','Ausschreibungen'],neu:['Vergabe','Neue Ausschreibung'],portal:['Vergabe','Bieterportal (Ansicht Nachunternehmer)'],projekt:['Projekte','Haus Beethoven · Wiesbaden'],crm:['Vertrieb','Interessenten'],objekt:['Vertrieb','Villaglück'],kanaele:['Vertrieb','Kanäle'],nu:['Vergabe','Nachunternehmer'],quali:['Vergabe','Qualifizierungsbogen (Ansicht neue Firma)'],lead:['Vertrieb','Interessentenakte'],auto:['Übersicht','Agenten & Workflows'],team:['Übersicht','Team & Rechte'],praes:['Angebot','Präsentation'],leistung:['Angebot','Leistungen'],konfig:['Angebot','Angebot zusammenstellen'],roi:['Angebot','Return on Investment'],events:['Vertrieb','Veranstaltungen']}[S.route];
   $('#crumbs').innerHTML=C.map((c,i)=>i===C.length-1?`<b>${c}</b>`:`<span>${c}</span>${I('caret-right','s')}`).join('');
 }
 
@@ -1246,7 +1291,7 @@ const TEAM=[
 S.user='dennis';S.role='gf';S.vac=false;
 const cur=()=>TEAM.find(u=>u[0]===S.user);
 function asUser(id){S.user=id;S.role=cur()[3];}
-const allowed=r=>!ROLES[S.role].routes||ROLES[S.role].routes.includes(r);
+const allowed=r=>['praes','leistung','konfig','roi','web'].includes(r)||!ROLES[S.role].routes||ROLES[S.role].routes.includes(r);
 const QROLE={rueck:['einkauf'],vergabe:['gf'],absagen:['einkauf'],brief:['gf'],remind:['einkauf'],lead:['vertrieb','office'],nachtrag:['kfm','gf'],akq:['einkauf'],event:['vertrieb','office']};
 const qRoles=k=>QROLE[k]||QROLE[k.replace(/\d+$/,'')]||['gf'];
 const approver=k=>{if(S.role!=='gf'&&qRoles(k).includes(S.role))return cur()[1];const r=qRoles(k)[0];if(r==='bau'&&S.vac)return 'K. Wagner, Vertretung';return TEAM.find(u=>u[3]===r)[1];};
@@ -1603,9 +1648,137 @@ document.addEventListener('click',e=>{
 
 (function(){try{if(/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname)){const l=document.getElementById('offerLink');if(l)l.style.display='block';}}catch(e){}})();
 /* ===== Render ===== */
+/* ===== Angebot: Präsentation, Leistungen, Konfigurator, ROI ===== */
+const OF=/*OFFER_JSON*/{};
+const eurO=n=>Math.round(n).toLocaleString('de-DE')+' €';
+/* Bausteine. p = einmalig netto, m = monatlich netto (Software), t = Betreuungsstufe (Website) */
+const CFG=[
+ {g:'sw',id:'sb',base:1,n:'Software-Basis',sub:'Plattform, Nachunternehmer, Ausschreibung, KI-Angebotsvergleich',mods:['plat','nu','aus','ki','pf','sich'],p:39500,m:690},
+ {g:'sw',id:'bau',n:'Baucontrolling und Bautagebuch',mods:['bau'],p:8000,m:100,req:['sb']},
+ {g:'sw',id:'sv',n:'Schriftverkehr, Agenten und Workflows',mods:['sv'],p:5000,m:100,req:['sb']},
+ {g:'sw',id:'crm',n:'Immobilien-CRM mit Interessenten-Funnel',mods:['crm'],p:7000,m:100,req:['sb']},
+ {g:'sx',id:'rech',n:'Recherche-Agent und Akquise',mods:['rech'],p:4500,m:120,req:['sb']},
+ {g:'sx',id:'gaeb',n:'GAEB-Import und Export',mods:['gaeb'],p:3500,m:80,req:['sb']},
+ {g:'sx',id:'term',n:'Terminplan und Kapazität',mods:['term'],p:3500,m:100,req:['sb','bau']},
+ {g:'sx',id:'ver',n:'Vertriebsauswertung und Veranstaltungen',mods:['ver'],p:1500,m:60,req:['sb','crm']},
+ {g:'sx',id:'wirk',n:'Wirkungsmessung',mods:['wirk'],p:1000,m:70,req:['sb']},
+ {g:'sx',id:'hyper',n:'2 Monate Begleitung nach Go-live',mods:['hyper'],p:1000,m:70,req:['sb']},
+ {g:'wb',id:'wb',base:1,n:'Website-Basis: Relaunch heimundpartner.com',sub:'Neues Design, Hauptseiten, 2 Projektseiten, Anfrage mit 5 Fragen, Terminbuchung, automatische Antwort',p:6900,t:1,
+  li:['Neues Design für Handy, Tablet und Laptop, 2 Korrekturschleifen','Start, Projekte, Leistungen, Über uns mit Team, Kontakt, Rechtliches','2 Projektseiten mit Lage, Beschreibung, Galerie','Anfrage mit 5 kurzen Fragen, Terminbuchung, automatische Antwort','SEO-Grundlagen, Weiterleitungen alter Adressen, Schulung'],lim:'Texte liefert ihr, wir lektorieren',xor:'ek'},
+ {g:'wv',id:'we1',n:'Einheiten, Grundrisse und Exposé',li:['Einheitentabelle mit Fläche, Zimmern, Preis, Status, selbst pflegbar','Grundrisse je Einheit','Exposé zum Download erst nach Anfrage','Baufortschritt mit Fotos'],p:2000,t:2,req:['wb']},
+ {g:'wv',id:'we2',n:'Anfragenliste, Weiterleitung und Kanäle',li:['Anfragen gehen an die zuständige Person je Projekt','Anfragenliste mit Status und Zuständigkeit','Links und QR-Codes für ImmoScout, Instagram, Flyer mit Auswertung','Datenschutzfreundliche Statistik'],lim:'Kein vollständiges CRM, das ist Teil der Software',p:1500,t:2,req:['wb']},
+ {g:'wv',id:'we3',n:'Texte durch uns',li:['Texte für alle Seiten, Abstimmung mit euch'],p:1000,t:2,req:['wb']},
+ {g:'wv',id:'we4',n:'2 weitere Projektseiten',li:['Insgesamt 4 Projektseiten, z. B. Haus Beethoven, Villaglück, Worfelden II, Referenzen'],p:500,t:2,req:['wb']},
+ {g:'wp',id:'wp1',n:'Markenauffrischung',li:['Feinschliff Logo, Farben, Schriften, Bildsprache','Kurze Markenrichtlinie'],lim:'Kein komplett neues Logo',p:2200,t:3,req:['wb']},
+ {g:'wp',id:'wp2',n:'Interessentenbereich mit Login',li:['Unterlagen, Grundrisse und Termine für Interessenten'],p:1900,t:3,req:['wb']},
+ {g:'wp',id:'wp3',n:'Englische Version',li:['Alle Hauptseiten und Projektseiten auf Englisch'],p:1000,t:3,req:['wb']},
+ {g:'wp',id:'wp4',n:'Projekt-Updates per E-Mail',li:['Baufortschritt an Interessenten, nur mit Einwilligung'],p:600,t:3,req:['wb']},
+ {g:'wp',id:'wp5',n:'2 Landingpages für Kampagnen',li:['Für Instagram- oder Anzeigenkampagnen'],lim:'Ohne Anzeigenbudget und Kampagnenbetreuung',p:800,t:3,req:['wb']},
+ {g:'wp',id:'wp6',n:'3 Monate Optimierung nach dem Start',li:['Auswertung und Verbesserung der Anfrage-Strecke'],p:500,t:3,req:['wb']},
+ {g:'ek',id:'ek',n:'Website-Erstkontakt ohne Relaunch',sub:'Für die bestehende Website',li:['Eigene Objektseite je Projekt mit Grundrissen und Terminbuchung','Abfrage mit 5 Fragen statt Anruf','Erreichbar über ImmoScout-Link, Instagram und QR-Code','Automatische Antwort, Anfragen direkt im CRM'],lim:'Kein Relaunch der Website',p:5900,m:99,xor:'wb'}];
+const CG=[['sw','Software · Basis und Kernbausteine'],['sx','Software · Erweiterungen'],['wb','Website'],['wv','Website · Vertrieb'],['wp','Website · Extras'],['ek','Alternative ohne Relaunch']];
+const PICK={sw_start:['sb'],sw_komplett:['sb','bau','sv','crm'],sw_premium:['sb','bau','sv','crm','rech','gaeb','term','ver','wirk','hyper'],
+ web_start:['wb'],web_vertrieb:['wb','we1','we2','we3','we4'],web_premium:['wb','we1','we2','we3','we4','wp1','wp2','wp3','wp4','wp5','wp6']};
+const PICKS=[['Software Start',['sw_start']],['Software Komplett',['sw_komplett']],['Software Premium',['sw_premium']],['Website Start',['web_start']],['Website Vertrieb',['web_vertrieb']],['Website Premium',['web_premium']],['Gesamtpaket',['sw_komplett','web_vertrieb']]];
+S.cfg={sel:new Set(),show:false};S.praes=0;S.leist='sw';
+S.roiA={gew:25,sgw:6,prj:3,vp:6,vs:1,bp:2,bs:1,wf:8,wm:8,satz:55,vol:0,pct:0.5,we:29};
+const has=id=>S.cfg.sel.has(id),hasAll=a=>a.every(has);
+function cfgCalc(sel=S.cfg.sel){
+ const it=CFG.filter(c=>sel.has(c.id));let p=0,m=0,t=0;
+ it.forEach(c=>{p+=c.p;if(c.m)m+=c.m;if(c.t)t=Math.max(t,c.t);});
+ const wc=[0,99,190,290][t];m+=wc;
+ const s=k=>PICK[k].every(x=>sel.has(x));
+ let rab=0,rabm=0,rabt='';
+ if(sel.has('sb')&&sel.has('wb')){if(s('sw_komplett')&&s('web_vertrieb')){rab=6500;rabm=90;rabt='Gesamtpaket-Nachlass (Software Komplett und Website Vertrieb)';}else{rab=2500;rabt='Kombi-Nachlass Software und Website';}}
+ const net=p-rab,mon=m-rabm;
+ return {it,p,m,wc,rab,rabm,rabt,net,mon,vat:Math.round(net*.19)};}
+function cfgToggle(id){const c=CFG.find(x=>x.id===id),sel=S.cfg.sel;
+ if(sel.has(id)){sel.delete(id);CFG.forEach(x=>{if(x.req&&x.req.includes(id))sel.delete(x.id);});}
+ else{if(c.xor&&sel.has(c.xor))return;(c.req||[]).forEach(r=>sel.add(r));sel.add(id);}
+ CFG.forEach(x=>{if(x.req&&x.req.some(r=>!sel.has(r)))sel.delete(x.id);});S.cfg.show=false;}
+function modLi(c){const L=c.li||(c.mods||[]).flatMap(k=>OF.MOD[k]?OF.MOD[k][1].slice(0,c.base?1:3):[]);return L;}
+function itemCard(c){const on=has(c.id),dis=!on&&c.xor&&has(c.xor);
+ return `<button class="of-it ${on?'on':''} ${dis?'dis':''}" data-cfg="${c.id}" aria-pressed="${on}" ${dis?'aria-disabled="true"':''}><span class="ck">${I(on?'check-square':'square')}</span><span><b>${esc(c.n)}</b>${c.sub?`<div class="xs t2" style="margin-top:2px">${esc(c.sub)}</div>`:''}<ul>${modLi(c).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${c.lim?`<div class="lim">Grenze: ${esc(c.lim)}</div>`:''}${dis?`<div class="lim">Nicht zusammen mit der Website-Basis</div>`:''}</span></button>`;}
+function vKonfig(){
+ const n=S.cfg.sel.size;
+ if(S.cfg.show&&n)return vKonfigSum();
+ return `<div class="ph"><div><h1>Angebot zusammenstellen</h1><div class="meta"><span>Bausteine anklicken, was ihr haben möchtet</span><span>Preis erst am Ende</span></div></div></div>
+ <section class="box"><div class="bh"><h2>Schnellauswahl</h2></div><div class="bb row">${PICKS.map(([l,k])=>`<button class="btn sm" data-pick="${k.join(',')}">${esc(l)}</button>`).join('')}<button class="btn sm" data-pick="">Alles abwählen</button></div></section>
+ ${CG.map(([g,l])=>`<section class="stack" style="gap:8px"><div class="lbl">${l}</div><div class="of-pick">${CFG.filter(c=>c.g===g).map(itemCard).join('')}</div></section>`).join('')}
+ <div class="of-bar"><span class="sm"><b>${n}</b> ${n===1?'Baustein':'Bausteine'} gewählt${n?` · ${CFG.filter(c=>has(c.id)&&c.base).map(c=>c.n.split(':')[0]).join(' + ')||''}`:''}</span><button class="btn acc" data-act="cfg-calc" ${n?'':'disabled'}>${I('calculator','s')}Endpreis berechnen</button></div>`;}
+function roiHours(sel){const A=S.roiA,g=[];if(sel.has('sb'))g.push('vg');if(sel.has('crm'))g.push('vt');if(sel.has('bau'))g.push('bl');if(sel.has('wb')||sel.has('ek'))g.push('web');
+ let h=0;if(g.includes('vg'))h+=A.gew*A.sgw*A.prj;if(g.includes('vt'))h+=A.vp*A.vs*52;if(g.includes('bl'))h+=A.bp*A.bs*52;if(g.includes('web'))h+=A.wf*A.wm*52/60;
+ const price=g.includes('vg')?(A.vol||0)*1e6*(A.pct||0)/100:0;return {g,h,t:h*A.satz,price};}
+function vKonfigSum(){const r=cfgCalc(),R=roiHours(S.cfg.sel),y3=r.net+36*r.mon,res=3*(R.t+R.price)-y3;
+ const big=r.net>45000,pay=big?[['Anzahlung','bei Auftragserteilung',40],['Zwischenzahlung','wenn die erste Stufe live ist',30],['Schlusszahlung','nach Gesamtabnahme',30]]:[['Anzahlung','bei Auftragserteilung',50],['Schlusszahlung','nach Abnahme',50]];
+ const not=CFG.filter(c=>!has(c.id)&&!(c.xor&&has(c.xor)));
+ const never=[...OF.NEVER.filter(x=>!/Relaunch/.test(x)),...OF.WNEVER.filter(x=>!/CRM/.test(x))];
+ return `<div class="ph"><div><h1>Euer Angebot</h1><div class="meta"><span>${r.it.length} Bausteine</span><span>Festpreis netto zzgl. USt.</span></div></div><button class="btn" data-act="cfg-back">${I('arrow-left','s')}Auswahl ändern</button></div>
+ <div class="of-tot"><div class="acc"><span class="lbl">Einmalig netto</span><b>${eurO(r.net)}</b><span class="xs t3">${eurO(r.net+r.vat)} brutto inkl. 19 % USt.</span></div><div><span class="lbl">Monatlich ab Livegang</span><b>${eurO(r.mon)}</b><span class="xs t3">Betreuung, Hosting, Wartung, Support</span></div><div><span class="lbl">Ergebnis nach 3 Jahren</span><b style="color:${res>=0?'var(--ok)':'var(--ink-2)'}">${res>=0?'+':''}${eurO(res)}</b><span class="xs t3">${R.price?'Zeit und Vergabepreis':'nur aus gesparter Zeit'} · <a href="#roi" data-go="roi" style="color:var(--accent)">Annahmen</a></span></div></div>
+ <section class="box"><div class="bh"><h2>Enthalten</h2></div><div class="tw"><table><thead><tr><th>Baustein</th><th class="r">Einmalig</th><th class="r">Monatlich</th></tr></thead><tbody>
+  ${r.it.map(c=>`<tr><td class="nm">${esc(c.n)}</td><td class="r num">${eurO(c.p)}</td><td class="r num t2">${c.m?eurO(c.m):'–'}</td></tr>`).join('')}
+  ${r.wc?`<tr><td>Betreuung Website</td><td class="r num t2">–</td><td class="r num">${eurO(r.wc)}</td></tr>`:''}
+  ${r.rab?`<tr><td style="color:var(--ok)">${esc(r.rabt)}</td><td class="r num" style="color:var(--ok)">−${eurO(r.rab)}</td><td class="r num" style="color:var(--ok)">${r.rabm?'−'+eurO(r.rabm):'–'}</td></tr>`:''}
+  <tr><td><b style="font-weight:600">Summe netto</b></td><td class="r num"><b style="font-weight:600">${eurO(r.net)}</b></td><td class="r num"><b style="font-weight:600">${eurO(r.mon)}</b></td></tr></tbody></table></div></section>
+ <div class="grid2"><section class="box"><div class="bh"><h2>Zahlungsplan</h2></div><div class="tw"><table><tbody>${pay.map(p=>`<tr><td>${p[0]}, ${p[2]} %</td><td class="t2">${p[1]}</td><td class="r num">${eurO(r.net*p[2]/100)}</td></tr>`).join('')}</tbody></table></div></section>
+ <section class="box"><div class="bh"><h2>Über 3 Jahre</h2></div><div class="tw"><table><tbody><tr><td>Kosten gesamt</td><td class="r num">${eurO(y3)}</td></tr><tr><td>Gesparte Zeit</td><td class="r num">${Math.round(R.h).toLocaleString('de-DE')} Std. pro Jahr · ${eurO(3*R.t)}</td></tr>${S.cfg.sel.has('wb')?`<tr><td>Website je Einheit, 3 Jahre (${S.roiA.we} Einheiten)</td><td class="r num">${eurO((r.it.filter(c=>c.g[0]==='w').reduce((x,c)=>x+c.p,0)+36*r.wc)/S.roiA.we)}</td></tr>`:''}</tbody></table></div></section></div>
+ <div class="grid2"><section class="box"><div class="bh"><h2>Nicht gewählt</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6">${not.map(c=>`<li>${esc(c.n)}</li>`).join('')||'<li>Alle Bausteine gewählt</li>'}</ul></div></section>
+ <section class="box"><div class="bh"><h2>In keinem Paket enthalten</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6">${never.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></section></div>
+ <div class="callout neutral">${I('info','s')}<span>Festpreis vorbehaltlich Pflichtenheft. Die Rechnung nutzt Annahmen, wir erfassen vor dem Start die Ausgangswerte und messen nach 3 Monaten nach.</span></div>`;}
+const RA=[['gew','Gewerke je Projekt','sb'],['sgw','Gesparte Stunden je Gewerk','sb'],['prj','Projekte pro Jahr','sb'],['vol','Vergabevolumen pro Jahr in Mio. €','sb'],['pct','Besserer Vergabepreis in %','sb'],
+ ['vp','Personen im Vertrieb','crm'],['vs','Vertrieb: Stunden je Person und Woche','crm'],['bp','Personen in der Bauleitung','bau'],['bs','Bauleitung: Stunden je Person und Woche','bau'],
+ ['wf','Grundfragen pro Woche','web'],['wm','Minuten je Grundfrage','web'],['we','Einheiten in den Projekten','web'],['satz','Kosten einer Arbeitsstunde in €','']];
+function vRoi(){const sel=S.cfg.sel.size?S.cfg.sel:new Set([...PICK.sw_komplett,...PICK.web_vertrieb]),R=roiHours(sel),A=S.roiA;
+ const shown=S.cfg.show&&S.cfg.sel.size,r=cfgCalc(sel),y3=r.net+36*r.mon,res=3*(R.t+R.price)-y3;
+ const vis=RA.filter(a=>!a[2]||(a[2]==='web'?sel.has('wb')||sel.has('ek'):sel.has(a[2])));
+ return `<div class="ph"><div><h1>Return on Investment</h1><div class="meta"><span>${S.cfg.sel.size?'für eure Auswahl':'Beispiel: Gesamtpaket'}</span><span>Annahmen gemeinsam anpassen</span></div></div></div>
+ <div class="of-tot"><div><span class="lbl">Gesparte Stunden pro Jahr</span><b>${Math.round(R.h).toLocaleString('de-DE')}</b><span class="xs t3">${R.g.map(g=>({vg:'Vergabe',vt:'Vertrieb',bl:'Bauleitung',web:'Website'})[g]).join(', ')}</span></div><div><span class="lbl">Wert der Zeit pro Jahr</span><b>${eurO(R.t)}</b><span class="xs t3">${eurO(A.satz)} je Stunde</span></div>
+ <div class="acc"><span class="lbl">${shown?'Ergebnis nach 3 Jahren':'Besserer Vergabepreis pro Jahr'}</span><b>${shown?(res>=0?'+':'')+eurO(res):(A.vol>0?eurO(R.price):'Volumen eintragen')}</b><span class="xs t3">${shown?'Kosten 3 Jahre '+eurO(y3):'Preise im Konfigurator berechnen'}</span></div></div>
+ <section class="box" id="roiIn"><div class="bh"><h2>Annahmen</h2></div><div class="bb"><div class="of-in">${vis.map(a=>`<label><span>${a[1]}</span><input type="number" min="0" step="any" value="${A[a[0]]}" data-roi="${a[0]}" aria-label="${a[1]}"></label>`).join('')}</div></div></section>
+ <div class="callout acc">${I('sparkle','s')}<span>Größter Hebel ist der Vergabepreis: Jedes 0,5 % weniger Vergabesumme bringt 5.000 € je 1 Mio. € Vergabevolumen. Die gesparte Zeit ist das, was ab dem ersten Monat sicher wirkt.</span></div>
+ <div class="callout neutral">${I('info','s')}<span>Beispielrechnung, keine Zusage. Vor dem Start erfassen wir die Ausgangswerte, nach 3 Monaten vergleichen wir.</span></div>`;}
+function vLeistung(){const W=S.leist==='web',MK={ja:['✓','y'],basis:['Basis',''],nein:['–','n'],'':['','']};
+ const cell=v=>{const k=MK[v]||[v,''];return `<td class="c ${k[1]}">${k[0]}</td>`;};
+ const groups=W?OF.WM:OF.M,cols=W?['Start','Vertrieb','Premium']:['Start','Komplett','Premium','Website-Erstkontakt'];
+ return `<div class="ph"><div><h1>Was ist in welchem Paket</h1><div class="meta"><span>✓ enthalten · Basis = eingeschränkt · – nicht enthalten</span></div></div></div>
+ <div class="tabs"><button class="${W?'':'on'}" data-leist="sw">Software</button><button class="${W?'on':''}" data-leist="web">Website</button></div>
+ ${groups.map(g=>`<section class="box"><div class="bh"><h2>${esc(g[0])}</h2></div><div class="tw"><table class="of-mx"><thead><tr><th>Leistung</th>${cols.map(c=>`<th class="c">${c}</th>`).join('')}<th>Grenze</th></tr></thead><tbody>${g[1].map(r=>`<tr><td>${esc(r[0])}</td>${cols.map((c,i)=>cell(r[1+i])).join('')}<td class="xs t3">${esc(W?r[4]:r[5])}</td></tr>`).join('')}</tbody></table></div></section>`).join('')}
+ <section class="box"><div class="bh"><h2>In keinem Paket enthalten</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6">${(W?OF.WNEVER:OF.NEVER).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></section>
+ <div class="row"><button class="btn acc" data-go="konfig">${I('check-square','s')}Angebot zusammenstellen</button></div>`;}
+const SL=[
+ {d:1,h:'<span class="lbl">Heim &amp; Partner · Plattform und Website</span><h1>Die KI bereitet vor. Euer Team entscheidet.</h1><p class="lead t2">Vergabe, Baustelle, Vertrieb und Website auf einer Datenbasis. Weniger Hinterhertelefonieren, schnellere Vergaben, keine verlorenen Anfragen.</p>'},
+ {h:'<span class="lbl">Heute</span><h2>Viel Zeit geht in Wiederholungen</h2><div class="of-cols"><div><b>Vergabe</b><span>Ausschreibungen per Mail, Rücklauf hinterhertelefonieren, Preisspiegel von Hand.</span></div><div><b>Baustelle</b><span>Zu wenig Leute fallen erst auf, wenn der Termin schon rutscht.</span></div><div><b>Vertrieb</b><span>Grundfragen am Telefon, Anfragen verstreut in Postfächern.</span></div></div>'},
+ {h:'<span class="lbl">Das Prinzip</span><h2>KI bereitet vor, Mensch gibt frei, der Rest läuft</h2><div class="of-cols"><div><b>Vorbereiten</b><span>Agenten lesen Angebote, prüfen Nachweise, schreiben Entwürfe, auch nachts.</span></div><div><b>Freigeben</b><span>Berechtigte bestätigen mit einem Klick, mit Freigabegrenzen je Person.</span></div><div><b>Nachvollziehen</b><span>Jede Entscheidung ist protokolliert: wer, was, wann, warum.</span></div></div>'},
+ {h:'<span class="lbl">Vergabe</span><h2>Von der Ausschreibung bis zur Vergabe auf einer Plattform</h2><div class="of-cols" style="--n:4"><div><b>Per Knopfdruck</b><span>LV-Vorlage laden, Mengen anpassen, an passende Firmen senden.</span></div><div><b>Bieterportal</b><span>Firmen laden Angebot und Nachweise selbst hoch, Erinnerungen laufen automatisch.</span></div><div><b>KI-Vergleich</b><span>Preisspiegel, Ausreißer, fehlende Positionen, begründeter Vorschlag.</span></div><div><b>Freigabe</b><span>Vergabe mit Begründung, Soll geht direkt ins Projekt.</span></div></div>'},
+ {h:'<span class="lbl">Baustelle</span><h2>Abweichungen am selben Tag sehen, nicht beim Verzug</h2><div class="of-cols"><div><b>Bautagebuch am Handy</b><span>Besetzung, Fotos, Mängel in einer Minute erfasst.</span></div><div><b>Abgleich mit dem Vertrag</b><span>10 Mann zugesagt, 2 da: Warnung und Terminprognose.</span></div><div><b>Schreiben als Entwurf</b><span>Mängelrüge oder Behinderungsanzeige mit Belegen, Versand nach Freigabe.</span></div></div>'},
+ {h:'<span class="lbl">Website heute</span><h2>Interessenten finden zu wenig und rufen an</h2><div class="of-cols"><div><b>Projektseiten</b><span>Ein Satz und „Weitere Informationen folgen“. Keine Einheiten, Preise, Grundrisse.</span></div><div><b>Erstkontakt</b><span>Nur Kontaktformular. Kein Termin, keine Fragen zu Zeitpunkt oder Finanzierung.</span></div><div><b>Vertrauen</b><span>Kein Team, keine Referenzen, obwohl es realisierte Projekte gibt.</span></div></div>'},
+ {h:'<span class="lbl">Die neue Website</span><h2>Alle Fakten sichtbar, Termin in fünf Fragen</h2><div class="of-cols" style="--n:4"><div><b>Einheiten mit Status</b><span>Fläche, Zimmer, Preis, frei oder reserviert.</span></div><div><b>Grundriss und Exposé</b><span>Exposé kommt nach der Anfrage automatisch.</span></div><div><b>5 Fragen</b><span>Einheit, Zeitpunkt, Finanzierung, Mitentscheider, Termin.</span></div><div><b>Richtige Person</b><span>Jede Anfrage geht an den, der das Projekt betreut.</span></div></div>'},
+ {h:'<span class="lbl">Was ihr davon habt</span><h2>Weniger Grundfragen, bessere Gespräche</h2><div class="of-cols" style="--n:2"><div><b>Für Interessenten</b><span>Antworten ohne Wartezeit, auch am Sonntagabend. Grundriss sofort, Termin selbst gebucht.</span></div><div><b>Für Heim &amp; Partner</b><span>Weniger Routineanrufe, vorqualifizierte Anfragen, nichts geht verloren, Vertretung möglich.</span></div></div>'},
+ {h:'<span class="lbl">Wie alles ineinandergreift</span><h2>Eine Anfrage, ohne Medienbruch</h2><div class="of-steps"><div><span class="k">1 · Website</span><b>Anfrage</b><span>5 Fragen auf der Projektseite</span></div><div><span class="k">2 · CRM</span><b>Landet im System</b><span>Mit Einheit und Zuständigkeit</span></div><div><span class="k">3 · KI</span><b>Antwortentwurf</b><span>Passende freie Einheiten</span></div><div><span class="k">4 · Regeln</span><b>Nachfassen</b><span>Nichts schläft ein</span></div><div><span class="k">5 · Pipeline</span><b>Reservierung</b><span>Status je Einheit</span></div><div><span class="k">6 · Website</span><b>Status zurück</b><span>Reserviert steht automatisch online</span></div></div>'},
+ {d:1,h:'<span class="lbl">Was beim Menschen bleibt</span><h1>Die Plattform sortiert vor. Entscheiden und verkaufen tut euer Team.</h1><div class="of-cols" style="--n:4"><div><b>Vergabe</b></div><div><b>Beratung</b></div><div><b>Besichtigung</b></div><div><b>Kaufvertrag</b></div></div>'},
+ {h:'<span class="lbl">Wie wir den Nutzen belegen</span><h2>Vorher messen, nach 3 Monaten vergleichen</h2><div class="of-cols"><div><b>Vergabe</b><span>Stunden je Ausschreibung, Zeit bis zur Vergabe, Vergabepreis gegen Budget.</span></div><div><b>Baustelle</b><span>Abweichungen je Woche, Terminverzug.</span></div><div><b>Vertrieb</b><span>Zeit bis zur ersten Antwort, Anfragen ohne zweiten Kontakt.</span></div></div>'},
+ {h:'<span class="lbl">Nächste Schritte</span><h2>Vom Termin zum Start in vier Schritten</h2><div class="of-steps" style="--n:4"><div><span class="k">1</span><b>Bausteine wählen</b><span>Gemeinsam im Konfigurator</span></div><div><span class="k">2</span><b>Unterlagen</b><span>2 bis 3 echte Vergaben, Einheitenlisten</span></div><div><span class="k">3</span><b>Vertrag</b><span>Festpreis, ein Vertrag für alles</span></div><div><span class="k">4</span><b>Workshop in Nauheim</b><span>Pflichtenheft und Website-Konzept</span></div></div>'}];
+function vPraes(){const i=Math.max(0,Math.min(SL.length-1,S.praes)),s=SL[i];
+ return `<div class="ph"><div><h1>Präsentation</h1><div class="meta"><span>Folie ${i+1} von ${SL.length}</span><span>Pfeiltasten zum Blättern</span></div></div><div class="row"><button class="btn" data-act="praes-full">${I('arrows-out','s')}Vollbild</button></div></div>
+ <div class="of-sl ${s.d?'dark':''}" id="slide">${s.h}<span class="of-num">${i+1} / ${SL.length}</span></div>
+ <div class="row sb"><button class="btn" data-praes="${i-1}" ${i?'':'disabled'}>${I('arrow-left','s')}Zurück</button><div class="of-dots">${SL.map((_,k)=>`<button class="${k===i?'on':''}" data-praes="${k}" aria-label="Folie ${k+1}"></button>`).join('')}</div>${i<SL.length-1?`<button class="btn pri" data-praes="${i+1}">Weiter ${I('arrow-right','s')}</button>`:`<button class="btn acc" data-go="konfig">${I('check-square','s')}Angebot zusammenstellen</button>`}</div>`;}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-cfg],[data-pick],[data-praes],[data-leist],[data-act="cfg-calc"],[data-act="cfg-back"],[data-act="praes-full"]');if(!t)return;const d=t.dataset;
+ if(d.cfg){cfgToggle(d.cfg);render();return;}
+ if(d.pick!==undefined){S.cfg.sel=new Set(d.pick?d.pick.split(',').flatMap(k=>PICK[k]):[]);S.cfg.show=false;render();return;}
+ if(d.praes!==undefined){praesGo(+d.praes);return;}
+ if(d.leist){S.leist=d.leist;render();return;}
+ if(d.act==='cfg-calc'){S.cfg.show=true;render();window.scrollTo({top:0});return;}
+ if(d.act==='cfg-back'){S.cfg.show=false;render();return;}
+ if(d.act==='praes-full'){const el=document.getElementById('slide');if(document.fullscreenElement)document.exitFullscreen();else el&&el.requestFullscreen&&el.requestFullscreen().catch(()=>{});}});
+document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.roi;if(!k)return;S.roiA[k]=+e.target.value||0;const pos=e.target.selectionStart;render();const n=document.querySelector(`[data-roi="${k}"]`);if(n){n.focus();try{n.setSelectionRange(pos,pos);}catch(_){}}});
+document.addEventListener('keydown',e=>{if(S.route!=='praes'||S.tour>=0||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+ if(e.key==='ArrowRight'&&S.praes<SL.length-1)praesGo(S.praes+1);if(e.key==='ArrowLeft'&&S.praes>0)praesGo(S.praes-1);});
+function praesGo(i){S.praes=i;const el=document.getElementById('slide');if(document.fullscreenElement===el){const s=SL[i];el.className='of-sl '+(s.d?'dark':'');el.innerHTML=s.h+`<span class="of-num">${i+1} / ${SL.length}</span>`;}else render();}
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&S.route==='praes')render();});
+
 function render(){
   nav();
-  const V={team:vTeam,nu:vNU,quali:vQuali,lead:vLead,auto:vAuto,events:vEvents,cockpit:vCockpit,freigaben:vFreigaben,vergabe:vVergabe,neu:vNeu,portal:vPortal,projekt:vProjekt,crm:vCRM,objekt:vObjekt,kanaele:vKanaele}[S.route];
+  const V={team:vTeam,nu:vNU,quali:vQuali,lead:vLead,auto:vAuto,events:vEvents,cockpit:vCockpit,freigaben:vFreigaben,vergabe:vVergabe,neu:vNeu,portal:vPortal,projekt:vProjekt,crm:vCRM,objekt:vObjekt,kanaele:vKanaele,praes:vPraes,leistung:vLeistung,konfig:vKonfig,roi:vRoi}[S.route];
   $('#view').innerHTML=V();tour();roleSync();
   document.querySelectorAll('[data-i]').forEach(e=>{e.outerHTML=I(e.dataset.i);});
 }
@@ -1683,7 +1856,7 @@ document.addEventListener('change',e=>{const t=e.target;if(t.dataset.nw)S.nw[t.d
   if(t.dataset.lsel){S.ai.letter[t.dataset.lsel]=t.value;if(t.dataset.lsel==='anlass'){S.ai.letter.text='';S.ai.letter.mode=null;}render();}
   if(t.id==='docFile'&&t.files&&t.files[0])runDoc(t.files[0]);});
 document.addEventListener('keydown',e=>{if(S.tour<0)return;if(e.key==='ArrowRight'&&S.tour<TOUR.length-1&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))tourGo(S.tour+1);if(e.key==='ArrowLeft'&&S.tour>0&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))tourGo(S.tour-1);if(e.key==='Escape'){S.tour=-1;render();}});
-const h=location.hash.slice(1);if(['nu','auto','events','freigaben','cockpit','vergabe','portal','projekt','crm','objekt','kanaele'].includes(h))S.route=h;
+const h=location.hash.slice(1);if(['nu','auto','events','freigaben','cockpit','vergabe','portal','projekt','crm','objekt','kanaele','praes','leistung','konfig','roi'].includes(h))S.route=h;
 render();
 })();
 </script>
