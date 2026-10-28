@@ -186,7 +186,7 @@ footer{border-top:1px solid var(--line);padding-top:18px;font-size:.78rem;color:
 <p class="xs t3">Beispielrechnung mit Annahmen, keine Zusage. Wir erfassen die Ausgangswerte vor dem Start und messen nach 3 Monaten nach. Preise netto.</p></div><script>(function(){const C={"pk": [{"n": "Start", "net": 39500, "care": 690, "g": ["vg"]}, {"n": "Komplett", "net": 59500, "care": 990, "g": ["vg", "vt", "bl"]}, {"n": "Premium", "net": 74500, "care": 1490, "g": ["vg", "vt", "bl"]}], "hl": 0},A={};const r=document.getElementById('roi');
 const e=n=>Math.round(n).toLocaleString('de-DE')+' €',h=n=>Math.round(n).toLocaleString('de-DE')+' Std.';
 r.querySelectorAll('input').forEach(i=>A[i.dataset.k]=+i.value);
-function hrs(p){let s=0;const g=p.g;if(g.includes('vg'))s+=A.gew*A.sgw*A.prj;if(g.includes('vt'))s+=A.vp*A.vs*52;if(g.includes('bl'))s+=A.bp*A.bs*52;if(g.includes('web'))s+=A.wf*A.wm*52/60;return s;}
+function hrs(p){let s=0;const g=p.g;if(g.includes('vg'))s+=A.gew*A.sgw*A.prj;if(g.includes('vt'))s+=A.vp*A.vs*52;if(g.includes('bl'))s+=A.bp*A.bs*52;if(g.includes('web'))s+=A.wf*A.wm*52/60;return s+(p.x||0);}
 function calc(){const rows=C.pk.map(p=>{const y1=p.net+12*p.care,y3=p.net+36*p.care,hh=hrs(p),t=hh*A.satz,price=p.g.includes('vg')?(A.vol||0)*1e6*(A.pct||0)/100:0,res3=3*(t+price)-y3,be=p.g.includes('vg')&&A.pct>0?Math.max(0,(y1-t)/(1e6*A.pct/100)):null;return {p,y1,y3,hh,t,price,res3,be,unit:C.perunit&&A.we>0?y3/A.we:null};});
 const hi=rows[C.hl]||rows[0];
 r.querySelector('.roi-kpi').innerHTML=`<div><span class="lbl">Kosten 3 Jahre · ${hi.p.n}</span><b>${e(hi.y3)}</b><span class="xs t3">${e(hi.p.net)} + 36 × ${e(hi.p.care)}</span></div><div><span class="lbl">Gesparte Zeit pro Jahr</span><b>${e(hi.t)}</b><span class="xs t3">${h(hi.hh)} × ${e(A.satz)}</span></div>${C.perunit?`<div><span class="lbl">Kosten je Einheit über 3 Jahre</span><b class="pos">${e(hi.unit||0)}</b><span class="xs t3">${e(hi.y3)} ÷ ${A.we} Einheiten</span></div>`:`<div><span class="lbl">Ergebnis nach 3 Jahren</span><b class="${hi.res3>=0?'pos':'neg'}">${hi.res3>=0?'+':''}${e(hi.res3)}</b><span class="xs t3">${hi.price?'Zeit und Vergabepreis':'nur aus gesparter Zeit'}</span></div>`}`;
@@ -222,7 +222,7 @@ r.addEventListener('input',ev=>{const i=ev.target;if(!i.dataset.k)return;A[i.dat
       <div><b style="font-weight:600">Klärungstermin</b><span class="sm t2">Rollen, Freigabegrenzen, bestehende Systeme, Mengengerüst.</span></div>
       <div><b style="font-weight:600">Vertrag und Anzahlung</b><span class="sm t2">Projektvertrag mit Leistungsbeschreibung, Preisblatt und Auftragsverarbeitungsvertrag.</span></div>
       <div><b style="font-weight:600">Start Prozessanalyse</b><span class="sm t2">Workshop bei euch vor Ort, danach das Pflichtenheft zur Freigabe.</span></div></div></div></section>
-  <footer><span>HK Growth Operator · [Anschrift] · info@hkgrowth-operator.de</span><span>Alle Preise netto zzgl. gesetzlicher USt., Festpreis vorbehaltlich Pflichtenheft.</span></footer>
+  <footer><span>HK Growth UG (haftungsbeschränkt) · Weststraße 2 · 51709 Marienheide · info@hk-growthoperator.de</span><span>Alle Preise netto zzgl. gesetzlicher USt., Festpreis vorbehaltlich Pflichtenheft.</span></footer>
 </div>
 <script>
 (function(){
