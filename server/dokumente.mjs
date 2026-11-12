@@ -58,6 +58,10 @@ tr.sum td{font-weight:600;border-top:1px solid var(--line-2)}
 .sig2{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:8px;break-inside:avoid}
 .sig2>div{display:flex;flex-direction:column;gap:4px}
 .sig2>div>b:first-child{min-height:2.9em}
+.sigpart{display:flex;flex-direction:column;gap:6px;margin-top:10px;break-inside:avoid}
+.sig3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.sigfeld{display:flex;flex-direction:column;gap:3px;break-inside:avoid;min-width:0}
+.sigfeld p{margin:0}
 .sigbox{height:62px;border-bottom:1px solid #333;display:flex;align-items:flex-end}
 .sigbox img{max-height:58px;max-width:100%}
 .sigtext{font-size:8.4pt;color:var(--ink-2);padding-bottom:4px}
@@ -104,14 +108,22 @@ function anlage8(kat, c) {
 }
 
 export function unterschriften(kat, u) {
-  const ag = u
-    ? `<p>${esc(u.ort)}, den ${esc(u.datum)}</p><div class="sigbox"><img src="${u.signatur}" alt="Unterschrift ${esc(u.name)}"></div><b>${esc(u.name)}, ${esc(u.funktion)}</b><span class="xs">elektronisch unterschrieben am ${esc(u.datum)} um ${esc(u.uhrzeit)} Uhr</span>`
-    : `<p class="ph-leer">Ort, den Datum</p><div class="sigbox"></div><span class="xs">Name, Funktion</span>`
+  // Ein Feld je Partner des Auftraggebers; wer unterschreibt, bekommt Bild und Zeitpunkt, die übrigen bleiben frei
+  const leer = (name, funktion) => `<div class="sigfeld"><p class="ph-leer">Ort, den Datum</p><div class="sigbox"></div><b>${esc(name)}</b><span class="xs">${esc(funktion)}</span></div>`
+  const voll = x => `<div class="sigfeld"><p>${esc(x.ort)}, den ${esc(x.datum)}</p><div class="sigbox"><img src="${x.signatur}" alt="Unterschrift ${esc(x.name)}"></div><b>${esc(x.name)}</b><span class="xs">${esc(x.funktion)} · elektronisch unterschrieben am ${esc(x.datum)} um ${esc(x.uhrzeit)} Uhr</span></div>`
+  const partner = (kat.vorbelegt && kat.vorbelegt.unterzeichner) || []
+  const norm = t => String(t || '').trim().toLowerCase().replace(/\s+/g, ' ')
+  const treffer = u ? partner.findIndex(p => norm(p.name) === norm(u.name)) : -1
+  let felder = partner.map((p, i) => (i === treffer ? voll(u) : leer(p.name, p.funktion))).join('')
+  if (u && treffer < 0) felder += voll(u)
+  if (!partner.length) felder = u ? voll(u) : leer('Name', 'Funktion')
   const v = HK_VORAB
   const an = v
-    ? `<p>${esc(v.ort)}, den ${esc(v.datum)}</p><div class="sigbox"><img src="${v.bild}" alt="Unterschrift ${esc(v.name)}"></div><b>${esc(v.name)}, ${esc(v.funktion)}</b><span class="xs">vorab elektronisch unterschrieben am ${esc(v.datum)}</span>`
-    : `<p>${esc(kat.unterzeichnet.ort)}, den ${esc(kat.unterzeichnet.datum)}</p><div class="sigbox"><span class="sigtext">Angebot ${esc(kat.nr)} verbindlich abgegeben</span></div><b>${esc(kat.hk.gf)} (Geschäftsführer)</b>`
-  return `<section class="unterschriften"><h3>Unterschriften</h3><div class="sig2"><div><b>Für den Auftraggeber: ${esc(kat.kunde.name)}</b>${ag}</div><div><b>Für den Auftragnehmer: ${esc(kat.hk.name)}</b>${an}</div></div></section>`
+    ? `<div class="sigfeld"><p>${esc(v.ort)}, den ${esc(v.datum)}</p><div class="sigbox"><img src="${v.bild}" alt="Unterschrift ${esc(v.name)}"></div><b>${esc(v.name)}</b><span class="xs">${esc(v.funktion)} · vorab elektronisch unterschrieben am ${esc(v.datum)}</span></div>`
+    : `<div class="sigfeld"><p>${esc(kat.unterzeichnet.ort)}, den ${esc(kat.unterzeichnet.datum)}</p><div class="sigbox"><span class="sigtext">Angebot ${esc(kat.nr)} verbindlich abgegeben</span></div><b>${esc(kat.hk.gf)}</b><span class="xs">Geschäftsführer</span></div>`
+  return `<section class="unterschriften"><h3>Unterschriften</h3>
+<div class="sigpart"><b>Für den Auftraggeber: ${esc(kat.kunde.name)}</b><div class="sig3">${felder}</div><p class="xs">Es unterschreibt einer der genannten Geschäftsführer. Die übrigen Felder bleiben frei.</p></div>
+<div class="sigpart"><b>Für den Auftragnehmer: ${esc(kat.hk.name)}</b><div class="sig3">${an}</div></div></section>`
 }
 
 /** Der reine Vertragsinhalt mit eingesetzten Angaben. f: { gf, ansprechpartner, vertretung } */
