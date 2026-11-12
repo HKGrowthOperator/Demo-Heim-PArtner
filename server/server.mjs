@@ -10,7 +10,7 @@ import { berechne, bereinigeAuswahl } from './preis.mjs'
 import { speicher } from './speicher.mjs'
 import { pdf, schliessen } from './pdf.mjs'
 import { senden, mailKonfiguriert, gueltigeMail } from './mail.mjs'
-import { vertragHtml, vertragsinhalt, rechnungHtml, mailInhalt, hkSteuer, sha256, datum, uhrzeit, esc } from './dokumente.mjs'
+import { vertragHtml, vertragsinhalt, rechnungHtml, mailInhalt, hkSteuer, sha256, datum, uhrzeit, esc, unterschriften, HK_VORAB } from './dokumente.mjs'
 
 const HIER = path.dirname(fileURLToPath(import.meta.url))
 const SITE = path.resolve(process.env.SITE_DIR || path.join(HIER, '..', 'site'))
@@ -239,7 +239,7 @@ const server = http.createServer(async (req, res) => {
         let s = fs.readFileSync(path.join(HIER, 'vorlage', 'vertrag.html'), 'utf8')
         s = st ? s.replace('USt-IdNr. {{HK_USTID}}', `${st.art} ${esc(st.wert)}`) : s.replace(' · USt-IdNr. {{HK_USTID}}', '')
         for (const k of ['GF', 'ANSPRECHPARTNER', 'VERTRETUNG']) s = s.replace(`{{${k}}}`, `<span class="ph" data-ph="${k}"></span>`)
-        s = s.replace('{{ANLAGE8}}', '<div data-ph="ANLAGE8"></div>').replace('{{UNTERSCHRIFTEN}}', '<div data-ph="UNTERSCHRIFTEN"></div>')
+        s = s.replace('{{ANLAGE8}}', '<div data-ph="ANLAGE8"></div>').replace('{{UNTERSCHRIFTEN}}', unterschriften(KAT, null))
         return senden_(res, 200, s, 'text/html; charset=utf-8')
       }
       if (req.method === 'POST' && teil[0] === 'vorschau') return await vorschau(req, res)
@@ -257,6 +257,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`[server] Port ${PORT}, Seiten aus ${SITE}, Ablage ${ablage.dir}`)
+  console.log(`[server] Vorab-Unterschrift Auftragnehmer: ${HK_VORAB ? HK_VORAB.name + ', ' + HK_VORAB.datum : 'keine'}`)
   console.log(`[server] Passwortschutz: ${process.env.BASIC_AUTH_USER && process.env.BASIC_AUTH_PASSWORD ? 'an' : 'aus'} · E-Mail: ${mailKonfiguriert() ? 'Resend' : 'aus (Postausgang)'} · Rechnung: ${hkSteuer() && process.env.HK_IBAN && process.env.HK_BANK ? 'an' : 'aus (Steuer- oder Bankdaten fehlen)'}`)
 })
 for (const sig of ['SIGTERM', 'SIGINT']) process.on(sig, () => { server.close(); schliessen().finally(() => process.exit(0)) })

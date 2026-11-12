@@ -349,11 +349,37 @@
   "web": "hk-growthoperator.de"
  },
  "kunde": {
-  "name": "Heim & Partner Immobilien GmbH",
+  "name": "HEIM & PARTNER GmbH",
   "str": "Im Rod 35",
   "ort": "64569 Nauheim",
   "hr": "Amtsgericht Darmstadt, HRB 106755",
-  "ustid": "DE451023615"
+  "ustid": "DE451023615",
+  "tel": "06152 1870725",
+  "mail": "info@heimundpartner.com"
+ },
+ "vorbelegt": {
+  "gf": "Frank Heim, Janosch Meyer und Dennis Hollinger",
+  "ansprechpartner": "Herrn Dennis Hollinger",
+  "vertretung": "",
+  "ort": "Nauheim",
+  "rechnungEmail": "info@heimundpartner.com",
+  "unterzeichner": [
+   {
+    "name": "Dennis Hollinger",
+    "funktion": "Geschäftsführer",
+    "email": "dhollinger@heimundpartner.com"
+   },
+   {
+    "name": "Frank Heim",
+    "funktion": "Geschäftsführer",
+    "email": ""
+   },
+   {
+    "name": "Janosch Meyer",
+    "funktion": "Geschäftsführer",
+    "email": ""
+   }
+  ]
  },
  "unterzeichnet": {
   "ort": "Marienheide",

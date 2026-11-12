@@ -6,6 +6,15 @@ import { fileURLToPath } from 'node:url'
 
 const HIER = path.dirname(fileURLToPath(import.meta.url))
 const VORLAGE = fs.readFileSync(path.join(HIER, 'vorlage', 'vertrag.html'), 'utf8')
+// Vorab-Unterschrift für den Auftragnehmer (Bild und Angaben), falls hinterlegt
+function vorab() {
+  try {
+    const info = JSON.parse(fs.readFileSync(path.join(HIER, 'vorlage', 'hk-unterschrift.json'), 'utf8'))
+    const png = fs.readFileSync(path.join(HIER, 'vorlage', 'hk-unterschrift.png')).toString('base64')
+    return { ...info, bild: 'data:image/png;base64,' + png }
+  } catch { return null }
+}
+export const HK_VORAB = vorab()
 const schrift = f => fs.readFileSync(path.join(HIER, 'fonts', f)).toString('base64')
 const FONTS = `@font-face{font-family:Geist;src:url(data:font/woff2;base64,${schrift('Geist-Variable.woff2')}) format('woff2');font-weight:100 900}
 @font-face{font-family:'Geist Mono';src:url(data:font/woff2;base64,${schrift('GeistMono-Variable.woff2')}) format('woff2');font-weight:100 900}`
@@ -48,6 +57,7 @@ tr.sum td{font-weight:600;border-top:1px solid var(--line-2)}
 .ph-leer{color:var(--ink-3)}
 .sig2{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:8px;break-inside:avoid}
 .sig2>div{display:flex;flex-direction:column;gap:4px}
+.sig2>div>b:first-child{min-height:2.9em}
 .sigbox{height:62px;border-bottom:1px solid #333;display:flex;align-items:flex-end}
 .sigbox img{max-height:58px;max-width:100%}
 .sigtext{font-size:8.4pt;color:var(--ink-2);padding-bottom:4px}
@@ -93,11 +103,15 @@ function anlage8(kat, c) {
   return h
 }
 
-function unterschriften(kat, u) {
+export function unterschriften(kat, u) {
   const ag = u
     ? `<p>${esc(u.ort)}, den ${esc(u.datum)}</p><div class="sigbox"><img src="${u.signatur}" alt="Unterschrift ${esc(u.name)}"></div><b>${esc(u.name)}, ${esc(u.funktion)}</b><span class="xs">elektronisch unterschrieben am ${esc(u.datum)} um ${esc(u.uhrzeit)} Uhr</span>`
     : `<p class="ph-leer">Ort, den Datum</p><div class="sigbox"></div><span class="xs">Name, Funktion</span>`
-  return `<section class="unterschriften"><h3>Unterschriften</h3><div class="sig2"><div><b>Für den Auftraggeber: ${esc(kat.kunde.name)}</b>${ag}</div><div><b>Für den Auftragnehmer: ${esc(kat.hk.name)}</b><p>${esc(kat.unterzeichnet.ort)}, den ${esc(kat.unterzeichnet.datum)}</p><div class="sigbox"><span class="sigtext">Angebot ${esc(kat.nr)} verbindlich abgegeben</span></div><b>${esc(kat.hk.gf)} (Geschäftsführer)</b></div></div></section>`
+  const v = HK_VORAB
+  const an = v
+    ? `<p>${esc(v.ort)}, den ${esc(v.datum)}</p><div class="sigbox"><img src="${v.bild}" alt="Unterschrift ${esc(v.name)}"></div><b>${esc(v.name)}, ${esc(v.funktion)}</b><span class="xs">vorab elektronisch unterschrieben am ${esc(v.datum)}</span>`
+    : `<p>${esc(kat.unterzeichnet.ort)}, den ${esc(kat.unterzeichnet.datum)}</p><div class="sigbox"><span class="sigtext">Angebot ${esc(kat.nr)} verbindlich abgegeben</span></div><b>${esc(kat.hk.gf)} (Geschäftsführer)</b>`
+  return `<section class="unterschriften"><h3>Unterschriften</h3><div class="sig2"><div><b>Für den Auftraggeber: ${esc(kat.kunde.name)}</b>${ag}</div><div><b>Für den Auftragnehmer: ${esc(kat.hk.name)}</b>${an}</div></div></section>`
 }
 
 /** Der reine Vertragsinhalt mit eingesetzten Angaben. f: { gf, ansprechpartner, vertretung } */
@@ -129,6 +143,7 @@ export function vertragHtml(kat, c, f, { vnr, u = null, protokoll = null, vorsch
       ['IP-Adresse', protokoll.ip],
       ['Browser', protokoll.ua],
       ['Bestätigt', 'Vertretungsberechtigung für den Auftraggeber; Vertrag mit Anlagen 1 bis 8 gelesen und Angebot verbindlich angenommen'],
+      ...(HK_VORAB ? [['Für den Auftragnehmer', `Vorab unterschrieben von ${HK_VORAB.name}, ${HK_VORAB.funktion}, am ${HK_VORAB.datum} in ${HK_VORAB.ort}`]] : []),
       ['Art der Unterschrift', 'Einfache elektronische Signatur: handschriftliche Unterschrift auf dem Bildschirm. Der Vertrag verlangt Textform (§ 126b BGB).'],
       ['Prüfsumme Vertragsinhalt', `SHA-256 ${protokoll.hash}`],
     ]
@@ -164,7 +179,7 @@ export function mailInhalt(kat, c, x) {
     `Vertragssumme ${eur2(c.net)} netto${c.posten.length ? `, davon Erweiterungen ${eur2(c.einmal)}` : ''}. Monatlich ab Go-live ${eur2(c.mon)} netto.`,
     'Als Nächstes melden wir uns für den Termin zur Prozessanalyse in Nauheim. Projektstart ist spätestens 2 Wochen nach Unterzeichnung.',
   ]
-  const gruss = `Viele Grüße\n${hk.gf}\n${hk.name}\n${hk.tel} · ${hk.mail}`
+  const gruss = `Viele Grüße\n${HK_VORAB ? HK_VORAB.name : hk.gf}\n${hk.name}\n${hk.tel} · ${hk.mail}`
   const text = `Guten Tag ${x.name},\n\n${zeilen.join('\n\n')}\n\nPrüfsumme des Vertrags-PDF (SHA-256): ${x.pdfHash}\n\n${gruss}`
   const html = `<!doctype html><html lang="de"><body style="margin:0;background:#f4f6f6;font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#1d2427"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #dfe4e5;border-radius:10px"><tr><td style="padding:24px 28px">
 <p style="margin:0 0 16px;font-weight:600;font-size:13px;color:#6b7478;letter-spacing:.06em;text-transform:uppercase">${esc(hk.name)}</p>
