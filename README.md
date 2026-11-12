@@ -7,8 +7,9 @@ Alle Namen, Firmen und Zahlen in der Demo sind Beispieldaten.
 | Pfad | Inhalt |
 |---|---|
 | `/` | Plattform-Demo (Demo-Führung oben rechts) |
-| `/angebot/` | Auswahl der Angebote |
-| `/angebot/gesamt-premium/` | Angebot 79.900 € mit Add-ons zum Ankreuzen |
+| `/angebot/` | Aktuelles Angebot 79.900 € mit Add-ons und Knopf zum Vertrag (gleich `/angebot/gesamt-premium/`) |
+| `/angebot/alle/` | Übersicht aller Angebote |
+| `/vertrag` | Kurzlink, leitet auf `/angebot/vertrag/` weiter |
 | `/angebot/vertrag/` | Vertrag zum Gesamtpaket Premium: Add-ons wählen, Vertrag lesen, online unterschreiben |
 | `/angebot/start/`, `/angebot/komplett/`, `/angebot/premium/`, `/angebot/gesamt/`, `/angebot/website/` | weitere Angebote |
 | `/website/` | Entwurf der neuen Website heimundpartner.com |

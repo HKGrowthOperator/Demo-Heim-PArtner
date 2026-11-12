@@ -247,6 +247,8 @@ const server = http.createServer(async (req, res) => {
       if (req.method === 'GET' && teil[0] === 'dokument' && teil.length === 3) return dokument(req, res, decodeURIComponent(teil[1]), teil[2])
       return json(res, 404, { ok: false })
     }
+    // Kurzlink zum Vertrag, z. B. für die Mail an Heim & Partner
+    if (url.pathname === '/vertrag' || url.pathname === '/vertrag/') { res.writeHead(302, { ...HEADER, Location: '/angebot/vertrag/' + url.search }); return res.end() }
     if (req.method !== 'GET' && req.method !== 'HEAD') return senden_(res, 405, 'Method Not Allowed', 'text/plain', { Allow: 'GET, HEAD' })
     return statisch(req, res, url)
   } catch (e) {
