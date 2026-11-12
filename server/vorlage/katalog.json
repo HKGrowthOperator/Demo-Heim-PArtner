@@ -14,17 +14,12 @@
   {
    "name": "Anzahlung",
    "wann": "bei Auftragserteilung",
-   "pct": 40
-  },
-  {
-   "name": "Zwischenzahlung",
-   "wann": "wenn Website und Vergabe live sind (Stufe 1)",
-   "pct": 30
+   "pct": 50
   },
   {
    "name": "Schlusszahlung",
    "wann": "nach Gesamtabnahme",
-   "pct": 30
+   "pct": 50
   }
  ],
  "bausteine": [

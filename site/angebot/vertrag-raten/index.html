@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><style>html{box-sizing:border-box}body{margin:0;padding:0}</style>
+<title>Vertrag mit Ratenzahlung · Heim &amp; Partner</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Angebotsdokument: ruhige Lesespalte, nummerierte Abschnitte, gleiche Tokens wie der Prototyp (Petrol, getönte Neutrale) */
+:root{
+  --bg:oklch(0.982 0.003 200); --panel:oklch(0.997 0.002 200); --sunk:oklch(0.955 0.006 200);
+  --line:oklch(0.9 0.006 200); --line-2:oklch(0.84 0.008 200);
+  --ink:oklch(0.23 0.014 220); --ink-2:oklch(0.43 0.013 220); --ink-3:oklch(0.57 0.011 220);
+  --primary:oklch(0.27 0.02 220); --on-primary:oklch(0.98 0.003 200);
+  --accent:oklch(0.5 0.095 205); --accent-soft:oklch(0.95 0.025 205); --accent-line:oklch(0.83 0.05 205);
+  --ok:oklch(0.52 0.12 152); --crit:oklch(0.53 0.17 28);
+  --f:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:oklch(0.175 0.008 220); --panel:oklch(0.205 0.009 220); --sunk:oklch(0.16 0.008 220);
+  --line:oklch(0.29 0.01 220); --line-2:oklch(0.36 0.012 220);
+  --ink:oklch(0.94 0.005 200); --ink-2:oklch(0.77 0.01 210); --ink-3:oklch(0.63 0.01 210);
+  --primary:oklch(0.92 0.01 200); --on-primary:oklch(0.2 0.01 220);
+  --accent:oklch(0.74 0.09 200); --accent-soft:oklch(0.27 0.04 205); --accent-line:oklch(0.45 0.06 205); --ok:oklch(0.75 0.13 152); --crit:oklch(0.72 0.15 28); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:oklch(0.175 0.008 220); --panel:oklch(0.205 0.009 220); --sunk:oklch(0.16 0.008 220);
+  --line:oklch(0.29 0.01 220); --line-2:oklch(0.36 0.012 220);
+  --ink:oklch(0.94 0.005 200); --ink-2:oklch(0.77 0.01 210); --ink-3:oklch(0.63 0.01 210);
+  --primary:oklch(0.92 0.01 200); --on-primary:oklch(0.2 0.01 220);
+  --accent:oklch(0.74 0.09 200); --accent-soft:oklch(0.27 0.04 205); --accent-line:oklch(0.45 0.06 205); --ok:oklch(0.75 0.13 152); --crit:oklch(0.72 0.15 28); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--f);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding-block:48px 96px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:64px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance;font-weight:600}
+h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1}
+h2{font-size:1.5rem;line-height:1.2}
+h3{font-size:1.02rem}
+p{margin:0}
+.lead{font-size:1.1rem;color:var(--ink-2);max-width:62ch}
+.lbl{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.t2{color:var(--ink-2)}.t3{color:var(--ink-3)}.sm{font-size:.875rem}.xs{font-size:.78rem}
+section{display:flex;flex-direction:column;gap:20px}
+.sec-h{display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;align-items:baseline}
+.sec-h .n{font:500 .85rem var(--mono);color:var(--ink-3)}
+.sec-h p{margin-top:8px;color:var(--ink-2);max-width:64ch}
+.sec-b{margin-left:72px;display:flex;flex-direction:column;gap:18px;min-width:0}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{width:30px;height:30px;border-radius:7px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font:700 11px var(--f)}
+
+/* Preisblock */
+.price{display:grid;grid-template-columns:minmax(0,1.2fr) repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.price>div{padding:18px 20px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.price>div+div{border-left:1px solid var(--line)}
+.price>div:first-child{background:var(--accent-soft)}
+.price .big{font:600 2.2rem/1 var(--mono);letter-spacing:-.04em}
+.price b{font-weight:500}
+
+/* Leistungen */
+.feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;border-top:1px solid var(--line)}
+.feat>div{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}
+.feat .k{width:28px;height:28px;border-radius:7px;background:var(--sunk);display:grid;place-items:center;font:600 .8rem var(--mono);color:var(--ink-2)}
+.feat b{font-weight:600;display:block;margin-bottom:4px}
+.feat p{font-size:.9rem;color:var(--ink-2)}
+.feat>div.wide{grid-column:1/-1}
+.link-note{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;border-radius:10px;background:var(--accent-soft);border:1px solid var(--accent-line);padding:14px 16px;font-size:.9rem}
+.link-note svg{color:var(--accent);margin-top:3px}
+
+/* Prozess */
+.proc{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.proc-rail{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.proc-rail button{all:unset;cursor:pointer;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-size:.8rem;color:var(--ink-3);border-right:1px solid var(--line);min-width:0}
+.proc-rail button:last-child{border-right:0}
+.proc-rail button:hover{background:var(--sunk)}
+.proc-rail button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.proc-rail i{height:3px;border-radius:2px;background:var(--line)}
+.proc-rail button.done i{background:var(--ink-2)} .proc-rail button.done{color:var(--ink-2)}
+.proc-rail button.on i{background:var(--accent)} .proc-rail button.on{color:var(--ink);font-weight:500}
+.proc-rail span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proc-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:260px}
+.proc-body>div{padding:22px 24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.proc-body>div+div{border-left:1px solid var(--line);background:var(--sunk)}
+.proc-body h3{font-size:1.25rem}
+.who{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 14px;font-size:.88rem}
+.who dt{color:var(--ink-3)} .who dd{margin:0}
+.sys{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.88rem}
+.sys li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px}
+.sys li svg{color:var(--accent);margin-top:3px}
+.proc-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.btn{cursor:pointer;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:8px;border:1px solid var(--line-2);background:var(--panel);font:500 .85rem var(--f);color:var(--ink);text-decoration:none}
+.btn:hover{background:var(--sunk)}
+.btn.pri{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Tabellen */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tfoot td{border-bottom:0;border-top:1px solid var(--line-2)}
+td.r,th.r{text-align:right;white-space:nowrap}
+.bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;min-width:80px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+
+/* Zeitplan */
+.phases{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) minmax(0,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.phases>div{padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.phases>div+div{border-left:1px solid var(--line)}
+.phases>div:nth-child(2){background:var(--accent-soft)}
+.phases b{font-weight:600;font-size:.92rem}
+
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;font-size:.92rem;color:var(--ink-2)}
+.list li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px}
+.list li svg{margin-top:3px;color:var(--ink-3)}
+.list.ok li svg{color:var(--ok)}
+.list.no li svg{color:var(--crit)}
+.note{border-radius:10px;background:var(--sunk);padding:14px 16px;font-size:.88rem;color:var(--ink-2)}
+.care{display:grid;grid-template-columns:240px minmax(0,1fr);border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.care>div{padding:20px;min-width:0}
+.care>div:first-child{border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px;justify-content:center}
+.care .big{font:600 1.8rem/1 var(--mono);letter-spacing:-.03em}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+.steps div{padding:16px 16px 0 0;display:flex;flex-direction:column;gap:6px;counter-increment:s}
+.steps div+div{padding-left:16px;border-left:1px solid var(--line)}
+.steps div::before{content:counter(s);font:500 .8rem var(--mono);color:var(--accent)}
+footer{border-top:1px solid var(--line);padding-top:18px;font-size:.78rem;color:var(--ink-3);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .sec-h{grid-template-columns:minmax(0,1fr)}.sec-h .n{display:none}.sec-b{margin-left:0}
+  .price{grid-template-columns:repeat(2,minmax(0,1fr))}.price>div:first-child{grid-column:1/-1}.price>div:nth-child(2){border-left:0}.price>div:nth-child(n+2){border-top:1px solid var(--line)}
+  .feat,.two{grid-template-columns:minmax(0,1fr)}
+  .proc-rail{grid-template-columns:repeat(6,minmax(0,1fr))}.proc-rail span{display:none}
+  .proc-body{grid-template-columns:minmax(0,1fr)}.proc-body>div+div{border-left:0;border-top:1px solid var(--line)}
+  .phases{grid-template-columns:minmax(0,1fr)}.phases>div+div{border-left:0;border-top:1px solid var(--line)}
+  .care{grid-template-columns:minmax(0,1fr)}.care>div:first-child{border-right:0;border-bottom:1px solid var(--line)}
+  .steps{grid-template-columns:minmax(0,1fr)}.steps div+div{padding-left:0;border-left:0;border-top:1px solid var(--line);padding-top:14px}
+}
+
+.mods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.mod{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.mod .h{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.mod b{font-weight:600}
+.mod.new{border-color:var(--accent-line);background:var(--accent-soft)}
+.tag{display:inline-block;font:500 .68rem var(--f);letter-spacing:.04em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-line);border-radius:99px;padding:1px 8px;margin-left:8px;vertical-align:middle}
+.tests{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tests>div{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--panel);display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;font-size:.88rem}
+.tests .k{font:600 .8rem var(--mono);color:var(--accent)}
+.link-note{overflow-wrap:anywhere;display:block}
+.up{border:1px dashed var(--line-2);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+
+.mx td.c,.mx th.c{text-align:center;white-space:nowrap}.mx td.y{color:var(--ok);font-weight:600}.mx td.n{color:var(--ink-3)}.mx .hl{background:var(--accent-soft)}.mx{table-layout:fixed;width:100%;min-width:620px}.mx th:first-child{width:34%}.mx th.c{width:10%}
+@media (max-width:860px){.mods,.tests{grid-template-columns:minmax(0,1fr)}}
+.roi-t .hl{background:var(--accent-soft)}
+
+.roi-in{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px}
+.roi-in label{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.88rem;border-bottom:1px solid var(--line);padding:6px 0}
+.roi-in input{width:90px;height:30px;border:1px solid var(--line-2);border-radius:6px;background:var(--panel);color:var(--ink);font:500 .85rem var(--mono);padding:0 8px;text-align:right}
+.roi-kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.roi-kpi>div{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.roi-kpi b{font:600 1.5rem/1.1 var(--mono);letter-spacing:-.03em}
+.roi-kpi .pos{color:var(--ok)}.roi-kpi .neg{color:var(--ink-2)}
+.ben{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ben>div{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ben .k{font-size:.78rem;color:var(--ink-3)}
+@media (max-width:860px){.roi-in,.roi-kpi,.ben{grid-template-columns:minmax(0,1fr)}}
+
+.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.flow>div{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.flow .s{font:600 .78rem var(--mono);color:var(--accent)}.flow .w{font-size:.74rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.pr{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.pr .box{border:1px solid var(--accent);box-shadow:0 0 0 2px var(--accent-soft);border-radius:12px;background:var(--panel);padding:20px;display:flex;flex-direction:column;gap:6px}
+.pr .big{font:600 2.2rem/1 var(--mono);letter-spacing:-.04em}
+@media (max-width:860px){.flow,.pr{grid-template-columns:minmax(0,1fr)}}
+.lt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;font-size:.84rem;line-height:1.5}.lt .t3{font-size:.76rem}
+.pos td{vertical-align:top}.pos .d{font-size:.78rem;color:var(--ink-2);margin-top:2px}.pos .z{font-size:.74rem;color:var(--accent);white-space:nowrap}
+.ao{display:grid;grid-template-columns:28px minmax(0,1fr) 120px 110px;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+.ao input[type=checkbox]{width:18px;height:18px;margin-top:2px;accent-color:var(--accent)}.ao .q{width:56px;height:28px;border:1px solid var(--line-2);border-radius:6px;background:var(--panel);color:var(--ink);font:500 .8rem var(--mono);padding:0 6px;text-align:right}
+.ao .p{text-align:right;font:500 .84rem var(--mono)}.ao .d{font-size:.78rem;color:var(--ink-2)}.ao .z{font-size:.74rem;color:var(--accent)}
+.sel{position:sticky;bottom:12px;background:var(--panel);border:1px solid var(--accent);box-shadow:0 0 0 2px var(--accent-soft);border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:end;z-index:5}
+.sel>div{display:flex;flex-direction:column;gap:2px}.sel b{font:600 1.25rem var(--mono)}.sig{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:28px}.sig div{border-top:1px solid var(--ink-3);padding-top:6px;font-size:.78rem;color:var(--ink-3)}
+.ck{display:inline-block;width:12px;height:12px;border:1px solid var(--ink-2);border-radius:2px;margin-right:6px;vertical-align:-1px}
+@media (max-width:760px){.lt,.sig,.sel{grid-template-columns:minmax(0,1fr)}.ao{grid-template-columns:24px minmax(0,1fr)}.ao .p{grid-column:2;text-align:left}}
+@media print{.noprint{display:none!important}.sel{position:static;box-shadow:none}}
+/* Summenleiste am Handy kompakt, damit sie nicht ein Drittel des Bildschirms verdeckt */
+@media (max-width:760px){.sel{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;padding:10px 12px;bottom:8px}.sel b{font-size:1rem}.sel .lbl{font-size:.64rem}}
+
+.pt th.r,.pt td.r{text-align:right;white-space:nowrap}@media (max-width:520px){.pt .b{display:none}}
+[hidden]{display:none!important}
+.wer{display:flex;flex-direction:column;gap:8px}
+.btn.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink);font-weight:600}
+.vtext .unterschriften{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-2)}
+.vtext .sig2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
+.vtext .sig2>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.vtext .sig2>div>b:first-child{min-height:3.2em}
+.vtext .sigpart{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.vtext .sig3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.vtext .sigfeld{display:flex;flex-direction:column;gap:3px;min-width:0}
+.vtext .sigfeld p{margin:0}
+.vtext .sigbox{height:64px;border-bottom:1px solid var(--ink-2);display:flex;align-items:flex-end}
+.vtext .sigbox img{max-height:60px;max-width:100%;background:#fff;border-radius:4px}
+.vtext .ph-leer{color:var(--ink-3)}
+@media (max-width:760px){.vtext .sig2,.vtext .sig3{grid-template-columns:minmax(0,1fr)}}
+.ao .q{width:56px}
+.fld{display:flex;flex-direction:column;gap:5px;font-size:.85rem;color:var(--ink-2);min-width:0}
+.fld input[type=text],.fld input[type=email]{width:100%;height:40px;text-align:left;font:400 .95rem var(--f);padding:0 12px;border-radius:8px}
+.fld .h{font-size:.76rem;color:var(--ink-3)}
+.fg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px}
+.zust{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start;font-size:.92rem;cursor:pointer}
+.zust input{margin-top:3px}
+.sigw{border:1px solid var(--line-2);border-radius:12px;background:var(--panel);position:relative;touch-action:none}
+.sigw canvas{display:block;width:100%;height:190px;cursor:crosshair;border-radius:12px}
+.sigw .ln{position:absolute;left:24px;right:24px;bottom:42px;border-bottom:1px solid var(--line-2);pointer-events:none}
+.sigw .hn{position:absolute;left:24px;bottom:16px;font-size:.76rem;color:var(--ink-3);pointer-events:none}
+.sigw .x{position:absolute;right:10px;top:10px}
+.vtext{max-height:70vh;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:24px 28px;font-size:.88rem;line-height:1.6}
+.vtext h1.vt{font-size:1.3rem;text-align:center;margin:0 0 6px}.vtext .vt-sub{text-align:center;margin-bottom:12px}
+.vtext .parteien{text-align:center;margin-bottom:14px}.vtext .parteien p{margin:0 0 2px}
+.vtext h2{font-size:1.02rem;color:var(--accent);margin:18px 0 6px}.vtext h3{font-size:.92rem;color:var(--accent);margin:12px 0 4px}
+.vtext h2.anl{margin-top:28px;padding-top:16px;border-top:1px dashed var(--line-2)}
+.vtext p{margin:0 0 6px}.vtext p.cl{padding-left:2.1em;text-indent:-2.1em}.vtext .cn{display:inline-block;width:2.1em;text-indent:0}
+.vtext ul{margin:2px 0 8px;padding-left:1.4em}.vtext li p{margin:0}
+.vtext table{font-size:.8rem}.vtext th,.vtext td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.vtext td p,.vtext th p{margin:0}
+.vtext .tw{margin:6px 0 10px}
+.vtext .ph{background:var(--accent-soft);border-radius:4px;padding:0 3px;color:var(--ink)}
+.vtext .ph:empty::before{content:'[wird aus euren Angaben eingesetzt]';color:var(--ink-3)}
+.vtext .ph8{border:1px solid var(--accent-line);border-radius:10px;background:var(--accent-soft);padding:12px 14px;margin:8px 0}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.meldung{border-radius:10px;padding:12px 14px;font-size:.9rem}
+.meldung.fehler{background:color-mix(in oklch,var(--crit) 10%,var(--panel));border:1px solid color-mix(in oklch,var(--crit) 35%,var(--line));color:var(--ink)}
+.meldung.gut{background:color-mix(in oklch,var(--ok) 10%,var(--panel));border:1px solid color-mix(in oklch,var(--ok) 35%,var(--line))}
+.btn.big{height:46px;padding:0 22px;font-size:.98rem;font-weight:600}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.fertig{border:1px solid var(--ok);box-shadow:0 0 0 3px color-mix(in oklch,var(--ok) 18%,transparent);border-radius:14px;background:var(--panel);padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.fertig h2{color:var(--ok)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+@media (max-width:760px){.fg{grid-template-columns:minmax(0,1fr)}.vtext{padding:16px;max-height:60vh}.sigw canvas{height:170px}}
+</style>
+</head><body>
+
+<div class="wrap">
+<header class="top"><div class="brand"><div class="logo">HK</div><div><b style="font-weight:600">HK Growth UG (haftungsbeschränkt)</b><div class="xs t3">Weststraße 2 · 51709 Marienheide · 0175 4547011 · info@hk-growthoperator.de</div></div></div><div class="xs t3">Vertrag zum Angebot HKG-2026-045 vom 28.10.2026 · gültig bis 27.11.2026</div></header>
+<section><span class="lbl">Für HEIM &amp; PARTNER GmbH · Dennis Hollinger · Ratenzahlung</span><h1>Vertrag mit Ratenzahlung</h1>
+<p class="lead">Gesamtpaket Premium (Software Premium + Website Vertrieb) zum Festpreis von 79.900 € netto, Betreuung 1.590 € netto im Monat. Der Vertrag ist vorbereitet und von HK Growth UG (haftungsbeschränkt) bereits unterschrieben. Eure Angaben sind eingetragen, ihr müsst nur noch prüfen und unterschreiben. Gezahlt wird die Hälfte bei Unterschrift, der Rest in drei oder vier gleichen Monatsraten, unabhängig vom Projektfortschritt. Danach bekommt ihr den unterschriebenen Vertrag und die Rechnung mit Zahlungsplan als PDF per E-Mail.</p>
+<div class="row"><a class="btn" href="/angebot/">Zum Angebot</a><a class="btn" href="/">Zur Demo</a></div></section>
+<section id="s01"><div class="sec-h"><span class="n">01</span><div><h2>Erweiterungen wählen</h2><p>Das Gesamtpaket ist gesetzt. Ankreuzen, was ihr zusätzlich beauftragen wollt. Die Erweiterungen stehen im Vertrag in Anlage 8.</p></div></div><div class="sec-b"><h3 style="margin-top:14px">Website</h3><label class="ao"><div><input type="checkbox" data-a="mk" aria-label="Markenauffrischung"></div><div><b style="font-weight:500">Markenauffrischung</b><div class="d">Feinschliff Logo, Farben, Schriften und Bildsprache, kurze Markenrichtlinie. Kein komplett neues Logo.</div></div><div class="p">2.200 €</div><div class="p t2" style="font-size:.76rem">Website-Betreuung 290 statt 190 €</div></label><label class="ao"><div><input type="checkbox" data-a="ib" aria-label="Interessentenbereich mit Login"></div><div><b style="font-weight:500">Interessentenbereich mit Login</b><div class="d">Interessenten sehen ihre Unterlagen, Grundrisse und Termine an einer Stelle statt in Mails.</div><div class="z">Zeitersparnis: weniger Rückfragen nach Unterlagen</div></div><div class="p">1.900 €</div><div class="p t2" style="font-size:.76rem">Website-Betreuung 290 statt 190 €</div></label><label class="ao"><div><input type="checkbox" data-a="en" aria-label="Englische Version"></div><div><b style="font-weight:500">Englische Version</b><div class="d">Alle Hauptseiten und Projektseiten zusätzlich auf Englisch.</div></div><div class="p">1.000 €</div><div class="p t2" style="font-size:.76rem">Website-Betreuung 290 statt 190 €</div></label><label class="ao"><div><input type="checkbox" data-a="pu" aria-label="Projekt-Updates per E-Mail"></div><div><b style="font-weight:500">Projekt-Updates per E-Mail</b><div class="d">Baufortschritt automatisch an Interessenten, nur mit Einwilligung. Hält Interessenten bis zum Verkaufsstart warm.</div></div><div class="p">600 €</div><div class="p t2" style="font-size:.76rem">Website-Betreuung 290 statt 190 €</div></label><label class="ao"><div><input type="checkbox" data-a="lp" aria-label="2 Landingpages für Kampagnen"></div><div><b style="font-weight:500">2 Landingpages für Kampagnen</b><div class="d">Für Instagram- oder Anzeigenkampagnen, ohne Anzeigenbudget und Kampagnenbetreuung.</div></div><div class="p">800 €</div><div class="p t2" style="font-size:.76rem">Website-Betreuung 290 statt 190 €</div></label><label class="ao"><div><input type="checkbox" data-a="op" aria-label="3 Monate Optimierung"></div><div><b style="font-weight:500">3 Monate Optimierung</b><div class="d">Auswertung und Verbesserung der Anfrage-Strecke nach dem Start.</div></div><div class="p">500 €</div><div class="p t2" style="font-size:.76rem">Website-Betreuung 290 statt 190 €</div></label><label class="ao"><div><input type="checkbox" data-a="ps" aria-label="Weitere Projektseite mit Einheiten"></div><div><b style="font-weight:500">Weitere Projektseite mit Einheiten</b><div class="d">Je weiteres Projekt eine Seite mit Einheitentabelle, Grundrissen, Exposé und Terminbuchung.</div><div class="row" style="gap:6px;margin-top:4px"><span class="xs t3">Menge</span><input class="q" type="number" min="1" max="50" value="1" data-q="ps" aria-label="Menge Weitere Projektseite mit Einheiten"></div></div><div class="p">550 € je Stück</div><div class="p t2" style="font-size:.76rem"></div></label><h3 style="margin-top:14px">Neue KI-Agenten</h3><label class="ao"><div><input type="checkbox" data-a="ar" aria-label="Agent Rechnungsprüfung"></div><div><b style="font-weight:500">Agent Rechnungsprüfung</b><div class="d">Prüft Rechnungen der Nachunternehmer gegen Auftrag, Aufmaß und genehmigte Nachträge, markiert Abweichungen, bereitet die Freigabe vor.</div><div class="z">Zeitersparnis: ca. 112 Std. pro Jahr (150 Rechnungen × 45 Min.)</div></div><div class="p">4.500 €</div><div class="p t2" style="font-size:.76rem">+ 60 € im Monat</div></label><label class="ao"><div><input type="checkbox" data-a="ap" aria-label="Agent Posteingang"></div><div><b style="font-weight:500">Agent Posteingang</b><div class="d">Liest eingehende Mails und gescannte Briefe, ordnet sie Projekt und Firma zu, legt Aufgaben mit Frist an.</div><div class="z">Zeitersparnis: ca. 73 Std. pro Jahr (20 Min. pro Arbeitstag)</div></div><div class="p">3.500 €</div><div class="p t2" style="font-size:.76rem">+ 50 € im Monat</div></label><label class="ao"><div><input type="checkbox" data-a="ag" aria-label="Agent Gewährleistung und Mängel nach Übergabe"></div><div><b style="font-weight:500">Agent Gewährleistung und Mängel nach Übergabe</b><div class="d">Erfasst Mängelanzeigen der Käufer, ordnet sie dem verantwortlichen Gewerk zu, überwacht Gewährleistungsfristen und erinnert die Firmen.</div><div class="z">Zeitersparnis: ca. 78 Std. pro Jahr (1,5 Std. pro Woche)</div></div><div class="p">3.500 €</div><div class="p t2" style="font-size:.76rem">+ 50 € im Monat</div></label><label class="ao"><div><input type="checkbox" data-a="ak" aria-label="Agent Käuferbetreuung und Sonderwünsche"></div><div><b style="font-weight:500">Agent Käuferbetreuung und Sonderwünsche</b><div class="d">Nimmt Sonderwünsche der Käufer auf, holt Preise beim Gewerk ein, erstellt den Kostenvorschlag und hält Bemusterungstermine nach.</div><div class="z">Zeitersparnis: ca. 58 Std. pro Jahr (2 Std. je Einheit × 29)</div></div><div class="p">4.000 €</div><div class="p t2" style="font-size:.76rem">+ 50 € im Monat</div></label><h3 style="margin-top:14px">Erweiterungen</h3><label class="ao"><div><input type="checkbox" data-a="wf" aria-label="Weiterer Workflow"></div><div><b style="font-weight:500">Weiterer Workflow</b><div class="d">Ein zusätzlicher Ablauf von Auslöser bis Ergebnis nach euren Regeln, mit Freigabepunkten.</div><div class="row" style="gap:6px;margin-top:4px"><span class="xs t3">Menge</span><input class="q" type="number" min="1" max="50" value="1" data-q="wf" aria-label="Menge Weiterer Workflow"></div></div><div class="p">1.200 € je Stück</div><div class="p t2" style="font-size:.76rem"></div></label><label class="ao"><div><input type="checkbox" data-a="vl" aria-label="Weitere Vorlage"></div><div><b style="font-weight:500">Weitere Vorlage</b><div class="d">Eine zusätzliche Schreiben- oder Berichtsart, die die KI als Entwurf mit Belegen erstellt.</div><div class="row" style="gap:6px;margin-top:4px"><span class="xs t3">Menge</span><input class="q" type="number" min="1" max="50" value="1" data-q="vl" aria-label="Menge Weitere Vorlage"></div></div><div class="p">450 € je Stück</div><div class="p t2" style="font-size:.76rem"></div></label><label class="ao"><div><input type="checkbox" data-a="db" aria-label="Weiteres Dashboard oder Auswertung"></div><div><b style="font-weight:500">Weiteres Dashboard oder Auswertung</b><div class="d">Eine zusätzliche Auswertung, zum Beispiel für Bank, Investoren oder Gesellschafter.</div><div class="row" style="gap:6px;margin-top:4px"><span class="xs t3">Menge</span><input class="q" type="number" min="1" max="50" value="1" data-q="db" aria-label="Menge Weiteres Dashboard oder Auswertung"></div></div><div class="p">900 € je Stück</div><div class="p t2" style="font-size:.76rem"></div></label><label class="ao"><div><input type="checkbox" data-a="zu" aria-label="Weitere Zugänge"></div><div><b style="font-weight:500">Weitere Zugänge</b><div class="d">Zugänge über die 8 enthaltenen Nutzer hinaus, mit Rolle und Rechten.</div><div class="row" style="gap:6px;margin-top:4px"><span class="xs t3">Menge</span><input class="q" type="number" min="1" max="50" value="1" data-q="zu" aria-label="Menge Weitere Zugänge"></div></div><div class="p"></div><div class="p t2" style="font-size:.76rem">+ 25 € im Monat je Zugang</div></label><label class="ao"><div><input type="checkbox" data-a="st" aria-label="Zusätzlicher Schulungstag vor Ort"></div><div><b style="font-weight:500">Zusätzlicher Schulungstag vor Ort</b><div class="d">Ein Tag Schulung in Nauheim, zum Beispiel für neue Mitarbeiter.</div><div class="row" style="gap:6px;margin-top:4px"><span class="xs t3">Menge</span><input class="q" type="number" min="1" max="50" value="1" data-q="st" aria-label="Menge Zusätzlicher Schulungstag vor Ort"></div></div><div class="p">960 € je Stück</div><div class="p t2" style="font-size:.76rem"></div></label><label class="ao"><div><input type="checkbox" data-a="if" aria-label="Schnittstelle zu ERP, DATEV oder Buchhaltung"></div><div><b style="font-weight:500">Schnittstelle zu ERP, DATEV oder Buchhaltung</b><div class="d">Anbindung an ein bestehendes System. Richtpreis 3.500 bis 8.000 € je Schnittstelle, Festpreis nach Prüfung.</div></div><div class="p">Richtpreis 3.500 bis 8.000 €</div><div class="p t2" style="font-size:.76rem">gesondertes Angebot, nicht im Vertrag</div></label></div></section>
+<div class="sel" id="sel"><div><span class="lbl">Gesamtpaket</span><b>79.900 €</b></div><div><span class="lbl">Erweiterungen</span><b id="sAdd">0 €</b></div><div><span class="lbl">Summe einmalig netto</span><b id="sNet" style="color:var(--accent)">79.900 €</b><span class="xs t3" id="sBr"></span></div><div><span class="lbl">Monatlich netto ab Go-live</span><b id="sMon">1.590 €</b><span class="xs t3" id="sAnz"></span></div></div>
+<section id="s02"><div class="sec-h"><span class="n">02</span><div><h2>Zahlungsweise</h2><p>Die Hälfte zahlt ihr bei Unterschrift, den Rest verteilt auf drei oder vier Monate. Wählt die Anzahl der Raten.</p></div></div><div class="sec-b"><div class="row" role="group" aria-label="Anzahl der Monatsraten"><button type="button" class="btn chip" data-rn="3" aria-pressed="false">3 Monatsraten</button><button type="button" class="btn chip" data-rn="4" aria-pressed="true">4 Monatsraten</button></div><div class="tw" style="margin-top:14px"><table class="pt"><thead><tr><th>Zahlung</th><th>Fällig</th><th class="r">Netto</th><th class="r b">Brutto</th></tr></thead><tbody id="planT"></tbody></table></div><p class="xs t3">Ihr bekommt bei Unterschrift eine Rechnung über die Vertragssumme mit diesem Zahlungsplan. Die Raten sind fest, unabhängig vom Projektfortschritt. Nach der Gesamtabnahme folgt die Schlussrechnung, in der alles angerechnet ist.</p></div></section>
+<section id="s03"><div class="sec-h"><span class="n">03</span><div><h2>Vertrag lesen</h2><p>Der vollständige Vertrag mit allen Anlagen. Eure Auswahl und Angaben sind markiert eingesetzt.</p></div></div><div class="sec-b"><div class="row"><button class="btn" type="button" id="pdfBtn">Als PDF ansehen</button><span class="xs t3">Die PDF-Vorschau enthält eure Auswahl und Angaben, aber noch keine Unterschrift.</span></div>
+<div class="vtext" id="vt" tabindex="0" aria-label="Vertragstext"><p class="t3">Vertrag wird geladen …</p></div></div></section>
+<section id="s04"><div class="sec-h"><span class="n">04</span><div><h2>Angaben und Unterschrift</h2><p>Unterschreibt mit Maus, Finger oder Stift. Der Vertrag sieht Textform vor, eine elektronische Unterschrift reicht.</p></div></div><div class="sec-b"><form id="f" novalidate class="stack" style="display:flex;flex-direction:column;gap:18px">
+<div class="wer"><span class="lbl">Wer unterschreibt?</span><div class="row" role="group" aria-label="Wer unterschreibt"><button type="button" class="btn chip" data-wer="0" aria-pressed="true">Dennis Hollinger</button><button type="button" class="btn chip" data-wer="1" aria-pressed="false">Frank Heim</button><button type="button" class="btn chip" data-wer="2" aria-pressed="false">Janosch Meyer</button><button type="button" class="btn chip" data-wer="x" aria-pressed="false">Andere Person</button></div></div>
+<div class="fg">
+<label class="fld">Name der unterzeichnenden Person<input type="text" id="f-name" name="name" autocomplete="name" required maxlength="120" value="Dennis Hollinger"></label>
+<label class="fld">Funktion<input type="text" id="f-funktion" name="funktion" value="Geschäftsführer" required maxlength="80"></label>
+<label class="fld">E-Mail<input type="email" id="f-email" name="email" autocomplete="email" required maxlength="200" value="dhollinger@heimundpartner.com"><span class="h">Hierhin schicken wir Vertrag und Rechnung als PDF.</span></label>
+<label class="fld">Ort der Unterschrift<input type="text" id="f-ort" name="ort" value="Nauheim" required maxlength="80"></label>
+<label class="fld">Vertreten durch die Geschäftsführer<input type="text" id="f-gf" name="gf" value="Frank Heim, Janosch Meyer und Dennis Hollinger" required maxlength="160" data-live="GF"><span class="h">Steht so im Vertrag unter den Parteien.</span></label>
+<label class="fld">Ansprechpartner im Projekt<input type="text" id="f-ap" name="ansprechpartner" value="Herrn Dennis Hollinger" required maxlength="120" data-live="ANSPRECHPARTNER"><span class="h">§ 4 Mitwirkung.</span></label>
+<label class="fld">Vertretung im Projekt (optional)<input type="text" id="f-vt" name="vertretung" maxlength="120" value="" data-live="VERTRETUNG"></label>
+<label class="fld">Weitere E-Mail für Rechnungen (optional)<input type="email" id="f-re" name="rechnungEmail" maxlength="200" value="info@heimundpartner.com"><span class="h">Bekommt Vertrag und Rechnung ebenfalls.</span></label>
+</div>
+<div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+<div><span class="lbl">Unterschrift</span><div class="sigw" style="margin-top:6px"><canvas id="sig" aria-label="Feld für die Unterschrift. Mit Maus, Finger oder Stift unterschreiben."></canvas><div class="ln"></div><span class="hn">Mit Maus, Finger oder Stift unterschreiben</span><button class="btn x" type="button" id="sigX">Löschen</button></div></div>
+<label class="zust"><input type="checkbox" name="vertretungsberechtigt"><span>Ich bin berechtigt, die HEIM &amp; PARTNER GmbH bei diesem Vertrag zu vertreten.</span></label>
+<label class="zust"><input type="checkbox" name="zustimmung"><span>Ich habe den Vertrag mit allen Anlagen gelesen und nehme das Angebot HKG-2026-045 mit den oben gewählten Erweiterungen verbindlich an.</span></label>
+<p class="sm" id="zus"></p>
+<div id="err" class="meldung fehler" role="alert" hidden></div>
+<div class="row"><button class="btn pri big" type="submit" id="go">Verbindlich unterschreiben</button><span class="xs t3" id="busy" hidden>Wird unterschrieben, Vertrag und Rechnung werden erstellt …</span></div>
+<p class="xs t3">Nach dem Absenden bekommt ihr den unterschriebenen Vertrag und die Rechnung mit Zahlungsplan per E-Mail, eine Kopie geht an HK Growth UG (haftungsbeschränkt). Gespeichert werden eure Angaben, die Unterschrift, Zeitpunkt, IP-Adresse und Browser als Nachweis der Unterzeichnung.</p>
+</form>
+<div id="done" class="fertig" hidden aria-live="polite"></div></div></section>
+<footer><span>HK Growth UG (haftungsbeschränkt) · Weststraße 2 · 51709 Marienheide · Geschäftsführer Nick Hinze, Luis Kummer · Amtsgericht Köln, HRB 129353</span><span>Alle Preise netto zzgl. gesetzlicher USt.</span></footer>
+</div><script>(function(){const K={"add": [{"id": "mk", "gruppe": "Website", "name": "Markenauffrischung", "text": "Feinschliff Logo, Farben, Schriften und Bildsprache, kurze Markenrichtlinie. Kein komplett neues Logo.", "preis": 2200, "monat": 0, "menge": false, "zeit": "", "art": 1}, {"id": "ib", "gruppe": "Website", "name": "Interessentenbereich mit Login", "text": "Interessenten sehen ihre Unterlagen, Grundrisse und Termine an einer Stelle statt in Mails.", "preis": 1900, "monat": 0, "menge": false, "zeit": "weniger Rückfragen nach Unterlagen", "art": 1}, {"id": "en", "gruppe": "Website", "name": "Englische Version", "text": "Alle Hauptseiten und Projektseiten zusätzlich auf Englisch.", "preis": 1000, "monat": 0, "menge": false, "zeit": "", "art": 1}, {"id": "pu", "gruppe": "Website", "name": "Projekt-Updates per E-Mail", "text": "Baufortschritt automatisch an Interessenten, nur mit Einwilligung. Hält Interessenten bis zum Verkaufsstart warm.", "preis": 600, "monat": 0, "menge": false, "zeit": "", "art": 1}, {"id": "lp", "gruppe": "Website", "name": "2 Landingpages für Kampagnen", "text": "Für Instagram- oder Anzeigenkampagnen, ohne Anzeigenbudget und Kampagnenbetreuung.", "preis": 800, "monat": 0, "menge": false, "zeit": "", "art": 1}, {"id": "op", "gruppe": "Website", "name": "3 Monate Optimierung", "text": "Auswertung und Verbesserung der Anfrage-Strecke nach dem Start.", "preis": 500, "monat": 0, "menge": false, "zeit": "", "art": 1}, {"id": "ps", "gruppe": "Website", "name": "Weitere Projektseite mit Einheiten", "text": "Je weiteres Projekt eine Seite mit Einheitentabelle, Grundrissen, Exposé und Terminbuchung.", "preis": 550, "monat": 0, "menge": true, "zeit": "", "art": 0}, {"id": "ar", "gruppe": "Neue KI-Agenten", "name": "Agent Rechnungsprüfung", "text": "Prüft Rechnungen der Nachunternehmer gegen Auftrag, Aufmaß und genehmigte Nachträge, markiert Abweichungen, bereitet die Freigabe vor.", "preis": 4500, "monat": 60, "menge": false, "zeit": "ca. 112 Std. pro Jahr (150 Rechnungen × 45 Min.)", "art": 0}, {"id": "ap", "gruppe": "Neue KI-Agenten", "name": "Agent Posteingang", "text": "Liest eingehende Mails und gescannte Briefe, ordnet sie Projekt und Firma zu, legt Aufgaben mit Frist an.", "preis": 3500, "monat": 50, "menge": false, "zeit": "ca. 73 Std. pro Jahr (20 Min. pro Arbeitstag)", "art": 0}, {"id": "ag", "gruppe": "Neue KI-Agenten", "name": "Agent Gewährleistung und Mängel nach Übergabe", "text": "Erfasst Mängelanzeigen der Käufer, ordnet sie dem verantwortlichen Gewerk zu, überwacht Gewährleistungsfristen und erinnert die Firmen.", "preis": 3500, "monat": 50, "menge": false, "zeit": "ca. 78 Std. pro Jahr (1,5 Std. pro Woche)", "art": 0}, {"id": "ak", "gruppe": "Neue KI-Agenten", "name": "Agent Käuferbetreuung und Sonderwünsche", "text": "Nimmt Sonderwünsche der Käufer auf, holt Preise beim Gewerk ein, erstellt den Kostenvorschlag und hält Bemusterungstermine nach.", "preis": 4000, "monat": 50, "menge": false, "zeit": "ca. 58 Std. pro Jahr (2 Std. je Einheit × 29)", "art": 0}, {"id": "wf", "gruppe": "Erweiterungen", "name": "Weiterer Workflow", "text": "Ein zusätzlicher Ablauf von Auslöser bis Ergebnis nach euren Regeln, mit Freigabepunkten.", "preis": 1200, "monat": 0, "menge": true, "zeit": "", "art": 0}, {"id": "vl", "gruppe": "Erweiterungen", "name": "Weitere Vorlage", "text": "Eine zusätzliche Schreiben- oder Berichtsart, die die KI als Entwurf mit Belegen erstellt.", "preis": 450, "monat": 0, "menge": true, "zeit": "", "art": 0}, {"id": "db", "gruppe": "Erweiterungen", "name": "Weiteres Dashboard oder Auswertung", "text": "Eine zusätzliche Auswertung, zum Beispiel für Bank, Investoren oder Gesellschafter.", "preis": 900, "monat": 0, "menge": true, "zeit": "", "art": 0}, {"id": "zu", "gruppe": "Erweiterungen", "name": "Weitere Zugänge", "text": "Zugänge über die 8 enthaltenen Nutzer hinaus, mit Rolle und Rechten.", "preis": 0, "monat": 25, "menge": true, "zeit": "", "art": 0}, {"id": "st", "gruppe": "Erweiterungen", "name": "Zusätzlicher Schulungstag vor Ort", "text": "Ein Tag Schulung in Nauheim, zum Beispiel für neue Mitarbeiter.", "preis": 960, "monat": 0, "menge": true, "zeit": "", "art": 0}, {"id": "if", "gruppe": "Erweiterungen", "name": "Schnittstelle zu ERP, DATEV oder Buchhaltung", "text": "Anbindung an ein bestehendes System. Richtpreis 3.500 bis 8.000 € je Schnittstelle, Festpreis nach Prüfung.", "preis": 0, "monat": 0, "menge": false, "zeit": "", "art": -1}], "net": 79900, "care": 1590, "websiteExtraMonat": 100, "pay": [{"name": "Anzahlung", "wann": "bei Auftragserteilung", "pct": 50}, {"name": "Schlusszahlung", "wann": "nach Gesamtabnahme", "pct": 50}], "nr": "HKG-2026-045", "datum": "28.10.2026", "vorbelegt": {"gf": "Frank Heim, Janosch Meyer und Dennis Hollinger", "ansprechpartner": "Herrn Dennis Hollinger", "vertretung": "", "ort": "Nauheim", "rechnungEmail": "info@heimundpartner.com", "unterzeichner": [{"name": "Dennis Hollinger", "funktion": "Geschäftsführer", "email": "dhollinger@heimundpartner.com"}, {"name": "Frank Heim", "funktion": "Geschäftsführer", "email": ""}, {"name": "Janosch Meyer", "funktion": "Geschäftsführer", "email": ""}]}};const f=n=>Math.round(n).toLocaleString('de-DE')+' €',f2=n=>n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €',r2=n=>Math.round(n*100)/100;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];const nonce=(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,12));
+const V=true;let RN=4;const MON=['einen Monat','zwei Monate','drei Monate','vier Monate'];
+function plan(net){if(!V)return K.pay.map(p=>({name:p.name,anteil:p.pct+' %',wann:p.wann,netto:r2(net*p.pct/100)}));const an=r2(net/2),rest=r2(net-an),je=r2(rest/RN);const z=[{name:'Anzahlung',anteil:'50 %',wann:'bei Auftragserteilung',netto:an}];for(let i=1;i<=RN;i++)z.push({name:`Rate ${i} von ${RN}`,anteil:'',wann:MON[i-1]+' nach Auftragserteilung',netto:i<RN?je:r2(rest-je*(RN-1))});return z;}
+const zq=()=>V?{variante:'raten',raten:RN}:{};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+// Vorauswahl aus ?add=en,ar,zu:3
+try{const q=new URLSearchParams(location.search).get('add');if(q)q.split(',').forEach(t=>{const[id,m]=t.split(':');const c=$(`[data-a="${CSS.escape(id)}"]`);if(c){c.checked=true;const qi=$(`[data-q="${CSS.escape(id)}"]`);if(qi&&m)qi.value=Math.max(1,Math.min(50,parseInt(m)||1));}});}catch(e){}
+function auswahl(){const o={};K.add.forEach(a=>{const c=$(`[data-a="${a.id}"]`);if(c&&c.checked){const qi=$(`[data-q="${a.id}"]`);o[a.id]=a.menge?Math.max(1,Math.min(50,parseInt(qi&&qi.value)||1)):1;}});return o;}
+function berechne(sel){const posten=[],angefragt=[];let einmal=0,monat=0,web=false;K.add.forEach(a=>{const m=sel[a.id];if(!m)return;if(a.art===-1){angefragt.push(a);return;}einmal+=a.preis*m;monat+=a.monat*m;if(a.art===1)web=true;posten.push({...a,m});});
+ const wm=web?K.websiteExtraMonat:0,net=K.net+einmal,ust=r2(net*.19);return{posten,angefragt,einmal,monat,wm,net,ust,brutto:r2(net+ust),mon:K.care+monat+wm,raten:plan(net)};}
+function anlage8(c){let h='<div class="ph8"><b>Anlage 8 nach eurer Auswahl</b>';h+=c.posten.length?'<div class="tw"><table><thead><tr><th>Erweiterung</th><th>Menge</th><th>Einmalig</th><th>Monatlich</th></tr></thead><tbody>'+c.posten.map(p=>`<tr><td>${esc(p.name)}</td><td>${p.m}</td><td>${p.preis?f(p.preis*p.m):'–'}</td><td>${p.monat?f(p.monat*p.m):'–'}</td></tr>`).join('')+'</tbody></table></div>':'<p>Keine Erweiterungen gewählt.</p>';
+ h+=`<p>Summe ${f(c.net)} netto (${f2(c.brutto)} brutto), monatlich ${f(c.mon)} netto ab Go-live${c.wm?', inklusive erweiterter Website-Betreuung':''}. Zahlungsplan: ${c.raten.map(r=>r.name+(r.anteil?' '+r.anteil:'')+' '+f2(r.netto)).join(', ')} (netto).</p>`;if(c.angefragt.length)h+=`<p>Gesondertes Angebot, nicht Bestandteil: ${c.angefragt.map(a=>esc(a.name)).join(', ')}.</p>`;return h+'</div>';}
+function calc(){const c=berechne(auswahl());$('#sAdd').textContent=f(c.einmal);$('#sNet').textContent=f(c.net);$('#sBr').textContent=f2(c.brutto)+' brutto';$('#sMon').textContent=f(c.mon);$('#sAnz').textContent=V?`50 % sofort, dann ${RN} × ${f2(c.raten[1].netto)} netto`:`Anzahlung ${K.pay[0].pct} %: ${f2(c.raten[0].netto)} netto`;
+ $('#zus').innerHTML=`Ihr unterschreibt: <b>${f(c.net)} netto</b> (${f2(c.brutto)} brutto) einmalig und <b>${f(c.mon)} netto im Monat</b> ab Go-live. ${V?`Mit der Unterschrift bekommt ihr eine Rechnung mit Zahlungsplan: Anzahlung ${f2(c.raten[0].netto)} netto (${f2(r2(c.raten[0].netto*1.19))} brutto), danach ${RN} Monatsraten zu ${f2(c.raten[1].netto)} netto, fest und unabhängig vom Projektfortschritt.`:`Mit der Unterschrift stellen wir die Anzahlung von ${K.pay[0].pct} % in Rechnung: ${f2(c.raten[0].netto)} netto, ${f2(r2(c.raten[0].netto*1.19))} brutto. Die übrigen ${K.pay[1].pct} % folgen ${esc(K.pay[1].wann)}.`}`;
+ if(V)$('#planT').innerHTML=c.raten.map((r,i)=>`<tr><td>${i?'Rate '+i:'Anzahlung 50 %'}</td><td>${i?'nach '+i+(i>1?' Monaten':' Monat'):'bei Unterschrift'}</td><td class="r">${f2(r.netto)}</td><td class="r b">${f2(r2(r.netto*1.19))}</td></tr>`).join('');
+ const a8=$('[data-ph="ANLAGE8"]');if(a8)a8.innerHTML=anlage8(c);return c;}
+function live(){$$('[data-live]').forEach(i=>{const t=$(`.ph[data-ph="${i.dataset.live}"]`);if(t)t.textContent=i.value.trim()||(i.dataset.live==='VERTRETUNG'?'eine vom Auftraggeber in Textform noch zu benennende Person':'');});}
+document.addEventListener('change',e=>{if(e.target.dataset.a||e.target.dataset.q)calc();});document.addEventListener('input',e=>{if(e.target.dataset.q)calc();if(e.target.dataset.live)live();});
+function laden(){const q=V?`?variante=raten&raten=${RN}`:'';fetch('/api/vertrag/text'+q).then(r=>{if(!r.ok)throw 0;return r.text();}).then(t=>{$('#vt').innerHTML=t;const u=$('[data-ph="UNTERSCHRIFTEN"]');if(u)u.innerHTML='<div class="ph8"><b>Unterschriften</b><p>Für den Auftraggeber unterschreibt ihr unten in Schritt 03. Für den Auftragnehmer ist das Angebot '+K.nr+' vom '+K.datum+' verbindlich abgegeben (Nick Hinze, Luis Kummer, Geschäftsführer).</p></div>';live();calc();}).catch(()=>{$('#vt').innerHTML='<p>Der Vertragstext konnte nicht geladen werden. Bitte die Seite neu laden.</p>';});}
+laden();
+$$('[data-rn]').forEach(b=>b.addEventListener('click',()=>{RN=+b.dataset.rn;$$('[data-rn]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));calc();laden();}));
+fetch('/api/vertrag/katalog').then(r=>r.json()).then(k=>{if(k&&k.offen===false){$('#go').disabled=true;const m=$('#err');m.hidden=false;m.textContent='Das Angebot war bis '+k.gueltig+' gültig. Bitte meldet euch bei uns, wir schicken ein neues.';}}).catch(()=>{});
+// PDF-Vorschau
+$('#pdfBtn').addEventListener('click',async()=>{const b=$('#pdfBtn');b.disabled=true;b.textContent='PDF wird erstellt …';const w=window.open('','_blank');try{const fd=new FormData($('#f'));const r=await fetch('/api/vertrag/vorschau',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...zq(),addons:auswahl(),gf:fd.get('gf'),ansprechpartner:fd.get('ansprechpartner'),vertretung:fd.get('vertretung')})});if(!r.ok)throw new Error((await r.json().catch(()=>({}))).fehler||'Vorschau nicht möglich');const u=URL.createObjectURL(await r.blob());if(w)w.location=u;else{const a=document.createElement('a');a.href=u;a.download='Vertrag-Vorschau.pdf';a.click();}}catch(e){if(w)w.close();alert(e.message);}finally{b.disabled=false;b.textContent='Als PDF ansehen';}});
+// Unterschrift
+const cv=$('#sig'),cx=cv.getContext('2d');let striche=0,zeichnet=false,last=null;
+function groesse(){const r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1;const alt=striche?cv.toDataURL():null;cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);cx.setTransform(d,0,0,d,0,0);cx.lineCap='round';cx.lineJoin='round';cx.strokeStyle='#14202a';cx.lineWidth=2.4;if(alt){const im=new Image();im.onload=()=>cx.drawImage(im,0,0,r.width,r.height);im.src=alt;}}
+groesse();window.addEventListener('resize',groesse);
+const pt=e=>{const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};};
+cv.addEventListener('pointerdown',e=>{e.preventDefault();cv.setPointerCapture(e.pointerId);zeichnet=true;last=pt(e);cx.beginPath();cx.arc(last.x,last.y,1.1,0,7);cx.fillStyle='#14202a';cx.fill();});
+cv.addEventListener('pointermove',e=>{if(!zeichnet)return;const p=pt(e);cx.beginPath();cx.moveTo(last.x,last.y);cx.quadraticCurveTo(last.x,last.y,(last.x+p.x)/2,(last.y+p.y)/2);cx.lineTo(p.x,p.y);cx.stroke();last=p;striche++;});
+['pointerup','pointercancel','pointerleave'].forEach(t=>cv.addEventListener(t,()=>{zeichnet=false;}));
+$('#sigX').addEventListener('click',()=>{cx.clearRect(0,0,cv.width,cv.height);striche=0;});
+// Absenden
+$('#f').addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(e.target),err=$('#err');err.hidden=true;const fehlt=[];
+ ['name','funktion','email','ort','gf','ansprechpartner'].forEach(k=>{if(!String(fd.get(k)||'').trim())fehlt.push($(`[name="${k}"]`).closest('label').firstChild.textContent.trim());});
+ if(fd.get('email')&&!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(fd.get('email').trim()))fehlt.push('gültige E-Mail');
+ if(striche<12)fehlt.push('Unterschrift');if(!fd.get('vertretungsberechtigt'))fehlt.push('Bestätigung der Vertretung');if(!fd.get('zustimmung'))fehlt.push('Annahme des Vertrags');
+ if(fehlt.length){err.hidden=false;err.textContent='Bitte ergänzen: '+fehlt.join(', ');err.scrollIntoView({block:'center',behavior:'smooth'});return;}
+ const go=$('#go');go.disabled=true;$('#busy').hidden=false;
+ try{const body={nonce,...zq(),addons:auswahl(),signer:{name:fd.get('name'),funktion:fd.get('funktion'),email:fd.get('email').trim(),ort:fd.get('ort')},gf:fd.get('gf'),ansprechpartner:fd.get('ansprechpartner'),vertretung:fd.get('vertretung'),rechnungEmail:(fd.get('rechnungEmail')||'').trim(),vertretungsberechtigt:!!fd.get('vertretungsberechtigt'),zustimmung:!!fd.get('zustimmung'),signatur:cv.toDataURL('image/png'),website:fd.get('website')};
+  const r=await fetch('/api/vertrag/unterschreiben',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));
+  if(!r.ok||!j.ok)throw new Error(j.fehler||'Das hat nicht geklappt. Bitte erneut versuchen.');fertig(j);}
+ catch(x){err.hidden=false;err.textContent=x.message;go.disabled=false;}finally{$('#busy').hidden=true;}});
+function rgText(g){if(!g)return' Die Rechnung schicken wir separat.';if(g.art==='raten'&&g.plan){const p=g.plan;return` Rechnung <b>${esc(g.nr)}</b> mit Zahlungsplan über ${f2(g.brutto)}: Anzahlung ${f2(p[0].brutto)} bis ${esc(p[0].faellig)}, danach ${p.length-1} Monatsraten zu je ${f2(p[1].brutto)}, die letzte ${p[p.length-1].brutto!==p[1].brutto?'über '+f2(p[p.length-1].brutto)+' ':''}am ${esc(p[p.length-1].faellig)}.`;}return` Anzahlungsrechnung <b>${esc(g.nr)}</b> über ${f2(g.brutto)}, zahlbar bis ${esc(g.faellig)}.`;}
+function fertig(j){const d=$('#done'),an=(j.mail.an||[]).map(esc).join(', ');let m;
+ if(j.mail.status==='gesendet')m=`Vertrag${j.rechnung?' und Rechnung':''} sind per E-Mail an ${an} unterwegs, eine Kopie geht an HK Growth.`;
+ else m='Eure Unterschrift ist gespeichert. Der E-Mail-Versand hat gerade nicht geklappt, wir schicken euch die Unterlagen zusätzlich manuell. Hier könnt ihr sie sofort herunterladen.';
+ d.innerHTML=`<span class="lbl">Unterschrieben</span><h2>Vielen Dank, ${esc(j.unterzeichner)}.</h2><p>Vertrag <b>${esc(j.vertragNr)}</b> über ${f(j.summe.net)} netto ist unterschrieben.${rgText(j.rechnung)}</p><p>${m}</p><div class="row"><a class="btn pri" href="${esc(j.downloads.vertrag)}" target="_blank" rel="noopener">Vertrag als PDF</a>${j.downloads.rechnung?`<a class="btn" href="${esc(j.downloads.rechnung)}" target="_blank" rel="noopener">Rechnung als PDF</a>`:''}</div><p class="xs t3">Als Nächstes melden wir uns für den Termin zur Prozessanalyse in Nauheim. Projektstart ist spätestens 2 Wochen nach Unterzeichnung.</p>`;
+ $('#f').hidden=true;d.hidden=false;$$('#s01 input,[data-rn]').forEach(i=>i.disabled=true);d.scrollIntoView({block:'start',behavior:'smooth'});}
+// Wer unterschreibt: setzt Name, Funktion und E-Mail
+const W=K.vorbelegt.unterzeichner;$$('[data-wer]').forEach(b=>b.addEventListener('click',()=>{$$('[data-wer]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));const p=b.dataset.wer==='x'?{name:'',funktion:'',email:''}:W[+b.dataset.wer];$('#f-name').value=p.name;$('#f-funktion').value=p.funktion;$('#f-email').value=p.email;const z=!p.name?$('#f-name'):!p.email?$('#f-email'):null;if(z)z.focus();}));
+calc();})();</script></body></html>
+</html>

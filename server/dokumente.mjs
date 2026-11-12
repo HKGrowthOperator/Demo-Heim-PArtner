@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
 import { fileURLToPath } from 'node:url'
+import { plan, plusMonate, monateText } from './zahlung.mjs'
 
 const HIER = path.dirname(fileURLToPath(import.meta.url))
 const VORLAGE = fs.readFileSync(path.join(HIER, 'vorlage', 'vertrag.html'), 'utf8')
@@ -88,7 +89,7 @@ export function hkSteuer() {
   return ust ? { art: 'USt-IdNr.', wert: ust } : stnr ? { art: 'Steuernummer', wert: stnr } : null
 }
 
-function anlage8(kat, c) {
+function anlage8(kat, c, zp) {
   const z = (l, b, m, cls = '') => `<tr class="${cls}"><td>${l}</td><td class="r">${b}</td><td class="r">${m}</td></tr>`
   let h = ''
   h += c.posten.length
@@ -99,12 +100,30 @@ function anlage8(kat, c) {
   if (c.posten.length) h += z('Gewählte Erweiterungen', eur(c.einmal), c.monat ? eur(c.monat) : '–')
   if (c.webMonat) h += z('Erweiterte Website-Betreuung wegen gewählter Website-Erweiterungen', '–', eur(c.webMonat))
   h += z('Summe netto', eur(c.net), eur(c.mon), 'sum') + z('zzgl. 19 % USt.', eur2(c.ust), eur2(Math.round(c.mon * 19) / 100)) + z('Summe brutto', eur2(c.brutto), eur2(Math.round(c.mon * 119) / 100), 'sum')
-  h += `</tbody></table></div><h3>Zahlungsplan auf die Summe</h3><div class="tw"><table><thead><tr><th>Rate</th><th>Fällig</th><th class="r">Netto</th><th class="r">Brutto</th></tr></thead><tbody>${c.raten.map(r => `<tr><td>${esc(r.name)}, ${r.pct} %</td><td>${esc(r.wann)}</td><td class="r">${eur2(r.netto)}</td><td class="r">${eur2(Math.round(r.netto * 119) / 100)}</td></tr>`).join('')}</tbody></table></div>`
+  h += `</tbody></table></div><h3>Zahlungsplan auf die Summe</h3>${planTabelle(zp)}`
   h += `<p class="cl"><span class="cn">(1)</span>Zusätzlich zum Festpreis nach § 7 beauftragt der Auftraggeber die oben aufgeführten Erweiterungen zu den genannten Festpreisen. Für sie gelten die Regelungen dieses Vertrags entsprechend.</p>`
-  h += `<p class="cl"><span class="cn">(2)</span>Der Zahlungsplan nach Anlage 3 gilt für die Summe einschließlich der Erweiterungen; maßgeblich sind die Beträge dieser Anlage.</p>`
+  h += `<p class="cl"><span class="cn">(2)</span>Der Zahlungsplan nach § 7 Abs. 2 und Anlage 3 gilt für die Summe einschließlich der Erweiterungen; maßgeblich sind die Beträge dieser Anlage.</p>`
   h += `<p class="cl"><span class="cn">(3)</span>Monatliche Beträge fallen ab Go-live gemeinsam mit der Betreuung nach Anlage 5 an, mit derselben Laufzeit und Kündigungsfrist.</p>`
   if (c.angefragt.length) h += `<p class="cl"><span class="cn">(4)</span>Für ${c.angefragt.map(a => esc(a.name)).join(', ')} erstellt der Auftragnehmer ein gesondertes Angebot. Diese Leistungen sind nicht Bestandteil dieses Vertrags.</p>`
   return h
+}
+
+function planTabelle(zp) {
+  return `<div class="tw"><table><thead><tr><th>Zahlung</th><th>Fällig</th><th class="r">Netto</th><th class="r">Brutto</th></tr></thead><tbody>${zp.map(r => `<tr><td>${esc(r.name)}${r.anteil ? `, ${esc(r.anteil)}` : ''}</td><td>${esc(r.wann)}</td><td class="r">${eur2(r.netto)}</td><td class="r">${eur2(Math.round(r.netto * 119) / 100)}</td></tr>`).join('')}</tbody></table></div>`
+}
+
+/** Text für § 7 Abs. 2, bezogen auf den Festpreis. opt: { variante, raten } */
+export function zahlungText(kat, opt = {}) {
+  const zp = plan(kat, kat.net, opt.variante, opt.raten)
+  if (opt.variante !== 'raten') return `Der Festpreis ist wie folgt fällig: ${zp.map(r => `${r.anteil} ${r.wann} (${eur(r.netto)} netto)`).join(' und ')}.`
+  const raten = zp.slice(1), rest = Math.round((kat.net - zp[0].netto) * 100) / 100
+  const wann = raten.map(r => monateText(r.monate)).join(', ').replace(/, ([^,]*)$/, ' und $1')
+  return `Der Festpreis ist wie folgt fällig: 50 % bei Auftragserteilung (${eur(zp[0].netto)} netto); die übrigen 50 % (${eur(rest)} netto) in ${raten.length} gleichen Monatsraten zu je ${eur2(raten[0].netto)} netto, fällig ${wann} nach Auftragserteilung, unabhängig vom Projektfortschritt. Der Auftragnehmer stellt bei Auftragserteilung eine Rechnung mit diesem Zahlungsplan.`
+}
+
+/** § 7 Abs. 2 und Zahlungsplan in Anlage 3 in die Vorlage einsetzen. */
+export function zahlungFuellen(s, kat, opt = {}) {
+  return s.replace('{{ZAHLUNG}}', esc(zahlungText(kat, opt))).replace(/(?:<p>)?\{\{ZAHLUNGSPLAN\}\}(?:<\/p>)?/, planTabelle(plan(kat, kat.net, opt.variante, opt.raten)))
 }
 
 export function unterschriften(kat, u) {
@@ -127,22 +146,23 @@ export function unterschriften(kat, u) {
 }
 
 /** Der reine Vertragsinhalt mit eingesetzten Angaben. f: { gf, ansprechpartner, vertretung } */
-export function vertragsinhalt(kat, c, f, u = null) {
+export function vertragsinhalt(kat, c, f, u = null, opt = {}) {
   const st = hkSteuer()
   let s = VORLAGE
   s = st ? s.replace('USt-IdNr. {{HK_USTID}}', `${st.art} ${esc(st.wert)}`) : s.replace(' · USt-IdNr. {{HK_USTID}}', '')
   s = s.replace('{{GF}}', f.gf ? esc(f.gf) : '<span class="ph-leer">[Geschäftsführer]</span>')
   s = s.replace('{{ANSPRECHPARTNER}}', f.ansprechpartner ? esc(f.ansprechpartner) : '<span class="ph-leer">[Ansprechpartner]</span>')
   s = s.replace('{{VERTRETUNG}}', f.vertretung ? esc(f.vertretung) : 'eine vom Auftraggeber in Textform noch zu benennende Person')
-  s = s.replace('{{ANLAGE8}}', anlage8(kat, c))
+  s = zahlungFuellen(s, kat, opt)
+  s = s.replace('{{ANLAGE8}}', anlage8(kat, c, plan(kat, c.net, opt.variante, opt.raten)))
   s = s.replace('{{UNTERSCHRIFTEN}}', unterschriften(kat, u))
   return s
 }
 
 export const sha256 = x => crypto.createHash('sha256').update(x).digest('hex')
 
-export function vertragHtml(kat, c, f, { vnr, u = null, protokoll = null, vorschau = false } = {}) {
-  const inhalt = vertragsinhalt(kat, c, f, u)
+export function vertragHtml(kat, c, f, { vnr, u = null, protokoll = null, vorschau = false, opt = {} } = {}) {
+  const inhalt = vertragsinhalt(kat, c, f, u, opt)
   const rechts = `${vnr ? `Vertrag Nr. ${esc(vnr)}<br>` : ''}zum Angebot ${esc(kat.nr)} vom ${esc(kat.datum)}`
   let p = ''
   if (protokoll) {
@@ -154,6 +174,7 @@ export function vertragHtml(kat, c, f, { vnr, u = null, protokoll = null, vorsch
       ['Zeitpunkt', `${protokoll.datum}, ${protokoll.uhrzeit} Uhr (Europe/Berlin) · ${protokoll.iso}`],
       ['IP-Adresse', protokoll.ip],
       ['Browser', protokoll.ua],
+      ['Zahlungsweise', opt.variante === 'raten' ? `50 % bei Auftragserteilung, Rest in ${opt.raten} Monatsraten` : 'laut Katalog: ' + kat.pay.map(p => `${p.pct} % ${p.wann}`).join(', ')],
       ['Bestätigt', 'Vertretungsberechtigung für den Auftraggeber; Vertrag mit Anlagen 1 bis 8 gelesen und Angebot verbindlich angenommen'],
       ...(HK_VORAB ? [['Für den Auftragnehmer', `Vorab unterschrieben von ${HK_VORAB.name}, ${HK_VORAB.funktion}, am ${HK_VORAB.datum} in ${HK_VORAB.ort}`]] : []),
       ['Art der Unterschrift', 'Einfache elektronische Signatur: handschriftliche Unterschrift auf dem Bildschirm. Der Vertrag verlangt Textform (§ 126b BGB).'],
@@ -165,38 +186,124 @@ export function vertragHtml(kat, c, f, { vnr, u = null, protokoll = null, vorsch
   return { inhalt, html: seite(`Vertrag ${vnr || 'Vorschau'}`, kopf(kat, rechts) + `<main>${inhalt}</main>` + p, wm) }
 }
 
-export function rechnungHtml(kat, c, r) {
-  const hk = kat.hk, k = kat.kunde, st = hkSteuer(), a = c.raten[0], ust = Math.round(a.netto * 19) / 100
+const r2 = n => Math.round(n * 100) / 100
+
+/** Gemeinsamer Rahmen: Kopf, Adressen, Kennzahlen, Text, Bank, Fuß. meta: [[Bezeichnung, Wert]] */
+function rechnungRahmen(kat, r, titel, meta, koerper, verwendung) {
+  const hk = kat.hk, k = kat.kunde, st = hkSteuer()
   const bank = [['Kontoinhaber', hk.name], ['IBAN', process.env.HK_IBAN], ['BIC', process.env.HK_BIC], ['Bank', process.env.HK_BANK]].filter(x => x[1])
   const inhalt = `${kopf(kat, `Rechnung Nr. ${esc(r.nr)}`)}<div class="rg">
 <div class="adr"><div><div class="absender">${esc(hk.name)} · ${esc(hk.str)} · ${esc(hk.ort)}</div><b>${esc(k.name)}</b><br>${esc(k.str)}<br>${esc(k.ort)}<br><span class="xs">USt-IdNr. ${esc(k.ustid)}</span></div>
-<div><table class="meta"><tbody><tr><td>Rechnungsnummer</td><td><b>${esc(r.nr)}</b></td></tr><tr><td>Rechnungsdatum</td><td>${esc(r.datum)}</td></tr><tr><td>Vertrag</td><td>${esc(r.vnr)} vom ${esc(r.datum)}</td></tr><tr><td>Angebot</td><td>${esc(kat.nr)} vom ${esc(kat.datum)}</td></tr><tr><td>Zahlbar bis</td><td>${esc(r.faellig)}</td></tr></tbody></table></div></div>
-<h1>Anzahlungsrechnung</h1>
-<p>Gemäß Vertrag ${esc(r.vnr)} stellen wir die Anzahlung von ${a.pct} % ${esc(a.wann)} in Rechnung.</p>
+<div><table class="meta"><tbody>${[['Rechnungsnummer', `<b>${esc(r.nr)}</b>`], ['Rechnungsdatum', esc(r.datum)], ...meta.map(([a, b]) => [esc(a), esc(b)])].map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</tbody></table></div></div>
+<h1>${esc(titel)}</h1>
+${koerper}
+<div class="box"><table class="meta"><tbody>${bank.map(([l, v]) => `<tr><td>${esc(l)}</td><td class="num">${esc(v)}</td></tr>`).join('')}<tr><td>Verwendungszweck</td><td class="num">${esc(verwendung)}</td></tr></tbody></table></div>
+<div class="fuss"><div>${esc(hk.name)}<br>${esc(hk.str)}, ${esc(hk.ort)}</div><div>Geschäftsführer: ${esc(hk.gf)}<br>${esc(hk.hr)}<br>${st ? `${esc(st.art)} ${esc(st.wert)}` : ''}</div><div>${esc(hk.tel)}<br>${esc(hk.mail)}<br>${esc(hk.web)}</div></div></div>`
+  return seite(`Rechnung ${r.nr}`, inhalt)
+}
+const leistung = (kat, c) => `${esc(kat.paket)}${c.posten.length ? ' einschließlich gewählter Erweiterungen nach Anlage 8' : ''}`
+
+/** Anzahlungsrechnung (Standard): erste Zeile des Zahlungsplans. r: { nr, datum, faellig, vnr } */
+export function rechnungHtml(kat, c, r, opt = {}) {
+  if (opt.variante === 'raten') return ratenRechnungHtml(kat, c, r, opt)
+  const a = plan(kat, c.net)[0], ust = r2(a.netto * 0.19), brutto = r2(a.netto + ust)
+  const koerper = `<p>Gemäß Vertrag ${esc(r.vnr)} stellen wir die Anzahlung von ${esc(a.anteil)} ${esc(a.wann)} in Rechnung.</p>
 <div class="tw"><table><thead><tr><th style="width:30px">Pos.</th><th>Leistung</th><th class="r">Betrag netto</th></tr></thead><tbody>
-<tr><td>1</td><td><b>${esc(a.name)} ${a.pct} %</b> auf ${esc(kat.paket)}${c.posten.length ? ' einschließlich gewählter Erweiterungen nach Anlage 8' : ''}<div class="xs">Vertragssumme ${eur2(c.net)} netto. Leistungszeitraum laut Vertrag ab Projektstart, spätestens 2 Wochen nach Unterzeichnung. Anzahlung vor Leistungserbringung.</div></td><td class="r">${eur2(a.netto)}</td></tr>
+<tr><td>1</td><td><b>${esc(a.name)} ${esc(a.anteil)}</b> auf ${leistung(kat, c)}<div class="xs">Vertragssumme ${eur2(c.net)} netto. Leistungszeitraum laut Vertrag ab Projektstart, spätestens 2 Wochen nach Unterzeichnung. Anzahlung vor Leistungserbringung.</div></td><td class="r">${eur2(a.netto)}</td></tr>
 <tr class="tot sum"><td></td><td>Summe netto</td><td class="r">${eur2(a.netto)}</td></tr>
 <tr class="tot"><td></td><td>zzgl. 19 % Umsatzsteuer</td><td class="r">${eur2(ust)}</td></tr>
-<tr class="tot sum"><td></td><td>Rechnungsbetrag</td><td class="r">${eur2(a.netto + ust)}</td></tr></tbody></table></div>
-<p>Bitte überweist den Rechnungsbetrag bis ${esc(r.faellig)} ohne Abzug unter Angabe der Rechnungsnummer ${esc(r.nr)}. Die Anzahlung wird in der Schlussrechnung angerechnet.</p>
-<div class="box"><table class="meta"><tbody>${bank.map(([l, v]) => `<tr><td>${esc(l)}</td><td class="num">${esc(v)}</td></tr>`).join('')}<tr><td>Verwendungszweck</td><td class="num">${esc(r.nr)}</td></tr></tbody></table></div>
-<div class="fuss"><div>${esc(hk.name)}<br>${esc(hk.str)}, ${esc(hk.ort)}</div><div>Geschäftsführer: ${esc(hk.gf)}<br>${esc(hk.hr)}<br>${st ? `${esc(st.art)} ${esc(st.wert)}` : ''}</div><div>${esc(hk.tel)}<br>${esc(hk.mail)}<br>${esc(hk.web)}</div></div></div>`
-  return { html: seite(`Rechnung ${r.nr}`, inhalt), brutto: Math.round((a.netto + ust) * 100) / 100, netto: a.netto, ust }
+<tr class="tot sum"><td></td><td>Rechnungsbetrag</td><td class="r">${eur2(brutto)}</td></tr></tbody></table></div>
+<p>Bitte überweist den Rechnungsbetrag bis ${esc(r.faellig)} ohne Abzug unter Angabe der Rechnungsnummer ${esc(r.nr)}. Die Anzahlung wird in der Schlussrechnung angerechnet.</p>`
+  const html = rechnungRahmen(kat, r, 'Anzahlungsrechnung', [['Vertrag', `${r.vnr} vom ${r.datum}`], ['Angebot', `${kat.nr} vom ${kat.datum}`], ['Zahlbar bis', r.faellig]], koerper, r.nr)
+  return { html, art: 'anzahlung', netto: a.netto, ust, brutto, faellig: r.faellig }
 }
 
+/** Rechnung mit Zahlungsplan (Raten): Vertragssumme, fällig in Anzahlung und Monatsraten. */
+function ratenRechnungHtml(kat, c, r, opt) {
+  const zp = plan(kat, c.net, 'raten', opt.raten)
+  const zeilen = zp.map((z, i) => ({ ...z, faellig: i === 0 ? r.faellig : datum(plusMonate(r.jetzt, z.monate)), ust: r2(z.netto * 0.19) }))
+  zeilen.forEach(z => { z.brutto = r2(z.netto + z.ust) })
+  const diff = r2(c.brutto - zeilen.reduce((a, z) => a + z.brutto, 0))
+  if (diff) { const l = zeilen[zeilen.length - 1]; l.ust = r2(l.ust + diff); l.brutto = r2(l.brutto + diff) }
+  const koerper = `<p>Gemäß Vertrag ${esc(r.vnr)} stellen wir die Vertragssumme mit dem vereinbarten Zahlungsplan in Rechnung: 50 % bei Auftragserteilung, der Rest in ${zp.length - 1} Monatsraten.</p>
+<div class="tw"><table><thead><tr><th style="width:30px">Pos.</th><th>Leistung</th><th class="r">Betrag netto</th></tr></thead><tbody>
+<tr><td>1</td><td><b>${leistung(kat, c)}</b><div class="xs">Festpreis laut Vertrag. Vorausrechnung: Leistungszeitraum ab Projektstart, spätestens 2 Wochen nach Unterzeichnung, bis zur Gesamtabnahme.</div></td><td class="r">${eur2(c.net)}</td></tr>
+<tr class="tot sum"><td></td><td>Summe netto</td><td class="r">${eur2(c.net)}</td></tr>
+<tr class="tot"><td></td><td>zzgl. 19 % Umsatzsteuer</td><td class="r">${eur2(c.ust)}</td></tr>
+<tr class="tot sum"><td></td><td>Rechnungsbetrag</td><td class="r">${eur2(c.brutto)}</td></tr></tbody></table></div>
+<h3>Zahlungsplan</h3>
+<div class="tw"><table><thead><tr><th>Zahlung</th><th>Fällig am</th><th class="r">Netto</th><th class="r">USt.</th><th class="r">Brutto</th></tr></thead><tbody>${zeilen.map(z => `<tr><td>${esc(z.name)}${z.anteil ? `, ${esc(z.anteil)}` : ''}</td><td>${esc(z.faellig)}</td><td class="r">${eur2(z.netto)}</td><td class="r">${eur2(z.ust)}</td><td class="r">${eur2(z.brutto)}</td></tr>`).join('')}<tr class="sum"><td>Summe</td><td></td><td class="r">${eur2(c.net)}</td><td class="r">${eur2(c.ust)}</td><td class="r">${eur2(c.brutto)}</td></tr></tbody></table></div>
+<p>Bitte überweist die Beträge jeweils bis zum Fälligkeitsdatum ohne Abzug, mit Rechnungsnummer und Zahlung im Verwendungszweck. Die Umsatzsteuer entsteht mit dem Eingang der jeweiligen Zahlung. Nach der Gesamtabnahme erhaltet ihr die Schlussrechnung, in der alle Zahlungen angerechnet werden.</p>`
+  const html = rechnungRahmen(kat, r, 'Rechnung mit Zahlungsplan', [['Vertrag', `${r.vnr} vom ${r.datum}`], ['Angebot', `${kat.nr} vom ${kat.datum}`], ['Erste Zahlung bis', r.faellig]], koerper, `${r.nr}, Anzahlung bzw. Rate`)
+  return { html, art: 'raten', netto: c.net, ust: c.ust, brutto: c.brutto, faellig: r.faellig, plan: zeilen.map(z => ({ name: z.name, faellig: z.faellig, netto: z.netto, ust: z.ust, brutto: z.brutto })) }
+}
+
+/** Schlussrechnung nach Gesamtabnahme, mit Abzug der bereits berechneten Beträge (§ 14 Abs. 5 UStG).
+ *  rec: gespeicherter Vertrag; r: { nr, datum, faellig, abnahme } */
+export function schlussrechnungHtml(kat, rec, r) {
+  const net = rec.summe.net, ust = r2(net * 0.19), brutto = r2(net + ust)
+  const v = rec.rechnung, restN = r2(net - v.netto), restU = r2(ust - v.ust), restB = r2(restN + restU)
+  const vorher = v.art === 'raten' ? 'Rechnung mit Zahlungsplan' : 'Anzahlungsrechnung'
+  const vertragVom = datum(new Date(rec.angelegt))
+  const koerper = `<p>Nach der Gesamtabnahme am ${esc(r.abnahme)} rechnen wir die Leistungen aus Vertrag ${esc(rec.vnr)} ab.</p>
+<div class="tw"><table><thead><tr><th style="width:30px">Pos.</th><th>Leistung</th><th class="r">Betrag netto</th></tr></thead><tbody>
+<tr><td>1</td><td><b>${esc(kat.paket)}${rec.posten && rec.posten.length ? ' einschließlich Erweiterungen nach Anlage 8' : ''}</b><div class="xs">Leistungszeitraum ${esc(vertragVom)} bis ${esc(r.abnahme)} (Gesamtabnahme).</div></td><td class="r">${eur2(net)}</td></tr>
+<tr class="tot sum"><td></td><td>Summe netto</td><td class="r">${eur2(net)}</td></tr>
+<tr class="tot"><td></td><td>zzgl. 19 % Umsatzsteuer</td><td class="r">${eur2(ust)}</td></tr>
+<tr class="tot sum"><td></td><td>Gesamtbetrag</td><td class="r">${eur2(brutto)}</td></tr>
+<tr class="tot"><td></td><td>abzüglich ${esc(vorher)} Nr. ${esc(v.nr)} vom ${esc(v.datum || vertragVom)}, netto</td><td class="r">−${eur2(v.netto)}</td></tr>
+<tr class="tot"><td></td><td>abzüglich darin enthaltene Umsatzsteuer</td><td class="r">−${eur2(v.ust)}</td></tr>
+<tr class="tot sum"><td></td><td>Restbetrag netto</td><td class="r">${eur2(restN)}</td></tr>
+<tr class="tot"><td></td><td>zzgl. 19 % Umsatzsteuer</td><td class="r">${eur2(restU)}</td></tr>
+<tr class="tot sum"><td></td><td>Zahlbetrag</td><td class="r">${eur2(restB)}</td></tr></tbody></table></div>
+${restB > 0 ? `<p>Bitte überweist den Zahlbetrag bis ${esc(r.faellig)} ohne Abzug unter Angabe der Rechnungsnummer ${esc(r.nr)}.</p>` : `<p>Der Gesamtbetrag ist bereits mit der ${esc(vorher)} Nr. ${esc(v.nr)} berechnet. Noch offene Raten bleiben nach deren Zahlungsplan fällig, ein weiterer Betrag ist nicht zu zahlen.</p>`}`
+  const html = rechnungRahmen(kat, r, 'Schlussrechnung', [['Vertrag', `${rec.vnr} vom ${vertragVom}`], ['Gesamtabnahme', r.abnahme], ...(restB > 0 ? [['Zahlbar bis', r.faellig]] : [])], koerper, r.nr)
+  return { html, netto: restN, ust: restU, brutto: restB, gesamt: { netto: net, ust, brutto } }
+}
+
+function mailHtml(kat, anrede, zeilen, gruss, fuss = '') {
+  return `<!doctype html><html lang="de"><body style="margin:0;background:#f4f6f6;font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#1d2427"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #dfe4e5;border-radius:10px"><tr><td style="padding:24px 28px">
+<p style="margin:0 0 16px;font-weight:600;font-size:13px;color:#6b7478;letter-spacing:.06em;text-transform:uppercase">${esc(kat.hk.name)}</p>
+<p style="margin:0 0 14px">${esc(anrede)}</p>${zeilen.map(z => `<p style="margin:0 0 14px">${z}</p>`).join('')}
+<p style="margin:18px 0 0;white-space:pre-line">${esc(gruss)}</p>${fuss ? `<p style="margin:20px 0 0;font-size:12px;color:#6b7478">${fuss}</p>` : ''}</td></tr></table></td></tr></table></body></html>`
+}
+const grussText = kat => `Viele Grüße\n${HK_VORAB ? HK_VORAB.name : kat.hk.gf}\n${kat.hk.name}\n${kat.hk.tel} · ${kat.hk.mail}`
+
+/** Mail an den Kunden nach der Unterschrift. x: { vnr, name, rechnung, pdfHash } */
 export function mailInhalt(kat, c, x) {
-  const hk = kat.hk
+  const rg = x.rechnung
+  const rgText = !rg ? ' Die Rechnung schicken wir separat.'
+    : rg.art === 'raten' ? ` und die Rechnung ${rg.nr} mit Zahlungsplan über ${eur2(rg.brutto)}: Anzahlung ${eur2(rg.plan[0].brutto)} bis ${rg.plan[0].faellig}, danach ${rg.plan.length - 1} Monatsraten zu je ${eur2(rg.plan[1].brutto)}, die letzte ${rg.plan[rg.plan.length - 1].brutto !== rg.plan[1].brutto ? `über ${eur2(rg.plan[rg.plan.length - 1].brutto)} ` : ''}am ${rg.plan[rg.plan.length - 1].faellig}.`
+    : ` und die Anzahlungsrechnung ${rg.nr} über ${eur2(rg.brutto)}, zahlbar bis ${rg.faellig}.`
   const zeilen = [
-    `vielen Dank für eure Unterschrift. Im Anhang findet ihr den unterschriebenen Vertrag ${x.vnr} zum ${kat.paket}${x.rechnung ? ` und die Anzahlungsrechnung ${x.rechnung.nr} über ${eur2(x.rechnung.brutto)}, zahlbar bis ${x.rechnung.faellig}` : ''}.${x.rechnung ? '' : ' Die Anzahlungsrechnung schicken wir separat.'}`,
+    `vielen Dank für eure Unterschrift. Im Anhang findet ihr den unterschriebenen Vertrag ${x.vnr} zum ${kat.paket}${rg ? rgText : '.' + rgText}`,
     `Vertragssumme ${eur2(c.net)} netto${c.posten.length ? `, davon Erweiterungen ${eur2(c.einmal)}` : ''}. Monatlich ab Go-live ${eur2(c.mon)} netto.`,
     'Als Nächstes melden wir uns für den Termin zur Prozessanalyse in Nauheim. Projektstart ist spätestens 2 Wochen nach Unterzeichnung.',
   ]
-  const gruss = `Viele Grüße\n${HK_VORAB ? HK_VORAB.name : hk.gf}\n${hk.name}\n${hk.tel} · ${hk.mail}`
+  const gruss = grussText(kat)
   const text = `Guten Tag ${x.name},\n\n${zeilen.join('\n\n')}\n\nPrüfsumme des Vertrags-PDF (SHA-256): ${x.pdfHash}\n\n${gruss}`
-  const html = `<!doctype html><html lang="de"><body style="margin:0;background:#f4f6f6;font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#1d2427"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #dfe4e5;border-radius:10px"><tr><td style="padding:24px 28px">
-<p style="margin:0 0 16px;font-weight:600;font-size:13px;color:#6b7478;letter-spacing:.06em;text-transform:uppercase">${esc(hk.name)}</p>
-<p style="margin:0 0 14px">Guten Tag ${esc(x.name)},</p>${zeilen.map(z => `<p style="margin:0 0 14px">${esc(z)}</p>`).join('')}
-<p style="margin:18px 0 0;white-space:pre-line">${esc(gruss)}</p>
-<p style="margin:20px 0 0;font-size:12px;color:#6b7478">Prüfsumme des Vertrags-PDF (SHA-256): ${esc(x.pdfHash)}</p></td></tr></table></td></tr></table></body></html>`
+  return { text, html: mailHtml(kat, `Guten Tag ${x.name},`, zeilen.map(esc), gruss, `Prüfsumme des Vertrags-PDF (SHA-256): ${esc(x.pdfHash)}`) }
+}
+
+/** Interne Mail an HK: Zusammenfassung und Link für die Schlussrechnung (nie an den Kunden). */
+export function mailIntern(kat, c, x) {
+  const z = [
+    `Vertrag ${x.vnr} ist unterschrieben von ${x.name} (${x.email}) für ${kat.kunde.name}.`,
+    `Summe ${eur2(c.net)} netto, monatlich ${eur2(c.mon)} netto ab Go-live. Zahlungsweise: ${x.zahlungsweise}.`,
+    x.rechnung ? `Rechnung ${x.rechnung.nr} über ${eur2(x.rechnung.brutto)} ist an ${x.an.join(', ')} gegangen.` : `Rechnung offen: In Coolify fehlen ${x.rechnungFehlt.join(', ')}.`,
+    `Nach der Gesamtabnahme die Schlussrechnung per Klick erstellen und senden: ${x.schlussLink}`,
+  ]
+  const text = `${z.join('\n\n')}\n\nVertrag und Rechnung hängen an.`
+  const html = mailHtml(kat, 'Intern, nicht weiterleiten.', [esc(z[0]), esc(z[1]), esc(z[2]), `Nach der Gesamtabnahme die Schlussrechnung per Klick erstellen und senden:<br><a href="${esc(x.schlussLink)}">Schlussrechnung ${esc(x.vnr)} erstellen</a>`], 'Vertrag und Rechnung hängen an.')
   return { text, html }
+}
+
+/** Mail an den Kunden mit der Schlussrechnung. */
+export function mailSchluss(kat, rec, x) {
+  const zeilen = [
+    `vielen Dank für die Abnahme. Im Anhang findet ihr die Schlussrechnung ${x.nr} zu Vertrag ${rec.vnr}.`,
+    x.brutto > 0 ? `Nach Abzug der bereits berechneten ${eur2(rec.rechnung.brutto)} beträgt der Zahlbetrag ${eur2(x.brutto)}, zahlbar bis ${x.faellig}.` : 'Der Gesamtbetrag ist bereits berechnet, mit dieser Rechnung ist kein weiterer Betrag zu zahlen. Noch offene Raten bleiben nach dem Zahlungsplan fällig.',
+  ]
+  const gruss = grussText(kat)
+  return { text: `Guten Tag ${rec.unterzeichner.name},\n\n${zeilen.join('\n\n')}\n\n${gruss}`, html: mailHtml(kat, `Guten Tag ${rec.unterzeichner.name},`, zeilen.map(esc), gruss) }
 }
