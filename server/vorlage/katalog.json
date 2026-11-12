@@ -1,0 +1,362 @@
+{
+ "nr": "HKG-2026-045",
+ "datum": "28.10.2026",
+ "gueltig": "27.11.2026",
+ "paket": "Gesamtpaket Premium (Software Premium + Website Vertrieb)",
+ "net": 79900,
+ "care": 1590,
+ "careSw": 1400,
+ "careWeb": 190,
+ "sw": 72400,
+ "web": 7500,
+ "websiteExtraMonat": 100,
+ "pay": [
+  {
+   "name": "Anzahlung",
+   "wann": "bei Auftragserteilung",
+   "pct": 40
+  },
+  {
+   "name": "Zwischenzahlung",
+   "wann": "wenn Website und Vergabe live sind (Stufe 1)",
+   "pct": 30
+  },
+  {
+   "name": "Schlusszahlung",
+   "wann": "nach Gesamtabnahme",
+   "pct": 30
+  }
+ ],
+ "bausteine": [
+  {
+   "id": "pf",
+   "teil": "sw",
+   "name": "Prozessanalyse und Pflichtenheft",
+   "preis": 2400
+  },
+  {
+   "id": "plat",
+   "teil": "sw",
+   "name": "Plattform, Rollen und Freigabe-Zentrale",
+   "preis": 7000
+  },
+  {
+   "id": "nu",
+   "teil": "sw",
+   "name": "Nachunternehmer-Stamm und Nachweise",
+   "preis": 7500
+  },
+  {
+   "id": "aus",
+   "teil": "sw",
+   "name": "Ausschreibung und Bieterportal",
+   "preis": 9000
+  },
+  {
+   "id": "ki",
+   "teil": "sw",
+   "name": "KI-Angebotsvergleich",
+   "preis": 8000
+  },
+  {
+   "id": "bau",
+   "teil": "sw",
+   "name": "Baucontrolling und Bautagebuch",
+   "preis": 8000
+  },
+  {
+   "id": "sv",
+   "teil": "sw",
+   "name": "Schriftverkehr, Agenten und Workflows",
+   "preis": 5000
+  },
+  {
+   "id": "crm",
+   "teil": "sw",
+   "name": "Immobilien-CRM und Pipeline",
+   "preis": 4500
+  },
+  {
+   "id": "rech",
+   "teil": "sw",
+   "name": "Recherche-Agent und Akquise",
+   "preis": 4500
+  },
+  {
+   "id": "gaeb",
+   "teil": "sw",
+   "name": "GAEB-Import und Export",
+   "preis": 3500
+  },
+  {
+   "id": "term",
+   "teil": "sw",
+   "name": "Terminplan und Kapazität",
+   "preis": 3500
+  },
+  {
+   "id": "ver",
+   "teil": "sw",
+   "name": "Vertriebsauswertung und Veranstaltungen",
+   "preis": 1000
+  },
+  {
+   "id": "wirk",
+   "teil": "sw",
+   "name": "Wirkungsmessung",
+   "preis": 1000
+  },
+  {
+   "id": "hyper",
+   "teil": "sw",
+   "name": "2 Monate Begleitung nach Go-live",
+   "preis": 1000
+  },
+  {
+   "id": "sich",
+   "teil": "sw",
+   "name": "Sicherheit, Tests und Einführung",
+   "preis": 6500
+  },
+  {
+   "id": "w1",
+   "teil": "web",
+   "name": "Website: Konzept und Design",
+   "preis": 2000
+  },
+  {
+   "id": "w2",
+   "teil": "web",
+   "name": "Website: Seiten, Projekte und Einheiten",
+   "preis": 2700
+  },
+  {
+   "id": "w3",
+   "teil": "web",
+   "name": "Website: Erstkontakt mit Termin",
+   "preis": 900
+  },
+  {
+   "id": "w4",
+   "teil": "web",
+   "name": "Website: Anbindung ans Cockpit",
+   "preis": 1200
+  },
+  {
+   "id": "w5",
+   "teil": "web",
+   "name": "Website: Texte, Technik und Start",
+   "preis": 700
+  }
+ ],
+ "add": [
+  {
+   "id": "mk",
+   "gruppe": "Website",
+   "name": "Markenauffrischung",
+   "text": "Feinschliff Logo, Farben, Schriften und Bildsprache, kurze Markenrichtlinie. Kein komplett neues Logo.",
+   "preis": 2200,
+   "monat": 0,
+   "menge": false,
+   "zeit": "",
+   "art": 1
+  },
+  {
+   "id": "ib",
+   "gruppe": "Website",
+   "name": "Interessentenbereich mit Login",
+   "text": "Interessenten sehen ihre Unterlagen, Grundrisse und Termine an einer Stelle statt in Mails.",
+   "preis": 1900,
+   "monat": 0,
+   "menge": false,
+   "zeit": "weniger Rückfragen nach Unterlagen",
+   "art": 1
+  },
+  {
+   "id": "en",
+   "gruppe": "Website",
+   "name": "Englische Version",
+   "text": "Alle Hauptseiten und Projektseiten zusätzlich auf Englisch.",
+   "preis": 1000,
+   "monat": 0,
+   "menge": false,
+   "zeit": "",
+   "art": 1
+  },
+  {
+   "id": "pu",
+   "gruppe": "Website",
+   "name": "Projekt-Updates per E-Mail",
+   "text": "Baufortschritt automatisch an Interessenten, nur mit Einwilligung. Hält Interessenten bis zum Verkaufsstart warm.",
+   "preis": 600,
+   "monat": 0,
+   "menge": false,
+   "zeit": "",
+   "art": 1
+  },
+  {
+   "id": "lp",
+   "gruppe": "Website",
+   "name": "2 Landingpages für Kampagnen",
+   "text": "Für Instagram- oder Anzeigenkampagnen, ohne Anzeigenbudget und Kampagnenbetreuung.",
+   "preis": 800,
+   "monat": 0,
+   "menge": false,
+   "zeit": "",
+   "art": 1
+  },
+  {
+   "id": "op",
+   "gruppe": "Website",
+   "name": "3 Monate Optimierung",
+   "text": "Auswertung und Verbesserung der Anfrage-Strecke nach dem Start.",
+   "preis": 500,
+   "monat": 0,
+   "menge": false,
+   "zeit": "",
+   "art": 1
+  },
+  {
+   "id": "ps",
+   "gruppe": "Website",
+   "name": "Weitere Projektseite mit Einheiten",
+   "text": "Je weiteres Projekt eine Seite mit Einheitentabelle, Grundrissen, Exposé und Terminbuchung.",
+   "preis": 550,
+   "monat": 0,
+   "menge": true,
+   "zeit": "",
+   "art": 0
+  },
+  {
+   "id": "ar",
+   "gruppe": "Neue KI-Agenten",
+   "name": "Agent Rechnungsprüfung",
+   "text": "Prüft Rechnungen der Nachunternehmer gegen Auftrag, Aufmaß und genehmigte Nachträge, markiert Abweichungen, bereitet die Freigabe vor.",
+   "preis": 4500,
+   "monat": 60,
+   "menge": false,
+   "zeit": "ca. 112 Std. pro Jahr (150 Rechnungen × 45 Min.)",
+   "art": 0
+  },
+  {
+   "id": "ap",
+   "gruppe": "Neue KI-Agenten",
+   "name": "Agent Posteingang",
+   "text": "Liest eingehende Mails und gescannte Briefe, ordnet sie Projekt und Firma zu, legt Aufgaben mit Frist an.",
+   "preis": 3500,
+   "monat": 50,
+   "menge": false,
+   "zeit": "ca. 73 Std. pro Jahr (20 Min. pro Arbeitstag)",
+   "art": 0
+  },
+  {
+   "id": "ag",
+   "gruppe": "Neue KI-Agenten",
+   "name": "Agent Gewährleistung und Mängel nach Übergabe",
+   "text": "Erfasst Mängelanzeigen der Käufer, ordnet sie dem verantwortlichen Gewerk zu, überwacht Gewährleistungsfristen und erinnert die Firmen.",
+   "preis": 3500,
+   "monat": 50,
+   "menge": false,
+   "zeit": "ca. 78 Std. pro Jahr (1,5 Std. pro Woche)",
+   "art": 0
+  },
+  {
+   "id": "ak",
+   "gruppe": "Neue KI-Agenten",
+   "name": "Agent Käuferbetreuung und Sonderwünsche",
+   "text": "Nimmt Sonderwünsche der Käufer auf, holt Preise beim Gewerk ein, erstellt den Kostenvorschlag und hält Bemusterungstermine nach.",
+   "preis": 4000,
+   "monat": 50,
+   "menge": false,
+   "zeit": "ca. 58 Std. pro Jahr (2 Std. je Einheit × 29)",
+   "art": 0
+  },
+  {
+   "id": "wf",
+   "gruppe": "Erweiterungen",
+   "name": "Weiterer Workflow",
+   "text": "Ein zusätzlicher Ablauf von Auslöser bis Ergebnis nach euren Regeln, mit Freigabepunkten.",
+   "preis": 1200,
+   "monat": 0,
+   "menge": true,
+   "zeit": "",
+   "art": 0
+  },
+  {
+   "id": "vl",
+   "gruppe": "Erweiterungen",
+   "name": "Weitere Vorlage",
+   "text": "Eine zusätzliche Schreiben- oder Berichtsart, die die KI als Entwurf mit Belegen erstellt.",
+   "preis": 450,
+   "monat": 0,
+   "menge": true,
+   "zeit": "",
+   "art": 0
+  },
+  {
+   "id": "db",
+   "gruppe": "Erweiterungen",
+   "name": "Weiteres Dashboard oder Auswertung",
+   "text": "Eine zusätzliche Auswertung, zum Beispiel für Bank, Investoren oder Gesellschafter.",
+   "preis": 900,
+   "monat": 0,
+   "menge": true,
+   "zeit": "",
+   "art": 0
+  },
+  {
+   "id": "zu",
+   "gruppe": "Erweiterungen",
+   "name": "Weitere Zugänge",
+   "text": "Zugänge über die 8 enthaltenen Nutzer hinaus, mit Rolle und Rechten.",
+   "preis": 0,
+   "monat": 25,
+   "menge": true,
+   "zeit": "",
+   "art": 0
+  },
+  {
+   "id": "st",
+   "gruppe": "Erweiterungen",
+   "name": "Zusätzlicher Schulungstag vor Ort",
+   "text": "Ein Tag Schulung in Nauheim, zum Beispiel für neue Mitarbeiter.",
+   "preis": 960,
+   "monat": 0,
+   "menge": true,
+   "zeit": "",
+   "art": 0
+  },
+  {
+   "id": "if",
+   "gruppe": "Erweiterungen",
+   "name": "Schnittstelle zu ERP, DATEV oder Buchhaltung",
+   "text": "Anbindung an ein bestehendes System. Richtpreis 3.500 bis 8.000 € je Schnittstelle, Festpreis nach Prüfung.",
+   "preis": 0,
+   "monat": 0,
+   "menge": false,
+   "zeit": "",
+   "art": -1
+  }
+ ],
+ "hk": {
+  "name": "HK Growth UG (haftungsbeschränkt)",
+  "str": "Weststraße 2",
+  "ort": "51709 Marienheide",
+  "gf": "Nick Hinze, Luis Kummer",
+  "hr": "Amtsgericht Köln, HRB 129353",
+  "tel": "0175 4547011",
+  "mail": "info@hk-growthoperator.de",
+  "web": "hk-growthoperator.de"
+ },
+ "kunde": {
+  "name": "Heim & Partner Immobilien GmbH",
+  "str": "Im Rod 35",
+  "ort": "64569 Nauheim",
+  "hr": "Amtsgericht Darmstadt, HRB 106755",
+  "ustid": "DE451023615"
+ },
+ "unterzeichnet": {
+  "ort": "Marienheide",
+  "datum": "28.10.2026"
+ }
+}

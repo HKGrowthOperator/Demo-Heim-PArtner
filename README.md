@@ -1,41 +1,75 @@
 # Demo Heim & Partner
 
-Klickbare Plattform-Demo und drei Angebote (Start, Komplett, Premium) für Heim & Partner.
-Statische Seiten, ausgeliefert mit nginx. Alle Namen, Firmen und Zahlen in der Demo sind Beispieldaten.
+Klickbare Plattform-Demo, die Angebote und der Online-Vertrag für Heim & Partner.
+Ein kleiner Node-Server liefert die Seiten aus und nimmt Unterschriften für den Vertrag entgegen.
+Alle Namen, Firmen und Zahlen in der Demo sind Beispieldaten.
 
 | Pfad | Inhalt |
 |---|---|
 | `/` | Plattform-Demo (Demo-Führung oben rechts) |
-| `/angebot/` | Auswahl der drei Angebote |
-| `/angebot/start/`, `/angebot/komplett/`, `/angebot/premium/` | die Angebote |
+| `/angebot/` | Auswahl der Angebote |
+| `/angebot/gesamt-premium/` | Angebot 79.900 € mit Add-ons zum Ankreuzen |
+| `/angebot/vertrag/` | Vertrag zum Gesamtpaket Premium: Add-ons wählen, Vertrag lesen, online unterschreiben |
+| `/angebot/start/`, `/angebot/komplett/`, `/angebot/premium/`, `/angebot/gesamt/`, `/angebot/website/` | weitere Angebote |
 | `/website/` | Entwurf der neuen Website heimundpartner.com |
 
-Die KI-Funktionen laufen hier im Demo-Modus mit festen Beispielergebnissen.
-Die Live-KI gibt es nur in der Fassung bei claude.ai.
+## Online-Vertrag
+
+1. Unter `/angebot/vertrag/` wählt Heim & Partner die Add-ons, liest den Vertrag (auch als PDF-Vorschau) und unterschreibt mit Maus, Finger oder Stift.
+2. Der Server rechnet alle Preise selbst aus `server/vorlage/katalog.json` nach, erstellt
+   - den **unterschriebenen Vertrag** als PDF mit Anlage 8 (gewählte Add-ons, Gesamtsumme, Zahlungsplan) und Prüfprotokoll (Zeitpunkt, IP, Browser, SHA-256),
+   - die **Anzahlungsrechnung** (40 % der Nettosumme zzgl. 19 % USt.) mit fortlaufender Nummer `HKG-RE-<Jahr>-0001`,
+3. legt beides unter `/data/vertraege/<Vertragsnummer>/` ab und
+4. schickt beides per E-Mail an die unterzeichnende Person (und eine optionale Rechnungsadresse), in Kopie an `MAIL_COPY_TO`.
+
+Ist der E-Mail-Versand nicht eingerichtet oder schlägt fehl, landet die Mail mit allen Angaben in `/data/outbox/`.
+Die Seite bietet die PDFs dann sofort zum Herunterladen an und sagt, dass die Unterlagen manuell nachkommen.
+Fehlen Steuer- oder Bankdaten, wird keine Rechnung erstellt: Der Vertrag geht trotzdem raus, `MAIL_COPY_TO` bekommt einen Hinweis.
+
+Der Vertrag verlangt Textform (§ 126b BGB). Die Unterschrift ist eine einfache elektronische Signatur.
+Unterschreiben geht nur bis zum Ende der Angebotsfrist (27.11.2026, änderbar mit `OFFER_VALID_UNTIL`).
 
 ## Deployment mit Coolify
 
-1. Neue Anwendung aus diesem Repo, Build Pack **Dockerfile**, Port **80**, Branch nach Wunsch.
-2. Domain eintragen, Coolify holt das Zertifikat.
-3. Die Seiten enthalten Preise. Für Passwortschutz in Coolify unter *Environment Variables* setzen:
-   - `BASIC_AUTH_USER`
-   - `BASIC_AUTH_PASSWORD`
+1. Anwendung aus diesem Repo, Build Pack **Dockerfile**, Port **80**.
+2. **Persistent Storage**: ein Volume nach `/data` mounten. Ohne Volume gehen unterschriebene Verträge
+   und der Rechnungszähler bei jedem Deploy verloren.
+3. **Environment Variables**:
 
-   Ohne diese beiden Variablen ist alles offen erreichbar (aber `noindex`, auch `robots.txt` sperrt Suchmaschinen).
-4. Health Check: `/healthz`.
+| Variable | Pflicht | Inhalt |
+|---|---|---|
+| `RESEND_API_KEY` | für E-Mail | API-Schlüssel von Resend (wie im Sales-Cockpit) |
+| `EMAIL_FROM` | für E-Mail | Absender auf der bei Resend freigegebenen Domain, z. B. `HK Growth <vertrag@hk-growthoperator.de>` |
+| `MAIL_COPY_TO` | nein | Kopie an, Standard `info@hk-growthoperator.de`, mehrere mit Komma |
+| `HK_USTID` oder `HK_STEUERNR` | für Rechnung | USt-IdNr. oder Steuernummer der HK Growth UG |
+| `HK_IBAN`, `HK_BANK` | für Rechnung | Bankverbindung für die Rechnung |
+| `HK_BIC` | nein | BIC |
+| `PUBLIC_BASE_URL` | empfohlen | Öffentliche Adresse, z. B. `https://demo.example.de`, für die Download-Links |
+| `BASIC_AUTH_USER`, `BASIC_AUTH_PASSWORD` | empfohlen | Passwortschutz für alle Seiten (die Seiten enthalten Preise) |
+| `DOWNLOAD_SECRET` | nein | Schlüssel für Download-Links, sonst wird einer in `/data` erzeugt |
+| `INVOICE_PREFIX`, `INVOICE_START` | nein | Rechnungsnummern, Standard `HKG-RE-` und 1 |
+| `OFFER_VALID_UNTIL` | nein | Ende der Angebotsfrist als `JJJJ-MM-TT` |
+
+4. Health Check: `/healthz` (ohne Passwort).
+5. Beim Start schreibt der Server ins Log, ob Passwortschutz, E-Mail und Rechnung aktiv sind.
 
 Lokal prüfen:
 
 ```bash
 docker build -t demo-heim-partner .
-docker run --rm -p 8080:80 -e BASIC_AUTH_USER=hp -e BASIC_AUTH_PASSWORD=geheim demo-heim-partner
+docker run --rm -p 8080:80 -v "$PWD/data:/data" -e BASIC_AUTH_USER=hp -e BASIC_AUTH_PASSWORD=geheim demo-heim-partner
 ```
 
 ## Aufbau
 
-- `site/` die auszuliefernden Dateien (Demo und Angebote sind je eine in sich geschlossene HTML-Datei)
-- `source/app.src.html` Quelltext der Demo, bevor die Icons eingebettet werden. Der Platzhalter
-  `/*ICONS_JSON*/{}` wird beim Bauen durch die benötigten Phosphor-Icons (`@phosphor-icons/core` 2.1.1) ersetzt.
-- `nginx.conf`, `Dockerfile`, `docker-entrypoint.d/` Auslieferung und optionaler Passwortschutz
+- `site/` die auszuliefernden Seiten (Demo und Angebote sind je eine in sich geschlossene HTML-Datei)
+- `server/` Node-Server ohne Framework: `server.mjs` (Auslieferung, Passwortschutz, API), `preis.mjs` (Preise),
+  `dokumente.mjs` (Vertrag, Rechnung, E-Mail), `pdf.mjs` (Chromium), `mail.mjs` (Resend), `speicher.mjs` (Ablage)
+- `server/vorlage/` Vertragsvorlage mit Platzhaltern und Preiskatalog, aus dem Vertrag und dem Angebot erzeugt
+- `server/fonts/` Schrift Geist für die PDFs (SIL Open Font License)
+- `source/app.src.html` Quelltext der Demo, bevor die Icons eingebettet werden
+
+API: `GET /api/vertrag/katalog`, `GET /api/vertrag/text`, `POST /api/vertrag/vorschau`, `POST /api/vertrag/unterschreiben`,
+`GET /api/vertrag/dokument/<Vertragsnummer>/<vertrag.pdf|rechnung.pdf>?t=<Token>`.
 
 Nicht in diesem Repo: der interne Spielplan mit Kalkulation und Verhandlungsgrenzen.

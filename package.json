@@ -1,0 +1,13 @@
+{
+  "name": "demo-heim-partner",
+  "private": true,
+  "type": "module",
+  "description": "Demo, Angebote und Online-Vertrag für Heim & Partner",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node server/server.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "25.16.0"
+  }
+}

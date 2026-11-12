@@ -1702,7 +1702,9 @@ function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),y3=r.net+36*r.mon,res=3*(R
  <section class="box"><div class="bh"><h2>Nicht enthalten</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6">${OF.NEV.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></section>
  <section class="box"><div class="bh"><h2>Auftrag</h2></div><div class="bb stack"><p class="sm">Hiermit beauftragt die Heim &amp; Partner Immobilien GmbH das Gesamtpaket gemäß Angebot ${OF.NR} zum Festpreis von ${eurO(OF.NET)} netto${r.L.length?` zuzüglich der gewählten Add-ons, zusammen ${eurO(r.net)} netto`:''}, sowie die Betreuung ab Livegang zu ${eurO(r.mon)} netto im Monat.</p>
   <div class="grid2" style="margin-top:24px"><div style="border-top:1px solid var(--ink-3);padding-top:6px" class="xs t3">Ort, Datum · Heim &amp; Partner Immobilien GmbH, Unterschrift</div><div style="border-top:1px solid var(--ink-3);padding-top:6px" class="xs t3">Ort, Datum · ${OF.HK.name}, ${OF.HK.gf}</div></div>
+  ${eigeneDomain()?`<div class="row noprint"><a class="btn acc" style="text-decoration:none" href="/angebot/vertrag/${r.L.length?'?add='+r.L.map(x=>x.a[0]+(x.a[6]?':'+x.q:'')).concat(r.req.map(a=>a[0])).join(','):''}">${I('signature','s')}Online unterschreiben</a><span class="xs t3">mit den gewählten Add-ons, Vertrag und Anzahlungsrechnung kommen per E-Mail</span></div>`:''}
   <p class="xs t3">${OF.HK.name} · ${OF.HK.str} · ${OF.HK.ort} · Geschäftsführer ${OF.HK.gf} · ${OF.HK.hr} · ${OF.HK.mail}</p></div></section>`;}
+function eigeneDomain(){try{return /^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname);}catch(e){return false;}}
 const AD=Object.fromEntries(OF.AREA.map(a=>[a[0],a]));
 const roiInit=()=>({a:Object.fromEntries(OF.AREA.map(a=>[a[0],{n:a[3],s:a[4],r:a[5]}])),vol:0,pct:0.5,tf:100});
 S.roi=roiInit();
