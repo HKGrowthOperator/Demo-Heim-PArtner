@@ -252,10 +252,9 @@ const deAusIso = s => s.split('-').reverse().join('.')
 
 function schlussSeite(res, status, titel, inhalt) {
   const html = `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${esc(titel)}</title>
-<style>:root{color-scheme:light dark;--bg:#f4f6f6;--card:#fff;--ink:#1d2427;--mute:#5d676b;--line:#dfe4e5;--acc:#0f6b5c;--bad:#a4262c}
-@media (prefers-color-scheme:dark){:root{--bg:#121617;--card:#1b2123;--ink:#e8eced;--mute:#a3adb1;--line:#2c3436;--acc:#5cc2ad;--bad:#ff8a8f}}
+<style>:root{color-scheme:light;--bg:#f5f5f1;--card:#fff;--ink:#202521;--mute:#71766f;--line:#e3e8df;--acc:#234d38;--bad:#a23b2b}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
-main{max-width:620px;margin:0 auto;padding:32px 16px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px}
+main{max-width:620px;margin:0 auto;padding:32px 16px}.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 16px 70px #22362608}
 h1{font-size:21px;margin:0 0 6px}p{margin:0 0 12px}.mute{color:var(--mute);font-size:13px}table{width:100%;border-collapse:collapse;margin:8px 0 16px}td{padding:7px 0;border-bottom:1px solid var(--line);vertical-align:top}td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:12px}
 label{display:block;font-weight:600;margin:4px 0 6px}input[type=date]{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-height:44px}
 button{font:inherit;font-weight:600;margin-top:16px;width:100%;min-height:46px;border:0;border-radius:10px;background:var(--acc);color:#fff;cursor:pointer}@media (prefers-color-scheme:dark){button{color:#0d1213}}

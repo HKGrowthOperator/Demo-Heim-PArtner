@@ -28,13 +28,13 @@ export const datum = d => new Intl.DateTimeFormat('de-DE', { timeZone: TZ, day: 
 export const uhrzeit = d => new Intl.DateTimeFormat('de-DE', { timeZone: TZ, hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(d)
 
 const CSS = `${FONTS}
-:root{--ink:#1d2427;--ink-2:#4d585c;--ink-3:#6b7478;--line:#dfe4e5;--line-2:#cdd4d6;--sunk:#f1f4f4;--accent:#1f6f78;--accent-soft:#e6f2f3}
+:root{--ink:#202521;--ink-2:#4d564e;--ink-3:#71766f;--line:#e3e8df;--line-2:#cbd3c5;--sunk:#f1f4ec;--accent:#234d38;--accent-soft:#edf3e9}
 *{box-sizing:border-box}
 html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 body{margin:0;color:var(--ink);font:400 9.6pt/1.5 Geist,Helvetica,Arial,sans-serif}
-.num,td.r{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.num,td.r{font-variant-numeric:tabular-nums}
 .kopf{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:22px}
-.brand{display:flex;gap:9px;align-items:center}.logo{width:26px;height:26px;border-radius:6px;background:#22292c;color:#fff;display:grid;place-items:center;font:700 9px Geist}
+.brand{display:flex;gap:9px;align-items:center}.logo{width:36px;height:36px;object-fit:contain;flex:none}
 .kopf .xs,.xs{font-size:7.8pt;color:var(--ink-3)}
 .kopf .meta{text-align:right}
 h1,h2,h3{font-weight:600;letter-spacing:-.01em;margin:0}
@@ -78,9 +78,11 @@ tr.sum td{font-weight:600;border-top:1px solid var(--line-2)}
 .rg .tot td{font-size:9.6pt}
 .fuss{margin-top:26px;padding-top:8px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:7.4pt;color:var(--ink-3)}`
 
+// Baum-Logo von HK, eingebettet, damit das PDF ohne Netz entsteht
+const BAUM = 'data:image/png;base64,' + fs.readFileSync(path.join(HIER, 'vorlage', 'hk-baum.png')).toString('base64')
 function kopf(kat, rechts) {
   const hk = kat.hk
-  return `<header class="kopf"><div class="brand"><div class="logo">HK</div><div><b>${esc(hk.name)}</b><div class="xs">${esc(hk.str)} · ${esc(hk.ort)} · ${esc(hk.tel)} · ${esc(hk.mail)}</div></div></div><div class="meta xs">${rechts}</div></header>`
+  return `<header class="kopf"><div class="brand"><img class="logo" src="${BAUM}" alt=""><div><b>${esc(hk.name)}</b><div class="xs">${esc(hk.str)} · ${esc(hk.ort)} · ${esc(hk.tel)} · ${esc(hk.mail)}</div></div></div><div class="meta xs">${rechts}</div></header>`
 }
 const seite = (titel, inhalt, extra = '') => `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>${esc(titel)}</title><style>${CSS}</style></head><body>${extra}${inhalt}</body></html>`
 
@@ -262,10 +264,10 @@ ${restB > 0 ? `<p>Bitte überweist den Zahlbetrag bis ${esc(r.faellig)} ohne Abz
 }
 
 function mailHtml(kat, anrede, zeilen, gruss, fuss = '') {
-  return `<!doctype html><html lang="de"><body style="margin:0;background:#f4f6f6;font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#1d2427"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #dfe4e5;border-radius:10px"><tr><td style="padding:24px 28px">
-<p style="margin:0 0 16px;font-weight:600;font-size:13px;color:#6b7478;letter-spacing:.06em;text-transform:uppercase">${esc(kat.hk.name)}</p>
+  return `<!doctype html><html lang="de"><body style="margin:0;background:#f5f5f1;font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#202521"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #e3e8df;border-radius:22px"><tr><td style="padding:30px 34px">
+<p style="margin:0 0 18px;font-weight:600;font-size:11px;color:#60794f;letter-spacing:1.5px;text-transform:uppercase">${esc(kat.hk.name)}</p>
 <p style="margin:0 0 14px">${esc(anrede)}</p>${zeilen.map(z => `<p style="margin:0 0 14px">${z}</p>`).join('')}
-<p style="margin:18px 0 0;white-space:pre-line">${esc(gruss)}</p>${fuss ? `<p style="margin:20px 0 0;font-size:12px;color:#6b7478">${fuss}</p>` : ''}</td></tr></table></td></tr></table></body></html>`
+<p style="margin:18px 0 0;white-space:pre-line">${esc(gruss)}</p>${fuss ? `<p style="margin:20px 0 0;font-size:12px;color:#71766f">${fuss}</p>` : ''}</td></tr></table></td></tr></table></body></html>`
 }
 const grussText = kat => `Viele Grüße\n${HK_VORAB ? HK_VORAB.name : kat.hk.gf}\n${kat.hk.name}\n${kat.hk.tel} · ${kat.hk.mail}`
 

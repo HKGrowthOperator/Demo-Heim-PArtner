@@ -22,6 +22,10 @@ Projektbild, Baum-Logo von HK). Sie liegt in einer Datei, `site/angebot/_stil/re
 Schrift und Formen der Seiten. Texte, Preise, Formular und Unterschrift stehen unverändert in den Seiten selbst.
 Die Plattform-Demo unter `/` ist davon nicht betroffen.
 
+Dieselben Farben und das Baum-Logo tragen auch die erzeugten Unterlagen: Vertrags-PDF, Rechnungen, Schlussrechnung
+(`server/dokumente.mjs`, Logo unter `server/vorlage/hk-baum.png`), die E-Mails dazu und die interne Seite für die Schlussrechnung.
+Inhalt, Nummern und Seitenumbruch der PDFs sind dabei gleich geblieben.
+
 Werden die Seiten unter `site/angebot/` neu erzeugt, hängt `python3 werkzeug/angebot-stil.py site/angebot` das Stylesheet
 und das Logo wieder an. Der Lauf ist wiederholbar und ändert keinen Seiteninhalt.
 
