@@ -1,0 +1,2 @@
+Inter: Copyright The Inter Project Authors (https://github.com/rsms/inter), SIL Open Font License 1.1.
+Lizenztext wie in OFL.txt in diesem Ordner.
