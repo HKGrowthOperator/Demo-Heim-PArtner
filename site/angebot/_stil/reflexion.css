@@ -1,0 +1,61 @@
+/* Gestaltung der Angebots- und Vertragsseiten wie die Reflexionsseite: Papier, Moosgrün, Sand.
+   Nur Darstellung. Texte, Preise, Formular und Unterschrift bleiben, wie sie in den Seiten stehen. */
+:root,:root:not([data-theme="light"]),:root[data-theme="dark"]{
+  --bg:#f5f5f1;--panel:#fff;--sunk:#f1f4ec;--line:#e3e8df;--line-2:#cbd3c5;
+  --ink:#202521;--ink-2:#4d564e;--ink-3:#71766f;
+  --primary:#234d38;--on-primary:#fff;
+  --accent:#285342;--accent-soft:#edf3e9;--accent-line:#d5e2d2;
+  --ok:#2f6b45;--crit:#a23b2b;
+  --f:-apple-system,BlinkMacSystemFont,"Inter","Helvetica Neue",Arial,sans-serif;--mono:var(--f);
+  color-scheme:light;
+}
+body{font-size:15.5px;font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;gap:56px}
+h1{letter-spacing:-.034em;font-size:clamp(2rem,4.2vw,3.1rem);line-height:1.08}
+h2{letter-spacing:-.026em;font-size:1.6rem}
+.lead{font-size:1.12rem;line-height:1.6;color:#646c64}
+.lbl{letter-spacing:1.5px;color:#60794f;font-size:11px;font-weight:600}
+.sec-h .n{color:#8e9b80;font-size:12px}
+
+/* Kopf: HK als Absender mit dem Baum-Logo */
+header.top{border-bottom:0;padding-bottom:0}
+.brand{gap:14px}
+.logo.baum{width:56px;height:56px;border-radius:0;background:none;object-fit:contain;flex:none}
+
+/* Auftakt: das Projektbild der Reflexionsseite als Band über dem ersten Abschnitt */
+.wrap>section:first-of-type{position:relative;padding-top:calc(clamp(190px,24vw,300px) + 44px)}
+.wrap>section:first-of-type::before{content:"";position:absolute;inset:0 0 auto 0;height:clamp(190px,24vw,300px);border-radius:28px;background:linear-gradient(#12271e77 0%,#0000 40%,#142c24f2 100%),url(villagluck.jpg) center 34%/cover #263b35;box-shadow:0 16px 70px #22362608}
+.wrap>section:first-of-type::after{content:"Weniger Handarbeit.\A Mehr Zeit fürs Projekt.";white-space:pre;position:absolute;left:clamp(22px,3vw,40px);top:calc(clamp(190px,24vw,300px) - clamp(74px,8vw,104px));color:#fff;font-size:clamp(19px,2.3vw,30px);font-weight:500;letter-spacing:-.6px;line-height:1.18;pointer-events:none}
+
+/* Flächen: weiche Karten, große Radien, ruhiger Schatten */
+.price,.proc,.care,.tw,.phases,.mod,.tests>div,.roi-kpi>div,.ben>div,.flow>div,.up,.sigw{border-radius:18px}
+.price{box-shadow:0 16px 70px #22362608}
+.pr .box,.sel{border-radius:22px;border-color:var(--accent-line);box-shadow:0 16px 50px #2236260f}
+.vtext{border-radius:22px;box-shadow:0 16px 70px #22362608}
+.vtext h2,.vtext h3{color:var(--primary)}
+.note,.link-note,.meldung,.vtext .ph8{border-radius:14px}
+.fertig{border-radius:24px}
+.sigw canvas{border-radius:18px}
+.feat .k{border-radius:9px}
+#onlTop{border-radius:20px!important;border-color:var(--accent-line)!important;box-shadow:0 16px 50px #2236260f!important}
+
+/* Bedienelemente wie auf der Reflexionsseite */
+.btn{height:40px;border-radius:11px;padding:0 16px;font-weight:500;transition:background-color .18s,border-color .18s}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:inset 0 1px #ffffff20,0 3px 8px #203f2410}
+.btn.pri:hover{background:#1b3f2d}
+.btn.chip[aria-pressed="true"]{background:#edf3e9;border-color:var(--accent);color:#193b2c}
+.fld input[type=text],.fld input[type=email]{height:46px;border-radius:12px;border-color:var(--line-2)}
+.fld input:focus,.ao .q:focus,.roi-in input:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 3px #23513820}
+.ao .q,.roi-in input{border-radius:9px}
+.bar i,.proc-rail button.on i{background:linear-gradient(90deg,#315c40,#8d9e78)}
+
+@media (max-width:720px){
+  .wrap>section:first-of-type::before{border-radius:22px}
+  .logo.baum{width:46px;height:46px}
+}
+@media print{
+  .wrap>section:first-of-type{padding-top:0}
+  .wrap>section:first-of-type::before,.wrap>section:first-of-type::after{display:none}
+  .price,.pr .box,.sel,.vtext,#onlTop{box-shadow:none!important}
+}
