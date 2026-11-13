@@ -16,6 +16,8 @@ import { variante } from './zahlung.mjs'
 const HIER = path.dirname(fileURLToPath(import.meta.url))
 const SITE = path.resolve(process.env.SITE_DIR || path.join(HIER, '..', 'site'))
 const KAT = JSON.parse(fs.readFileSync(path.join(HIER, 'vorlage', 'katalog.json'), 'utf8'))
+// Voller Firmenname nur dort, wo er hingehört (Briefkopf, Parteien, Unterschrift, Kontoinhaber, Fußzeile mit Pflichtangaben). Sonst der Kurzname.
+const KURZ = KAT.hk.kurz || KAT.hk.name
 const PORT = Number(process.env.PORT || 80)
 const ablage = speicher(process.env.DATA_DIR || '/data')
 const KOPIE_AN = (process.env.MAIL_COPY_TO || KAT.hk.mail).split(',').map(s => s.trim()).filter(Boolean)
@@ -157,7 +159,7 @@ async function unterschreiben(req, res) {
     const u = { name: d.name, funktion: d.funktion, ort: d.ort, datum: datum(jetzt), uhrzeit: uhrzeit(jetzt), signatur: 'data:image/png;base64,' + d.png.toString('base64') }
     const inhalt = vertragsinhalt(KAT, c, f, u, v)
     const protokoll = { vnr, name: d.name, funktion: d.funktion, email: d.email, ort: d.ort, datum: u.datum, uhrzeit: u.uhrzeit, iso: jetzt.toISOString(), ip, ua: String(req.headers['user-agent'] || '').slice(0, 300), hash: sha256(inhalt) }
-    const vertragPdf = await pdf(vertragHtml(KAT, c, f, { vnr, u, protokoll, opt: v }).html, { fusszeile: `Vertrag ${vnr} · ${KAT.kunde.name} · ${KAT.hk.name}` })
+    const vertragPdf = await pdf(vertragHtml(KAT, c, f, { vnr, u, protokoll, opt: v }).html, { fusszeile: `Vertrag ${vnr} · ${KAT.kunde.name} · ${KURZ}` })
     const pdfHash = sha256(vertragPdf)
 
     // Rechnung nur mit vollständigen Steuer- und Bankdaten (§ 14 UStG)
@@ -167,7 +169,7 @@ async function unterschreiben(req, res) {
       const nr = rechnungsNr(jahr)
       const faellig = datum(new Date(jetzt.getTime() + 14 * 86400_000))
       const rg = rechnungHtml(KAT, c, { nr, datum: u.datum, faellig, vnr, jetzt }, v)
-      rechnungPdf = await pdf(rg.html, { fusszeile: `Rechnung ${nr} · ${KAT.hk.name}` })
+      rechnungPdf = await pdf(rg.html, { fusszeile: `Rechnung ${nr} · ${KURZ}` })
       rechnung = { nr, art: rg.art, datum: u.datum, faellig, brutto: rg.brutto, netto: rg.netto, ust: rg.ust, ...(rg.plan ? { plan: rg.plan } : {}) }
     }
 
@@ -303,7 +305,7 @@ async function schluss(req, res, vnr) {
     const jetzt = new Date(), nr = rechnungsNr(jahrVon(jetzt))
     const x = { nr, datum: datum(jetzt), faellig: datum(new Date(jetzt.getTime() + 14 * 86400_000)), abnahme: deAusIso(abnahme) }
     const sr = schlussrechnungHtml(KAT, r0, x)
-    const buf = await pdf(sr.html, { fusszeile: `Schlussrechnung ${nr} · ${KAT.hk.name}` })
+    const buf = await pdf(sr.html, { fusszeile: `Schlussrechnung ${nr} · ${KURZ}` })
     const schlussDaten = { ...x, netto: sr.netto, ust: sr.ust, brutto: sr.brutto, gesamt: sr.gesamt, erstellt: jetzt.toISOString(), mail: { status: 'offen' } }
     ablage.ablegen(vnr, { 'schlussrechnung.pdf': buf }, { ...r0, schluss: schlussDaten })
     const an = [...new Set([r0.unterzeichner.email, r0.rechnungEmail].filter(Boolean))]

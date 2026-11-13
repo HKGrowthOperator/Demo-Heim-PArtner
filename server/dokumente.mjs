@@ -195,7 +195,7 @@ function rechnungRahmen(kat, r, titel, meta, koerper, verwendung) {
   const hk = kat.hk, k = kat.kunde, st = hkSteuer()
   const bank = [['Kontoinhaber', hk.name], ['IBAN', process.env.HK_IBAN], ['BIC', process.env.HK_BIC], ['Bank', process.env.HK_BANK]].filter(x => x[1])
   const inhalt = `${kopf(kat, `Rechnung Nr. ${esc(r.nr)}`)}<div class="rg">
-<div class="adr"><div><div class="absender">${esc(hk.name)} · ${esc(hk.str)} · ${esc(hk.ort)}</div><b>${esc(k.name)}</b><br>${esc(k.str)}<br>${esc(k.ort)}<br><span class="xs">USt-IdNr. ${esc(k.ustid)}</span></div>
+<div class="adr"><div><div class="absender">${esc(hk.kurz || hk.name)} · ${esc(hk.str)} · ${esc(hk.ort)}</div><b>${esc(k.name)}</b><br>${esc(k.str)}<br>${esc(k.ort)}<br><span class="xs">USt-IdNr. ${esc(k.ustid)}</span></div>
 <div><table class="meta"><tbody>${[['Rechnungsnummer', `<b>${esc(r.nr)}</b>`], ['Rechnungsdatum', esc(r.datum)], ...meta.map(([a, b]) => [esc(a), esc(b)])].map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</tbody></table></div></div>
 <h1>${esc(titel)}</h1>
 ${koerper}
@@ -265,7 +265,7 @@ ${restB > 0 ? `<p>Bitte überweist den Zahlbetrag bis ${esc(r.faellig)} ohne Abz
 
 function mailHtml(kat, anrede, zeilen, gruss, fuss = '') {
   return `<!doctype html><html lang="de"><body style="margin:0;background:#f5f5f1;font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#202521"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #e3e8df;border-radius:22px"><tr><td style="padding:30px 34px">
-<p style="margin:0 0 18px;font-weight:600;font-size:11px;color:#60794f;letter-spacing:1.5px;text-transform:uppercase">${esc(kat.hk.name)}</p>
+<p style="margin:0 0 18px;font-weight:600;font-size:11px;color:#60794f;letter-spacing:1.5px;text-transform:uppercase">${esc(kat.hk.kurz || kat.hk.name)}</p>
 <p style="margin:0 0 14px">${esc(anrede)}</p>${zeilen.map(z => `<p style="margin:0 0 14px">${z}</p>`).join('')}
 <p style="margin:18px 0 0;white-space:pre-line">${esc(gruss)}</p>${fuss ? `<p style="margin:20px 0 0;font-size:12px;color:#71766f">${fuss}</p>` : ''}</td></tr></table></td></tr></table></body></html>`
 }
