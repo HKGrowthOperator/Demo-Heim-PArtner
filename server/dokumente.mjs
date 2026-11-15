@@ -17,8 +17,8 @@ function vorab() {
 }
 export const HK_VORAB = vorab()
 const schrift = f => fs.readFileSync(path.join(HIER, 'fonts', f)).toString('base64')
-// Inter wie auf der Website, eingebettet, damit jedes PDF gleich aussieht
-const FONTS = [400, 500, 600, 700].map(w => `@font-face{font-family:Inter;font-weight:${w};src:url(data:font/woff2;base64,${schrift(`Inter-${w}.woff2`)}) format('woff2')}`).join('\n')
+const FONTS = `@font-face{font-family:Geist;src:url(data:font/woff2;base64,${schrift('Geist-Variable.woff2')}) format('woff2');font-weight:100 900}
+@font-face{font-family:'Geist Mono';src:url(data:font/woff2;base64,${schrift('GeistMono-Variable.woff2')}) format('woff2');font-weight:100 900}`
 
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
 export const eur = n => (Number.isInteger(n) ? n.toLocaleString('de-DE') : n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })) + ' €'
@@ -28,16 +28,16 @@ export const datum = d => new Intl.DateTimeFormat('de-DE', { timeZone: TZ, day: 
 export const uhrzeit = d => new Intl.DateTimeFormat('de-DE', { timeZone: TZ, hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(d)
 
 const CSS = `${FONTS}
-:root{--ink:#202521;--ink-2:#4d564e;--ink-3:#71766f;--line:#e3e8df;--line-2:#cbd3c5;--sunk:#f1f4ec;--accent:#234d38;--accent-soft:#edf3e9}
+:root{--ink:#1d2427;--ink-2:#4d585c;--ink-3:#6b7478;--line:#dfe4e5;--line-2:#cdd4d6;--sunk:#f1f4f4;--accent:#1f6f78;--accent-soft:#e6f2f3}
 *{box-sizing:border-box}
 html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-body{margin:0;color:var(--ink);font:400 9.4pt/1.55 Inter,Helvetica,Arial,sans-serif;letter-spacing:-.003em;font-feature-settings:'cv11','ss03'}
-.num,td.r{font-variant-numeric:tabular-nums}
+body{margin:0;color:var(--ink);font:400 9.6pt/1.5 Geist,Helvetica,Arial,sans-serif}
+.num,td.r{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
 .kopf{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:22px}
-.brand{display:flex;gap:9px;align-items:center}.logo{width:44px;height:44px;object-fit:contain;flex:none}.brand b{font-size:10.5pt;font-weight:600;letter-spacing:-.01em}.brand{flex:none}.brand .xs{white-space:nowrap}
+.brand{display:flex;gap:9px;align-items:center}.logo{width:26px;height:26px;border-radius:6px;background:#22292c;color:#fff;display:grid;place-items:center;font:700 9px Geist}
 .kopf .xs,.xs{font-size:7.8pt;color:var(--ink-3)}
 .kopf .meta{text-align:right}
-h1,h2,h3{font-weight:600;letter-spacing:-.02em;margin:0}
+h1,h2,h3{font-weight:600;letter-spacing:-.01em;margin:0}
 h1.vt{font-size:16pt;line-height:1.2;text-align:center;margin:10px 0 6px;text-wrap:balance}
 .vt-sub{text-align:center;margin:0 0 14px}
 .parteien{text-align:center;margin-bottom:18px}.parteien p{margin:0 0 3px;text-align:center}
@@ -69,29 +69,18 @@ tr.sum td{font-weight:600;border-top:1px solid var(--line-2)}
 .unterschriften{break-inside:avoid;margin-top:14px}
 .protokoll{break-before:page}
 .box{border:1px solid var(--line-2);border-radius:8px;padding:10px 12px;background:var(--sunk);margin:8px 0}
-.wm{position:fixed;top:42%;left:0;right:0;text-align:center;transform:rotate(-24deg);font:700 46pt Inter;color:rgba(200,60,40,.13);z-index:9;pointer-events:none}
+.wm{position:fixed;top:42%;left:0;right:0;text-align:center;transform:rotate(-24deg);font:700 46pt Geist;color:rgba(200,60,40,.13);z-index:9;pointer-events:none}
 /* Rechnung */
-.rg .adr{display:grid;grid-template-columns:1fr 1.25fr;gap:28px;margin:10px 0 20px;align-items:start}
-.rg .adr>div:first-child{font-size:10.2pt;line-height:1.55}
-.rg .absender{font-size:7.2pt;color:var(--ink-3);margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid var(--line);display:block;width:fit-content}
-.rg .adr>div:last-child{background:var(--sunk);border-radius:14px;padding:12px 16px}
-.rg h1{font-size:20pt;letter-spacing:-.035em;line-height:1.1;margin:0 0 8px}
-.rg h1+p{color:var(--ink-2);margin-bottom:10px}
-.rg table.meta td{border:0;padding:2px 0}.rg table.meta td:first-child{color:var(--ink-3);width:36%}.rg table.meta td{white-space:nowrap}.rg .box table.meta td{white-space:normal}
-.rg .tw table{font-size:9pt}
-.rg .tw th{background:none;border-bottom:1px solid var(--ink);color:var(--ink-3);font-weight:500;font-size:7.6pt;letter-spacing:.06em;text-transform:uppercase;padding-bottom:6px}
-.rg .tw td{padding-top:4.5px;padding-bottom:4.5px}
+.rg .adr{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;margin:8px 0 26px}
+.rg .absender{font-size:7.4pt;color:var(--ink-3);text-decoration:underline;margin-bottom:6px}
+.rg h1{font-size:15pt;margin:0 0 12px}
+.rg table.meta td{border:0;padding:1px 0}.rg table.meta td:first-child{color:var(--ink-3);width:40%}
 .rg .tot td{font-size:9.6pt}
-.rg tbody tr.tot.sum:last-child td{font-size:12.5pt;font-weight:600;letter-spacing:-.02em;color:var(--accent);background:var(--accent-soft);padding-top:9px;padding-bottom:9px;border-bottom:0}
-.rg .box{border:0;border-radius:14px;padding:10px 16px;margin-top:10px;break-inside:avoid}
-.rg .box tbody{display:grid;grid-template-columns:1.25fr 1fr;column-gap:26px}.rg .box tr{display:grid;grid-template-columns:34% 1fr}.rg .box table.meta td:first-child{width:auto}
-.fuss{break-inside:avoid;margin-top:14px;padding-top:10px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:7.4pt;color:var(--ink-3)}`
+.fuss{margin-top:26px;padding-top:8px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-size:7.4pt;color:var(--ink-3)}`
 
-// Baum-Logo von HK, eingebettet, damit das PDF ohne Netz entsteht
-const BAUM = 'data:image/png;base64,' + fs.readFileSync(path.join(HIER, 'vorlage', 'hk-baum.png')).toString('base64')
 function kopf(kat, rechts) {
   const hk = kat.hk
-  return `<header class="kopf"><div class="brand"><img class="logo" src="${BAUM}" alt=""><div><b>${esc(hk.name)}</b><div class="xs">${esc(hk.str)} · ${esc(hk.ort)} · ${esc(hk.tel)} · ${esc(hk.mail)}</div></div></div><div class="meta xs">${rechts}</div></header>`
+  return `<header class="kopf"><div class="brand"><div class="logo">HK</div><div><b>${esc(hk.name)}</b><div class="xs">${esc(hk.str)} · ${esc(hk.ort)} · ${esc(hk.tel)} · ${esc(hk.mail)}</div></div></div><div class="meta xs">${rechts}</div></header>`
 }
 const seite = (titel, inhalt, extra = '') => `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>${esc(titel)}</title><style>${CSS}</style></head><body>${extra}${inhalt}</body></html>`
 
@@ -204,7 +193,7 @@ function rechnungRahmen(kat, r, titel, meta, koerper, verwendung) {
   const hk = kat.hk, k = kat.kunde, st = hkSteuer()
   const bank = [['Kontoinhaber', hk.name], ['IBAN', process.env.HK_IBAN], ['BIC', process.env.HK_BIC], ['Bank', process.env.HK_BANK]].filter(x => x[1])
   const inhalt = `${kopf(kat, `Rechnung Nr. ${esc(r.nr)}`)}<div class="rg">
-<div class="adr"><div><div class="absender">${esc(hk.kurz || hk.name)} · ${esc(hk.str)} · ${esc(hk.ort)}</div><b>${esc(k.name)}</b><br>${esc(k.str)}<br>${esc(k.ort)}<br><span class="xs">USt-IdNr. ${esc(k.ustid)}</span></div>
+<div class="adr"><div><div class="absender">${esc(hk.name)} · ${esc(hk.str)} · ${esc(hk.ort)}</div><b>${esc(k.name)}</b><br>${esc(k.str)}<br>${esc(k.ort)}<br><span class="xs">USt-IdNr. ${esc(k.ustid)}</span></div>
 <div><table class="meta"><tbody>${[['Rechnungsnummer', `<b>${esc(r.nr)}</b>`], ['Rechnungsdatum', esc(r.datum)], ...meta.map(([a, b]) => [esc(a), esc(b)])].map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`).join('')}</tbody></table></div></div>
 <h1>${esc(titel)}</h1>
 ${koerper}
@@ -273,10 +262,10 @@ ${restB > 0 ? `<p>Bitte überweist den Zahlbetrag bis ${esc(r.faellig)} ohne Abz
 }
 
 function mailHtml(kat, anrede, zeilen, gruss, fuss = '') {
-  return `<!doctype html><html lang="de"><body style="margin:0;background:#f5f5f1;font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#202521"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #e3e8df;border-radius:22px"><tr><td style="padding:30px 34px">
-<p style="margin:0 0 18px;font-weight:600;font-size:11px;color:#60794f;letter-spacing:1.5px;text-transform:uppercase">${esc(kat.hk.kurz || kat.hk.name)}</p>
+  return `<!doctype html><html lang="de"><body style="margin:0;background:#f4f6f6;font:15px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#1d2427"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:1px solid #dfe4e5;border-radius:10px"><tr><td style="padding:24px 28px">
+<p style="margin:0 0 16px;font-weight:600;font-size:13px;color:#6b7478;letter-spacing:.06em;text-transform:uppercase">${esc(kat.hk.name)}</p>
 <p style="margin:0 0 14px">${esc(anrede)}</p>${zeilen.map(z => `<p style="margin:0 0 14px">${z}</p>`).join('')}
-<p style="margin:18px 0 0;white-space:pre-line">${esc(gruss)}</p>${fuss ? `<p style="margin:20px 0 0;font-size:12px;color:#71766f">${fuss}</p>` : ''}</td></tr></table></td></tr></table></body></html>`
+<p style="margin:18px 0 0;white-space:pre-line">${esc(gruss)}</p>${fuss ? `<p style="margin:20px 0 0;font-size:12px;color:#6b7478">${fuss}</p>` : ''}</td></tr></table></td></tr></table></body></html>`
 }
 const grussText = kat => `Viele Grüße\n${HK_VORAB ? HK_VORAB.name : kat.hk.gf}\n${kat.hk.name}\n${kat.hk.tel} · ${kat.hk.mail}`
 

@@ -15,24 +15,6 @@ Alle Namen, Firmen und Zahlen in der Demo sind Beispieldaten.
 | `/angebot/start/`, `/angebot/komplett/`, `/angebot/premium/`, `/angebot/gesamt/`, `/angebot/website/` | weitere Angebote |
 | `/website/` | Entwurf der neuen Website heimundpartner.com |
 
-## Gestaltung der Angebots- und Vertragsseiten
-
-Angebot und Vertrag tragen dieselbe Gestaltung wie die Reflexionsseite und die Nutzenpräsentation (Papier, Moosgrün, Sand,
-Projektbild, Baum-Logo von HK). Sie liegt in einer Datei, `site/angebot/_stil/reflexion.css`, und überschreibt nur Farben,
-Schrift und Formen der Seiten. Texte, Preise, Formular und Unterschrift stehen unverändert in den Seiten selbst.
-Die Plattform-Demo unter `/` ist davon nicht betroffen.
-
-Dieselben Farben und das Baum-Logo tragen auch die erzeugten Unterlagen: Vertrags-PDF, Rechnungen, Schlussrechnung
-(`server/dokumente.mjs`, Logo unter `server/vorlage/hk-baum.png`), die E-Mails dazu und die interne Seite für die Schlussrechnung.
-Inhalt, Nummern und Seitenumbruch der PDFs sind dabei gleich geblieben.
-
-Der volle Firmenname „HK Growth UG (haftungsbeschränkt)“ steht nur dort, wo er hingehört: im Briefkopf, in der Fußzeile mit den
-Pflichtangaben, bei Absender, Vertragsparteien, Unterschrift und Kontoinhaber. Im Fließtext der Seiten, im Kopf der E-Mails, in der
-Absenderzeile der Rechnung und in der Seitenfußzeile der PDFs steht der Kurzname aus `katalog.json` (`hk.kurz`, „HK Growth“).
-
-Werden die Seiten unter `site/angebot/` neu erzeugt, hängt `python3 werkzeug/angebot-stil.py site/angebot` das Stylesheet
-und das Logo wieder an. Der Lauf ist wiederholbar. Am Seiteninhalt ändert er nur den Kurznamen im Fließtext der Vertragsseiten.
-
 ## Online-Vertrag
 
 1. Unter `/angebot/vertrag/` wählt Heim & Partner die Add-ons, liest den Vertrag (auch als PDF-Vorschau) und unterschreibt mit Maus, Finger oder Stift.

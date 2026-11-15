@@ -16,8 +16,6 @@ import { variante } from './zahlung.mjs'
 const HIER = path.dirname(fileURLToPath(import.meta.url))
 const SITE = path.resolve(process.env.SITE_DIR || path.join(HIER, '..', 'site'))
 const KAT = JSON.parse(fs.readFileSync(path.join(HIER, 'vorlage', 'katalog.json'), 'utf8'))
-// Voller Firmenname nur dort, wo er hingehört (Briefkopf, Parteien, Unterschrift, Kontoinhaber, Fußzeile mit Pflichtangaben). Sonst der Kurzname.
-const KURZ = KAT.hk.kurz || KAT.hk.name
 const PORT = Number(process.env.PORT || 80)
 const ablage = speicher(process.env.DATA_DIR || '/data')
 const KOPIE_AN = (process.env.MAIL_COPY_TO || KAT.hk.mail).split(',').map(s => s.trim()).filter(Boolean)
@@ -159,7 +157,7 @@ async function unterschreiben(req, res) {
     const u = { name: d.name, funktion: d.funktion, ort: d.ort, datum: datum(jetzt), uhrzeit: uhrzeit(jetzt), signatur: 'data:image/png;base64,' + d.png.toString('base64') }
     const inhalt = vertragsinhalt(KAT, c, f, u, v)
     const protokoll = { vnr, name: d.name, funktion: d.funktion, email: d.email, ort: d.ort, datum: u.datum, uhrzeit: u.uhrzeit, iso: jetzt.toISOString(), ip, ua: String(req.headers['user-agent'] || '').slice(0, 300), hash: sha256(inhalt) }
-    const vertragPdf = await pdf(vertragHtml(KAT, c, f, { vnr, u, protokoll, opt: v }).html, { fusszeile: `Vertrag ${vnr} · ${KAT.kunde.name} · ${KURZ}` })
+    const vertragPdf = await pdf(vertragHtml(KAT, c, f, { vnr, u, protokoll, opt: v }).html, { fusszeile: `Vertrag ${vnr} · ${KAT.kunde.name} · ${KAT.hk.name}` })
     const pdfHash = sha256(vertragPdf)
 
     // Rechnung nur mit vollständigen Steuer- und Bankdaten (§ 14 UStG)
@@ -169,7 +167,7 @@ async function unterschreiben(req, res) {
       const nr = rechnungsNr(jahr)
       const faellig = datum(new Date(jetzt.getTime() + 14 * 86400_000))
       const rg = rechnungHtml(KAT, c, { nr, datum: u.datum, faellig, vnr, jetzt }, v)
-      rechnungPdf = await pdf(rg.html, { fusszeile: `Rechnung ${nr} · ${KURZ}` })
+      rechnungPdf = await pdf(rg.html, { fusszeile: `Rechnung ${nr} · ${KAT.hk.name}` })
       rechnung = { nr, art: rg.art, datum: u.datum, faellig, brutto: rg.brutto, netto: rg.netto, ust: rg.ust, ...(rg.plan ? { plan: rg.plan } : {}) }
     }
 
@@ -254,9 +252,10 @@ const deAusIso = s => s.split('-').reverse().join('.')
 
 function schlussSeite(res, status, titel, inhalt) {
   const html = `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${esc(titel)}</title>
-<style>:root{color-scheme:light;--bg:#f5f5f1;--card:#fff;--ink:#202521;--mute:#71766f;--line:#e3e8df;--acc:#234d38;--bad:#a23b2b}
+<style>:root{color-scheme:light dark;--bg:#f4f6f6;--card:#fff;--ink:#1d2427;--mute:#5d676b;--line:#dfe4e5;--acc:#0f6b5c;--bad:#a4262c}
+@media (prefers-color-scheme:dark){:root{--bg:#121617;--card:#1b2123;--ink:#e8eced;--mute:#a3adb1;--line:#2c3436;--acc:#5cc2ad;--bad:#ff8a8f}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
-main{max-width:620px;margin:0 auto;padding:32px 16px}.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 16px 70px #22362608}
+main{max-width:620px;margin:0 auto;padding:32px 16px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px}
 h1{font-size:21px;margin:0 0 6px}p{margin:0 0 12px}.mute{color:var(--mute);font-size:13px}table{width:100%;border-collapse:collapse;margin:8px 0 16px}td{padding:7px 0;border-bottom:1px solid var(--line);vertical-align:top}td:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:12px}
 label{display:block;font-weight:600;margin:4px 0 6px}input[type=date]{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-height:44px}
 button{font:inherit;font-weight:600;margin-top:16px;width:100%;min-height:46px;border:0;border-radius:10px;background:var(--acc);color:#fff;cursor:pointer}@media (prefers-color-scheme:dark){button{color:#0d1213}}
@@ -305,7 +304,7 @@ async function schluss(req, res, vnr) {
     const jetzt = new Date(), nr = rechnungsNr(jahrVon(jetzt))
     const x = { nr, datum: datum(jetzt), faellig: datum(new Date(jetzt.getTime() + 14 * 86400_000)), abnahme: deAusIso(abnahme) }
     const sr = schlussrechnungHtml(KAT, r0, x)
-    const buf = await pdf(sr.html, { fusszeile: `Schlussrechnung ${nr} · ${KURZ}` })
+    const buf = await pdf(sr.html, { fusszeile: `Schlussrechnung ${nr} · ${KAT.hk.name}` })
     const schlussDaten = { ...x, netto: sr.netto, ust: sr.ust, brutto: sr.brutto, gesamt: sr.gesamt, erstellt: jetzt.toISOString(), mail: { status: 'offen' } }
     ablage.ablegen(vnr, { 'schlussrechnung.pdf': buf }, { ...r0, schluss: schlussDaten })
     const an = [...new Set([r0.unterzeichner.email, r0.rechnungEmail].filter(Boolean))]
