@@ -1008,7 +1008,7 @@ const GESPRAECHSTOUR=[
   {t:'Preis und Besetzung nebeneinander',x:'Nowak bietet den niedrigsten Preis. Vier Monteure sind verfügbar, acht braucht die Baustelle. Wie hättet ihr das bei eurer letzten Vergabe vor der Zusage herausgefunden?',go:TOUR[11].go,f:TOUR[11].f},
   {t:'Die Freigabe liegt bei euch',x:'Preis, Besetzung und Nachweise liegen zusammen vor. Die Entscheidung, wer den Auftrag bekommt, bleibt bei euch.',go:TOUR[13].go,f:TOUR[13].f}
 ];
-let rundgang=GESPRAECHSTOUR;
+let rundgang=TOUR;
 function tour(){
   const el=$('#tour');
   if(S.tour<0){el.innerHTML='';return;}
@@ -1873,7 +1873,7 @@ function routeAusAdresse() {
 }
 function fuehrungAusAdresse() {
   history.replaceState(null,'',location.pathname+location.search);
-  rundgang=GESPRAECHSTOUR;tourGo(0);
+  rundgang=TOUR;tourGo(0);
 }
 function folgeAdresse() {
   if(location.hash==='#fuehrung'){fuehrungAusAdresse();return;}
@@ -2031,7 +2031,7 @@ document.addEventListener('click',e=>{
      const ziel=d.act==='tour-probe'?'probe':'termin';
      const u=new URL(location.href);
      if(u.searchParams.get('modus') !== ziel){u.searchParams.set('modus',ziel);u.hash='fuehrung';location.assign(u.href);return;}
-     closeModal();rundgang=GESPRAECHSTOUR;tourGo(0);break;
+     closeModal();rundgang=TOUR;tourGo(0);break;
    }
    case 'tour-komplett':closeModal();rundgang=TOUR;tourGo(0);break;
    case 'tour-praes':S.tour=-1;foliennummer=1;go('praes');break;
