@@ -91,3 +91,22 @@ test('Die Moderation sieht zulässige Mengen und Zahlungspläne und jeden Unters
   komponent.attrs.auswahl='{"zu":1}';komponent.attrs.raten='3';await komponent.aktualisieren();assert.match(komponent.inhalt(),/liegt innerhalb der Freigabe/)
   context.window.hpModerationsHeader=()=>({});url=null;await komponent.aktualisieren();assert.equal(url,null)
 })
+
+test('Kundenlink, Vorschau in eigenem Tab und Unterschriftsstatus gehören zur selben Auswahl',()=>{
+  const id='c'.repeat(48), origin='https://demo.invalid', html=script('index.html')
+  const begin=html.indexOf('function freigegebenerStand('), end=html.indexOf('async function angebotsFassungOeffnen',begin)
+  const context={URL,location:{origin},esc:s=>s.replaceAll('&','&amp;')}
+  vm.runInNewContext(html.slice(begin,end),context)
+  const fassung={inhalt:'drei Zugänge',angebot:'/angebot/?stand='+id,vertrag:'/angebot/vertrag-raten/?stand='+id+'&raten=3&add=zu%3A3'}
+  const ansicht=context.freigegebenerStand(fassung,fassung.inhalt)
+  assert.ok(ansicht.includes('value="'+origin+fassung.angebot+'"'))
+  assert.ok(ansicht.includes('href="'+context.esc(fassung.vertrag)+'" target="_blank" rel="noopener noreferrer"'))
+  assert.ok(ansicht.includes('<hp-zeichnungsstand stand="'+id+'"'))
+  const vorher=context.freigegebenerStand(fassung,'zwei Zugänge')
+  assert.match(vorher,/Vorherige Kundenfassung/)
+  assert.ok(!vorher.includes('data-kopiere-angebot'))
+  assert.ok(vorher.includes('<hp-zeichnungsstand stand="'+id+'"'))
+  assert.equal(context.freigegebenerStand({...fassung,vertrag:'/angebot/vertrag/?stand='+'f'.repeat(48)},fassung.inhalt),'')
+  const ende=html.indexOf("document.addEventListener('click'",end)
+  assert.doesNotMatch(html.slice(end,ende),/location\.assign|location\.href\s*=/)
+})
