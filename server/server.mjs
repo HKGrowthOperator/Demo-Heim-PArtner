@@ -14,6 +14,7 @@ import { senden, mailKonfiguriert, gueltigeMail } from './mail.mjs'
 import { abrechnungsstand, abrechnungFuer, vertragHtml, vertragsinhalt, rechnungHtml, schlussrechnungHtml, mailInhalt, mailIntern, mailSchluss, hkSteuer, sha256, datum, uhrzeit, esc, eur2, unterschriften, zahlungFuellen, HK_VORAB } from './dokumente.mjs'
 import { angebotModell, archiv, dokument as angebotsDokument, fassung, vertragslink, vertragsbindung, verbindungPruefen } from './angebot.mjs'
 import { zeichnungsablage, signierteFassung } from './zeichnung.mjs'
+import { pruefeVertragsablage } from './vertragsablage.mjs'
 import { variante } from './zahlung.mjs'
 
 const HIER = path.dirname(fileURLToPath(import.meta.url))
@@ -86,13 +87,17 @@ function begrenzt(ip, art, max) {
 const token = (id, datei) => crypto.createHmac('sha256', ablage.geheimnis()).update(`${id}/${datei}`).digest('hex').slice(0, 32)
 const tokenOk = (ist, soll) => typeof ist === 'string' && ist.length === soll.length && crypto.timingSafeEqual(Buffer.from(ist), Buffer.from(soll))
 const zahlungsweise = v => v.variante === 'raten' ? `50 % bei Auftragserteilung, Rest in ${v.raten} Monatsraten` : KAT.pay.map(p => `${p.pct} % ${p.wann}`).join(', ')
+const dauerhafterBestand=()=>pruefeVertragsablage(ablage.dir,zeichnung.basisId,hkEinladung.basisInhaltSha256)
+function sichereAblageVerlangen() {
+  if(!dauerhafterBestand())throw Object.assign(new Error('Die Vertragsablage ist derzeit nicht sicher verfügbar. Bitte später erneut versuchen.'),{status:503})
+}
 function bereit() {
   const dir = process.env.DATA_DIR || '/data'
-  let schreibbar = false, eigenesVolume = false
+  let schreibbar = false
   try { const probe = path.join(dir, '.bereit-' + process.pid); fs.writeFileSync(probe, ''); fs.unlinkSync(probe); schreibbar = true } catch { /* nicht schreibbar */ }
-  try { eigenesVolume = fs.statSync(dir).dev !== fs.statSync('/').dev } catch { /* Ordner fehlt */ }
+
   const fehlt = fehltRechnung()
-  return { mailVersand: mailKonfiguriert(), rechnung: fehlt.length === 0, rechnungFehlt: fehlt, ablageSchreibbar: schreibbar, ablageDauerhaft: eigenesVolume, kopieAn: KOPIE_AN.length }
+  return { mailVersand: mailKonfiguriert(), rechnung: fehlt.length === 0, rechnungFehlt: fehlt, ablageSchreibbar: schreibbar, ablageDauerhaft: dauerhafterBestand(), kopieAn: KOPIE_AN.length }
 }
 const fehltRechnung = () => [!hkSteuer() && 'HK_USTID oder HK_STEUERNR', !process.env.HK_IBAN && 'HK_IBAN', !process.env.HK_BANK && 'HK_BANK'].filter(Boolean)
 const rechnungsNr = jahr => `${process.env.INVOICE_PREFIX || 'HKG-RE-'}${jahr}-${String(ablage.naechste('rechnung', jahr, Number(process.env.INVOICE_START || 1))).padStart(4, '0')}`
@@ -156,6 +161,7 @@ const nacheinander = fn => (kette = kette.then(fn, fn))
 async function unterschreiben(req, res) {
   const ip = clientIp(req)
   const b = await lies(req)
+  sichereAblageVerlangen()
   if (b.website) return json(res, 400, { ok: false, fehler: 'Ungültige Anfrage' })
   const nonce = typeof b.nonce === 'string' && /^[A-Za-z0-9-]{8,64}$/.test(b.nonce) ? b.nonce : null
   if (!nonce) return json(res, 400, { ok: false, fehler: 'Ungültige Anfrage' })
@@ -174,6 +180,7 @@ async function unterschreiben(req, res) {
   if (begrenzt(ip, 'sign', 5)) return json(res, 429, { ok: false, fehler: 'Zu viele Versuche. Bitte in einer Stunde erneut oder per E-Mail an ' + KAT.hk.mail })
 
   const ergebnis = await nacheinander(async () => {
+    sichereAblageVerlangen()
     const vorhanden = zeichnung.vertragsnummer()
     const abgeschlossen=vorhanden && ablage.record(vorhanden)
     if(abgeschlossen)return wiederholung(req,abgeschlossen,v.angebotsstand)
@@ -209,6 +216,7 @@ async function unterschreiben(req, res) {
       gf: d.gf, ansprechpartner: d.ansprechpartner, vertretung: d.vertretung, rechnungEmail: d.rechnungEmail, protokoll, pdfHash,
       rechnung, rechnungFehlt: fehltRg, mail: { status: 'offen' },
     }
+    sichereAblageVerlangen()
     if(!ablage.ablegenEinmalig(vnr,dateien,record))return wiederholung(req,ablage.record(vnr),v.angebotsstand)
     ablage.merkeNonce(nonce, vnr)
 
@@ -251,6 +259,7 @@ function wiederholung(req,r,stand) {
 }
 
 function zeichnungsstatus(req,id) {
+  sichereAblageVerlangen()
   const stand=angebote.lesen(id),vnr=zeichnung.vertragsnummer(),vertrag=vnr&&ablage.record(vnr)
   if(historischeStaende.has(id))return {status:'abgeschlossen',hinweis:'Dieser frühere Vertrag ist bereits abgeschlossen.'}
   if(vertrag && vertrag.angebotsstand===id)return {status:'abgeschlossen',hinweis:'Beide Seiten haben unterschrieben.',vertragNr:vnr,pdf:antwort(req,vertrag).downloads.vertrag,pdfHash:vertrag.pdfHash}
@@ -395,10 +404,12 @@ const server = http.createServer(async (req, res) => {
     if(url.pathname==='/api/zeichnung/einladung'||url.pathname==='/api/zeichnung/freigeben'){
       const bear=/^Bearer ([^ ]+)$/i.exec(String(req.headers['x-hk-einladung'] || req.headers.authorization || ''))
       zeichnung.authentisieren(bear?.[1])
-      if(url.pathname.endsWith('/einladung') && req.method==='GET')return json(res,200,zeichnung.details())
+      if(url.pathname.endsWith('/einladung') && req.method==='GET'){sichereAblageVerlangen();return json(res,200,zeichnung.details())}
       if(url.pathname.endsWith('/freigeben') && req.method==='POST'){
         if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||''))return json(res,415,{fehler:'JSON erforderlich.'})
-        return json(res,201,zeichnung.freigeben(await lies(req,850000)))
+        const freigabe=await lies(req,850000)
+        sichereAblageVerlangen()
+        return json(res,201,zeichnung.freigeben(freigabe))
       }
       return json(res,405,{fehler:'Methode nicht erlaubt.'})
     }

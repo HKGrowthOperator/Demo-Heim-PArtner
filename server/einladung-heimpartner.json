@@ -3,5 +3,6 @@
   "moderationSha256": "a5d770165499e7f447d90746f2daf773301f5b643673c064104d844f5d70b923",
   "ablauf": "2026-11-27T22:59:59.000Z",
   "standSha256": "125dadecb1b719b8c616bfb150d012077a3a9d37dfb7aabe381170da5f0f119d",
-  "name": "Luis Kummer"
+  "name": "Luis Kummer",
+  "basisInhaltSha256": "15d4c78e05f94156d42b6b6d17ae8b2d220cb18edbdd8e6effcde1b7664e73f5"
 }
