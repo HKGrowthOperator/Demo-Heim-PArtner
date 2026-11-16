@@ -1725,7 +1725,7 @@ function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),pay=angebotsRaten(r.net),p
  <section class="box"><div class="bh"><h2>${probe?'Vorschau':'Angebot und Vertrag'}</h2></div><div class="bb stack">
  <p>${probe?'Die Druckprobe zeigt Umfang, Annahmen und Zahlungsplan.':'Die Angebotsfassung hält den Gesamtpreis, die gemeinsam angesetzten Stunden und den Zahlungsplan fest.'}</p>
  ${!probe&&eigeneDomain()&&!window.hpModerationsHeader?.().Authorization?'<p class="noprint">Für die verbindliche Kundenfassung öffnet Nick seinen persönlichen Moderationslink. Hier könnt ihr das Angebot prüfen und drucken.</p>':''}
- ${!probe&&eigeneDomain()&&window.hpModerationsHeader?.().Authorization?`<div class="noprint stack"><label><input type="checkbox" id="ang-gespraech"> Gesprächsangaben und Startplanung in die Kundenfassung übernehmen</label><div class="row"><button type="button" class="btn" data-fassung="angebot">Angebotslink erstellen</button><button type="button" class="btn acc" data-fassung="vertrag">Vertrag prüfen</button></div><div id="ang-ergebnis" role="status" aria-live="polite"></div><div id="ang-gemeinsam">${freigegebenerStand(letzteFassung)}</div></div>`:''}
+ ${!probe&&eigeneDomain()&&window.hpModerationsHeader?.().Authorization?`<div class="noprint stack"><label><input type="checkbox" id="ang-gespraech"> Gesprächsangaben und Startplanung in die Kundenfassung übernehmen</label><p>Wenn Umfang und Zahlungsplan feststehen, erstellt ihr hier den Link für Heim &amp; Partner.</p><div class="row"><button type="button" class="btn acc" data-fassung="angebot">Angebotslink erstellen</button></div><div id="ang-ergebnis" role="status" aria-live="polite"></div><div id="ang-gemeinsam">${freigegebenerStand(letzteFassung,JSON.stringify(kundenfassungEingabe(false)))}</div></div>`:''}
   <p class="xs t3">${OF.HK.name} · ${OF.HK.str} · ${OF.HK.ort} · Geschäftsführer ${OF.HK.gf} · ${OF.HK.hr} · ${OF.HK.mail}</p></div></section>`;}
 function eigeneDomain(){try{return /^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname);}catch(e){return false;}}
 const AD=Object.fromEntries(OF.AREA.map(a=>[a[0],a]));
@@ -1927,9 +1927,8 @@ function angebotsStartdaten(){return [
  ['Projektverantwortung',typeof verantwortlich==='string'?verantwortlich:''],
  ['Gewünschter Start',typeof wunschstart==='string'?wunschstart:'']
 ];}
-function kundenfassungEingabe(){
+function kundenfassungEingabe(teilen=document.getElementById('ang-gespraech')?.checked===true){
  const r=cfgCalc(),addons=Object.fromEntries(r.L.map(x=>[x.a[0],x.q]).concat(r.req.map(a=>[a[0],1])));
- const teilen=document.getElementById('ang-gespraech')?.checked===true;
  const [[,start],[,person],[,datum]]=angebotsStartdaten();
  return {freigabe:true,gespraechFreigabe:teilen,addons,raten:S.cfg.raten,roi:S.roi,...teilen?{gespraech:{gespraechsziel,gespraechsfall,erfolgskriterium,praxisstunden,startprojekt:start,verantwortlich:person,wunschstart:datum}}:{}};
 }
@@ -1942,11 +1941,13 @@ if(!istProbe){
    if(v && typeof v.inhalt==='string' && /^\/angebot\/\?stand=[a-f0-9]{48}$/.test(v.angebot) && /^\/angebot\/vertrag(?:-raten)?\/\?stand=[a-f0-9]{48}(?:&|$)/.test(v.vertrag))letzteFassung=v;
  }catch{}
 }
-function freigegebenerStand(d){
+function freigegebenerStand(d,inhalt){
  if(!d)return '';
- const id=new URL(d.angebot,location.origin).searchParams.get('stand');
- if(!/^[a-f0-9]{48}$/.test(id||''))return '';
- return '<div class="noprint" id="kundenstand"><b>Zuletzt freigegebene Kundenfassung</b><p class="xs">Fassung '+esc(id.slice(0,12))+' · <a href="'+esc(d.angebot)+'" target="_blank" rel="noopener noreferrer">Kundenansicht öffnen</a></p><hp-zeichnungsstand stand="'+esc(id)+'">Unterschriften werden geprüft.</hp-zeichnungsstand></div>';
+ const url=new URL(d.angebot,location.origin), vertrag=new URL(d.vertrag,location.origin);
+ const id=url.searchParams.get('stand');
+ if(url.origin!==location.origin||vertrag.origin!==location.origin||!/^[0-9a-f]{48}$/.test(id||'')||vertrag.searchParams.get('stand')!==id)return '';
+ if(d.inhalt!==inhalt)return '<div class="noprint"><b>Vorherige Kundenfassung '+esc(id.slice(0,12))+'</b><p>Die aktuelle Auswahl weicht ab. Erstellt den aktuellen Angebotslink, bevor ihr ihn teilt.</p><hp-zeichnungsstand stand="'+esc(id)+'">Unterschriften der vorherigen Fassung werden geprüft.</hp-zeichnungsstand></div>';
+ return '<div class="noprint stack" id="kundenstand"><label><b>Kundenlink für Heim &amp; Partner</b><input readonly style="width:100%" aria-label="Link zur Angebotsfassung" value="'+esc(url.href)+'"></label><div class="row"><button type="button" class="btn acc" data-kopiere-angebot>Link kopieren</button><a class="btn" href="'+esc(url.pathname+url.search)+'" target="_blank" rel="noopener noreferrer">Kundenansicht öffnen</a><a class="btn" href="'+esc(vertrag.pathname+vertrag.search)+'" target="_blank" rel="noopener noreferrer">Vertrag in neuem Tab prüfen</a></div><p class="xs">Fassung '+esc(id.slice(0,12))+'. Über diesen Link kann Heim &amp; Partner das Angebot prüfen und den Vertrag unterschreiben.</p><hp-zeichnungsstand stand="'+esc(id)+'">Unterschriften werden geprüft.</hp-zeichnungsstand></div>';
 }
 async function angebotsFassungOeffnen(button){
  if(angebotsProbe())return;
@@ -1962,21 +1963,23 @@ async function angebotsFassungOeffnen(button){
      if(!aktuell())return;
      letzteFassung={inhalt,...daten};
      try{sessionStorage.setItem(fassungsAblage,JSON.stringify(letzteFassung));}catch{}
-     const gemeinsam=document.getElementById('ang-gemeinsam');if(gemeinsam)gemeinsam.innerHTML=freigegebenerStand(letzteFassung);
    }
    if(!aktuell())return;
-   if(window.HPLive){await window.HPLive.angebot(letzteFassung.angebot);if(!aktuell())return;}
-   if(button.dataset.fassung==='vertrag'){location.assign(letzteFassung.vertrag);return;}
-   const url=new URL(letzteFassung.angebot,location.origin);
-   status.innerHTML='<label>Link zur Angebotsfassung<input readonly style="width:100%" aria-label="Link zur Angebotsfassung"></label><div class="row"><button class="btn" type="button" data-kopiere-angebot>Link kopieren</button><a class="btn" target="_blank" rel="noopener noreferrer">Angebot öffnen</a></div>';
-   status.querySelector('input').value=url.href;status.querySelector('a').href=url.href;
+   const gemeinsam=document.getElementById('ang-gemeinsam');
+   gemeinsam.innerHTML=freigegebenerStand(letzteFassung,inhalt);
+   status.textContent='Der Kundenlink für diese Auswahl ist bereit.';
+   if(window.HPLive)await window.HPLive.angebot(letzteFassung.angebot);
  }catch(e){if(aktuell())status.textContent=e.message||'Die Angebotsfassung konnte nicht geöffnet werden.';}finally{steuerelemente.forEach(el=>el.disabled=false);}
 }
 document.addEventListener('click',async e=>{
  const b=e.target.closest('[data-fassung]');if(b){await angebotsFassungOeffnen(b);return;}
- if(e.target.closest('[data-kopiere-angebot]')){const f=document.querySelector('#ang-ergebnis input');if(!f)return;f.select();try{await navigator.clipboard.writeText(f.value);e.target.textContent='Link kopiert';}catch{f.focus();f.select();}}
+ if(e.target.closest('[data-kopiere-angebot]')){const f=document.querySelector('#kundenstand input');if(!f)return;f.select();try{await navigator.clipboard.writeText(f.value);e.target.textContent='Link kopiert';}catch{f.focus();f.select();}}
 });
-document.addEventListener('change',e=>{if(e.target.id==='ang-gespraech'){const status=document.getElementById('ang-ergebnis');if(status)status.replaceChildren();}});
+document.addEventListener('change',e=>{
+ if(e.target.id!=='ang-gespraech')return;
+ document.getElementById('ang-ergebnis').replaceChildren();
+ document.getElementById('ang-gemeinsam').innerHTML=freigegebenerStand(letzteFassung,JSON.stringify(kundenfassungEingabe()));
+});
 function angebotsRaten(netto){
   if(!S.cfg.raten) return [['Anzahlung','50 % bei Auftragserteilung',netto/2],['Schlusszahlung','50 % nach Gesamtabnahme',netto/2]];
   const cent=Math.round(netto*100), start=Math.round(cent/2), rest=cent-start, rate=Math.round(rest/S.cfg.raten);
