@@ -12,7 +12,7 @@
       try{sessionStorage.setItem(schluessel,neu);}catch{}
       url.searchParams.set('modus','termin');
     }
-    url.hash=istProbe?'fuehrung':inhaber?'fuehrung':'';
+    url.hash='';
     history.replaceState(null,'',url.pathname+url.search+url.hash);
   }
   if(!istProbe&&!istZuschauer&&!inhaber){try{inhaber=sessionStorage.getItem(schluessel)||'';}catch{}}

@@ -19,7 +19,7 @@ function moderation(link, gespeichert) {
 test('Nur der persönliche Moderationslink übergibt das Zugangsmerkmal. Sein Fragment wird sofort entfernt.',()=>{
   const auth=moderation('https://demo.invalid/?modus=termin#moderation='+unbenutzterSchluessel)
   assert.equal(auth.header.Authorization,'Bearer '+unbenutzterSchluessel)
-  assert.equal(auth.url.hash,'#fuehrung')
+  assert.equal(auth.url.hash,'')
   assert.equal(auth.url.href.includes(unbenutzterSchluessel),false)
   assert.equal(auth.eintraege.get('hp-moderation-v1'),unbenutzterSchluessel)
   const gast=moderation('https://demo.invalid/')
