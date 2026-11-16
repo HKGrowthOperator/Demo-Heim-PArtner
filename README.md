@@ -23,8 +23,8 @@ Alle Namen, Firmen und Zahlen in der Demo sind Beispieldaten.
    - die **Rechnung** mit fortlaufender Nummer `HKG-RE-<Jahr>-0001`: beim Standardvertrag die Anzahlungsrechnung über 50 % der Nettosumme zzgl. 19 % USt.,
      beim Ratenvertrag eine Rechnung über die ganze Summe mit Zahlungsplan (Anzahlung in 14 Tagen, Raten jeweils 1 bis 4 Monate nach Unterschrift),
 3. legt beides unter `/data/vertraege/<Vertragsnummer>/` ab,
-4. schickt beides per E-Mail an die unterzeichnende Person (und eine optionale Rechnungsadresse) und
-5. schickt eine eigene interne Mail an `MAIL_COPY_TO` mit beiden PDFs und dem Link für die Schlussrechnung. Dieser Link geht nie an den Kunden.
+4. schickt den unterschriebenen Vertrag an die unterzeichnende Person. Die Rechnung geht an die angegebene Rechnungsadresse. Ohne gesonderte Adresse kommen beide PDFs in einer Mail an.
+5. schickt denselben Vertrag und den internen Link für die Schlussrechnung an `MAIL_COPY_TO`.
 
 ## Schlussrechnung nach der Gesamtabnahme
 
@@ -33,9 +33,7 @@ Dort das Datum der Gesamtabnahme wählen und auf „Schlussrechnung erstellen un
 mit der Gesamtsumme, zieht die erste Rechnung mit ihrer Umsatzsteuer ab (§ 14 Abs. 5 UStG) und schickt sie an den Kunden, in Kopie an `MAIL_COPY_TO`.
 Beim Ratenvertrag ist der Zahlbetrag 0 €, die offenen Raten bleiben nach Plan fällig. Ein zweiter Klick erzeugt keine zweite Rechnung.
 
-Ist der E-Mail-Versand nicht eingerichtet oder schlägt fehl, landet die Mail mit allen Angaben in `/data/outbox/`.
-Die Seite bietet die PDFs dann sofort zum Herunterladen an und sagt, dass die Unterlagen manuell nachkommen.
-Fehlen Steuer- oder Bankdaten, wird keine Rechnung erstellt: Der Vertrag geht trotzdem raus, die interne Mail an `MAIL_COPY_TO` nennt die fehlenden Angaben.
+Der Abschluss speichert Empfänger, Dokumente und Versandstand auf dem Vertragsvolume. Bei einer vorübergehenden Störung wiederholt der Server neu freigegebene Sendungen innerhalb des Idempotenzfensters. Ohne aktiven Mailanschluss werden die Unterlagen zum manuellen Versand abgelegt. Frühere Abschlüsse werden durch das spätere Einrichten des Anschlusses nicht versendet. Die PDFs bleiben direkt abrufbar.
 
 Der Vertrag verlangt Textform (§ 126b BGB). Die Unterschrift ist eine einfache elektronische Signatur.
 Unterschreiben geht nur bis zum Ende der Angebotsfrist (27.11.2026, änderbar mit `OFFER_VALID_UNTIL`).
@@ -60,6 +58,8 @@ Unterschreiben geht nur bis zum Ende der Angebotsfrist (27.11.2026, änderbar mi
 | `DOWNLOAD_SECRET` | nein | Schlüssel für Download-Links, sonst wird einer in `/data` erzeugt |
 | `INVOICE_PREFIX`, `INVOICE_START` | nein | Rechnungsnummern, Standard `HKG-RE-` und 1 |
 | `OFFER_VALID_UNTIL` | nein | Ende der Angebotsfrist als `JJJJ-MM-TT` |
+
+Die Betriebsdaten können alternativ als geschützte Datei unter `/run/hk-heimpartner/firma.env` eingebunden werden. Explizite Laufzeitvariablen haben Vorrang. Zugangsdaten, Steuer- und Bankangaben gehören ausschließlich in die Serverkonfiguration.
 
 4. Health Check: `/healthz` (ohne Passwort).
 5. Beim Start schreibt der Server ins Log, ob Passwortschutz, E-Mail und Rechnung aktiv sind.

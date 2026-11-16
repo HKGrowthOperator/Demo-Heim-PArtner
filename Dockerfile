@@ -23,4 +23,4 @@ COPY site ./site
 VOLUME /data
 EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD node -e "fetch('http://127.0.0.1/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
-CMD ["node", "server/server.mjs"]
+CMD ["node", "--env-file-if-exists=/run/hk-heimpartner/firma.env", "server/server.mjs"]

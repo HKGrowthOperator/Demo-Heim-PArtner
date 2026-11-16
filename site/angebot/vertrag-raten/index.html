@@ -260,7 +260,7 @@ footer{border-top:1px solid var(--line);padding-top:18px;font-size:.78rem;color:
 <label class="fld">Geschäftsführung laut Impressum<input type="text" id="f-gf" name="gf" value="Frank Heim" required maxlength="160" data-live="GF"><span class="h">Steht so im Vertrag unter den Parteien.</span></label>
 <label class="fld">Ansprechpartner im Projekt<input type="text" id="f-ap" name="ansprechpartner" value="Herrn Dennis Hollinger" required maxlength="120" data-live="ANSPRECHPARTNER"><span class="h">§ 4 Mitwirkung.</span></label>
 <label class="fld">Vertretung im Projekt (optional)<input type="text" id="f-vt" name="vertretung" maxlength="120" value="" data-live="VERTRETUNG"></label>
-<label class="fld">Weitere E-Mail für Rechnungen (optional)<input type="email" id="f-re" name="rechnungEmail" maxlength="200" value=""><span class="h">Zusätzlicher Empfänger für den Rechnungsversand.</span></label>
+<label class="fld">E-Mail eurer Buchhaltung (optional)<input type="email" id="f-re" name="rechnungEmail" maxlength="200" value=""><span class="h">Wenn ihr eine Adresse angebt, schicken wir die Rechnung dorthin. Den Vertrag bekommt die unterzeichnende Person.</span></label>
 </div>
 <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 <div><span class="lbl">Unterschrift</span><div class="sigw" style="margin-top:6px"><canvas id="sig" aria-label="Feld für die Unterschrift. Mit Maus, Finger oder Stift unterschreiben."></canvas><div class="ln"></div><span class="hn">Mit Maus, Finger oder Stift unterschreiben</span><button class="btn x" type="button" id="sigX">Löschen</button></div></div>
@@ -354,7 +354,14 @@ $('#f').addEventListener('submit',async e=>{e.preventDefault();if(!bereitZurZeic
  catch(x){err.hidden=false;err.textContent=x.message;}finally{wirdGesendet=false;sendeKnopf();$('#busy').hidden=true;info.querySelector('hp-zeichnungsstand')?.aktualisieren?.();}});
 function rgText(g){if(!g)return' Die Rechnung steht noch aus.';if(g.art==='raten'&&g.plan){const p=g.plan;return` Rechnung <b>${esc(g.nr)}</b> mit Zahlungsplan über ${f2(g.brutto)}: Anzahlung ${f2(p[0].brutto)} bis ${esc(p[0].faellig)}, danach ${p.length-1} Monatsraten zu je ${f2(p[1].brutto)}, die letzte ${p[p.length-1].brutto!==p[1].brutto?'über '+f2(p[p.length-1].brutto)+' ':''}am ${esc(p[p.length-1].faellig)}.`;}return` Anzahlungsrechnung <b>${esc(g.nr)}</b> über ${f2(g.brutto)}, zahlbar bis ${esc(g.faellig)}.`;}
 function fertig(j){abgeschlossen=true;sendeKnopf();const d=$('#done'),an=(j.mail.an||[]).map(esc).join(', ');let m;
- if(j.mail.status==='gesendet')m=`Vertrag${j.rechnung?' und Rechnung':''} sind per E-Mail an ${an} unterwegs, eine Kopie geht an HK Growth.`;
+ if(j.bereitsAbgeschlossen){
+   d.innerHTML=`<span class="lbl">Beide Seiten haben unterschrieben</span><h2>Euer Vertrag ist gespeichert.</h2><p>Vertrag ${esc(j.vertragNr)}</p><a class="btn" href="${esc(j.downloads.vertrag)}">Unterschriebenen Vertrag öffnen</a>`;
+   $('#f').hidden=true;d.hidden=false;d.scrollIntoView({block:'start'});return;
+ }
+ if(j.mail.status==='angenommen'||j.mail.status==='gesendet'){
+   m=`Der Versanddienst hat die Vertragsmail an ${an} angenommen.`;
+   if(j.mail.rechnung)m+=j.mail.rechnung.status==='angenommen'?` Die Rechnung ist für ${esc(j.mail.rechnung.an)} ebenfalls zum Versand angenommen.`:' Der Rechnungsversand steht noch aus.';
+ }
  else m='Die Unterschriften sind gespeichert. Der E-Mail-Versand steht aus. Hier könnt ihr die vorhandenen Unterlagen sofort herunterladen.';
  d.innerHTML=`<span class="lbl">Unterschrieben</span><h2>Vielen Dank, ${esc(j.unterzeichner)}.</h2><p>Vertrag <b>${esc(j.vertragNr)}</b> über ${f(j.summe.net)} netto ist unterschrieben.${rgText(j.rechnung)}</p><p>${m}</p><div class="row"><a class="btn pri" href="${esc(j.downloads.vertrag)}" target="_blank" rel="noopener">Vertrag als PDF</a>${j.downloads.rechnung?`<a class="btn" href="${esc(j.downloads.rechnung)}" target="_blank" rel="noopener">Rechnung als PDF</a>`:''}</div><p class="xs t3">Als Nächstes melden wir uns für den Termin zur Prozessanalyse in Nauheim. Projektstart ist spätestens 2 Wochen nach Unterzeichnung.</p>`;
  $('#f').hidden=true;d.hidden=false;$$('#s01 input,[data-rn]').forEach(i=>i.disabled=true);d.scrollIntoView({block:'start',behavior:'smooth'});}
