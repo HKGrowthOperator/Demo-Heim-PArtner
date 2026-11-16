@@ -1007,6 +1007,11 @@ const GESPRAECHSTOUR=[
 let rundgang=TOUR;
 function tour(){
   const el=$('#tour');
+  const ziel=S.tour>=0 ? $(rundgang[S.tour].f) : null;
+  document.querySelectorAll('.tour-focus').forEach(altesZiel=>{
+    if(altesZiel!==ziel)altesZiel.classList.remove('tour-focus');
+  });
+  if(ziel)ziel.classList.add('tour-focus');
   if(S.tour<0){el.innerHTML='';return;}
   const st=rundgang[S.tour];
   el.innerHTML=`<div class="tour" role="dialog" aria-label="Demo-Führung"><div><span class="k">FÜHRUNG ${S.tour+1} / ${rundgang.length}</span><b>${st.t}</b><p>${st.x}</p></div>
@@ -1017,7 +1022,6 @@ function fokusAufStation(){
   requestAnimationFrame(()=>{
     const ziel= S.tour>=0 && $(rundgang[S.tour].f);
     if(!ziel)return;
-    ziel.classList.add('tour-focus');
     const r=ziel.getBoundingClientRect();
     window.scrollTo({top:Math.max(0,window.scrollY+r.top-70),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
   });
