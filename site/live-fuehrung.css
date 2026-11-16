@@ -1,0 +1,6 @@
+#hp-live-teilen[hidden],#hp-live-angebot[hidden]{display:none!important}
+#hp-live-gast{display:none}.hp-zuschauer #hp-live-gast{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;background:#123c39;color:#fff;gap:12px;font:600 14px/1.4 system-ui}
+#hp-live-gast a{color:#fff;text-decoration:underline}.hp-zuschauer :is(.shell>.side,.top){display:none!important}.hp-zuschauer .shell{display:block}
+.hp-zuschauer :is(#tour .row,.noprint,.tour button,#view button){pointer-events:none}.hp-zuschauer .tour button,.hp-zuschauer #view .hp-gespraech button{visibility:hidden}
+.hp-zuschauer.hp-wartet :is(.shell,#tour){visibility:hidden}.hp-zuschauer .hp-gespraech iframe{pointer-events:none}
+.hp-live-dialog{padding:24px;max-width:min(490px,93vw);margin:auto;border:1px solid #bec9c8;border-radius:14px;color:#172e2b}.hp-live-dialog p{margin:12px 0 16px;line-height:1.5}.hp-live-dialog button{margin:5px 6px 0 0}.hp-live-dialog input{width:100%}.hp-live-dialog::backdrop{background:#14252577}

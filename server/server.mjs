@@ -2,6 +2,7 @@
 // Liefert site/ aus (wie zuvor nginx) und nimmt Unterschriften für den Vertrag entgegen:
 // Vertrag und Anzahlungsrechnung als PDF, Ablage auf dem Volume, Versand per E-Mail.
 import http from 'node:http'
+import { liveDienst } from './fuehrung.mjs'
 import fs from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
@@ -12,6 +13,7 @@ import { pdf, schliessen } from './pdf.mjs'
 import { senden, mailKonfiguriert, gueltigeMail } from './mail.mjs'
 import { abrechnungsstand, abrechnungFuer, vertragHtml, vertragsinhalt, rechnungHtml, schlussrechnungHtml, mailInhalt, mailIntern, mailSchluss, hkSteuer, sha256, datum, uhrzeit, esc, eur2, unterschriften, zahlungFuellen, HK_VORAB } from './dokumente.mjs'
 import { angebotModell, archiv, dokument as angebotsDokument, fassung, vertragslink, vertragsbindung, verbindungPruefen } from './angebot.mjs'
+import { zeichnungsablage, signierteFassung } from './zeichnung.mjs'
 import { variante } from './zahlung.mjs'
 
 const HIER = path.dirname(fileURLToPath(import.meta.url))
@@ -22,6 +24,13 @@ const ablage = speicher(process.env.DATA_DIR || '/data')
 const angebote = archiv(ablage.dir)
 const angebotsModell = angebotModell(path.join(SITE, 'index.html'))
 const aktuelleBindung = vertragsbindung(KAT,angebotsModell)
+const hkEinladung = JSON.parse(fs.readFileSync(path.join(HIER,'einladung-heimpartner.json'),'utf8'))
+const zeichnung = zeichnungsablage({dir:ablage.dir,einladung:hkEinladung,angebote,kat:KAT,bindung:aktuelleBindung})
+const historischeStaende = new Map()
+for(const id of fs.readdirSync(path.join(ablage.dir,'vertraege')).filter(n=>/^HKG-V-\d{4}-\d{4}$/.test(n))){
+  const rec=ablage.record(id)
+  if(rec?.angebotsstand && !rec.hkFreigabe)historischeStaende.set(rec.angebotsstand,id)
+}
 const KOPIE_AN = (process.env.MAIL_COPY_TO || KAT.hk.mail).split(',').map(s => s.trim()).filter(Boolean)
 
 // ── Hilfen ───────────────────────────────────────────────────
@@ -153,28 +162,32 @@ async function unterschreiben(req, res) {
   if (Date.now() > gueltigBis().getTime()) return json(res, 410, { ok: false, fehler: `Das Angebot war bis ${KAT.gueltig} gültig. Bitte meldet euch bei uns, wir schicken ein neues.` })
   const { fehlt, daten: d } = pruefe(b)
   const v = variante(b.variante, b.raten)
-  if (b.angebotsstand !== undefined) {
-    const stand = angebote.lesen(b.angebotsstand)
-    verbindungPruefen(KAT, stand, b.addons, v.raten ?? 0, v.variante, aktuelleBindung)
-    v.angebotsstand = b.angebotsstand
-  }
+  if(typeof b.angebotsstand!=='string')return json(res,409,{ok:false,fehler:'Zum Unterschreiben bitte den persönlichen Link zur besprochenen Angebotsfassung öffnen.'})
+  const stand=angebote.lesen(b.angebotsstand)
+  verbindungPruefen(KAT, stand, b.addons, v.raten ?? 0, v.variante, aktuelleBindung)
+  v.angebotsstand=b.angebotsstand
+  if(historischeStaende.has(v.angebotsstand))return json(res,409,{ok:false,fehler:'Zu dieser Fassung besteht bereits ein Vertrag.'})
+  const hkFreigabe=zeichnung.passend(v.angebotsstand,stand)
+  if(!hkFreigabe)return json(res,409,{ok:false,fehler:'HK hat für diese Auswahl noch keine passende Unterschrift hinterlegt.'})
   if (v.variante === 'raten' && !v.raten) fehlt.push('Anzahl der Raten')
   if (fehlt.length) return json(res, 422, { ok: false, fehler: 'Bitte ergänzen: ' + fehlt.join(', '), fehlt })
   if (begrenzt(ip, 'sign', 5)) return json(res, 429, { ok: false, fehler: 'Zu viele Versuche. Bitte in einer Stunde erneut oder per E-Mail an ' + KAT.hk.mail })
 
   const ergebnis = await nacheinander(async () => {
-    const vorhanden = ablage.nonce(nonce)
-    if (vorhanden) return antwort(req, ablage.record(vorhanden))
+    const vorhanden = zeichnung.vertragsnummer()
+    const abgeschlossen=vorhanden && ablage.record(vorhanden)
+    if(abgeschlossen)return wiederholung(req,abgeschlossen,v.angebotsstand)
+    if(ablage.nonce(nonce))throw Object.assign(new Error('Bitte den Vertrag erneut öffnen.'),{status:409})
 
     const auswahl = bereinigeAuswahl(KAT, b.addons)
     const c = berechne(KAT, auswahl)
     const jetzt = new Date(), jahr = jahrVon(jetzt)
-    const vnr = `HKG-V-${jahr}-${String(ablage.naechste('vertrag', jahr)).padStart(4, '0')}`
+    const vnr=zeichnung.reserviereNummer(()=>`HKG-V-${jahr}-${String(ablage.naechste('vertrag',jahr)).padStart(4,'0')}`)
     const f = { gf: d.gf, ansprechpartner: d.ansprechpartner, vertretung: d.vertretung }
     const u = { name: d.name, funktion: d.funktion, ort: d.ort, datum: datum(jetzt), uhrzeit: uhrzeit(jetzt), signatur: 'data:image/png;base64,' + d.png.toString('base64') }
-    const inhalt = vertragsinhalt(KAT, c, f, u, v)
+    const inhalt = signierteFassung(vertragsinhalt(KAT,c,f,u,v),hkFreigabe,v,true)
     const protokoll = { vnr, name: d.name, funktion: d.funktion, email: d.email, ort: d.ort, datum: u.datum, uhrzeit: u.uhrzeit, iso: jetzt.toISOString(), ip, ua: String(req.headers['user-agent'] || '').slice(0, 300), hash: sha256(inhalt) }
-    const vertragPdf = await pdf(vertragHtml(KAT, c, f, { vnr, u, protokoll, opt: v }).html, { fusszeile: `Vertrag ${vnr} · ${KAT.kunde.name} · ${KAT.hk.name}` })
+    const vertragPdf = await pdf(signierteFassung(vertragHtml(KAT,c,f,{vnr,u,protokoll,opt:v}).html,hkFreigabe,v,true), { fusszeile: `Vertrag ${vnr} · ${KAT.kunde.name} · ${KAT.hk.name}` })
     const pdfHash = sha256(vertragPdf)
 
     // Rechnung nur mit vollständigen Steuer- und Bankdaten (§ 14 UStG)
@@ -191,12 +204,12 @@ async function unterschreiben(req, res) {
     const dateien = { 'vertrag.pdf': vertragPdf, 'signatur.png': d.png }
     if (rechnungPdf) dateien['rechnung.pdf'] = rechnungPdf
     const record = {
-      vnr, angelegt: jetzt.toISOString(), nonce, auswahl, abrechnungsstand: abrechnungsstand(KAT), angebotsstand: v.angebotsstand || null, variante: v.variante, raten: v.raten, summe: { net: c.net, brutto: c.brutto, mon: c.mon, einmalAddons: c.einmal },
+      vnr, hkFreigabe: {referenz:hkFreigabe.referenz,zeitpunkt:hkFreigabe.zeitpunkt,basis:hkFreigabe.stand,modus:hkFreigabe.modus,name:hkFreigabe.name}, angelegt: jetzt.toISOString(), nonce, auswahl, abrechnungsstand: abrechnungsstand(KAT), angebotsstand: v.angebotsstand || null, variante: v.variante, raten: v.raten, summe: { net: c.net, brutto: c.brutto, mon: c.mon, einmalAddons: c.einmal },
       posten: c.posten, angefragt: c.angefragt, unterzeichner: { name: d.name, funktion: d.funktion, email: d.email, ort: d.ort },
       gf: d.gf, ansprechpartner: d.ansprechpartner, vertretung: d.vertretung, rechnungEmail: d.rechnungEmail, protokoll, pdfHash,
       rechnung, rechnungFehlt: fehltRg, mail: { status: 'offen' },
     }
-    ablage.ablegen(vnr, dateien, record)
+    if(!ablage.ablegenEinmalig(vnr,dateien,record))return wiederholung(req,ablage.record(vnr),v.angebotsstand)
     ablage.merkeNonce(nonce, vnr)
 
     // Versand
@@ -231,6 +244,22 @@ async function unterschreiben(req, res) {
   return json(res, 200, ergebnis)
 }
 
+function wiederholung(req,r,stand) {
+  if(!r || r.angebotsstand!==stand)throw Object.assign(new Error('Zu dieser Angebotsrunde wurde bereits eine andere Fassung abgeschlossen.'),{status:409})
+  const j=antwort(req,r)
+  return {ok:true,bereitsAbgeschlossen:true,vertragNr:r.vnr,summe:r.summe,mail:{status:'abgeschlossen',an:[]},downloads:{vertrag:j.downloads.vertrag}}
+}
+
+function zeichnungsstatus(req,id) {
+  const stand=angebote.lesen(id),vnr=zeichnung.vertragsnummer(),vertrag=vnr&&ablage.record(vnr)
+  if(historischeStaende.has(id))return {status:'abgeschlossen',hinweis:'Dieser frühere Vertrag ist bereits abgeschlossen.'}
+  if(vertrag && vertrag.angebotsstand===id)return {status:'abgeschlossen',hinweis:'Beide Seiten haben unterschrieben.',vertragNr:vnr,pdf:antwort(req,vertrag).downloads.vertrag,pdfHash:vertrag.pdfHash}
+  if(vertrag)return {status:'andere_fassung',hinweis:'Diese Angebotsrunde ist abgeschlossen.'}
+  const hk=zeichnung.passend(id,stand)
+  if(!hk)return {status:'wartet',hinweis:'Für diese Auswahl liegt noch keine passende HK-Freigabe vor.'}
+  return {status:'bereit',hinweis:'HK hat diese Auswahl freigegeben. Heim & Partner kann unterschreiben.',hk:{name:hk.name,zeitpunkt:hk.zeitpunkt,modus:hk.modus}}
+}
+
 function antwort(req, r) {
   const basis = basisUrl(req), link = datei => `${basis}/api/vertrag/dokument/${encodeURIComponent(r.vnr)}/${datei}?t=${token(r.vnr, datei)}`
   return {
@@ -254,7 +283,8 @@ async function vorschau(req, res) {
     v.angebotsstand = b.angebotsstand
   }
   if (v.variante === 'raten' && !v.raten) v.raten = 4
-  const buf = await pdf(vertragHtml(KAT, c, f, { vorschau: true, opt: v }).html, { fusszeile: `Vorschau · Vertrag zum Angebot ${KAT.nr} · nicht unterschrieben` })
+  const zeichner=v.angebotsstand && zeichnung.passend(v.angebotsstand,angebote.lesen(v.angebotsstand))
+  const buf = await pdf(signierteFassung(vertragHtml(KAT,c,f,{vorschau:true,opt:v}).html,zeichner,v,false), { fusszeile: `Vorschau · Vertrag zum Angebot ${KAT.nr} · nicht unterschrieben` })
   senden_(res, 200, buf, 'application/pdf', { 'Content-Disposition': `inline; filename="Vertrag-Vorschau-${KAT.nr}.pdf"` })
 }
 
@@ -347,6 +377,8 @@ async function schluss(req, res, vnr) {
 }
 
 // ── Routing ──────────────────────────────────────────────────
+const liveAnfrage=liveDienst({dir:ablage.dir,einladung:hkEinladung,modell:angebotsModell,lesen:lies,json,
+  berechtigteFassung:id=>zeichnung.moderiert(id,angebote.lesen(id))})
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x')
   try {
@@ -354,12 +386,31 @@ const server = http.createServer(async (req, res) => {
     // Bereitschaft für die Unterschrift: nur Ja/Nein und Namen fehlender Angaben, keine Werte
     if (url.pathname === '/api/vertrag/bereit' && req.method === 'GET') return json(res, 200, bereit())
     if (!passwortOk(req)) return senden_(res, 401, 'Passwort erforderlich', 'text/plain', { 'WWW-Authenticate': 'Basic realm="Heim & Partner", charset="UTF-8"' })
+    if (await liveAnfrage(req,res,url)) return
+    if(url.pathname==='/api/zeichnung/rahmen' && req.method==='GET'){
+      const bear=/^Bearer ([^ ]+)$/i.exec(String(req.headers['x-hk-moderation']||req.headers.authorization||''))
+      return json(res,200,zeichnung.rahmen(bear?.[1],nr=>!!ablage.record(nr)))
+    }
+    if(url.pathname==='/api/zeichnung/status' && req.method==='GET')return json(res,200,zeichnungsstatus(req,url.searchParams.get('stand')))
+    if(url.pathname==='/api/zeichnung/einladung'||url.pathname==='/api/zeichnung/freigeben'){
+      const bear=/^Bearer ([^ ]+)$/i.exec(String(req.headers['x-hk-einladung'] || req.headers.authorization || ''))
+      zeichnung.authentisieren(bear?.[1])
+      if(url.pathname.endsWith('/einladung') && req.method==='GET')return json(res,200,zeichnung.details())
+      if(url.pathname.endsWith('/freigeben') && req.method==='POST'){
+        if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||''))return json(res,415,{fehler:'JSON erforderlich.'})
+        return json(res,201,zeichnung.freigeben(await lies(req,850000)))
+      }
+      return json(res,405,{fehler:'Methode nicht erlaubt.'})
+    }
     if (req.method === 'POST' && url.pathname === '/api/angebot/stand') {
       if (!/^application\/json(?:;|$)/i.test(req.headers['content-type'] || '')) return json(res, 415, {fehler:'JSON erforderlich.'})
       if (begrenzt(clientIp(req), 'angebot', 35)) return json(res, 429, {fehler:'Zu viele Angebotsfassungen. Bitte später erneut versuchen.'})
       const b = await lies(req, 16_000)
       if (b?.freigabe !== true) return json(res, 400, {fehler:'Bitte die Angebotsfassung bewusst freigeben.'})
-      const stand = fassung(KAT, angebotsModell, b, aktuelleBindung), id = angebote.speichern(stand)
+      const stand=fassung(KAT,angebotsModell,b,aktuelleBindung)
+      const moderation=/^Bearer ([^ ]+)$/i.exec(String(req.headers['x-hk-moderation'] || req.headers.authorization || ''))
+      zeichnung.markiere(stand,moderation?.[1])
+      const id=angebote.speichern(stand)
       return json(res, 201, {angebot:'/angebot/?stand='+id, vertrag:vertragslink(stand,id)})
     }
     if (req.method === 'GET' || req.method === 'HEAD') {
