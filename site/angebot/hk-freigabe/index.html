@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+<title>Vertragsfreigabe für Luis · Heim &amp; Partner</title>
+<link rel="stylesheet" href="seite.css"><script defer src="seite.js"></script>
+</head>
+<body><main>
+<header><div class="marke" aria-hidden="true">HK</div><div><b>HK Growth UG (haftungsbeschränkt)</b><small>Vertragsfreigabe für Luis Kummer</small></div></header>
+<p id="meldung" role="status">Die Einladung wird geprüft.</p>
+<article id="inhalt" hidden>
+<h1>Deine Unterschrift für Heim &amp; Partner</h1>
+<p>Hallo Luis, hier legst du fest, welches Angebot HK gegenüber Heim &amp; Partner vertritt. Die Partner können im Termin die freigegebene Fassung mit ihrer eigenen Unterschrift annehmen.</p>
+<section><h2>Das Angebot</h2><p id="bezug"></p><p class="preis" id="preise"></p><nav id="unterlagen"></nav></section>
+<form id="freigabe">
+<fieldset><legend>Was möchtest du freigeben?</legend>
+<label class="wahl"><input name="modus" type="radio" value="genau" required><span><b>Genau diese Fassung</b><small>Es gelten die Leistungen und der Zahlungsplan in den verlinkten Unterlagen.</small></span></label>
+<label class="wahl"><input name="modus" type="radio" value="wahlrahmen"><span><b>Auswahl im gemeinsamen Termin erlauben</b><small>Du bestimmst hier, welche Erweiterungen, Höchstmengen und Zahlungsweisen im Call vereinbart werden dürfen.</small></span></label>
+<div id="rahmen" hidden>
+<h3>Freigegebene Erweiterungen</h3>
+<p>Markiere die Leistungen, die Heim &amp; Partner zusätzlich zum Gesamtpaket wählen darf.</p>
+<button type="button" class="textknopf" id="alle">Alle aufgeführten Optionen auswählen</button>
+<div id="optionen"></div><p id="websitegebuehr"></p>
+<h3>Freigegebene Zahlungsweisen</h3><div id="plaene"></div>
+<div class="obergrenze"><b>Obergrenze für diesen Wahlrahmen</b><p id="hoechstpreis"></p></div>
+</div></fieldset>
+<fieldset><legend>Deine Angaben</legend><div class="felder">
+<label>Name<input id="name" name="name" autocomplete="name" readonly required></label>
+<label>Funktion<input id="funktion" name="funktion" value="Geschäftsführer" maxlength="80" required></label>
+<label>Ort der Unterschrift<input id="ort" name="ort" autocomplete="address-level2" maxlength="80" required></label></div></fieldset>
+<fieldset id="zeichnen" disabled><legend>Unterzeichnen</legend>
+<p id="erklaerung"></p>
+<label class="wahl"><input type="checkbox" name="vertretungsberechtigt" required><span>Ich bin befugt, die HK Growth UG (haftungsbeschränkt) bei dieser Freigabe zu vertreten.</span></label>
+<label class="wahl"><input type="checkbox" name="zustimmung" required><span>Ich habe die Unterlagen geprüft und unterschreibe die oben beschriebene Freigabe verbindlich.</span></label>
+<label for="signatur" class="signaturlabel">Deine handschriftliche Unterschrift</label>
+<canvas id="signatur" width="900" height="218" aria-label="Hier mit Maus, Finger oder Stift unterschreiben"></canvas>
+<div class="aktionen"><small>Mit Finger, Stift oder Maus zeichnen.</small><button type="button" class="textknopf" id="loeschen">Unterschrift neu zeichnen</button></div>
+<p id="fehler" role="alert" hidden></p><button type="submit" class="bestaetigen">Für HK verbindlich unterschreiben</button>
+</fieldset></form>
+</article>
+<section id="fertig" hidden><h1>Deine Freigabe ist hinterlegt.</h1><p id="quittung"></p></section>
+</main></body></html>

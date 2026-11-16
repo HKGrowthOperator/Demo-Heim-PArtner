@@ -31,6 +31,15 @@ export function speicher(dir) {
     },
     nonce(n) { return lesen(nf, {})[n] || null },
     merkeNonce(n, id) { const x = lesen(nf, {}); x[n] = id; schreiben(nf, JSON.stringify(x)) },
+    ablegenEinmalig(id, dateien, record) {
+      const ort=path.join(dir,'vertraege'), temp=fs.mkdtempSync(path.join(ort,'.abschluss-'))
+      try {
+        for(const [name,buf] of Object.entries(dateien))fs.writeFileSync(path.join(temp,name),buf,{mode:0o600})
+        schreiben(path.join(temp,'record.json'),JSON.stringify(record,null,1))
+        try{fs.renameSync(temp,path.join(ort,id));return true}
+        catch(e){if(['EEXIST','ENOTEMPTY'].includes(e.code))return false;throw e}
+      } finally {fs.rmSync(temp,{recursive:true,force:true})}
+    },
     ablegen(id, dateien, record) {
       const d = path.join(dir, 'vertraege', id)
       fs.mkdirSync(d, { recursive: true })

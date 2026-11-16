@@ -1,4 +1,5 @@
 <title>Heim &amp; Partner Plattform</title>
+<meta name="referrer" content="no-referrer"><script src="/moderation.js"></script><link rel="stylesheet" href="/live-fuehrung.css"><script src="/live-fuehrung.js"></script><script defer src="/angebot/zeichnungsstand.js"></script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
 <style>
@@ -460,6 +461,7 @@ tr.hl td{background:var(--accent-soft)}
 @media(max-width:860px){.hp-gespraech iframe{height:calc(100dvh - 115px);min-height:380px}.hp-gespraech h1{font-size:1rem}}
 </style>
 
+<div id="hp-live-gast"><span id="hp-live-status" role="status">Live-Führung</span><a id="hp-live-angebot" hidden target="_blank" rel="noopener noreferrer">Freigegebenes Angebot öffnen</a></div>
 <div class="shell">
   <aside class="side">
     <div class="ws"><div class="logo">H&amp;P</div><div><b>Heim &amp; Partner</b><span>Bauplattform</span></div></div>
@@ -472,6 +474,7 @@ tr.hl td{background:var(--accent-soft)}
       <button class="search" data-act="search" aria-label="Suche öffnen" style="cursor:pointer;font-family:inherit;text-align:left"><span data-i="magnifying-glass"></span>Suchen …<kbd>⌘K</kbd></button>
       <button class="iconbtn" aria-label="Benachrichtigungen" data-act="bell"><span data-i="bell"></span><span class="bdg"></span></button>
       <span class="kibadge" id="kibadge" title="Status der KI-Verbindung"><span class="dot"></span><span>KI wird verbunden</span></span>
+      <button type="button" class="btn" id="hp-live-teilen" hidden>Live teilen</button>
       <button class="btn" data-act="tour-start" id="tourBtn"><span data-i="play-circle"></span>Demo-Führung</button>
     </header>
     <main class="page" id="view"></main>
@@ -1687,15 +1690,23 @@ function priceBox(){return `<div class="of-tot"><div class="acc"><span class="lb
 function addCard(a){const on=!!S.cfg.add[a[0]];const pr=a[8]===-1?'Richtpreis 3.500 bis 8.000 €':(a[4]?eurO(a[4])+(a[6]?' je Stück':''):'');
  const pm=a[8]===1?'Zusätzliche Betreuung für Website-Erweiterungen: insgesamt 100 € monatlich':(a[5]?'+ '+eurO(a[5])+' im Monat'+(a[0]==='zu'?' je Zugang':''):'');
  return `<div class="of-it ${on?'on':''}" style="cursor:default"><button class="ck" data-add="${a[0]}" aria-pressed="${on}" aria-label="${esc(a[2])}" style="all:unset;cursor:pointer;color:${on?'var(--accent)':'var(--ink-3)'}">${I(on?'check-square':'square')}</button><span><span class="row sb" style="align-items:baseline"><b>${esc(a[2])}</b><span class="num sm" style="font-weight:600">${pr}</span></span><div class="xs t2" style="margin-top:3px;line-height:1.45">${esc(a[3])}</div>${a[7]?`<div class="xs" style="color:var(--accent);margin-top:3px">Zeitersparnis: ${esc(a[7])}</div>`:''}${pm?`<div class="xs t3" style="margin-top:3px">${pm}</div>`:''}${a[6]&&on?`<label class="row xs t3" style="gap:6px;margin-top:6px">Menge <input type="number" min="1" value="${S.cfg.qty[a[0]]||1}" data-aqty="${a[0]}" style="width:56px;height:26px;border:1px solid var(--line-2);border-radius:6px;background:var(--panel);color:var(--ink);font:500 .78rem var(--mono);padding:0 6px;text-align:right"></label>`:''}</span></div>`;}
+function freigabeRahmen(r){
+  if(angebotsProbe()||!window.hpModerationsHeader?.().Authorization)return '';
+  const auswahl=Object.fromEntries([...r.L.map(x=>[x.a[0],x.q]),...r.req.map(a=>[a[0],1])]);
+  const namen=Object.fromEntries(OF.ADD.map(a=>[a[0],a[2]]));
+  return '<hp-zeichnungsrahmen class="noprint" auswahl="'+esc(JSON.stringify(auswahl))+'" namen="'+esc(JSON.stringify(namen))+'" raten="'+S.cfg.raten+'">Die HK-Freigabe wird geladen.</hp-zeichnungsrahmen>';
+}
 function vKonfig(){if(S.cfg.show)return vKonfigSum();const r=cfgCalc();
  return `<div class="ph"><div><h1>Angebot</h1><div class="meta"><span>Nr. ${OF.NR} · ${OF.DAT} · gültig bis ${OF.GUELTIG}</span><span>Gesamtpaket plus Add-ons zum Ankreuzen</span></div></div><button class="btn" data-act="cfg-calc">${I('receipt','s')}Angebot ansehen</button></div>
  ${priceBox()}
+ ${freigabeRahmen(r)}
  <section class="box"><div class="bh"><h2>Im Gesamtpaket enthalten</h2><a href="#leistung" data-go="leistung" class="xs" style="color:var(--accent)">Leistungsumfang ansehen</a></div><p class="bb">Vergabe, Baustelle und Vertrieb greifen ineinander. Anfragen über eure Website landen direkt im CRM.</p></section>
  ${ADDG.map(g=>`<section class="stack" style="gap:8px"><div class="lbl">Add-ons · ${esc(g)}</div><div class="of-pick">${OF.ADD.filter(a=>a[1]===g).map(addCard).join('')}</div></section>`).join('')}
  <div class="of-bar"><span class="sm">Gesamtpaket ${eurO(OF.NET)} + Add-ons ${eurO(r.p)} = <b>${eurO(r.net)}</b> netto · monatlich <b>${eurO(r.mon)}</b>${r.req.length?` · ${r.req.length} × Angebot anfordern`:''}</span><button class="btn acc" data-act="cfg-calc">${I('receipt','s')}Angebot ansehen</button></div>`;}
 function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),pay=angebotsRaten(r.net),probe=angebotsProbe();
  const startdaten=angebotsStartdaten();
  return `<div class="ph"><div><h1>${probe?'Druckprobe · ':''}Angebot ${OF.NR}</h1><div class="meta"><span>${OF.HK.name}</span><span>an Heim &amp; Partner Immobilien GmbH</span><span>gültig bis ${OF.GUELTIG}</span></div></div><div class="row noprint">${folienRueckweg()}<button class="btn" data-act="cfg-back">${I('arrow-left','s')}Add-ons ändern</button><button class="btn" data-act="print">${I('printer','s')}${probe?'Druckprobe':'Drucken'}</button></div></div>
+ ${freigabeRahmen(r)}
  ${probe?'<p class="box bb"><b>Probelauf</b> · Diese Fassung dient ausschließlich der Vorbereitung.</p>':''}
  <div class="of-tot"><div class="acc"><span class="lbl">Einmalig netto</span><b>${eurO(r.net)}</b><span class="xs t3">${eurO(r.net+r.vat)} brutto inkl. 19 % USt.</span></div><div><span class="lbl">Monatlich ab Livegang</span><b>${eurO(r.mon)}</b><span class="xs t3">${eur2(r.mon*1.19)} brutto</span></div><div><span class="lbl">Geschätzte freie Kapazität</span><b>${hsO(Math.round(R.h))} Std./Jahr</b><span class="xs t3">Rechnerischer Zeitwert ${eurO(R.t)} im Jahr · <a href="#roi" data-go="roi" style="color:var(--accent)">Annahmen ansehen</a></span></div></div>
  ${ausPraesentation && (gespraechsziel||gespraechsfall||erfolgskriterium||praxisstunden!==null)?`<section class="box"><div class="bh"><h2>Aus unserem Gespräch</h2></div><div class="bb stack">${gespraechsziel?`<p><b>Euer Ziel</b><br>${esc(gespraechsziel)}</p>`:''}${gespraechsfall?`<p><b>Euer Beispiel</b><br>${esc(gespraechsfall)}</p>`:''}${erfolgskriterium?`<p><b>Daran messt ihr den Erfolg</b><br>${esc(erfolgskriterium)}</p>`:''}${praxisstunden!==null?`<p>Für diesen Vorgang schätzt ihr ${hsO(praxisstunden)} freie Stunden pro Jahr. Dieses Beispiel dient zum Abgleich mit dem Teammodell.</p>`:''}</div></section>`:''}
@@ -1711,7 +1722,8 @@ function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),pay=angebotsRaten(r.net),p
  <section class="box"><div class="bh"><h2>Nicht enthalten</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6">${OF.NEV.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></section>
  <section class="box"><div class="bh"><h2>${probe?'Vorschau':'Angebot und Vertrag'}</h2></div><div class="bb stack">
  <p>${probe?'Die Druckprobe zeigt Umfang, Annahmen und Zahlungsplan.':'Die Angebotsfassung hält den Gesamtpreis, die gemeinsam angesetzten Stunden und den Zahlungsplan fest.'}</p>
- ${!probe&&eigeneDomain()?`<div class="noprint stack"><label><input type="checkbox" id="ang-gespraech"> Gesprächsangaben und Startplanung in die Kundenfassung übernehmen</label><div class="row"><button type="button" class="btn" data-fassung="angebot">Angebotslink erstellen</button><button type="button" class="btn acc" data-fassung="vertrag">Vertrag prüfen</button></div><div id="ang-ergebnis" role="status" aria-live="polite"></div></div>`:''}
+ ${!probe&&eigeneDomain()&&!window.hpModerationsHeader?.().Authorization?'<p class="noprint">Für die verbindliche Kundenfassung öffnet Nick seinen persönlichen Moderationslink. Hier könnt ihr das Angebot prüfen und drucken.</p>':''}
+ ${!probe&&eigeneDomain()&&window.hpModerationsHeader?.().Authorization?`<div class="noprint stack"><label><input type="checkbox" id="ang-gespraech"> Gesprächsangaben und Startplanung in die Kundenfassung übernehmen</label><div class="row"><button type="button" class="btn" data-fassung="angebot">Angebotslink erstellen</button><button type="button" class="btn acc" data-fassung="vertrag">Vertrag prüfen</button></div><div id="ang-ergebnis" role="status" aria-live="polite"></div><div id="ang-gemeinsam">${freigegebenerStand(letzteFassung)}</div></div>`:''}
   <p class="xs t3">${OF.HK.name} · ${OF.HK.str} · ${OF.HK.ort} · Geschäftsführer ${OF.HK.gf} · ${OF.HK.hr} · ${OF.HK.mail}</p></div></section>`;}
 function eigeneDomain(){try{return /^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname);}catch(e){return false;}}
 const AD=Object.fromEntries(OF.AREA.map(a=>[a[0],a]));
@@ -1790,11 +1802,13 @@ let verantwortlich = '';
 let wunschstart = '';
 
 function gespraechMerken() {
+  if(window.HPLive?.gast)return;
   try {
     sessionStorage.setItem(notebook, JSON.stringify({roi:S.roi,cfg:S.cfg,foliennummer,ausPraesentation,praxisstunden,gespraechsziel,gespraechsfall,erfolgskriterium,startprojekt,verantwortlich,wunschstart}));
   } catch { /* Im privaten Modus bleibt der Stand für die laufende Ansicht erhalten. */ }
 }
 function gespraechLaden() {
+  if(window.HPLive?.gast)return;
   try {
     const d = JSON.parse(sessionStorage.getItem(notebook) || 'null');
     if (!d) return;
@@ -1836,6 +1850,7 @@ function deckKontext() {
 function folienAdresse() {
   const u=new URL(DECK);
   u.searchParams.set('demo','1');
+  if(window.HPLive?.gast)u.searchParams.set('live-view','1');
   u.searchParams.set('modus',modus);
   if (wirtschaftOeffnen && foliennummer===7) u.searchParams.set('ansicht','wirtschaft');
   u.hash='s'+foliennummer;
@@ -1883,6 +1898,7 @@ window.addEventListener('message', ev=>{
   if (S.route!=='praes' || !frame || ev.source!==frame.contentWindow || ev.origin!==DECK.origin || !m || m.channel!==channel || m.version!==1) return;
   const antworte=()=>frame.contentWindow.postMessage(deckKontext(), DECK.origin);
   if(m.type==='ready') {antworte();return;}
+  if(window.HPLive?.gast)return;
   if(m.type==='step') {
     if(Number.isInteger(m.step) && m.step>=1 && m.step<=9 && m.step!==foliennummer){foliennummer=m.step;wirtschaftOeffnen=false;setGeschaeftsHash(praesHash());gespraechMerken();}
     return;
@@ -1915,7 +1931,21 @@ function kundenfassungEingabe(){
  const [[,start],[,person],[,datum]]=angebotsStartdaten();
  return {freigabe:true,gespraechFreigabe:teilen,addons,raten:S.cfg.raten,roi:S.roi,...teilen?{gespraech:{gespraechsziel,gespraechsfall,erfolgskriterium,praxisstunden,startprojekt:start,verantwortlich:person,wunschstart:datum}}:{}};
 }
+// Die zuletzt freigegebene Fassung bei einem Neuladen im Moderationsfenster wieder anzeigen.
+const fassungsAblage='hp-freigegebenes-angebot-1';
 let letzteFassung=null;
+if(!istProbe){
+ try{
+   const v=JSON.parse(sessionStorage.getItem(fassungsAblage)||'null');
+   if(v && typeof v.inhalt==='string' && /^\/angebot\/\?stand=[a-f0-9]{48}$/.test(v.angebot) && /^\/angebot\/vertrag(?:-raten)?\/\?stand=[a-f0-9]{48}(?:&|$)/.test(v.vertrag))letzteFassung=v;
+ }catch{}
+}
+function freigegebenerStand(d){
+ if(!d)return '';
+ const id=new URL(d.angebot,location.origin).searchParams.get('stand');
+ if(!/^[a-f0-9]{48}$/.test(id||''))return '';
+ return '<div class="noprint" id="kundenstand"><b>Zuletzt freigegebene Kundenfassung</b><p class="xs">Fassung '+esc(id.slice(0,12))+' · <a href="'+esc(d.angebot)+'" target="_blank" rel="noopener noreferrer">Kundenansicht öffnen</a></p><hp-zeichnungsstand stand="'+esc(id)+'">Unterschriften werden geprüft.</hp-zeichnungsstand></div>';
+}
 async function angebotsFassungOeffnen(button){
  if(angebotsProbe())return;
  const status=document.getElementById('ang-ergebnis');
@@ -1925,12 +1955,15 @@ async function angebotsFassungOeffnen(button){
  const aktuell=()=>button.isConnected&&status.isConnected&&!angebotsProbe()&&inhalt===JSON.stringify(kundenfassungEingabe());
  try{
    if(letzteFassung?.inhalt!==inhalt){
-     const antwort=await fetch('/api/angebot/stand',{method:'POST',headers:{'Content-Type':'application/json'},body:inhalt});
+     const antwort=await fetch('/api/angebot/stand',{method:'POST',headers:{'Content-Type':'application/json',...window.hpModerationsHeader?.()},body:inhalt});
      const daten=await antwort.json();if(!antwort.ok)throw Error(daten.fehler||'Die Fassung konnte nicht gespeichert werden.');
      if(!aktuell())return;
      letzteFassung={inhalt,...daten};
+     try{sessionStorage.setItem(fassungsAblage,JSON.stringify(letzteFassung));}catch{}
+     const gemeinsam=document.getElementById('ang-gemeinsam');if(gemeinsam)gemeinsam.innerHTML=freigegebenerStand(letzteFassung);
    }
    if(!aktuell())return;
+   if(window.HPLive){await window.HPLive.angebot(letzteFassung.angebot);if(!aktuell())return;}
    if(button.dataset.fassung==='vertrag'){location.assign(letzteFassung.vertrag);return;}
    const url=new URL(letzteFassung.angebot,location.origin);
    status.innerHTML='<label>Link zur Angebotsfassung<input readonly style="width:100%" aria-label="Link zur Angebotsfassung"></label><div class="row"><button class="btn" type="button" data-kopiere-angebot>Link kopieren</button><a class="btn" target="_blank" rel="noopener noreferrer">Angebot öffnen</a></div>';
@@ -1961,6 +1994,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-wirkung],[
 document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.aqty;if(!k)return;S.cfg.qty[k]=Math.min(50,Math.max(1,Math.floor(+e.target.value||1)));render();});
 document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.roi;if(!k)return;const max=k==='tf'||k==='pct'?100:1000000;const v=Math.min(max,Math.max(0,Number(e.target.value)||0)),[a,f]=k.split('.');if(f)S.roi.a[a][f]=v;else S.roi[a]=v;let pos=null;try{pos=e.target.selectionStart;}catch{}gespraechMerken();render();const n=document.querySelector(`[data-roi="${k}"]`);if(n){n.focus();try{n.setSelectionRange(pos,pos);}catch(_){}}});
 function render(){
+  window.HPLive?.geaendert();
   if(ausPraesentation || ['praes','roi','konfig'].includes(S.route))gespraechMerken();
   nav();
   const V={team:vTeam,nu:vNU,quali:vQuali,lead:vLead,auto:vAuto,events:vEvents,cockpit:vCockpit,freigaben:vFreigaben,vergabe:vVergabe,neu:vNeu,portal:vPortal,projekt:vProjekt,crm:vCRM,objekt:vObjekt,kanaele:vKanaele,praes:vPraes,leistung:vLeistung,konfig:vKonfig,roi:vRoi}[S.route];
@@ -2051,6 +2085,26 @@ document.addEventListener('change',e=>{const t=e.target;if(t.dataset.nw)S.nw[t.d
   if(t.dataset.lsel){S.ai.letter[t.dataset.lsel]=t.value;if(t.dataset.lsel==='anlass'){S.ai.letter.text='';S.ai.letter.mode=null;}render();}
   if(t.id==='docFile'&&t.files&&t.files[0])runDoc(t.files[0]);});
 document.addEventListener('keydown',e=>{if(S.tour<0)return;if(e.key==='ArrowRight'&&S.tour<rundgang.length-1&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))tourGo(S.tour+1);if(e.key==='ArrowLeft'&&S.tour>0&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))tourGo(S.tour-1);if(e.key==='Escape'){S.tour=-1;render();}});
+window.HPLiveModell={
+  deckOrigin:DECK.origin,
+  lesen(){
+    const auswahl=Object.fromEntries(OF.ADD.filter(a=>S.cfg.add[a[0]]).map(a=>[a[0],a[6]?(S.cfg.qty[a[0]]||1):1]));
+    return {seite:S.route,station:S.tour,kurz:rundgang===GESPRAECHSTOUR,tid:S.tid,ttab:S.ttab,ptab:S.ptab,ana:S.ana,vergeben:S.awarded,fertig:S.saved,auswahl,rollen:S.roi.a,wirkung:S.roi.tf,raten:S.cfg.raten,zusammenfassung:S.cfg.show,folie:foliennummer};
+  },
+  zeigen(v){
+    if(!window.HPLive?.gast)return;
+    const altesDeck=S.route==='praes'&&document.getElementById('hp-praesentation');
+    S.cfg.add=Object.fromEntries(Object.keys(v.auswahl).map(id=>[id,true]));S.cfg.qty={...v.auswahl};
+    S.cfg.raten=v.raten;S.cfg.show=v.zusammenfassung;S.roi.tf=v.wirkung;S.roi.a=v.rollen;
+    S.route=v.seite;S.tid=v.tid;S.ttab=v.ttab;S.ptab=v.ptab;S.ana=v.ana;S.awarded=v.vergeben;S.saved=v.fertig;
+    foliennummer=v.deck.step;rundgang=v.kurz?GESPRAECHSTOUR:TOUR;
+    if(v.station>=0&&v.station<rundgang.length){tourGo(v.station);}
+    else{S.tour=-1;if(altesDeck&&S.route==='praes'){altesDeck.contentWindow.postMessage(deckKontext(),DECK.origin);}
+      else{render();window.scrollTo({top:0});}}
+    const ansicht=document.getElementById('view');if(ansicht)ansicht.inert=true;
+    const fuehrung=document.getElementById('tour');if(fuehrung)fuehrung.inert=true;
+  }
+};
 gespraechLaden();
 const start=routeAusAdresse();
 if(start){S.route=start.seite;if(start.folie){foliennummer=start.folie;ausPraesentation=true;}if(S.route==='neu'&&!S.nw)initNew();}
