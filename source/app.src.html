@@ -998,10 +998,10 @@ const TOUR=[
  {t:'Team & Rechte',x:'Alle 8 Zugänge an einer Stelle: wer was sieht, wer bis zu welchem Betrag freigeben darf, wer wen vertritt. Jede Freigabe wird mit Name und Uhrzeit protokolliert.',go:()=>{S.route='team';},f:'#team'},
  {t:'Workflows: vom Auslöser bis zum Ergebnis',x:'Sechs Abläufe, zum Beispiel die Ausschreibung per Knopfdruck. Jeder Schritt zeigt, ob KI, Automatik oder ein Mensch dran ist. Ablauf durchspielen und an den Freigabe-Punkten bestätigen.',go:()=>{S.route='auto';S.wf.tab='flows';S.wf.sel='ausschr';S.wf.run=null;},f:'#wfs'}];
 const GESPRAECHSTOUR=[
-  {t:'Euer Morgen im Büro',x:'Hier liegen die Vorgänge, die eine Entscheidung brauchen. Welchen würdet ihr morgens zuerst öffnen?',go:TOUR[0].go,f:TOUR[0].f},
-  {t:'Der Rücklauf vom Haus Beethoven',x:'Die Angebote sind eingegangen. Bei Rhein-Neckar ist die Haftpflicht abgelaufen. Wer kümmert sich bei euch heute um so eine Rückfrage?',go:TOUR[8].go,f:TOUR[8].f},
-  {t:'Preis und Besetzung nebeneinander',x:'Nowak ist am günstigsten. Vier Monteure sind verfügbar, acht braucht die Baustelle. Was würdet ihr vor der Zusage klären?',go:TOUR[11].go,f:TOUR[11].f},
-  {t:'Die Freigabe liegt bei euch',x:'Der Vorschlag und seine Begründung liegen vor. Wer im Team entscheiden darf, gibt frei. Wie lief das bei eurer letzten Vergabe?',go:TOUR[13].go,f:TOUR[13].f}
+  {t:'Euer Morgen im Büro',x:'Haus Beethoven: Acht Angebote für den Trockenbau liegen vor. Heute steht die Vergabe an.',go:TOUR[0].go,f:TOUR[0].f},
+  {t:'Der Rücklauf vom Haus Beethoven',x:'Beim Angebot von Rhein-Neckar ist der Haftpflichtnachweis abgelaufen. Die Rückfrage liegt schon bereit.',go:TOUR[8].go,f:TOUR[8].f},
+  {t:'Preis und Besetzung nebeneinander',x:'Nowak bietet den niedrigsten Preis. Vier Monteure sind verfügbar, acht braucht die Baustelle. Wie hättet ihr das bei eurer letzten Vergabe vor der Zusage herausgefunden?',go:TOUR[11].go,f:TOUR[11].f},
+  {t:'Die Freigabe liegt bei euch',x:'Preis, Besetzung und Nachweise liegen zusammen vor. Die Entscheidung, wer den Auftrag bekommt, bleibt bei euch.',go:TOUR[13].go,f:TOUR[13].f}
 ];
 let rundgang=GESPRAECHSTOUR;
 function tour(){
@@ -1693,10 +1693,13 @@ function vKonfig(){if(S.cfg.show)return vKonfigSum();const r=cfgCalc();
  <section class="box"><div class="bh"><h2>Im Gesamtpaket enthalten</h2><a href="#leistung" data-go="leistung" class="xs" style="color:var(--accent)">Leistungsumfang ansehen</a></div><p class="bb">Vergabe, Baustelle und Vertrieb greifen ineinander. Anfragen über eure Website landen direkt im CRM.</p></section>
  ${ADDG.map(g=>`<section class="stack" style="gap:8px"><div class="lbl">Add-ons · ${esc(g)}</div><div class="of-pick">${OF.ADD.filter(a=>a[1]===g).map(addCard).join('')}</div></section>`).join('')}
  <div class="of-bar"><span class="sm">Gesamtpaket ${eurO(OF.NET)} + Add-ons ${eurO(r.p)} = <b>${eurO(r.net)}</b> netto · monatlich <b>${eurO(r.mon)}</b>${r.req.length?` · ${r.req.length} × Angebot anfordern`:''}</span><button class="btn acc" data-act="cfg-calc">${I('receipt','s')}Angebot ansehen</button></div>`;}
-function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),pay=angebotsRaten(r.net);
- return `<div class="ph"><div><h1>Angebot ${OF.NR}</h1><div class="meta"><span>${OF.HK.name}</span><span>an Heim &amp; Partner Immobilien GmbH</span><span>gültig bis ${OF.GUELTIG}</span></div></div><div class="row noprint">${folienRueckweg()}<button class="btn" data-act="cfg-back">${I('arrow-left','s')}Add-ons ändern</button><button class="btn" data-act="print">${I('printer','s')}Drucken</button></div></div>
+function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),pay=angebotsRaten(r.net),probe=angebotsProbe();
+ const startdaten=angebotsStartdaten();
+ return `<div class="ph"><div><h1>${probe?'Druckprobe · ':''}Angebot ${OF.NR}</h1><div class="meta"><span>${OF.HK.name}</span><span>an Heim &amp; Partner Immobilien GmbH</span><span>gültig bis ${OF.GUELTIG}</span></div></div><div class="row noprint">${folienRueckweg()}<button class="btn" data-act="cfg-back">${I('arrow-left','s')}Add-ons ändern</button><button class="btn" data-act="print">${I('printer','s')}${probe?'Druckprobe':'Drucken'}</button></div></div>
+ ${probe?'<p class="box bb"><b>Probelauf</b> · Diese Fassung dient ausschließlich der Vorbereitung.</p>':''}
  <div class="of-tot"><div class="acc"><span class="lbl">Einmalig netto</span><b>${eurO(r.net)}</b><span class="xs t3">${eurO(r.net+r.vat)} brutto inkl. 19 % USt.</span></div><div><span class="lbl">Monatlich ab Livegang</span><b>${eurO(r.mon)}</b><span class="xs t3">${eur2(r.mon*1.19)} brutto</span></div><div><span class="lbl">Geschätzte freie Kapazität</span><b>${hsO(Math.round(R.h))} Std./Jahr</b><span class="xs t3">Rechnerischer Zeitwert ${eurO(R.t)} im Jahr · <a href="#roi" data-go="roi" style="color:var(--accent)">Annahmen ansehen</a></span></div></div>
  ${ausPraesentation && (gespraechsziel||gespraechsfall||erfolgskriterium||praxisstunden!==null)?`<section class="box"><div class="bh"><h2>Aus unserem Gespräch</h2></div><div class="bb stack">${gespraechsziel?`<p><b>Euer Ziel</b><br>${esc(gespraechsziel)}</p>`:''}${gespraechsfall?`<p><b>Euer Beispiel</b><br>${esc(gespraechsfall)}</p>`:''}${erfolgskriterium?`<p><b>Daran messt ihr den Erfolg</b><br>${esc(erfolgskriterium)}</p>`:''}${praxisstunden!==null?`<p>Für diesen Vorgang schätzt ihr ${hsO(praxisstunden)} freie Stunden pro Jahr. Dieses Beispiel dient zum Abgleich mit dem Teammodell.</p>`:''}</div></section>`:''}
+ ${startdaten.some(([,v])=>v)?`<section class="box"><div class="bh"><h2>Vorgesehener Projektstart</h2></div><div class="bb">${startdaten.filter(([,v])=>v).map(([l,v])=>`<p><b>${l}</b> · ${esc(v)}</p>`).join('')}</div></section>`:''}
  <section class="box"><div class="bh"><h2>Leistungsumfang und Preis</h2></div><div class="tw"><table><thead><tr><th>Pos.</th><th>Leistung</th><th class="r">Geschätzte Zeit</th><th class="r">Netto</th></tr></thead><tbody>
   <tr><td class="num">1</td><td class="nm">Gesamtumsetzung für Heim &amp; Partner<div class="xs t2">Vergabe, Baustelle und Vertrieb mit angebundener Website, einschließlich Einführung und Schulung.</div></td><td class="r num">${hsO(Math.round(roiHours().h))} Std./Jahr</td><td class="r num">${eurO(OF.NET)}</td></tr>
   ${r.L.length?`<tr><td colspan="4" style="background:var(--sunk);font-weight:600">Gewählte Add-ons</td></tr>${r.L.map((x,i)=>`<tr><td class="num t3">C${i+1}</td><td class="nm">${x.q>1?x.q+' × ':''}${esc(x.a[2])}${x.a[5]?`<div class="xs t3" style="font-weight:400">+ ${eurO(x.a[5]*x.q)} im Monat</div>`:''}</td><td class="r num xs" style="color:var(--accent)">${OF.AH[x.a[0]]?hsO(OF.AH[x.a[0]]*tfOf())+' Std./Jahr':''}</td><td class="r num">${x.a[4]?eurO(x.a[4]*x.q):'–'}</td></tr>`).join('')}${r.web?`<tr><td></td><td class="xs t3">Zusätzliche Betreuung für die gewählten Website-Erweiterungen</td><td></td><td class="r num xs t3">+ 100 € / Monat</td></tr>`:''}`:''}
@@ -1706,9 +1709,9 @@ function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),pay=angebotsRaten(r.net);
  <section class="box"><div class="bh"><h2>Monatlich ab Livegang</h2></div><div class="tw"><table><tbody><tr><td>Betreuung der Gesamtumsetzung</td><td class="r num">${eurO(OF.CARE)}</td></tr>${r.m||r.wm?`<tr><td>Gewählte Erweiterungen</td><td class="r num">${eurO(r.m+r.wm)}</td></tr>`:''}<tr><td><b style="font-weight:600">Summe monatlich netto</b></td><td class="r num"><b style="font-weight:600">${eurO(r.mon)}</b></td></tr><tr><td class="t2 xs">KI-Verbrauch zum Selbstkostenpreis, Budget 150 € im Monat, mehr nur nach Freigabe</td><td class="r num t2 xs">nach Verbrauch</td></tr></tbody></table></div></section></div>
  <section class="box"><div class="bh"><h2>Konditionen</h2></div><div class="tw"><table><tbody>${OF.KOND.map(k=>`<tr><td class="nm" style="width:150px">${esc(k[0])}</td><td class="t2 sm">${esc(k[1])}</td></tr>`).join('')}</tbody></table></div></section>
  <section class="box"><div class="bh"><h2>Nicht enthalten</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6">${OF.NEV.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></section>
- <section class="box"><div class="bh"><h2>Auftrag</h2></div><div class="bb stack"><p class="sm">Hiermit beauftragt die Heim &amp; Partner Immobilien GmbH das Gesamtpaket gemäß Angebot ${OF.NR} zum Festpreis von ${eurO(OF.NET)} netto${r.L.length?` zuzüglich der gewählten Add-ons, zusammen ${eurO(r.net)} netto`:''}, sowie die Betreuung ab Livegang zu ${eurO(r.mon)} netto im Monat.</p>
-  <div class="grid2" style="margin-top:24px"><div style="border-top:1px solid var(--ink-3);padding-top:6px" class="xs t3">Ort, Datum · Heim &amp; Partner Immobilien GmbH, Unterschrift</div><div style="border-top:1px solid var(--ink-3);padding-top:6px" class="xs t3">Ort, Datum · ${OF.HK.name}, ${OF.HK.gf}</div></div>
-  ${eigeneDomain()?`<div class="row noprint"><a class="btn acc" style="text-decoration:none" href="${esc(vertragsAdresse(r))}">${I('signature','s')}Online unterschreiben</a><span class="xs t3">mit den gewählten Add-ons, Vertrag und Anzahlungsrechnung kommen per E-Mail</span></div>`:''}
+ <section class="box"><div class="bh"><h2>${probe?'Vorschau':'Angebot und Vertrag'}</h2></div><div class="bb stack">
+ <p>${probe?'Die Druckprobe zeigt Umfang, Annahmen und Zahlungsplan.':'Die Angebotsfassung hält den Gesamtpreis, die gemeinsam angesetzten Stunden und den Zahlungsplan fest.'}</p>
+ ${!probe&&eigeneDomain()?`<div class="noprint stack"><label><input type="checkbox" id="ang-gespraech"> Gesprächsangaben und Startplanung in die Kundenfassung übernehmen</label><div class="row"><button type="button" class="btn" data-fassung="angebot">Angebotslink erstellen</button><button type="button" class="btn acc" data-fassung="vertrag">Vertrag prüfen</button></div><div id="ang-ergebnis" role="status" aria-live="polite"></div></div>`:''}
   <p class="xs t3">${OF.HK.name} · ${OF.HK.str} · ${OF.HK.ort} · Geschäftsführer ${OF.HK.gf} · ${OF.HK.hr} · ${OF.HK.mail}</p></div></section>`;}
 function eigeneDomain(){try{return /^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname);}catch(e){return false;}}
 const AD=Object.fromEntries(OF.AREA.map(a=>[a[0],a]));
@@ -1720,68 +1723,60 @@ function bWeg(i){const sp=OF.SPLIT[i];if(!sp)return '';return Object.keys(sp).ma
 function areaHV(k,tf){const d=AD[k],a=S.roi.a[k],h=a.n*a.s*(d[6]==='woche'?52:1)*tfOf(tf);return [h,h*a.r];}
 function roiHours(r,tf){let h=0,t=0;OF.B.forEach(b=>{const x=bHV(b[0],tf);h+=x[0];t+=x[1];});
  (r?r.L:[]).forEach(x=>{const k=x.a[0];if(OF.AH[k]){h+=OF.AH[k]*tfOf(tf);t+=OF.AH[k]*OF.AR[k]*tfOf(tf);}});
- return {h,t,price:(S.roi.vol||0)*1e6*(S.roi.pct||0)/100};}
-const ROI_SC=[['Vorsichtig','Hälfte der geschätzten Zeitersparnis, ohne Vergabepreis',50,0,0],['Mittel','75 % der Zeitersparnis, 0,25 % besserer Vergabepreis auf 3 Mio. €',75,3,0.25],['Unsere Rechnung','volle Zeitersparnis wie im Angebot, ohne Vergabepreis',100,0,0],['Mit Vergabehebel','volle Zeitersparnis, 0,5 % besserer Vergabepreis auf 5 Mio. €',100,5,0.5]];
-const sgO=n=>(n>=0?'+':'')+eurO(n);
-function amoStart(net,care,w1,w,m1=3,m2=6){let c=0;for(let m=1;m<=120;m++){const g=m<m1?0:(m<m2?w1:w)/12-care;if(g>0&&c+g>=net)return m-1+(net-c)/g;c+=g;}return null;}
-function roiStufe(r){const S1=OF.STUFE1;let h1=0,w1=0;S1.forEach(i=>{const x=bHV(i);h1+=x[0];w1+=x[1];});
- const wk=(k,ids)=>{const d=AD[k],a=S.roi.a[k];return (ids?ids.reduce((x,i)=>x+((OF.SPLIT[i]||{})[k]||0),0)*(d[4]?a.s/d[4]:0):a.s)*tfOf();};
- return {h1,w1,wk};}
-function roiChart(ser,lab){const sm=window.innerWidth<700,W=sm?420:900,H=sm?260:250,pl=58,pr=10,pt=12,pb=28,iw=W-pl-pr,ih=H-pt-pb,all=ser.flat(),mn=Math.min(0,...all)*1.1,mx=Math.max(1,...all)*1.08,y=v=>pt+ih*(mx-v)/(mx-mn);
- const st=[50000,100000,200000,250000,500000,1000000].find(s=>(mx-mn)/s<=6)||2000000;let g='';
- for(let t=Math.ceil(mn/st)*st;t<=mx;t+=st)g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" stroke="var(${t===0?'--ink-3':'--line'})" stroke-width="1"/><text x="${pl-6}" y="${(y(t)+3).toFixed(1)}" text-anchor="end" font-size="9" fill="var(--ink-3)">${hsO(t/1000)} Tsd.</text>`;
- const gw=iw/5,bw=sm?16:30,gap=2;
- for(let i=0;i<5;i++){const cx=pl+gw*i+gw/2;ser.forEach((vals,j)=>{const v=vals[i],x=j?cx+gap/2:cx-bw-gap/2,y0=y(0),y1=y(v),top=Math.min(y0,y1),h=Math.max(1,Math.abs(y1-y0));
-  g+=`<rect x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="3" fill="var(--c${j+1})"><title>Jahr ${i+1} · ${lab[j]}: ${sgO(v)}</title></rect><rect x="${x.toFixed(1)}" y="${pt}" width="${bw}" height="${ih}" fill="transparent"><title>Jahr ${i+1} · ${lab[j]}: ${sgO(v)}</title></rect>`;});
-  g+=`<text x="${cx.toFixed(1)}" y="${H-9}" text-anchor="middle" font-size="10" fill="var(--ink-2)">Jahr ${i+1}</text>`;}
- return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Kumuliertes Ergebnis je Jahr nach allen Kosten" style="font-family:var(--mono);display:block">${g}</svg>`;}
-function vRoi(){const r=cfgCalc(),R=roiHours(r),y1=r.net+12*r.mon,fol=12*r.mon,y3=r.net+36*r.mon,J=R.t+R.price,res=3*J-y3,amo=r.net/Math.max(1,J/12-r.mon),T=roiHours(r,100).t,H=roiHours(r).h;
- const cum=v=>{let c=0;return [1,2,3,4,5].map(i=>c+=v-(i===1?y1:fol));};
- const vg=S.roi.vol>0?[S.roi.vol,S.roi.pct]:[5,0.5],vgP=vg[0]*1e6*vg[1]/100,lab=['nur gesparte Zeit',`Zeit + ${hsO(vg[1])} % besserer Vergabepreis auf ${hsO(vg[0])} Mio. €${S.roi.vol>0?'':' (Beispiel)'}`],s1=cum(R.t),s2=cum(R.t+vgP);
- const sc=ROI_SC.map(s=>{const j=T*s[2]/100+s[3]*1e6*s[4]/100;return [...s,j,3*j-y3];});
- const ag=OF.ADD.filter(a=>OF.AH[a[0]]),ab=r.L.filter(x=>OF.AH[x.a[0]]),ST=roiStufe(r),amS=amoStart(r.net,r.mon,ST.w1+R.price,J);
- const P=OF.PARTNER,pw=ids=>P.reduce((x,k)=>x+ST.wk(k,ids),0),NMo=Object.fromEntries(OF.AREA.map(a=>[a[0],a[1]]));
- const wv=(x,u)=>x?hsO(Math.round(x*10)/10)+' Std.'+(u||''):'–';
- const strows=[['<b style="font-weight:600">Je Partner</b>',pw(OF.STUFE1),pw(),''],...P.map(k=>[`<span class="t2">davon ${NMo[k]}</span>`,ST.wk(k,OF.STUFE1),ST.wk(k),'']),['Bauleiter und Ingenieur, je',ST.wk('bl',OF.STUFE1),ST.wk('bl'),''],['Weitere Person',ST.wk('bo',OF.STUFE1),ST.wk('bo'),''],['Abstimmung mit Nachunternehmern',ST.wk('nu',OF.STUFE1),ST.wk('nu'),' je Gewerk']];
- const stufe=`<section class="box"><div class="bh"><h2>Ab wann die Zeit wirkt</h2><span class="xs t3">nach dem Zeitplan im Angebot, wenn alles nach Plan läuft</span></div><div class="bb stack" style="gap:12px"><div class="of-tot"><div><span class="lbl">Woche 6 bis 8 · Stufe 1</span><b>${Math.round(ST.h1).toLocaleString('de-DE')} Std.</b><span class="xs t3">Website und Vergabe live · ≈ ${eurO(ST.w1)} pro Jahr · je Partner ${wv(pw(OF.STUFE1))} pro Woche</span></div><div><span class="lbl">Woche 16 bis 20 · Stufe 2</span><b>+ ${Math.round(H-ST.h1).toLocaleString('de-DE')} Std.</b><span class="xs t3">Baustelle, CRM, Agenten, GAEB, Terminplan</span></div><div class="acc"><span class="lbl">Danach 2 Monate Begleitung</span><b>${Math.round(H).toLocaleString('de-DE')} Std.</b><span class="xs t3">voll eingespielt · ≈ ${eurO(R.t)} pro Jahr · je Partner ${wv(pw())} pro Woche</span></div></div></div>
-  <div class="tw"><table><thead><tr><th>Gesparte Zeit pro Woche</th><th class="r">nach Stufe 1</th><th class="r">nach Umsetzung</th></tr></thead><tbody>${strows.map(x=>`<tr><td>${x[0]}</td><td class="r num">${wv(x[1],x[1]?x[3]:'')}</td><td class="r num"><b style="font-weight:600">${wv(x[2],x[3])}</b></td></tr>`).join('')}</tbody></table></div>
-  <div class="bb sm t2">Ab Projektstart gerechnet ist der Einmalpreis mit diesem Hochlauf nach rund <b style="color:var(--ink)">${amS?Math.round(amS)+' Monaten':'–'}</b> bezahlt: Stufe 1 wirkt ab Monat 3, alles ab Monat 6, Betreuung ab Livegang. Damit das eintritt: alle Projekte und Gewerke laufen über die Plattform, die Nachunternehmer nutzen das Bieterportal, Anfragen kommen über Website und CRM, Freigaben laufen in der Plattform.</div></section>`;
- const inp=(k,v,l)=>`<input class="roi-i" type="number" min="0" step="any" value="${v}" data-roi="${k}" aria-label="${l}">`;
- const sum=OF.AREA.reduce((s,a)=>{const x=areaHV(a[0]);return [s[0]+x[0],s[1]+x[1]];},[0,0]);
- const rows=OF.B.filter(b=>OF.SPLIT[b[0]]).map(b=>{const [h,v]=bHV(b[0]);return `<tr><td class="nm">${esc(b[2].replace('Website: ','Website · '))}<div class="xs t2" style="font-weight:400;margin-top:2px">${esc(b[4])}</div></td><td class="t2 sm">${esc(b[6])}</td><td class="r num" style="white-space:normal"><b style="color:var(--accent)">${hsO(Math.round(h))} Std.</b><div class="xs t3" style="font-weight:400">${esc(bWeg(b[0]))}</div><div class="xs t2">≈ ${eurO(v)}</div></td></tr>`;}).join('')
-  +ab.map(x=>{const k=x.a[0],h=OF.AH[k]*tfOf();return `<tr><td class="nm">${esc(x.a[2])} <span class="tag">Add-on</span><div class="xs t2" style="font-weight:400;margin-top:2px">${esc(x.a[3])}</div></td><td class="t2 sm">${esc(x.a[7]||'')}</td><td class="r num"><b style="color:var(--accent)">${hsO(Math.round(h))} Std.</b><div class="xs t2">≈ ${eurO(h*OF.AR[k])}</div></td></tr>`;}).join('');
- const nohrs=OF.B.filter(b=>!OF.SPLIT[b[0]]).map(b=>esc(b[2].replace('Website: ','Website · '))).join(', ');
- return `<div class="ph"><div><h1>Mehrwert und Return on Investment</h1><div class="meta"><span>Gesamtpaket ${eurO(OF.NET)}${r.L.length?` + ${r.L.length} Add-ons`:''}</span><span>3 Partner, Bauleiter, Ingenieur, weitere Person und die Nachunternehmer</span></div></div><div class="row noprint">${folienRueckweg()}<button class="btn" data-act="roi-reset">${I('arrow-counter-clockwise','s')}Zurücksetzen</button><button class="btn" data-act="print">${I('printer','s')}Drucken</button></div></div>
- <div class="of-tot k4"><div class="acc"><span class="lbl">Gesparte Zeit pro Jahr nach Umsetzung</span><b>${Math.round(H).toLocaleString('de-DE')} Std.</b><span class="xs t3">je Partner rund ${hsO(Math.round(OF.PARTNER.reduce((x,k)=>x+S.roi.a[k].s,0)*tfOf()*10)/10)} Std. pro Woche</span></div>
- <div><span class="lbl">Wert pro Jahr</span><b>${eurO(J)}</b><span class="xs t3">Zeit ${eurO(R.t)}${R.price?' + Vergabepreis '+eurO(R.price):', anhand der eingestellten Stundensätze'}</span></div>
- <div><span class="lbl">Einmalpreis bezahlt nach</span><b>${amo>0&&amo<120?hsO(Math.round(amo*10)/10)+' Mon.':'–'}</b><span class="xs t3">ab Livegang · ab Projektstart rund ${(()=>{const a=amoStart(r.net,r.mon,ST.w1+R.price,J);return a?Math.round(a):'–';})()} Mon.</span></div>
- <div><span class="lbl">Ergebnis nach 3 Jahren</span><b style="color:${res>=0?'var(--ok)':'var(--ink-2)'}">${sgO(res)}</b><span class="xs t3">Kosten 3 Jahre ${eurO(y3)}</span></div></div>
- <section class="box" id="roiIn"><div class="bh"><h2>Annahmen je Rolle</h2><span class="xs t3">Felder anklicken und gemeinsam anpassen</span></div><div class="tw"><table><thead><tr><th>Bereich · wer</th><th class="r">Personen / Gewerke</th><th class="r">gesparte Std. je Woche / je Gewerk</th><th class="r">€ je Std.</th><th class="r">Std. pro Jahr</th><th class="r">Wert pro Jahr</th></tr></thead><tbody>
-  ${OF.AREA.map(a=>{const v=S.roi.a[a[0]],x=areaHV(a[0]);return `<tr><td class="nm">${esc(a[1])}<div class="xs t3" style="font-weight:400">${esc(a[2])}${a[6]==='woche'?' · Std. je Person und Woche':' · Gewerke im Jahr, Std. je Gewerk'}</div></td><td class="r">${inp(a[0]+'.n',v.n,a[1]+' Anzahl')}</td><td class="r">${inp(a[0]+'.s',v.s,a[1]+' Stunden')}</td><td class="r">${inp(a[0]+'.r',v.r,a[1]+' Euro je Stunde')}</td><td class="r num">${hsO(Math.round(x[0]))}</td><td class="r num">${eurO(x[1])}</td></tr>`;}).join('')}
-  <tr><td colspan="4"><b style="font-weight:600">Zusammen</b> <span class="xs t3">Wirkung ${hsO(S.roi.tf)} % der geschätzten Zeit</span></td><td class="r num"><b style="font-weight:600">${hsO(Math.round(sum[0]))}</b></td><td class="r num"><b style="font-weight:600">${eurO(sum[1])}</b></td></tr></tbody></table></div>
-  <div class="bb"><div class="of-in c3"><label><span>Wirkung in % der geschätzten Zeit</span>${inp('tf',S.roi.tf,'Wirkung in Prozent')}</label><label><span>Vergabevolumen pro Jahr in Mio. €</span>${inp('vol',S.roi.vol,'Vergabevolumen')}</label><label><span>Besserer Vergabepreis in %</span>${inp('pct',S.roi.pct,'Besserer Vergabepreis')}</label></div></div></section>
- <section class="stack" style="gap:8px"><div class="lbl">Mehrwert nach Bereich</div><div class="roi-ar">${OF.AREA.map(a=>{const x=areaHV(a[0]),t=OF.ATXT[a[0]];return `<div><div class="hd"><b>${esc(a[1])}</b><span>${hsO(Math.round(x[0]))} Std. · ${eurO(x[1])}</span></div><span class="k">Was die Plattform übernimmt</span><p>${esc(t[0])}</p><span class="k">Was wegfällt</span><p class="t2">${esc(t[1])}</p><span class="k">Hebel über die Zeit hinaus</span><p>${esc(t[2])}</p></div>`;}).join('')}
-  <div style="background:var(--sunk)"><div class="hd"><b>Zusammen</b><span>${hsO(Math.round(sum[0]))} Std. · ${eurO(sum[1])}</span></div><p>Rund ${hsO(Math.round(sum[0]/168)/10)} Vollzeitstellen ohne neue Stelle. Die Zeit fließt in mehr Vergaben, Baustellenpräsenz und Verkauf.</p><span class="k">Rechnung</span><p class="t2">Personen × gesparte Stunden pro Woche × 52, bei den Nachunternehmern Gewerke im Jahr × Stunden je Gewerk.</p></div></div></section>
- ${stufe}
- <section class="box"><div class="bh"><h2>Kosten und Nutzen über 5 Jahre</h2><span class="xs t3">kumuliertes Ergebnis nach allen Kosten, ab Livegang</span></div><div class="bb stack" style="gap:8px"><div class="roi-lg"><span><i style="background:var(--c1)"></i>${lab[0]}</span><span><i style="background:var(--c2)"></i>${lab[1]}</span></div>${roiChart([s1,s2],lab)}</div>
-  <div class="tw"><table><thead><tr><th></th>${[1,2,3,4,5].map(i=>`<th class="r">Jahr ${i}</th>`).join('')}</tr></thead><tbody><tr><td>Kosten im Jahr</td>${[1,2,3,4,5].map(i=>`<td class="r num">${eurO(i===1?y1:fol)}</td>`).join('')}</tr><tr><td>Nutzen aus Zeit</td>${[1,2,3,4,5].map(()=>`<td class="r num">${eurO(R.t)}</td>`).join('')}</tr><tr><td><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--c1);margin-right:6px"></i>Kumuliert, ${lab[0]}</td>${s1.map(v=>`<td class="r num"><b style="font-weight:600">${sgO(v)}</b></td>`).join('')}</tr><tr><td><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--c2);margin-right:6px"></i>Kumuliert, mit Vergabepreis</td>${s2.map(v=>`<td class="r num"><b style="font-weight:600">${sgO(v)}</b></td>`).join('')}</tr></tbody></table></div></section>
- <section class="box"><div class="bh"><h2>Szenarien über 3 Jahre</h2><span class="xs t3">mit euren Werten je Rolle</span></div><div class="tw"><table><thead><tr><th>Szenario</th><th>Annahme</th><th class="r">Nutzen pro Jahr</th><th class="r">Ergebnis nach 3 Jahren</th></tr></thead><tbody>${sc.map(s=>`<tr class="${s[0]==='Unsere Rechnung'?'hl':''}"><td class="nm">${s[0]}</td><td class="t2 sm">${s[1]}</td><td class="r num">${eurO(s[5])}</td><td class="r num"><b style="font-weight:600;color:${s[6]>=0?'var(--ok)':'var(--ink-2)'}">${sgO(s[6])}</b></td></tr>`).join('')}<tr><td class="nm">Eure Eingabe</td><td class="t2 sm">${hsO(S.roi.tf)} % der Zeit${S.roi.vol>0?`, ${hsO(S.roi.pct)} % auf ${hsO(S.roi.vol)} Mio. €`:''}${r.L.length?', mit gewählten Add-ons':''}</td><td class="r num">${eurO(J)}</td><td class="r num"><b style="font-weight:600">${sgO(res)}</b></td></tr></tbody></table></div><div class="bb xs t3">Kosten über 3 Jahre ${eurO(y3)} (${eurO(r.net)} + 36 × ${eurO(r.mon)}). Ab Jahr 4 nur noch ${eurO(fol)} Betreuung pro Jahr.</div></section>
- <section class="box"><div class="bh"><h2>Jeder Baustein einzeln</h2><span class="xs t3">Was ihr ohne ihn selbst macht und wie viel Zeit er spart</span></div><div class="tw"><table><thead><tr><th>Baustein</th><th>Was ihr sonst selbst macht</th><th class="r" style="width:260px">Gespart pro Jahr</th></tr></thead><tbody>${rows}<tr><td colspan="2"><b style="font-weight:600">Summe</b></td><td class="r num"><b style="font-weight:600">${hsO(Math.round(H))} Std. · ${eurO(R.t)}</b></td></tr></tbody></table></div><div class="bb xs t3">Ohne eigene Stundenrechnung, weil sie Grundlage für alles andere sind: ${nohrs}.</div></section>
- <section class="box"><div class="bh"><h2>Geldhebel über die Zeit hinaus</h2><span class="xs t3">größter Hebel ist der Vergabepreis</span></div><div class="grid2" style="gap:0"><div class="tw"><table><thead><tr><th>Vergabevolumen</th><th class="r">0,5 %</th><th class="r">1 %</th><th class="r">2 %</th></tr></thead><tbody>${[2,3,5,8].map(v=>`<tr><td>${v} Mio. €</td>${[0.5,1,2].map(p=>`<td class="r num">${eurO(v*1e6*p/100)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="bb sm t2 stack" style="gap:6px"><span><b style="font-weight:500;color:var(--ink)">Verzug vermeiden:</b> Unterbesetzung fällt am selben Tag auf, jeder vermiedene Monat spart Finanzierungskosten.</span><span><b style="font-weight:500;color:var(--ink)">Schneller verkaufen:</b> Antwort in Minuten, Nachfassen nach Regeln, Einheiten früher reserviert.</span><span><b style="font-weight:500;color:var(--ink)">Weniger Risiko:</b> abgelaufene Nachweise der Nachunternehmer fallen auf, bevor ein Schaden entsteht.</span></div></div></section>
- <section class="box"><div class="bh"><h2>Zusätzliche Agenten mit eigenem ROI</h2></div><div class="tw"><table><thead><tr><th>Agent</th><th class="r">Preis</th><th class="r">Zeit</th><th class="r">Wert</th><th class="r">Bezahlt nach</th><th></th></tr></thead><tbody>${ag.map(a=>{const h=OF.AH[a[0]],w=h*OF.AR[a[0]],pm=a[4]/(w/12-a[5]),on=!!S.cfg.add[a[0]];return `<tr><td class="nm">${esc(a[2].replace('Agent ',''))}</td><td class="r num">${eurO(a[4])}<div class="xs t3">+ ${eurO(a[5])}/Mon.</div></td><td class="r num">${hsO(h)} Std.</td><td class="r num">${eurO(w)}</td><td class="r num"><b style="font-weight:600">${Math.round(pm)} Mon.</b></td><td class="r"><button class="btn sm ${on?'acc':''}" data-add="${a[0]}" aria-pressed="${on}">${I(on?'check-square':'plus','s')}${on?'Gewählt':'Dazu'}</button></td></tr>`;}).join('')}</tbody></table></div><div class="bb xs t3">Zeit und Wert pro Jahr, bewertet mit 55 € je Stunde. Gewählte Agenten fließen oben in die Rechnung ein.</div></section>
- <div class="grid2"><section class="box"><div class="bh"><h2>Value, der sich nicht in Stunden misst</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6"><li><b style="font-weight:500;color:var(--ink)">Wissen im System</b> statt in persönlichen Postfächern, Urlaub und Vertretung sind kein Risiko.</li><li><b style="font-weight:500;color:var(--ink)">Transparenz</b> für alle drei Partner: Stand, Abweichungen und Freigaben jedes Projekts.</li><li><b style="font-weight:500;color:var(--ink)">Wachstum ohne neue Stelle:</b> ein weiteres Projekt pro Jahr mit demselben Team.</li><li><b style="font-weight:500;color:var(--ink)">Auftritt nach außen</b> gegenüber Käufern, Banken und Investoren.</li><li><b style="font-weight:500;color:var(--ink)">Datenhoheit:</b> Quellcode und Daten gehören nach Zahlung Heim &amp; Partner.</li></ul></div></section>
- <section class="box"><div class="bh"><h2>Risiko und Absicherung</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6"><li>Ausstieg nach dem Pflichtenheft für 3.000 €, das Pflichtenheft gehört euch.</li><li>Festpreis, Änderungen nur mit Preis vorab.</li><li>Die Hälfte erst nach der Gesamtabnahme gegen festgelegte Tests.</li><li>Die KI entscheidet nichts, freigegeben wird immer von Berechtigten.</li><li>Hosting in der EU, Auftragsverarbeitungsvertrag nach DSGVO.</li></ul></div></section></div>
- <div class="callout neutral">${I('info','s')}<span>Beispielrechnung mit Annahmen, keine Zusage. Vor dem Start erfassen wir die Ausgangswerte gemeinsam, nach 3 Monaten vergleichen wir mit den Werten aus der Plattform.</span></div>`;}
+ return {h,t};}
+function vRoi() {
+  const r=cfgCalc(), team=roiHours(r);
+  const input=(key,value,label,max)=>`<input class="roi-i" type="number" min="0" max="${max}" step="any" value="${value}" data-roi="${key}" aria-label="${esc(label)}">`;
+  const rollen=OF.AREA.map(a=>{
+    const [id,name,wer]=a, v=S.roi.a[id], [stunden,wert]=areaHV(id);
+    const wochen=a[6]==='woche';
+    return `<tr><td class="nm">${esc(name)}<div class="xs t3">${esc(wer)} · ${wochen?'je Person und Woche':'je Gewerk'}</div></td>
+      <td class="r">${input(id+'.n',v.n,name+' Anzahl',1000000)}</td>
+      <td class="r">${input(id+'.s',v.s,name+' Stunden',1000000)}</td>
+      <td class="r">${input(id+'.r',v.r,name+' Euro je Stunde',1000000)}</td>
+      <td class="r num">${hsO(Math.round(stunden))}</td><td class="r num">${eurO(wert)}</td></tr>`;
+  }).join('');
+  const szenarien=[50,75,100].map(prozent=>{
+    const modell=roiHours(r,prozent);
+    return `<tr><td>${prozent} %</td><td class="r num">${hsO(Math.round(modell.h))} Std.</td><td class="r num">${eurO(modell.t)}</td>
+      <td class="r noprint"><button type="button" class="btn sm" data-wirkung="${prozent}" aria-pressed="${S.roi.tf===prozent}">${S.roi.tf===prozent?'Ausgewählt':'Übernehmen'}</button></td></tr>`;
+  }).join('');
+  const module=r.L.filter(x=>OF.AH[x.a[0]]);
+  const erweiterungen=module.length ? `<p class="bb sm t2">Gewählte Erweiterungen sind in der Gesamtsumme enthalten: ${module.map(x=>esc(x.a[2])+' ('+hsO(Math.round(OF.AH[x.a[0]]*tfOf()))+' Std./Jahr)').join(', ')}.</p>`:'';
+  const ablauf=OF.B.filter(b=>OF.SPLIT[b[0]]).map(b=>{
+    const [h,v]=bHV(b[0]);
+    return `<tr><td class="nm">${esc(b[2])}</td><td class="t2 sm">${esc(bWeg(b[0]))}</td><td class="r num">${hsO(Math.round(h))} Std.</td><td class="r num">${eurO(v)}</td></tr>`;
+  }).join('');
+  return `<div class="ph"><div><h1>Zeitgewinn für euer Team</h1><div class="meta">Gemeinsame Schätzung für ein volles Betriebsjahr</div></div>
+    <div class="row noprint">${folienRueckweg()}<button class="btn" data-act="roi-reset">Ausgangswerte laden</button><button class="btn" data-act="print">${I('printer','s')}Drucken</button></div></div>
+    <div class="of-tot"><div class="acc"><span class="lbl">Mögliche freie Arbeitszeit</span><b>${hsO(Math.round(team.h))} Std.</b><span class="xs t3">pro Jahr bei ${hsO(S.roi.tf)} % der angenommenen Wirkung</span></div>
+    <div><span class="lbl">Rechnerischer Kapazitätswert</span><b>${eurO(team.t)}</b><span class="xs t3">Freie Arbeitszeit zu den eingestellten Stundensätzen</span></div>
+    <div><span class="lbl">Finanzielle Amortisation</span><b>Separat prüfen</b><button class="btn sm" data-act="wirtschaft-pruefen">Belegte Einsparungen ansehen</button></div></div>
+    <section class="box" id="roiIn"><div class="bh"><h2>Welche Annahmen passen zu eurem Alltag?</h2></div><div class="bb">
+    Alle Wochenwerte rechnen mit 52 Wochen. Bei Nachunternehmern zählen die Stunden je Gewerk. Tragt für jede Rolle die Zeit ein, die ihr in diesem Bereich für realistisch haltet. Ordnet denselben Handgriff nur einmal zu.</div>
+    <div class="tw"><table><thead><tr><th>Bereich</th><th class="r">Personen / Gewerke</th><th class="r">Stunden je Woche / Gewerk</th><th class="r">€ je Stunde</th><th class="r">Std. im Jahr</th><th class="r">Zeitwert im Jahr</th></tr></thead><tbody>${rollen}</tbody></table></div>
+    <div class="bb"><label>Angenommene Wirkung in Prozent ${input('tf',S.roi.tf,'Wirkung in Prozent',100)}</label></div>${erweiterungen}</section>
+    <section class="box"><div class="bh"><h2>Wie verändert sich die Schätzung?</h2></div><div class="tw"><table><thead><tr><th>Anteil der angenommenen Wirkung</th><th class="r">Stunden im Jahr</th><th class="r">Kapazitätswert im Jahr</th><th class="noprint"></th></tr></thead>
+    <tbody>${szenarien}</tbody></table></div></section>
+    <section class="box"><div class="bh"><h2>Was ihr dafür investiert</h2></div><div class="bb stack">
+    <p>Umsetzung insgesamt <b>${eurO(r.net)} netto</b>. Betreuung ab Livegang <b>${eurO(r.mon)} netto im Monat</b>. KI und Drittdienste nach tatsächlichem Verbrauch.</p>
+    <p>Für die finanzielle Amortisation rechnen wir mit den Ausgaben, die bei euch nachweisbar wegfallen. Im Gespräch könnt ihr dafür Betrag und Quelle festhalten.</p></div></section>
+    <details class="box"><summary class="bh"><strong>Zeitansatz je Arbeitsschritt</strong></summary><div class="tw"><table>
+      <thead><tr><th>Arbeitsschritt</th><th>Rechenweg bei voller Wirkung</th><th class="r">Bei ${hsO(S.roi.tf)} %</th><th class="r">Zeitwert</th></tr></thead><tbody>${ablauf}</tbody></table></div></details>`;
+}
 function vLeistung(){const row=b=>`<tr><td class="nm">${esc(b[2].replace('Website: ',''))}<div class="xs t2" style="font-weight:400;margin-top:2px">${esc(b[4])}</div></td><td class="t2 sm">${esc(b[6])}</td><td class="r num">${OF.SPLIT[b[0]]?`<b style="color:var(--accent)">${hsO(bHV(b[0])[0])} Std.</b>`:'<span class="t3">–</span>'}<div class="xs t3" style="font-weight:400">${esc(b[8])}</div></td></tr>`;
  const tb=(t,list)=>`<section class="box"><div class="bh"><h2>${t}</h2></div><div class="tw"><table><thead><tr><th>Baustein und was er ist</th><th>Ohne Plattform macht ihr selbst</th><th class="r">Zeit gespart pro Jahr</th></tr></thead><tbody>${list.map(row).join('')}</tbody></table></div></section>`;
  return `<div class="ph"><div><h1>Leistungsumfang</h1><div class="meta"><span>Gesamtpaket: 20 Bausteine</span><span>${hsO(roiHours().h)} Std. pro Jahr geschätzt</span></div></div><button class="btn acc" data-go="konfig">${I('receipt','s')}Zum Angebot</button></div>
- ${tb('Gemeinsamer Leistungsumfang',OF.B)}
+ ${tb('So greift das Gesamtpaket ineinander',OF.B)}
  <section class="box"><div class="bh"><h2>Nicht enthalten</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6">${OF.NEV.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></section>`;}
 // Die Präsentation liest die aktuellen Gesprächswerte aus demselben Modell wie das Angebot.
 const DECK = new URL('https://reflexionheimpartner.hk-growthoperator.de/gespraech-02aedca599/');
 const channel = 'heim-partner-gespraech';
 const sharedExtras = ['ar','ap','ag','ak','ib','pu'];
-const notebook = 'hp-demo-angebot-v1';
+const modus = new URLSearchParams(location.search).get('modus') === 'probe' ? 'probe' : 'termin';
+const istProbe = modus === 'probe';
+const notebook = 'hp-demo-angebot-v2-' + modus;
+let wirtschaftOeffnen = false;
 const aufteilung = n => [0,3,4].includes(n);
 const begrenzt = (v,max) => typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= max;
 let foliennummer = 1;
@@ -1790,10 +1785,13 @@ let praxisstunden = null;
 let gespraechsziel = '';
 let gespraechsfall = '';
 let erfolgskriterium = '';
+let startprojekt = '';
+let verantwortlich = '';
+let wunschstart = '';
 
 function gespraechMerken() {
   try {
-    sessionStorage.setItem(notebook, JSON.stringify({roi:S.roi,cfg:S.cfg,foliennummer,ausPraesentation,praxisstunden,gespraechsziel,gespraechsfall,erfolgskriterium}));
+    sessionStorage.setItem(notebook, JSON.stringify({roi:S.roi,cfg:S.cfg,foliennummer,ausPraesentation,praxisstunden,gespraechsziel,gespraechsfall,erfolgskriterium,startprojekt,verantwortlich,wunschstart}));
   } catch { /* Im privaten Modus bleibt der Stand für die laufende Ansicht erhalten. */ }
 }
 function gespraechLaden() {
@@ -1816,6 +1814,9 @@ function gespraechLaden() {
     if(begrenzt(d.praxisstunden,1000000)) praxisstunden=d.praxisstunden;
     if(typeof d.gespraechsfall==='string') gespraechsfall=d.gespraechsfall.slice(0,240);
     if(typeof d.erfolgskriterium==='string') erfolgskriterium=d.erfolgskriterium.slice(0,300);
+    if(typeof d.startprojekt==='string') startprojekt=d.startprojekt.slice(0,240);
+    if(typeof d.verantwortlich==='string') verantwortlich=d.verantwortlich.slice(0,160);
+    if(typeof d.wunschstart==='string' && /^\d{4}-\d{2}-\d{2}$/.test(d.wunschstart)) wunschstart=d.wunschstart;
     if(typeof d.gespraechsziel==='string') gespraechsziel=d.gespraechsziel.slice(0,300);
   } catch { /* Ein älterer oder unlesbarer Entwurf verhindert den Demostart nicht. */ }
 }
@@ -1832,9 +1833,16 @@ function deckKontext() {
     otherSetup:weitere.reduce((sum,x)=>sum+x.a[4]*x.q,0),otherMonthly:weitere.reduce((sum,x)=>sum+x.a[5]*x.q,0),
     otherWebsiteExtra:weitere.some(x=>x.a[8]===1)};
 }
-function folienAdresse() { const u=new URL(DECK); u.searchParams.set('demo','1');u.hash='s'+foliennummer;return u.href; }
+function folienAdresse() {
+  const u=new URL(DECK);
+  u.searchParams.set('demo','1');
+  u.searchParams.set('modus',modus);
+  if (wirtschaftOeffnen && foliennummer===7) u.searchParams.set('ansicht','wirtschaft');
+  u.hash='s'+foliennummer;
+  return u.href;
+}
 function vPraes() {
-  return `<section class="hp-gespraech" id="hp-gespraech"><div class="row sb"><h1>Präsentation</h1><button class="btn" data-act="praes-full">${I('arrows-out','s')}Vollbild</button></div>
+  return `<section class="hp-gespraech" id="hp-gespraech"><div class="row sb"><h1>${istProbe?'Präsentation · Probe':'Präsentation'}</h1><button class="btn" data-act="praes-full">${I('arrows-out','s')}Vollbild</button></div>
     <iframe title="Heim &amp; Partner · Gemeinsames Projektgespräch" id="hp-praesentation" src="${esc(folienAdresse())}" allow="fullscreen" allowfullscreen></iframe></section>`;
 }
 function praesHash() { return foliennummer===1?'#praes':'#praes-'+foliennummer; }
@@ -1846,7 +1854,12 @@ function routeAusAdresse() {
   if(['team','nu','quali','lead','auto','events','freigaben','cockpit','vergabe','neu','portal','projekt','crm','objekt','kanaele','leistung','konfig','roi'].includes(h)) return {seite:h};
   return null;
 }
+function fuehrungAusAdresse() {
+  history.replaceState(null,'',location.pathname+location.search);
+  rundgang=GESPRAECHSTOUR;tourGo(0);
+}
 function folgeAdresse() {
+  if(location.hash==='#fuehrung'){fuehrungAusAdresse();return;}
   const ziel=routeAusAdresse();
   if(!ziel) return;
   const gleicheSeite=S.route===ziel.seite;
@@ -1871,7 +1884,7 @@ window.addEventListener('message', ev=>{
   const antworte=()=>frame.contentWindow.postMessage(deckKontext(), DECK.origin);
   if(m.type==='ready') {antworte();return;}
   if(m.type==='step') {
-    if(Number.isInteger(m.step) && m.step>=1 && m.step<=9 && m.step!==foliennummer){foliennummer=m.step;setGeschaeftsHash(praesHash());gespraechMerken();}
+    if(Number.isInteger(m.step) && m.step>=1 && m.step<=9 && m.step!==foliennummer){foliennummer=m.step;wirtschaftOeffnen=false;setGeschaeftsHash(praesHash());gespraechMerken();}
     return;
   }
   if(m.type==='roi'){ausPraesentation=true;go('roi');return;}
@@ -1884,23 +1897,60 @@ window.addEventListener('message', ev=>{
   gespraechsziel=typeof m.ziel==='string'?m.ziel.trim().slice(0,300):'';
   gespraechsfall=typeof m.fall==='string'?m.fall.trim().slice(0,240):'';
   erfolgskriterium=typeof m.erfolg==='string'?m.erfolg.trim().slice(0,300):'';
+  startprojekt=typeof m.startprojekt==='string'?m.startprojekt.trim().slice(0,240):'';
+  verantwortlich=typeof m.verantwortlich==='string'?m.verantwortlich.trim().slice(0,160):'';
+  wunschstart=typeof m.wunschstart==='string' && /^\d{4}-\d{2}-\d{2}$/.test(m.wunschstart)?m.wunschstart:'';
   ausPraesentation=true;S.cfg.show=true;
   go('konfig');
 });
-function vertragsAdresse(r){
-  const u=new URL(S.cfg.raten?'/angebot/vertrag-raten/':'/angebot/vertrag/',location.origin);
-  if(S.cfg.raten) u.searchParams.set('raten',String(S.cfg.raten));
-  const ids=r.L.map(x=>x.a[0]+(x.a[6]?':'+x.q:'')).concat(r.req.map(a=>a[0]));
-  if(ids.length) u.searchParams.set('add',ids.join(','));
-  return u.pathname+u.search;
+function angebotsProbe(){return typeof istProbe!=='undefined'?istProbe:new URLSearchParams(location.search).has('probe');}
+function angebotsStartdaten(){return [
+ ['Startprojekt',typeof startprojekt==='string'?startprojekt:''],
+ ['Projektverantwortung',typeof verantwortlich==='string'?verantwortlich:''],
+ ['Gewünschter Start',typeof wunschstart==='string'?wunschstart:'']
+];}
+function kundenfassungEingabe(){
+ const r=cfgCalc(),addons=Object.fromEntries(r.L.map(x=>[x.a[0],x.q]).concat(r.req.map(a=>[a[0],1])));
+ const teilen=document.getElementById('ang-gespraech')?.checked===true;
+ const [[,start],[,person],[,datum]]=angebotsStartdaten();
+ return {freigabe:true,gespraechFreigabe:teilen,addons,raten:S.cfg.raten,roi:S.roi,...teilen?{gespraech:{gespraechsziel,gespraechsfall,erfolgskriterium,praxisstunden,startprojekt:start,verantwortlich:person,wunschstart:datum}}:{}};
 }
+let letzteFassung=null;
+async function angebotsFassungOeffnen(button){
+ if(angebotsProbe())return;
+ const status=document.getElementById('ang-ergebnis');
+ const eingabe=kundenfassungEingabe(),inhalt=JSON.stringify(eingabe);
+ const steuerelemente=Array.from(document.querySelectorAll('[data-fassung],#ang-gespraech'));
+ steuerelemente.forEach(el=>el.disabled=true);
+ const aktuell=()=>button.isConnected&&status.isConnected&&!angebotsProbe()&&inhalt===JSON.stringify(kundenfassungEingabe());
+ try{
+   if(letzteFassung?.inhalt!==inhalt){
+     const antwort=await fetch('/api/angebot/stand',{method:'POST',headers:{'Content-Type':'application/json'},body:inhalt});
+     const daten=await antwort.json();if(!antwort.ok)throw Error(daten.fehler||'Die Fassung konnte nicht gespeichert werden.');
+     if(!aktuell())return;
+     letzteFassung={inhalt,...daten};
+   }
+   if(!aktuell())return;
+   if(button.dataset.fassung==='vertrag'){location.assign(letzteFassung.vertrag);return;}
+   const url=new URL(letzteFassung.angebot,location.origin);
+   status.innerHTML='<label>Link zur Angebotsfassung<input readonly style="width:100%" aria-label="Link zur Angebotsfassung"></label><div class="row"><button class="btn" type="button" data-kopiere-angebot>Link kopieren</button><a class="btn" target="_blank" rel="noopener noreferrer">Angebot öffnen</a></div>';
+   status.querySelector('input').value=url.href;status.querySelector('a').href=url.href;
+ }catch(e){if(aktuell())status.textContent=e.message||'Die Angebotsfassung konnte nicht geöffnet werden.';}finally{steuerelemente.forEach(el=>el.disabled=false);}
+}
+document.addEventListener('click',async e=>{
+ const b=e.target.closest('[data-fassung]');if(b){await angebotsFassungOeffnen(b);return;}
+ if(e.target.closest('[data-kopiere-angebot]')){const f=document.querySelector('#ang-ergebnis input');if(!f)return;f.select();try{await navigator.clipboard.writeText(f.value);e.target.textContent='Link kopiert';}catch{f.focus();f.select();}}
+});
+document.addEventListener('change',e=>{if(e.target.id==='ang-gespraech'){const status=document.getElementById('ang-ergebnis');if(status)status.replaceChildren();}});
 function angebotsRaten(netto){
   if(!S.cfg.raten) return [['Anzahlung','50 % bei Auftragserteilung',netto/2],['Schlusszahlung','50 % nach Gesamtabnahme',netto/2]];
   const cent=Math.round(netto*100), start=Math.round(cent/2), rest=cent-start, rate=Math.round(rest/S.cfg.raten);
   return [['Anzahlung','50 % bei Auftragserteilung',start/100],...Array.from({length:S.cfg.raten},(_,i)=>['Rate '+(i+1),(i+1)+(i?' Monate':' Monat')+' nach Auftragserteilung',(i===S.cfg.raten-1?rest-i*rate:rate)/100])];
 }
 
-document.addEventListener('click',e=>{const t=e.target.closest('[data-add],[data-act="cfg-calc"],[data-act="cfg-back"],[data-act="print"],[data-act="praes-full"],[data-act="roi-reset"]');if(!t)return;const d=t.dataset;
+document.addEventListener('click',e=>{const t=e.target.closest('[data-wirkung],[data-act="wirtschaft-pruefen"],[data-add],[data-act="cfg-calc"],[data-act="cfg-back"],[data-act="print"],[data-act="praes-full"],[data-act="roi-reset"]');if(!t)return;const d=t.dataset;
+ if(d.wirkung && [50,75,100].includes(Number(d.wirkung))){S.roi.tf=Number(d.wirkung);gespraechMerken();render();return;}
+ if(d.act==='wirtschaft-pruefen'){wirtschaftOeffnen=true;foliennummer=7;go('praes');return;}
  if(d.act==='roi-reset'){S.roi=roiInit();gespraechMerken();render();return;}
  if(d.add){S.cfg.add[d.add]=!S.cfg.add[d.add];render();return;}
 
@@ -1936,8 +1986,14 @@ document.addEventListener('click',e=>{
   if(d.nstep!==undefined){if(S.nw.sending<0){S.nw.step=+d.nstep;render();}return;}
   switch(d.act){
    case 'tour-start':{
-    const o=modal('Demo-Führung','<div class="stack" style="padding:24px"><h2>Demo-Führung</h2><button class="btn acc" data-act="tour-termin">Vergabe im Gespräch zeigen</button><button class="btn" data-act="tour-komplett">Alle Funktionen erkunden</button></div>');o.querySelector('[data-act="tour-termin"]').focus();break;}
-   case 'tour-termin':closeModal();rundgang=GESPRAECHSTOUR;tourGo(0);break;
+    const o=modal('Demo-Führung','<div class="stack" style="padding:24px"><h2>Demo-Führung</h2><button class="btn acc" data-act="tour-termin">Kundentermin öffnen</button><button class="btn" data-act="tour-probe">Probe starten</button><button class="btn" data-act="tour-komplett">Alle Funktionen erkunden</button></div>');o.querySelector('[data-act="tour-termin"]').focus();break;}
+   case 'tour-termin':
+   case 'tour-probe':{
+     const ziel=d.act==='tour-probe'?'probe':'termin';
+     const u=new URL(location.href);
+     if(u.searchParams.get('modus') !== ziel){u.searchParams.set('modus',ziel);u.hash='fuehrung';location.assign(u.href);return;}
+     closeModal();rundgang=GESPRAECHSTOUR;tourGo(0);break;
+   }
    case 'tour-komplett':closeModal();rundgang=TOUR;tourGo(0);break;
    case 'tour-praes':S.tour=-1;foliennummer=1;go('praes');break;
    case 'tour-next':tourGo(S.tour+1);break;
@@ -1999,6 +2055,7 @@ gespraechLaden();
 const start=routeAusAdresse();
 if(start){S.route=start.seite;if(start.folie){foliennummer=start.folie;ausPraesentation=true;}if(S.route==='neu'&&!S.nw)initNew();}
 render();
+if(location.hash==='#fuehrung') fuehrungAusAdresse();
 window.addEventListener('hashchange',folgeAdresse);
 })();
 </script>

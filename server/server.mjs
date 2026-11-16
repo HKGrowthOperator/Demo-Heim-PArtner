@@ -10,7 +10,8 @@ import { berechne, bereinigeAuswahl } from './preis.mjs'
 import { speicher } from './speicher.mjs'
 import { pdf, schliessen } from './pdf.mjs'
 import { senden, mailKonfiguriert, gueltigeMail } from './mail.mjs'
-import { vertragHtml, vertragsinhalt, rechnungHtml, schlussrechnungHtml, mailInhalt, mailIntern, mailSchluss, hkSteuer, sha256, datum, uhrzeit, esc, eur2, unterschriften, zahlungFuellen, HK_VORAB } from './dokumente.mjs'
+import { abrechnungsstand, abrechnungFuer, vertragHtml, vertragsinhalt, rechnungHtml, schlussrechnungHtml, mailInhalt, mailIntern, mailSchluss, hkSteuer, sha256, datum, uhrzeit, esc, eur2, unterschriften, zahlungFuellen, HK_VORAB } from './dokumente.mjs'
+import { angebotModell, archiv, dokument as angebotsDokument, fassung, vertragslink, vertragsbindung, verbindungPruefen } from './angebot.mjs'
 import { variante } from './zahlung.mjs'
 
 const HIER = path.dirname(fileURLToPath(import.meta.url))
@@ -18,6 +19,9 @@ const SITE = path.resolve(process.env.SITE_DIR || path.join(HIER, '..', 'site'))
 const KAT = JSON.parse(fs.readFileSync(path.join(HIER, 'vorlage', 'katalog.json'), 'utf8'))
 const PORT = Number(process.env.PORT || 80)
 const ablage = speicher(process.env.DATA_DIR || '/data')
+const angebote = archiv(ablage.dir)
+const angebotsModell = angebotModell(path.join(SITE, 'index.html'))
+const aktuelleBindung = vertragsbindung(KAT,angebotsModell)
 const KOPIE_AN = (process.env.MAIL_COPY_TO || KAT.hk.mail).split(',').map(s => s.trim()).filter(Boolean)
 
 // ── Hilfen ───────────────────────────────────────────────────
@@ -25,7 +29,7 @@ const HEADER = {
   'X-Robots-Tag': 'noindex, nofollow',
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Referrer-Policy': 'no-referrer',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 }
 const TYPEN = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon', '.txt': 'text/plain; charset=utf-8', '.pdf': 'application/pdf', '.woff2': 'font/woff2' }
@@ -141,6 +145,11 @@ async function unterschreiben(req, res) {
   if (Date.now() > gueltigBis().getTime()) return json(res, 410, { ok: false, fehler: `Das Angebot war bis ${KAT.gueltig} gültig. Bitte meldet euch bei uns, wir schicken ein neues.` })
   const { fehlt, daten: d } = pruefe(b)
   const v = variante(b.variante, b.raten)
+  if (b.angebotsstand !== undefined) {
+    const stand = angebote.lesen(b.angebotsstand)
+    verbindungPruefen(KAT, stand, b.addons, v.raten ?? 0, v.variante, aktuelleBindung)
+    v.angebotsstand = b.angebotsstand
+  }
   if (v.variante === 'raten' && !v.raten) fehlt.push('Anzahl der Raten')
   if (fehlt.length) return json(res, 422, { ok: false, fehler: 'Bitte ergänzen: ' + fehlt.join(', '), fehlt })
   if (begrenzt(ip, 'sign', 5)) return json(res, 429, { ok: false, fehler: 'Zu viele Versuche. Bitte in einer Stunde erneut oder per E-Mail an ' + KAT.hk.mail })
@@ -174,7 +183,7 @@ async function unterschreiben(req, res) {
     const dateien = { 'vertrag.pdf': vertragPdf, 'signatur.png': d.png }
     if (rechnungPdf) dateien['rechnung.pdf'] = rechnungPdf
     const record = {
-      vnr, angelegt: jetzt.toISOString(), nonce, auswahl, variante: v.variante, raten: v.raten, summe: { net: c.net, brutto: c.brutto, mon: c.mon, einmalAddons: c.einmal },
+      vnr, angelegt: jetzt.toISOString(), nonce, auswahl, abrechnungsstand: abrechnungsstand(KAT), angebotsstand: v.angebotsstand || null, variante: v.variante, raten: v.raten, summe: { net: c.net, brutto: c.brutto, mon: c.mon, einmalAddons: c.einmal },
       posten: c.posten, angefragt: c.angefragt, unterzeichner: { name: d.name, funktion: d.funktion, email: d.email, ort: d.ort },
       gf: d.gf, ansprechpartner: d.ansprechpartner, vertretung: d.vertretung, rechnungEmail: d.rechnungEmail, protokoll, pdfHash,
       rechnung, rechnungFehlt: fehltRg, mail: { status: 'offen' },
@@ -231,6 +240,11 @@ async function vorschau(req, res) {
   const c = berechne(KAT, bereinigeAuswahl(KAT, b.addons))
   const f = { gf: txt(b.gf, 1, 160) || '', ansprechpartner: txt(b.ansprechpartner, 1, 120) || '', vertretung: txt(b.vertretung, 1, 120) || '' }
   const v = variante(b.variante, b.raten)
+  if (b.angebotsstand !== undefined) {
+    const stand = angebote.lesen(b.angebotsstand)
+    verbindungPruefen(KAT, stand, b.addons, v.raten ?? 0, v.variante, aktuelleBindung)
+    v.angebotsstand = b.angebotsstand
+  }
   if (v.variante === 'raten' && !v.raten) v.raten = 4
   const buf = await pdf(vertragHtml(KAT, c, f, { vorschau: true, opt: v }).html, { fusszeile: `Vorschau · Vertrag zum Angebot ${KAT.nr} · nicht unterschrieben` })
   senden_(res, 200, buf, 'application/pdf', { 'Content-Disposition': `inline; filename="Vertrag-Vorschau-${KAT.nr}.pdf"` })
@@ -278,14 +292,15 @@ async function schluss(req, res, vnr) {
   const rec = ablage.record(vnr)
   if (!rec) return schlussSeite(res, 404, 'Nicht gefunden', '<h1>Vertrag nicht gefunden</h1>')
   if (rec.schluss) return schlussSeite(res, 200, `Schlussrechnung ${rec.schluss.nr}`, schlussErgebnis(req, rec))
+  const parteien = abrechnungFuer(rec)
   const vom = rec.angelegt.slice(0, 10), heute = isoHeute()
-  const kopf = `<h1>Schlussrechnung zu Vertrag ${esc(vnr)}</h1><p class="mute">${esc(KAT.kunde.name)} · unterschrieben von ${esc(rec.unterzeichner.name)} am ${esc(datum(new Date(rec.angelegt)))} · ${esc(rec.variante === 'raten' ? `Raten (${rec.raten})` : '50/50')}</p>`
+  const kopf = `<h1>Schlussrechnung zu Vertrag ${esc(vnr)}</h1><p class="mute">${esc(parteien.kunde.name)} · unterschrieben von ${esc(rec.unterzeichner.name)} am ${esc(datum(new Date(rec.angelegt)))} · ${esc(rec.variante === 'raten' ? `Raten (${rec.raten})` : '50/50')}</p>`
   if (!rec.rechnung) return schlussSeite(res, 409, 'Keine Rechnung', `${kopf}<p class="bad">Zu diesem Vertrag ist keine erste Rechnung gespeichert.</p><p>Die Schlussrechnung muss die bereits berechneten Beträge abziehen. Bitte manuell erstellen.</p>`)
   const fehlt = fehltRechnung()
   if (fehlt.length) return schlussSeite(res, 409, 'Daten fehlen', `${kopf}<p class="bad">In Coolify fehlen: ${esc(fehlt.join(', '))}.</p>`)
 
   if (req.method === 'GET') {
-    const rest = schlussrechnungHtml(KAT, rec, { nr: '', datum: '', faellig: '', abnahme: '' }).brutto
+    const rest = schlussrechnungHtml(parteien, rec, { nr: '', datum: '', faellig: '', abnahme: '' }).brutto
     return schlussSeite(res, 200, `Schlussrechnung ${vnr}`, `${kopf}
 <table><tr><td>Vertragssumme brutto</td><td>${eur2(rec.summe.brutto)}</td></tr><tr><td>bereits berechnet: Rechnung ${esc(rec.rechnung.nr)}</td><td>−${eur2(rec.rechnung.brutto)}</td></tr><tr><td><b>Zahlbetrag der Schlussrechnung</b></td><td><b>${eur2(rest)}</b></td></tr></table>
 <form method="post"><label for="abnahme">Datum der Gesamtabnahme</label><input type="date" id="abnahme" name="abnahme" value="${heute}" min="${vom}" max="${heute}" required>
@@ -303,13 +318,14 @@ async function schluss(req, res, vnr) {
     if (r0.schluss) return r0
     const jetzt = new Date(), nr = rechnungsNr(jahrVon(jetzt))
     const x = { nr, datum: datum(jetzt), faellig: datum(new Date(jetzt.getTime() + 14 * 86400_000)), abnahme: deAusIso(abnahme) }
-    const sr = schlussrechnungHtml(KAT, r0, x)
-    const buf = await pdf(sr.html, { fusszeile: `Schlussrechnung ${nr} · ${KAT.hk.name}` })
+    const endstand = abrechnungFuer(r0)
+    const sr = schlussrechnungHtml(endstand, r0, x)
+    const buf = await pdf(sr.html, { fusszeile: `Schlussrechnung ${nr} · ${endstand.hk.name}` })
     const schlussDaten = { ...x, netto: sr.netto, ust: sr.ust, brutto: sr.brutto, gesamt: sr.gesamt, erstellt: jetzt.toISOString(), mail: { status: 'offen' } }
     ablage.ablegen(vnr, { 'schlussrechnung.pdf': buf }, { ...r0, schluss: schlussDaten })
     const an = [...new Set([r0.unterzeichner.email, r0.rechnungEmail].filter(Boolean))]
-    const m = mailSchluss(KAT, r0, { nr, brutto: sr.brutto, faellig: x.faellig })
-    const mail = { an, kopie: KOPIE_AN.filter(k => !an.includes(k)), antwortAn: KAT.hk.mail, betreff: `Schlussrechnung ${nr} zu Vertrag ${vnr}`, html: m.html, text: m.text, anhaenge: [{ name: `Schlussrechnung-${nr}.pdf`, buf }] }
+    const m = mailSchluss(endstand, r0, { nr, brutto: sr.brutto, faellig: x.faellig })
+    const mail = { an, kopie: KOPIE_AN.filter(k => !an.includes(k)), antwortAn: endstand.hk.mail, betreff: `Schlussrechnung ${nr} zu Vertrag ${vnr}`, html: m.html, text: m.text, anhaenge: [{ name: `Schlussrechnung-${nr}.pdf`, buf }] }
     let st
     if (mailKonfiguriert()) {
       try { st = { status: 'gesendet', id: await senden(mail), an } }
@@ -328,6 +344,34 @@ const server = http.createServer(async (req, res) => {
   try {
     if (url.pathname === '/healthz') return senden_(res, 200, 'ok\n', 'text/plain')
     if (!passwortOk(req)) return senden_(res, 401, 'Passwort erforderlich', 'text/plain', { 'WWW-Authenticate': 'Basic realm="Heim & Partner", charset="UTF-8"' })
+    if (req.method === 'POST' && url.pathname === '/api/angebot/stand') {
+      if (!/^application\/json(?:;|$)/i.test(req.headers['content-type'] || '')) return json(res, 415, {fehler:'JSON erforderlich.'})
+      if (begrenzt(clientIp(req), 'angebot', 35)) return json(res, 429, {fehler:'Zu viele Angebotsfassungen. Bitte später erneut versuchen.'})
+      const b = await lies(req, 16_000)
+      if (b?.freigabe !== true) return json(res, 400, {fehler:'Bitte die Angebotsfassung bewusst freigeben.'})
+      const stand = fassung(KAT, angebotsModell, b, aktuelleBindung), id = angebote.speichern(stand)
+      return json(res, 201, {angebot:'/angebot/?stand='+id, vertrag:vertragslink(stand,id)})
+    }
+    if (req.method === 'GET' || req.method === 'HEAD') {
+      if (/^\/angebot\/(alle|start|gesamt|gesamt-premium|website|premium|komplett)(?:\/(?:index\.html)?)?$/.test(url.pathname)) {
+        res.writeHead(302, {...HEADER, Location:'/angebot/'+url.search}); return res.end()
+      }
+      if (/^\/angebot(?:\/(?:index\.html)?)?$/.test(url.pathname)) {
+        const id = url.searchParams.get('stand')
+        const stand = id === null ? fassung(KAT, angebotsModell) : angebote.lesen(id)
+        return senden_(res, 200, angebotsDokument(stand,id || ''), 'text/html; charset=utf-8', {'Referrer-Policy':'no-referrer'})
+      }
+      if (url.searchParams.has('stand') && /^\/angebot\/vertrag(?:-raten)?(?:\/(?:index\.html)?)?$/.test(url.pathname)) {
+        const id=url.searchParams.get('stand'), stand=angebote.lesen(id)
+        const ziel=vertragslink(stand,id)
+        try { verbindungPruefen(KAT,stand,stand.addons,stand.raten,stand.raten?'raten':'standard',aktuelleBindung) }
+        catch (error) {
+          if (error.status!==409) throw error
+          return schlussSeite(res,409,'Neue Angebotsfassung erforderlich','<h1>Neue Angebotsfassung erforderlich</h1><p>'+esc(error.message)+'</p><p><a href="/angebot/?stand='+encodeURIComponent(id)+'">Bisheriges Angebot ansehen</a></p>')
+        }
+        if (url.pathname+url.search!==ziel) { res.writeHead(302, {...HEADER, 'Referrer-Policy':'no-referrer', Location:ziel}); return res.end() }
+      }
+    }
     if (url.pathname.startsWith('/api/vertrag/')) {
       const teil = url.pathname.slice('/api/vertrag/'.length).split('/')
       if (req.method === 'GET' && teil[0] === 'katalog') return json(res, 200, { add: KAT.add, net: KAT.net, care: KAT.care, websiteExtraMonat: KAT.websiteExtraMonat, pay: KAT.pay, nr: KAT.nr, datum: KAT.datum, gueltig: KAT.gueltig, paket: KAT.paket, offen: Date.now() <= gueltigBis().getTime() })
