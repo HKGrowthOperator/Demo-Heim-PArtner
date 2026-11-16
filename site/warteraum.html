@@ -166,38 +166,17 @@
         location.replace(address.href);
         return;
       }
-      const key = 'hp-termin-20261117';
-      let invitation = fragment.get('einlass');
-      if (invitation && /^[A-Za-z0-9_-]{43}$/.test(invitation)) {
-        try { sessionStorage.setItem(key, invitation); } catch {}
-        history.replaceState(history.state, '', address.pathname + address.search);
-      } else {
-        try { invitation = sessionStorage.getItem(key); } catch { invitation = null; }
-      }
-      if (!/^[A-Za-z0-9_-]{43}$/.test(invitation || '')) invitation = null;
+      const closes = Date.parse('2026-11-17T15:30:00+01:00');
       let canJoin;
       function updateJoin(ms) {
-        const enabled = ms >= opens && ms < end;
+        const enabled = ms >= opens && ms < closes;
         if (enabled === canJoin) return;
         canJoin = enabled;
         join.setAttribute('aria-disabled', String(!enabled));
         if (enabled) join.setAttribute('href', '/termin/beitreten');
         else join.removeAttribute('href');
-        note.textContent = enabled
-          ? (invitation ? 'Sie gelangen direkt zu Zoom.' : 'Wenn Zoom einen Kenncode anfragt, nutzen Sie den direkten Link in Ihrer Terminbestätigung.')
-          : 'Der Beitritt öffnet am Dienstag um 12:20 Uhr.';
+        note.textContent = enabled ? 'Ein Klick öffnet unser Gespräch in Zoom.' : 'Der Beitritt öffnet am Dienstag um 12:20 Uhr.';
       }
-      join.addEventListener('click', event => {
-        if (!canJoin) { event.preventDefault(); return; }
-        if (!invitation) return;
-        event.preventDefault();
-        const form = document.createElement('form');
-        form.method = 'post';
-        form.action = '/termin/beitreten';
-        const field = document.createElement('input');
-        field.type = 'hidden'; field.name = 'einlass'; field.value = invitation;
-        form.append(field); document.body.append(form); form.submit(); form.remove();
-      });
       const pad = value => String(value).padStart(2, '0');
       const AudioEngine = window.AudioContext || window.webkitAudioContext;
       let audio;
@@ -238,18 +217,19 @@
         phase = nextPhase;
         const before = phase === 'before';
         const live = phase === 'live';
-        get('status').textContent = before ? 'Videotermin' : live ? 'Der Termin hat begonnen' : 'Termin beendet';
+        const extended = phase === 'extended';
+        get('status').textContent = before ? 'Videotermin' : live ? 'Der Termin hat begonnen' : extended ? 'Geplante Gesprächszeit vorbei' : 'Termin beendet';
         get('counter-title').textContent = before ? 'Zeit bis zum Beginn' : 'Unser Termin';
         get('counter').hidden = !before;
         get('phase-message').hidden = before;
-        if (!before) get('phase-message').textContent = live ? 'Sie können jetzt teilnehmen.' : 'Vielen Dank für Ihre Zeit.';
+        if (!before) get('phase-message').textContent = live ? 'Sie können jetzt teilnehmen.' : extended ? 'Falls unser Gespräch noch läuft, können Sie wieder beitreten.' : 'Vielen Dank für Ihre Zeit.';
         get('buttons').hidden = phase === 'after';
       }
 
       function showTime(now) {
         const ms = now.getTime();
         updateJoin(ms);
-        switchPhase(ms < start ? 'before' : ms < end ? 'live' : 'after');
+        switchPhase(ms < start ? 'before' : ms < end ? 'live' : ms < closes ? 'extended' : 'after');
         if (phase === 'before') {
           const left = Math.ceil((start - ms) / 1000);
           const days = Math.floor(left / 86400);
