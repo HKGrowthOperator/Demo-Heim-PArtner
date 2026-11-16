@@ -11,7 +11,8 @@ import { berechne, bereinigeAuswahl } from './preis.mjs'
 import { speicher } from './speicher.mjs'
 import { pdf, schliessen } from './pdf.mjs'
 import { senden, mailKonfiguriert, gueltigeMail } from './mail.mjs'
-import { abrechnungsstand, abrechnungFuer, vertragHtml, vertragsinhalt, rechnungHtml, schlussrechnungHtml, mailInhalt, mailIntern, mailSchluss, hkSteuer, sha256, datum, uhrzeit, esc, eur2, unterschriften, zahlungFuellen, HK_VORAB } from './dokumente.mjs'
+import { versandplan, versandstand, zustellen } from './vertragsversand.mjs'
+import { abrechnungsstand, abrechnungFuer, vertragHtml, vertragsinhalt, rechnungHtml, schlussrechnungHtml, mailSchluss, hkSteuer, sha256, datum, uhrzeit, esc, eur2, unterschriften, zahlungFuellen, HK_VORAB } from './dokumente.mjs'
 import { angebotModell, archiv, dokument as angebotsDokument, fassung, vertragslink, vertragsbindung, verbindungPruefen } from './angebot.mjs'
 import { zeichnungsablage, signierteFassung } from './zeichnung.mjs'
 import { pruefeVertragsablage } from './vertragsablage.mjs'
@@ -86,7 +87,6 @@ function begrenzt(ip, art, max) {
 
 const token = (id, datei) => crypto.createHmac('sha256', ablage.geheimnis()).update(`${id}/${datei}`).digest('hex').slice(0, 32)
 const tokenOk = (ist, soll) => typeof ist === 'string' && ist.length === soll.length && crypto.timingSafeEqual(Buffer.from(ist), Buffer.from(soll))
-const zahlungsweise = v => v.variante === 'raten' ? `50 % bei Auftragserteilung, Rest in ${v.raten} Monatsraten` : KAT.pay.map(p => `${p.pct} % ${p.wann}`).join(', ')
 const dauerhafterBestand=()=>pruefeVertragsablage(ablage.dir,zeichnung.basisId,hkEinladung.basisInhaltSha256)
 function sichereAblageVerlangen() {
   if(!dauerhafterBestand())throw Object.assign(new Error('Die Vertragsablage ist derzeit nicht sicher verfügbar. Bitte später erneut versuchen.'),{status:503})
@@ -147,6 +147,7 @@ function pruefe(b) {
   if (!ansprechpartner) f.push('Ansprechpartner im Projekt')
   if (vertretung === null) f.push('Vertretung im Projekt')
   if (rechnungEmail === false) f.push('E-Mail für Rechnungen')
+  if ([email, rechnungEmail].some(adresse => adresse && KOPIE_AN.some(hk => hk.toLowerCase() === adresse.toLowerCase()))) f.push('eigene E-Mail-Adresse von Heim & Partner für Vertrag und Rechnung')
   if (b.vertretungsberechtigt !== true) f.push('Bestätigung der Vertretungsberechtigung')
   if (b.zustimmung !== true) f.push('Annahme des Vertrags')
   const sig = typeof b.signatur === 'string' ? /^data:image\/png;base64,([A-Za-z0-9+/=]+)$/.exec(b.signatur) : null
@@ -216,37 +217,17 @@ async function unterschreiben(req, res) {
       gf: d.gf, ansprechpartner: d.ansprechpartner, vertretung: d.vertretung, rechnungEmail: d.rechnungEmail, protokoll, pdfHash,
       rechnung, rechnungFehlt: fehltRg, mail: { status: 'offen' },
     }
+    // Empfänger und Anhänge gemeinsam mit dem tatsächlichen Vertrag festschreiben.
+    record.versandplan=versandplan(record,KOPIE_AN,schlussLink(vnr))
     sichereAblageVerlangen()
     if(!ablage.ablegenEinmalig(vnr,dateien,record))return wiederholung(req,ablage.record(vnr),v.angebotsstand)
     ablage.merkeNonce(nonce, vnr)
 
-    // Versand
-    const an = [...new Set([d.email, d.rechnungEmail].filter(Boolean))]
-    const m = mailInhalt(KAT, c, { vnr, name: d.name, rechnung, pdfHash })
-    const mail = {
-      an, antwortAn: KAT.hk.mail,
-      betreff: `Vertrag ${vnr} unterschrieben${rechnung ? ` · ${rechnung.art === 'raten' ? 'Rechnung mit Zahlungsplan' : 'Anzahlungsrechnung'} ${rechnung.nr}` : ''}`,
-      html: m.html, text: m.text,
-      anhaenge: [{ name: `Vertrag-${vnr}.pdf`, buf: vertragPdf }, ...(rechnungPdf ? [{ name: `Rechnung-${rechnung.nr}.pdf`, buf: rechnungPdf }] : [])],
-    }
-    let mailStatus
-    if (mailKonfiguriert()) {
-      try { mailStatus = { status: 'gesendet', id: await senden(mail), an } }
-      catch (e) { console.error('[vertrag] Versand fehlgeschlagen', vnr, e.message); ablage.postausgang({ ...mail, fehler: e.message }); mailStatus = { status: 'fehler', fehler: e.message, an } }
+    if(record.versandplan.automatisch){
+      await zustellen(ablage,record).catch(e=>console.error('[vertragsversand]',vnr,e.message))
     } else {
-      ablage.postausgang(mail); mailStatus = { status: 'postausgang', an }
+      for(const m of Object.values(record.versandplan.nachrichten))ablage.postausgang(m)
     }
-    const mi = mailIntern(KAT, c, { vnr, name: d.name, email: d.email, zahlungsweise: zahlungsweise(v), rechnung, rechnungFehlt: fehltRg, an, schlussLink: schlussLink(req, vnr) })
-    const intern = { an: KOPIE_AN, betreff: `Intern: Vertrag ${vnr} unterschrieben (${d.name})`, html: mi.html, text: mi.text, anhaenge: mail.anhaenge }
-    let internStatus
-    if (mailKonfiguriert()) {
-      try { internStatus = { status: 'gesendet', id: await senden(intern), an: KOPIE_AN } }
-      catch (e) { console.error('[vertrag] Interne Mail fehlgeschlagen', vnr, e.message); ablage.postausgang({ ...intern, fehler: e.message }); internStatus = { status: 'fehler', fehler: e.message } }
-    } else {
-      ablage.postausgang(intern); internStatus = { status: 'postausgang' }
-    }
-    ablage.nachtragen(vnr, { mail: mailStatus, mailIntern: internStatus })
-    console.log(`[vertrag] ${vnr} unterschrieben von ${d.name}, ${c.net} € netto, ${zahlungsweise(v)}, Rechnung ${rechnung?.nr || 'offen'}, Mail ${mailStatus.status}`)
     return antwort(req, ablage.record(vnr))
   })
   return json(res, 200, ergebnis)
@@ -275,7 +256,10 @@ function antwort(req, r) {
     ok: true, vertragNr: r.vnr, summe: r.summe, unterzeichner: r.unterzeichner.name,
     variante: r.variante || 'standard', raten: r.raten || null,
     rechnung: r.rechnung ? { nr: r.rechnung.nr, art: r.rechnung.art || 'anzahlung', brutto: r.rechnung.brutto, faellig: r.rechnung.faellig, plan: r.rechnung.plan || null } : null,
-    mail: { status: r.mail.status, an: r.mail.an || [] },
+    mail: r.versandplan ? {
+      status: versandstand(ablage,r,'kunde').status, an: [r.unterzeichner.email],
+      rechnung: r.rechnung ? {an:r.rechnungEmail || r.unterzeichner.email,status:(versandstand(ablage,r,'rechnung') || versandstand(ablage,r,'kunde')).status} : null,
+    } : { status: r.mail.status, an: r.mail.an || [] },
     downloads: { vertrag: link('vertrag.pdf'), ...(r.rechnung ? { rechnung: link('rechnung.pdf') } : {}) },
   }
 }
@@ -307,7 +291,10 @@ function dokument(req, res, id, datei) {
 }
 
 // ── Schlussrechnung nach Gesamtabnahme ───────────────────────
-function schlussLink(req, vnr) { return `${basisUrl(req)}/api/vertrag/schluss/${encodeURIComponent(vnr)}?t=${token(vnr, 'schluss')}` }
+function schlussLink(vnr) {
+  const basis=process.env.PUBLIC_BASE_URL || 'https://demo-heim-partner.hk-growthoperator.de'
+  return new URL('/api/vertrag/schluss/'+encodeURIComponent(vnr)+'?t='+token(vnr,'schluss'),basis).href
+}
 const isoHeute = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Berlin' }).format(new Date())
 const deAusIso = s => s.split('-').reverse().join('.')
 
@@ -476,7 +463,16 @@ const server = http.createServer(async (req, res) => {
   }
 })
 
+// Ein Neustart setzt ausschließlich neu autorisierte, atomar gespeicherte Versandpläne fort.
+async function offeneVertragsmails(){
+  if(!mailKonfiguriert() || !dauerhafterBestand())return
+  const nr=zeichnung.vertragsnummer()
+  if(nr)await nacheinander(()=>zustellen(ablage,ablage.record(nr)))
+}
+const wiederholen=()=>offeneVertragsmails().catch(e=>console.error('[vertragsversand]',e.message))
+setInterval(wiederholen,120000).unref()
 server.listen(PORT, () => {
+  wiederholen()
   console.log(`[server] Port ${PORT}, Seiten aus ${SITE}, Ablage ${ablage.dir}`)
   console.log(`[server] Vorab-Unterschrift Auftragnehmer: ${HK_VORAB ? HK_VORAB.name + ', ' + HK_VORAB.datum : 'keine'}`)
   console.log(`[server] Passwortschutz: ${process.env.BASIC_AUTH_USER && process.env.BASIC_AUTH_PASSWORD ? 'an' : 'aus'} · E-Mail: ${mailKonfiguriert() ? 'Resend' : 'aus (Postausgang)'} · Rechnung: ${hkSteuer() && process.env.HK_IBAN && process.env.HK_BANK ? 'an' : 'aus (Steuer- oder Bankdaten fehlen)'}`)
