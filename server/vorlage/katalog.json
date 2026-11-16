@@ -2,7 +2,7 @@
  "nr": "HKG-2026-045",
  "datum": "28.10.2026",
  "gueltig": "27.11.2026",
- "paket": "Gesamtpaket Premium (Software Premium + Website Vertrieb)",
+ "paket": "Gesamtumsetzung für Heim & Partner",
  "net": 79900,
  "care": 1590,
  "careSw": 1400,
@@ -344,7 +344,7 @@
   "web": "hk-growthoperator.de"
  },
  "kunde": {
-  "name": "HEIM & PARTNER GmbH",
+  "name": "Heim & Partner Immobilien GmbH",
   "str": "Im Rod 35",
   "ort": "64569 Nauheim",
   "hr": "Amtsgericht Darmstadt, HRB 106755",
@@ -353,28 +353,12 @@
   "mail": "info@heimundpartner.com"
  },
  "vorbelegt": {
-  "gf": "Frank Heim, Janosch Meyer und Dennis Hollinger",
+  "gf": "Frank Heim",
   "ansprechpartner": "Herrn Dennis Hollinger",
   "vertretung": "",
   "ort": "Nauheim",
-  "rechnungEmail": "info@heimundpartner.com",
-  "unterzeichner": [
-   {
-    "name": "Dennis Hollinger",
-    "funktion": "Geschäftsführer",
-    "email": "dhollinger@heimundpartner.com"
-   },
-   {
-    "name": "Frank Heim",
-    "funktion": "Geschäftsführer",
-    "email": ""
-   },
-   {
-    "name": "Janosch Meyer",
-    "funktion": "Geschäftsführer",
-    "email": ""
-   }
-  ]
+  "rechnungEmail": "",
+  "unterzeichner": []
  },
  "unterzeichnet": {
   "ort": "Marienheide",

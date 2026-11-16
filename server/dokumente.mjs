@@ -6,11 +6,18 @@ import { fileURLToPath } from 'node:url'
 import { plan, plusMonate, monateText } from './zahlung.mjs'
 
 const HIER = path.dirname(fileURLToPath(import.meta.url))
+const ALTER_ABRECHNUNGSSTAND = JSON.parse(fs.readFileSync(path.join(HIER, 'vorlage', 'abrechnung-altbestand.json'), 'utf8'))
+export const abrechnungsstand = ({nr,datum,kunde,hk,paket}) => ({nr,datum,kunde:{...kunde},hk:{...hk},paket})
+export const abrechnungFuer = record => record.abrechnungsstand || ALTER_ABRECHNUNGSSTAND
 const VORLAGE = fs.readFileSync(path.join(HIER, 'vorlage', 'vertrag.html'), 'utf8')
 // Vorab-Unterschrift für den Auftragnehmer (Bild und Angaben), falls hinterlegt
 function vorab() {
   try {
     const info = JSON.parse(fs.readFileSync(path.join(HIER, 'vorlage', 'hk-unterschrift.json'), 'utf8'))
+    // Eine Vorabzeichnung gilt nur für den vom Anbieter bestätigten Vorlagenstand.
+    const katalog = fs.readFileSync(path.join(HIER, 'vorlage', 'katalog.json'))
+    const stand = crypto.createHash('sha256').update(VORLAGE).update('\0').update(katalog).digest('hex')
+    if (!info.vorlagenHash || info.vorlagenHash !== stand) return null
     const png = fs.readFileSync(path.join(HIER, 'vorlage', 'hk-unterschrift.png')).toString('base64')
     return { ...info, bild: 'data:image/png;base64,' + png }
   } catch { return null }
@@ -139,9 +146,9 @@ export function unterschriften(kat, u) {
   const v = HK_VORAB
   const an = v
     ? `<div class="sigfeld"><p>${esc(v.ort)}, den ${esc(v.datum)}</p><div class="sigbox"><img src="${v.bild}" alt="Unterschrift ${esc(v.name)}"></div><b>${esc(v.name)}</b><span class="xs">${esc(v.funktion)} · vorab elektronisch unterschrieben am ${esc(v.datum)}</span></div>`
-    : `<div class="sigfeld"><p>${esc(kat.unterzeichnet.ort)}, den ${esc(kat.unterzeichnet.datum)}</p><div class="sigbox"><span class="sigtext">Angebot ${esc(kat.nr)} verbindlich abgegeben</span></div><b>${esc(kat.hk.gf)}</b><span class="xs">Geschäftsführer</span></div>`
+    : `<div class="sigfeld"><b>${esc(kat.hk.name)}</b><span>Ausstellerin des Angebots ${esc(kat.nr)} vom ${esc(kat.datum)}</span></div>`
   return `<section class="unterschriften"><h3>Unterschriften</h3>
-<div class="sigpart"><b>Für den Auftraggeber: ${esc(kat.kunde.name)}</b><div class="sig3">${felder}</div><p class="xs">Es unterschreibt einer der genannten Geschäftsführer. Die übrigen Felder bleiben frei.</p></div>
+<div class="sigpart"><b>Für den Auftraggeber: ${esc(kat.kunde.name)}</b><div class="sig3">${felder}</div><p class="xs">Die unterzeichnende Person bestätigt ihre Vertretungsberechtigung für die Auftraggeberin.</p></div>
 <div class="sigpart"><b>Für den Auftragnehmer: ${esc(kat.hk.name)}</b><div class="sig3">${an}</div></div></section>`
 }
 
@@ -154,7 +161,7 @@ export function vertragsinhalt(kat, c, f, u = null, opt = {}) {
   s = s.replace('{{ANSPRECHPARTNER}}', f.ansprechpartner ? esc(f.ansprechpartner) : '<span class="ph-leer">[Ansprechpartner]</span>')
   s = s.replace('{{VERTRETUNG}}', f.vertretung ? esc(f.vertretung) : 'eine vom Auftraggeber in Textform noch zu benennende Person')
   s = zahlungFuellen(s, kat, opt)
-  s = s.replace('{{ANLAGE8}}', anlage8(kat, c, plan(kat, c.net, opt.variante, opt.raten)))
+  s = s.replace('{{ANLAGE8}}', (opt.angebotsstand ? '<p>Angebotsfassung ' + esc(opt.angebotsstand.slice(0, 12)) + '</p>' : '') + anlage8(kat, c, plan(kat, c.net, opt.variante, opt.raten)))
   s = s.replace('{{UNTERSCHRIFTEN}}', unterschriften(kat, u))
   return s
 }

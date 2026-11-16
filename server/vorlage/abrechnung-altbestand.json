@@ -1,0 +1,24 @@
+{
+  "nr": "HKG-2026-045",
+  "datum": "28.10.2026",
+  "kunde": {
+    "name": "HEIM & PARTNER GmbH",
+    "str": "Im Rod 35",
+    "ort": "64569 Nauheim",
+    "hr": "Amtsgericht Darmstadt, HRB 106755",
+    "ustid": "DE451023615",
+    "tel": "06152 1870725",
+    "mail": "info@heimundpartner.com"
+  },
+  "hk": {
+    "name": "HK Growth UG (haftungsbeschränkt)",
+    "str": "Weststraße 2",
+    "ort": "51709 Marienheide",
+    "gf": "Nick Hinze, Luis Kummer",
+    "hr": "Amtsgericht Köln, HRB 129353",
+    "tel": "0175 4547011",
+    "mail": "info@hk-growthoperator.de",
+    "web": "hk-growthoperator.de"
+  },
+  "paket": "Gesamtpaket Premium (Software Premium + Website Vertrieb)"
+}
