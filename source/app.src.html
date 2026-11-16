@@ -1,5 +1,5 @@
 <title>Heim &amp; Partner Plattform</title>
-<meta name="referrer" content="no-referrer"><script src="/moderation.js"></script><link rel="stylesheet" href="/live-fuehrung.css"><script src="/live-fuehrung.js"></script><script defer src="/angebot/zeichnungsstand.js"></script>
+<meta name="referrer" content="no-referrer"><script src="/moderation.js?v=produkt-20261116-1"></script><link rel="stylesheet" href="/live-fuehrung.css?v=produkt-20261116-1"><script src="/live-fuehrung.js?v=produkt-20261116-1"></script><script defer src="/angebot/zeichnungsstand.js"></script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
 <style>
@@ -78,6 +78,7 @@ svg.i.l{width:20px;height:20px}
 .me{margin-top:auto;display:flex;align-items:center;gap:9px;padding:10px 8px 2px;border-top:1px solid var(--line)}
 .av{width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent-2);display:grid;place-items:center;font-size:.6875rem;font-weight:600;flex:none}
 
+.demostart{display:inline-flex;flex-shrink:0}.demostart button:first-child{border-radius:7px 0 0 7px}.demostart button:last-child{border-radius:0 7px 7px 0;border-left:0;padding:0 8px}
 .top{position:sticky;top:0;z-index:20;height:52px;display:flex;align-items:center;gap:12px;padding:0 max(20px,env(safe-area-inset-right,0px)) 0 20px;background:color-mix(in oklch,var(--bg) 88%,transparent);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--line)}
 .crumbs{display:flex;align-items:center;gap:6px;color:var(--ink-3);font-size:.8125rem;min-width:0;white-space:nowrap;overflow:hidden}
 .crumbs b{color:var(--ink);font-weight:500;overflow:hidden;text-overflow:ellipsis}
@@ -454,11 +455,6 @@ tr.hl td{background:var(--accent-soft)}
 @media (max-width:1100px){.roi-ar{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.of-tot.k4,.roi-ar,.of-in.c3{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:860px){.of-pick,.of-in,.of-tot{grid-template-columns:minmax(0,1fr)}.of-cols{grid-template-columns:repeat(2,minmax(0,1fr))}.of-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.of-sl{aspect-ratio:auto}}
-.hp-gespraech{display:flex;flex-direction:column;gap:12px;min-width:0}
-.hp-gespraech iframe{display:block;border:1px solid var(--line);border-radius:12px;width:100%;height:calc(100dvh - 160px);min-height:540px;background:var(--panel)}
-.hp-gespraech:fullscreen{padding:8px;background:var(--bg)}
-.hp-gespraech:fullscreen iframe{min-height:0;flex:1}
-@media(max-width:860px){.hp-gespraech iframe{height:calc(100dvh - 115px);min-height:380px}.hp-gespraech h1{font-size:1rem}}
 </style>
 
 <div id="hp-live-gast"><span id="hp-live-status" role="status">Live-Führung</span><a id="hp-live-angebot" hidden target="_blank" rel="noopener noreferrer">Freigegebenes Angebot öffnen</a></div>
@@ -475,7 +471,7 @@ tr.hl td{background:var(--accent-soft)}
       <button class="iconbtn" aria-label="Benachrichtigungen" data-act="bell"><span data-i="bell"></span><span class="bdg"></span></button>
       <span class="kibadge" id="kibadge" title="Status der KI-Verbindung"><span class="dot"></span><span>KI wird verbunden</span></span>
       <button type="button" class="btn" id="hp-live-teilen" hidden>Live teilen</button>
-      <button class="btn" data-act="tour-start" id="tourBtn"><span data-i="play-circle"></span>Demo-Führung</button>
+      <div class="demostart"><button class="btn" data-act="tour-start" id="tourBtn"><span data-i="play-circle"></span>Demo-Führung</button><button class="btn" data-act="tour-optionen" aria-label="Weitere Demooptionen" aria-haspopup="dialog" title="Weitere Demooptionen"><span data-i="caret-down"></span></button></div>
     </header>
     <main class="page" id="view"></main>
   </div>
@@ -555,7 +551,7 @@ const NAV=[
  ['','Übersicht'],['cockpit','Cockpit','squares-four'],['freigaben','Freigaben','check-circle',()=>queue().length],['auto','Agenten & Workflows','sparkle'],['team','Team & Rechte','users'],
  ['','Vergabe'],['vergabe','Ausschreibungen','gavel',()=>TENDERS.filter(t=>!t.awarded&&!(t.id==='t1'&&S.awarded)).length],['nu','Nachunternehmer','list-checks'],['portal','Bieterportal','arrow-square-out'],
  ['','Projekte'],['projekt','Haus Beethoven','hard-hat',()=>S.saved&&S.letter!=='sent'?'!':'',(S)=>S.saved&&S.letter!=='sent'?'crit':'warn'],['p2','Villaglück','buildings',null,()=>'ok'],['p3','Worfelden II','house-line',null,()=>'ok'],
- ['','Angebot'],['praes','Präsentation','presentation-chart'],['leistung','Leistungsumfang','list-checks'],['konfig','Angebot','receipt',()=>S.cfg?Object.values(S.cfg.add).filter(Boolean).length||'':''],['roi','Return on Investment','chart-line-up'],
+ ['','Angebot'],['leistung','Leistungsumfang','list-checks'],['konfig','Angebot','receipt',()=>S.cfg?Object.values(S.cfg.add).filter(Boolean).length||'':''],['roi','Return on Investment','chart-line-up'],
  ['','Vertrieb'],['crm','Interessenten','users-three',()=>LEADS.filter(l=>l.st<4).length],['objekt','Objekte & Einheiten','buildings'],['events','Veranstaltungen','calendar-blank'],['kanaele','Kanäle','chart-bar']];
 function nav(){
   const vis=NAV.filter((n,i)=>{if(n[0])return allowed(n[0]==='p2'||n[0]==='p3'?'projekt':n[0]);for(let j=i+1;j<NAV.length&&NAV[j][0];j++)if(allowed(NAV[j][0]==='p2'||NAV[j][0]==='p3'?'projekt':NAV[j][0]))return true;return false;});
@@ -564,7 +560,7 @@ function nav(){
     const c=cnt?cnt():'';const on=S.route===r||(r==='vergabe'&&S.route==='neu')||(r==='nu'&&S.route==='quali')||(r==='crm'&&S.route==='lead');
     const proj=r==='p2'||r==='p3';
     return `<a href="#${r}" data-go="${proj?'projekt':r}" class="${on?'on':''} ${proj?'proj':''}" ${on?'aria-current="page"':''}>${dotf?`<span class="dot ${dotf(S)}"></span>`:I(ic)}<span>${l}</span>${c!==''&&c!==0?`<span class="cnt ${c==='!'?'alert':''}">${c==='!'?I('warning-circle','s'):c}</span>`:''}</a>`;}).join('');
-  const C={cockpit:['Cockpit'],freigaben:['Übersicht','Freigabe-Zentrale'],vergabe:['Vergabe','Ausschreibungen'],neu:['Vergabe','Neue Ausschreibung'],portal:['Vergabe','Bieterportal (Ansicht Nachunternehmer)'],projekt:['Projekte','Haus Beethoven · Wiesbaden'],crm:['Vertrieb','Interessenten'],objekt:['Vertrieb','Villaglück'],kanaele:['Vertrieb','Kanäle'],nu:['Vergabe','Nachunternehmer'],quali:['Vergabe','Qualifizierungsbogen (Ansicht neue Firma)'],lead:['Vertrieb','Interessentenakte'],auto:['Übersicht','Agenten & Workflows'],team:['Übersicht','Team & Rechte'],praes:['Angebot','Präsentation'],leistung:['Angebot','Leistungsumfang'],konfig:['Angebot','Angebot '+(typeof OF!=='undefined'?OF.NR:'')],roi:['Angebot','Return on Investment'],events:['Vertrieb','Veranstaltungen']}[S.route];
+  const C={cockpit:['Cockpit'],freigaben:['Übersicht','Freigabe-Zentrale'],vergabe:['Vergabe','Ausschreibungen'],neu:['Vergabe','Neue Ausschreibung'],portal:['Vergabe','Bieterportal (Ansicht Nachunternehmer)'],projekt:['Projekte','Haus Beethoven · Wiesbaden'],crm:['Vertrieb','Interessenten'],objekt:['Vertrieb','Villaglück'],kanaele:['Vertrieb','Kanäle'],nu:['Vergabe','Nachunternehmer'],quali:['Vergabe','Qualifizierungsbogen (Ansicht neue Firma)'],lead:['Vertrieb','Interessentenakte'],auto:['Übersicht','Agenten & Workflows'],team:['Übersicht','Team & Rechte'],leistung:['Angebot','Leistungsumfang'],konfig:['Angebot','Angebot '+(typeof OF!=='undefined'?OF.NR:'')],roi:['Angebot','Return on Investment'],events:['Vertrieb','Veranstaltungen']}[S.route];
   $('#crumbs').innerHTML=C.map((c,i)=>i===C.length-1?`<b>${c}</b>`:`<span>${c}</span>${I('caret-right','s')}`).join('');
 }
 
@@ -576,7 +572,7 @@ function vCockpit(){
   if(!S.saved) items.push(['warn','warning','Innenputz Haus Beethoven: Tagesbericht von heute fehlt','Putzwerk Hoffmann war Freitag mit 6 statt 10 Arbeitskräften vor Ort. Bauleitung erfasst gerade.','Projekt öffnen','projekt']);
   else if(S.letter!=='sent') items.push(['crit','warning-circle',`Innenputz Haus Beethoven: ${S.ist} statt 10 Arbeitskräfte, dritter Tag unter Soll`,`Prognose +${impact(S.assume).delay} Arbeitstage. Aufforderung nach § 5 Abs. 3 VOB/B liegt zur Freigabe bereit.`,'Prüfen','projekt']);
   else items.push(['ok','check-circle','Aufforderung an Putzwerk Hoffmann versendet','Frist 21.10.2026 · Wiedervorlage ist eingetragen.','Ansehen','projekt']);
-  if(!S.awarded) items.push(['acc','sparkle',`Trockenbau Haus Beethoven: ${offers} Angebote ausgewertet, Vergabevorschlag bereit`,'Frist endet Freitag. 4 Bieter haben unvollständige Nachweise, Rückfragen sind vorbereitet.','Vergleich öffnen','vergabe']);
+  if(!S.awarded) items.push(['acc','sparkle',`Trockenbau Haus Beethoven: ${offers} Angebote ausgewertet, Vergabevorschlag bereit`,'Frist endet Freitag. 4 Bieter haben unvollständige Nachweise, Rückfragen sind vorbereitet.','Vergleich öffnen','vergabe','cockpit-vergleich']);
   else items.push(['ok','check-circle','Trockenbau Haus Beethoven vergeben an TBS Trockenbau Rhein-Main','Auftragsschreiben und 10 Absagen als Entwurf vorbereitet.','Ansehen','vergabe']);
   items.push(['warn','currency-eur','Nachtrag N-06 Haus Beethoven seit 12 Tagen in Prüfung','Geänderte Fensterformate DG, 18.400 €. Frist zur Stellungnahme 26.10.','Ansehen','projekt']);
   items.push(['acc','users-three','3 Anfragen vom Tag der offenen Tür ohne Rückmeldung','Villaglück WE 2 und WE 3. Follow-up-Mails sind vorbereitet.','Zum Vertrieb','crm']);
@@ -599,7 +595,7 @@ function vCockpit(){
   ${aiAskView()}
   <div class="cols c-2-1">
     <section class="box" id="agenda"><div class="bh"><h2>Heute zu entscheiden</h2><span class="xs t3">nach Dringlichkeit</span></div>
-      <div class="divide">${items.map(a=>`<div class="ag"><span class="ic ${a[0]}">${I(a[1],'s')}</span><div><b>${a[2]}</b><div class="why">${a[3]}</div></div><button class="btn sm" data-go="${a[5]}">${a[4]}</button></div>`).join('')}</div></section>
+      <div class="divide">${items.map(a=>`<div class="ag"${a[6]==='cockpit-vergleich'?' id="trockenbau-entscheidung"':''}><span class="ic ${a[0]}">${I(a[1],'s')}</span><div><b>${a[2]}</b><div class="why">${a[3]}</div></div><button class="btn sm" ${a[6]==='cockpit-vergleich'?'data-act="cockpit-vergleich"':'data-go="'+a[5]+'"'}>${a[4]}</button></div>`).join('')}</div></section>
     <section class="box"><div class="bh"><h2>Aktivität</h2><span class="xs t3">automatisch protokolliert</span></div>
       <div>${act.map(a=>`<div class="tl"><span class="d">${a[0]}</span><span class="p"><span class="dot ${a[1]}"></span></span><span>${a[2]}</span></div>`).join('')}</div></section>
   </div>
@@ -659,7 +655,7 @@ function tBieter(t){
   return `<div class="bb stack" style="padding-bottom:6px">${need.length?`<div class="callout acc" id="kicheck">${I('sparkle','s')}<div class="row sb" style="gap:12px"><span><b>KI-Prüfung:</b> ${need.length} Bieter mit fehlenden oder abgelaufenen Nachweisen. Rückfragen sind formuliert.</span><button class="btn sm acc" data-act="askall">Alle ${need.length} Rückfragen senden</button></div></div>`:`<div class="callout neutral">${I('check-circle','s')}<span>Alle offenen Rückfragen sind versendet. Uploads landen automatisch hier und werden erneut geprüft.</span></div>`}${t.id==='t1'?aiDocView():''}</div>
   <div class="tw"><table><thead><tr><th>Nachunternehmer</th><th>Status</th><th class="r">Angebot</th><th>Nachweise</th><th></th></tr></thead><tbody>
   ${t.bidders.map((x,i)=>{const s=x.asked?['warn','Rückfrage gesendet']:STL[x.status];const m=missOf(x);const show=x.status==='angebot'||x.status==='unterlagen';
-    return `<tr><td><span class="nm">${x.name}</span><span class="sub">${x.city}${x.ago?' · '+x.ago:''}</span></td><td><span class="st"><span class="dot ${s[0]}"></span>${s[1]}</span></td><td class="r num">${x.price?eur(x.price):'<span class="t3">—</span>'}</td>
+    return `<tr${x.name.startsWith('Rhein-Neckar')?' id="rueckfrage-versicherung"':''}><td><span class="nm">${x.name}</span><span class="sub">${x.city}${x.ago?' · '+x.ago:''}</span></td><td><span class="st"><span class="dot ${s[0]}"></span>${s[1]}</span></td><td class="r num">${x.price?eur(x.price):'<span class="t3">—</span>'}</td>
     <td>${show?(m.length?`<div class="row" style="gap:4px">${m.map(d=>`<span class="tag crit">${d}</span>`).join('')}</div>`:`<span class="st"><span class="dot ok"></span>6/6 gültig</span>`):'<span class="t3 xs">—</span>'}</td>
     <td class="r">${show&&m.length&&!x.asked?`<button class="btn sm" data-exp="${i}">Rückfrage ${I(S.expand===i?'caret-down':'caret-right','s')}</button>`:x.status==='eingeladen'||x.status==='geoeffnet'?`<button class="btn sm ghost" data-remind="${i}">Erinnern</button>`:''}</td></tr>
     ${S.expand===i?`<tr><td colspan="5" style="background:var(--sunk)"><div class="stack" style="padding:6px 4px">
@@ -689,7 +685,7 @@ function tVergleich(t){
    <div id="weights"><div class="row sb" style="margin-bottom:10px"><h3>Kriterien und Gewichtung</h3><span class="xs t3">Regler ändern, Rangfolge rechnet sofort neu</span></div>
      <div class="weights">${[['p','Preis'],['q','Qualifikation, Referenzen'],['c','Kapazität'],['v','Vollständigkeit, Risiko']].map(([k,l])=>`<label for="w-${k}"><span class="row sb">${l}<span class="wv">${S.w[k]} %</span></span><input id="w-${k}" type="range" min="0" max="60" step="5" value="${S.w[k]}" data-w="${k}"></label>`).join('')}</div></div>
    <div class="tw" style="margin:0 -16px"><table><thead><tr><th class="r">#</th><th>Bieter</th><th class="r">Angebot</th><th class="r">zum Median</th><th class="r">Monteure</th><th class="r">Ref.</th><th>Hinweise der Prüfung</th><th>Wertung</th></tr></thead><tbody>
-   ${list.map((x,i)=>`<tr class="${i===0?'sel':''}"><td class="r num t3">${i+1}</td><td class="nm">${x.name}</td><td class="r num">${eur(x.price)}</td><td class="r num" style="color:${Math.abs(x.dev)>10?'var(--warn)':'var(--ink-2)'}">${x.dev>0?'+':'−'}${de(Math.abs(x.dev))} %</td><td class="r num" style="${x.cap<t.need?'color:var(--crit)':''}">${x.cap}</td><td class="r num">${x.refs}</td>
+   ${list.map((x,i)=>`<tr class="${i===0?'sel':''}"${x.name.startsWith('Bauteam Nowak')?' id="vergleich-besetzung"':''}><td class="r num t3">${i+1}</td><td class="nm">${x.name}</td><td class="r num">${eur(x.price)}</td><td class="r num" style="color:${Math.abs(x.dev)>10?'var(--warn)':'var(--ink-2)'}">${x.dev>0?'+':'−'}${de(Math.abs(x.dev))} %</td><td class="r num" style="${x.cap<t.need?'color:var(--crit)':''}">${x.cap}</td><td class="r num">${x.refs}</td>
     <td>${x.risks.length?`<div class="row" style="gap:4px">${x.risks.map(r=>`<span class="tag crit" style="white-space:normal;height:auto;padding:2px 7px">${r}</span>`).join('')}</div>`:x.docs.includes(0)?'<span class="tag warn">Nachweis fehlt</span>':'<span class="t3 xs">keine</span>'}</td>
     <td><div class="bar-s"><div class="tr"><i style="width:${x.total}%"></i></div><span class="num xs">${de(x.total)}</span></div></td></tr>`).join('')}
    </tbody></table></div>
@@ -1001,9 +997,9 @@ const TOUR=[
  {t:'Team & Rechte',x:'Alle 8 Zugänge an einer Stelle: wer was sieht, wer bis zu welchem Betrag freigeben darf, wer wen vertritt. Jede Freigabe wird mit Name und Uhrzeit protokolliert.',go:()=>{S.route='team';},f:'#team'},
  {t:'Workflows: vom Auslöser bis zum Ergebnis',x:'Sechs Abläufe, zum Beispiel die Ausschreibung per Knopfdruck. Jeder Schritt zeigt, ob KI, Automatik oder ein Mensch dran ist. Ablauf durchspielen und an den Freigabe-Punkten bestätigen.',go:()=>{S.route='auto';S.wf.tab='flows';S.wf.sel='ausschr';S.wf.run=null;},f:'#wfs'}];
 const GESPRAECHSTOUR=[
-  {t:'Euer Morgen im Büro',x:'Haus Beethoven: Acht Angebote für den Trockenbau liegen vor. Heute steht die Vergabe an.',go:TOUR[0].go,f:TOUR[0].f},
-  {t:'Der Rücklauf vom Haus Beethoven',x:'Beim Angebot von Rhein-Neckar ist der Haftpflichtnachweis abgelaufen. Die Rückfrage liegt schon bereit.',go:TOUR[8].go,f:TOUR[8].f},
-  {t:'Preis und Besetzung nebeneinander',x:'Nowak bietet den niedrigsten Preis. Vier Monteure sind verfügbar, acht braucht die Baustelle. Wie hättet ihr das bei eurer letzten Vergabe vor der Zusage herausgefunden?',go:TOUR[11].go,f:TOUR[11].f},
+  {t:'Euer Morgen im Büro',x:'Haus Beethoven: Acht Angebote für den Trockenbau liegen vor. Heute steht die Vergabe an.',go:TOUR[0].go,f:'#trockenbau-entscheidung'},
+  {t:'Der Rücklauf vom Haus Beethoven',x:'Beim Angebot von Rhein-Neckar ist der Haftpflichtnachweis abgelaufen. Die Rückfrage liegt schon bereit.',go:TOUR[8].go,f:'#rueckfrage-versicherung'},
+  {t:'Preis und Besetzung nebeneinander',x:'Nowak bietet den niedrigsten Preis. Vier Monteure sind verfügbar, acht braucht die Baustelle. Wie hättet ihr das bei eurer letzten Vergabe vor der Zusage herausgefunden?',go:TOUR[11].go,f:'#vergleich-besetzung'},
   {t:'Die Freigabe liegt bei euch',x:'Preis, Besetzung und Nachweise liegen zusammen vor. Die Entscheidung, wer den Auftrag bekommt, bleibt bei euch.',go:TOUR[13].go,f:TOUR[13].f}
 ];
 let rundgang=TOUR;
@@ -1012,10 +1008,21 @@ function tour(){
   if(S.tour<0){el.innerHTML='';return;}
   const st=rundgang[S.tour];
   el.innerHTML=`<div class="tour" role="dialog" aria-label="Demo-Führung"><div><span class="k">FÜHRUNG ${S.tour+1} / ${rundgang.length}</span><b>${st.t}</b><p>${st.x}</p></div>
-   <div class="row" style="flex-wrap:nowrap"><button class="btn sm" data-act="tour-prev" ${S.tour===0?'disabled':''} aria-label="Zurück">${I('arrow-left','s')}</button>${S.tour<rundgang.length-1?`<button class="btn sm go" data-act="tour-next">Weiter ${I('arrow-right','s')}</button>`:`<button class="btn sm go" data-act="tour-praes">Zur Präsentation</button>`}<button class="btn sm" data-act="tour-end" aria-label="Führung beenden">${I('x','s')}</button></div>
+   <div class="row" style="flex-wrap:nowrap"><button class="btn sm" data-act="tour-prev" ${S.tour===0?'disabled':''} aria-label="Zurück">${I('arrow-left','s')}</button>${S.tour<rundgang.length-1?`<button class="btn sm go" data-act="tour-next">Weiter ${I('arrow-right','s')}</button>`:`<button class="btn sm go" data-act="tour-end">Führung beenden</button>`}<button class="btn sm" data-act="tour-end" aria-label="Führung beenden">${I('x','s')}</button></div>
    <div class="prog"><i style="width:${(S.tour+1)/rundgang.length*100}%"></i></div></div>`;
 }
-function tourGo(i){S.tour=i;asUser('dennis');rundgang[i].go();render();requestAnimationFrame(()=>{const t=$(rundgang[i].f);if(t){t.classList.add('tour-focus');const r=t.getBoundingClientRect();window.scrollTo({top:Math.max(0,window.scrollY+r.top-70),behavior:'smooth'});}});}
+function fokusAufStation(){
+  requestAnimationFrame(()=>{
+    const ziel= S.tour>=0 && $(rundgang[S.tour].f);
+    if(!ziel)return;
+    ziel.classList.add('tour-focus');
+    const r=ziel.getBoundingClientRect();
+    window.scrollTo({top:Math.max(0,window.scrollY+r.top-70),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  });
+}
+function tourGo(i){
+  S.tour=i;asUser('dennis');rundgang[i].go();render();fokusAufStation();
+}
 
 /* ===== KI: live über claude.use('sample'), sonst vorbereitetes Demo-Ergebnis ===== */
 let KI=null;const KIS={state:'wait'};
@@ -1320,7 +1327,7 @@ const TEAM=[
 S.user='dennis';S.role='gf';S.vac=false;
 const cur=()=>TEAM.find(u=>u[0]===S.user);
 function asUser(id){S.user=id;S.role=cur()[3];}
-const allowed=r=>['praes','leistung','konfig','roi'].includes(r)||!ROLES[S.role].routes||ROLES[S.role].routes.includes(r);
+const allowed=r=>['leistung','konfig','roi'].includes(r)||!ROLES[S.role].routes||ROLES[S.role].routes.includes(r);
 const QROLE={rueck:['einkauf'],vergabe:['gf'],absagen:['einkauf'],brief:['gf'],remind:['einkauf'],lead:['vertrieb','office'],nachtrag:['kfm','gf'],akq:['einkauf'],event:['vertrieb','office']};
 const qRoles=k=>QROLE[k]||QROLE[k.replace(/\d+$/,'')]||['gf'];
 const approver=k=>{if(S.role!=='gf'&&qRoles(k).includes(S.role))return cur()[1];const r=qRoles(k)[0];if(r==='bau'&&S.vac)return 'K. Wagner, Vertretung';return TEAM.find(u=>u[3]===r)[1];};
@@ -1677,7 +1684,7 @@ document.addEventListener('click',e=>{
 
 (function(){try{if(/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname)){const l=document.getElementById('offerLink');if(l)l.style.display='block';}}catch(e){}})();
 /* ===== Render ===== */
-/* ===== Angebot: Präsentation, Leistungsumfang, Angebot mit Add-ons, ROI ===== */
+/* ===== Leistungsumfang, Angebot und ROI ===== */
 const OF=/*OFFER_JSON*/{};
 const eurO=n=>Math.round(n).toLocaleString('de-DE')+' €',eur2=n=>n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
 const hsO=x=>x.toLocaleString('de-DE',{maximumFractionDigits:1});
@@ -1704,13 +1711,10 @@ function vKonfig(){if(S.cfg.show)return vKonfigSum();const r=cfgCalc();
  ${ADDG.map(g=>`<section class="stack" style="gap:8px"><div class="lbl">Add-ons · ${esc(g)}</div><div class="of-pick">${OF.ADD.filter(a=>a[1]===g).map(addCard).join('')}</div></section>`).join('')}
  <div class="of-bar"><span class="sm">Gesamtpaket ${eurO(OF.NET)} + Add-ons ${eurO(r.p)} = <b>${eurO(r.net)}</b> netto · monatlich <b>${eurO(r.mon)}</b>${r.req.length?` · ${r.req.length} × Angebot anfordern`:''}</span><button class="btn acc" data-act="cfg-calc">${I('receipt','s')}Angebot ansehen</button></div>`;}
 function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),pay=angebotsRaten(r.net),probe=angebotsProbe();
- const startdaten=angebotsStartdaten();
- return `<div class="ph"><div><h1>${probe?'Druckprobe · ':''}Angebot ${OF.NR}</h1><div class="meta"><span>${OF.HK.name}</span><span>an Heim &amp; Partner Immobilien GmbH</span><span>gültig bis ${OF.GUELTIG}</span></div></div><div class="row noprint">${folienRueckweg()}<button class="btn" data-act="cfg-back">${I('arrow-left','s')}Add-ons ändern</button><button class="btn" data-act="print">${I('printer','s')}${probe?'Druckprobe':'Drucken'}</button></div></div>
+ return `<div class="ph"><div><h1>${probe?'Druckprobe · ':''}Angebot ${OF.NR}</h1><div class="meta"><span>${OF.HK.name}</span><span>an Heim &amp; Partner Immobilien GmbH</span><span>gültig bis ${OF.GUELTIG}</span></div></div><div class="row noprint"><button class="btn" data-act="cfg-back">${I('arrow-left','s')}Add-ons ändern</button><button class="btn" data-act="print">${I('printer','s')}${probe?'Druckprobe':'Drucken'}</button></div></div>
  ${freigabeRahmen(r)}
  ${probe?'<p class="box bb"><b>Probelauf</b> · Diese Fassung dient ausschließlich der Vorbereitung.</p>':''}
  <div class="of-tot"><div class="acc"><span class="lbl">Einmalig netto</span><b>${eurO(r.net)}</b><span class="xs t3">${eurO(r.net+r.vat)} brutto inkl. 19 % USt.</span></div><div><span class="lbl">Monatlich ab Livegang</span><b>${eurO(r.mon)}</b><span class="xs t3">${eur2(r.mon*1.19)} brutto</span></div><div><span class="lbl">Geschätzte freie Kapazität</span><b>${hsO(Math.round(R.h))} Std./Jahr</b><span class="xs t3">Rechnerischer Zeitwert ${eurO(R.t)} im Jahr · <a href="#roi" data-go="roi" style="color:var(--accent)">Annahmen ansehen</a></span></div></div>
- ${ausPraesentation && (gespraechsziel||gespraechsfall||erfolgskriterium||praxisstunden!==null)?`<section class="box"><div class="bh"><h2>Aus unserem Gespräch</h2></div><div class="bb stack">${gespraechsziel?`<p><b>Euer Ziel</b><br>${esc(gespraechsziel)}</p>`:''}${gespraechsfall?`<p><b>Euer Beispiel</b><br>${esc(gespraechsfall)}</p>`:''}${erfolgskriterium?`<p><b>Daran messt ihr den Erfolg</b><br>${esc(erfolgskriterium)}</p>`:''}${praxisstunden!==null?`<p>Für diesen Vorgang schätzt ihr ${hsO(praxisstunden)} freie Stunden pro Jahr. Dieses Beispiel dient zum Abgleich mit dem Teammodell.</p>`:''}</div></section>`:''}
- ${startdaten.some(([,v])=>v)?`<section class="box"><div class="bh"><h2>Vorgesehener Projektstart</h2></div><div class="bb">${startdaten.filter(([,v])=>v).map(([l,v])=>`<p><b>${l}</b> · ${esc(v)}</p>`).join('')}</div></section>`:''}
  <section class="box"><div class="bh"><h2>Leistungsumfang und Preis</h2></div><div class="tw"><table><thead><tr><th>Pos.</th><th>Leistung</th><th class="r">Geschätzte Zeit</th><th class="r">Netto</th></tr></thead><tbody>
   <tr><td class="num">1</td><td class="nm">Gesamtumsetzung für Heim &amp; Partner<div class="xs t2">Vergabe, Baustelle und Vertrieb mit angebundener Website, einschließlich Einführung und Schulung.</div></td><td class="r num">${hsO(Math.round(roiHours().h))} Std./Jahr</td><td class="r num">${eurO(OF.NET)}</td></tr>
   ${r.L.length?`<tr><td colspan="4" style="background:var(--sunk);font-weight:600">Gewählte Add-ons</td></tr>${r.L.map((x,i)=>`<tr><td class="num t3">C${i+1}</td><td class="nm">${x.q>1?x.q+' × ':''}${esc(x.a[2])}${x.a[5]?`<div class="xs t3" style="font-weight:400">+ ${eurO(x.a[5]*x.q)} im Monat</div>`:''}</td><td class="r num xs" style="color:var(--accent)">${OF.AH[x.a[0]]?hsO(OF.AH[x.a[0]]*tfOf())+' Std./Jahr':''}</td><td class="r num">${x.a[4]?eurO(x.a[4]*x.q):'–'}</td></tr>`).join('')}${r.web?`<tr><td></td><td class="xs t3">Zusätzliche Betreuung für die gewählten Website-Erweiterungen</td><td></td><td class="r num xs t3">+ 100 € / Monat</td></tr>`:''}`:''}
@@ -1723,7 +1727,7 @@ function vKonfigSum(){const r=cfgCalc(),R=roiHours(r),pay=angebotsRaten(r.net),p
  <section class="box"><div class="bh"><h2>${probe?'Vorschau':'Angebot und Vertrag'}</h2></div><div class="bb stack">
  <p>${probe?'Die Druckprobe zeigt Umfang, Annahmen und Zahlungsplan.':'Die Angebotsfassung hält den Gesamtpreis, die gemeinsam angesetzten Stunden und den Zahlungsplan fest.'}</p>
  ${!probe&&eigeneDomain()&&!window.hpModerationsHeader?.().Authorization?'<p class="noprint">Für die verbindliche Kundenfassung öffnet Nick seinen persönlichen Moderationslink. Hier könnt ihr das Angebot prüfen und drucken.</p>':''}
- ${!probe&&eigeneDomain()&&window.hpModerationsHeader?.().Authorization?`<div class="noprint stack"><label><input type="checkbox" id="ang-gespraech"> Gesprächsangaben und Startplanung in die Kundenfassung übernehmen</label><p>Wenn Umfang und Zahlungsplan feststehen, erstellt ihr hier den Link für Heim &amp; Partner.</p><div class="row"><button type="button" class="btn acc" data-fassung="angebot">Angebotslink erstellen</button></div><div id="ang-ergebnis" role="status" aria-live="polite"></div><div id="ang-gemeinsam">${freigegebenerStand(letzteFassung,JSON.stringify(kundenfassungEingabe(false)))}</div></div>`:''}
+ ${!probe&&eigeneDomain()&&window.hpModerationsHeader?.().Authorization?`<div class="noprint stack"><p>Wenn Umfang und Zahlungsplan feststehen, erstellt ihr hier den Link für Heim &amp; Partner.</p><div class="row"><button type="button" class="btn acc" data-fassung="angebot">Angebotslink erstellen</button></div><div id="ang-ergebnis" role="status" aria-live="polite"></div><div id="ang-gemeinsam">${freigegebenerStand(letzteFassung,JSON.stringify(kundenfassungEingabe()))}</div></div>`:''}
   <p class="xs t3">${OF.HK.name} · ${OF.HK.str} · ${OF.HK.ort} · Geschäftsführer ${OF.HK.gf} · ${OF.HK.hr} · ${OF.HK.mail}</p></div></section>`;}
 function eigeneDomain(){try{return /^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent/i.test(location.hostname);}catch(e){return false;}}
 const AD=Object.fromEntries(OF.AREA.map(a=>[a[0],a]));
@@ -1760,10 +1764,10 @@ function vRoi() {
     return `<tr><td class="nm">${esc(b[2])}</td><td class="t2 sm">${esc(bWeg(b[0]))}</td><td class="r num">${hsO(Math.round(h))} Std.</td><td class="r num">${eurO(v)}</td></tr>`;
   }).join('');
   return `<div class="ph"><div><h1>Zeitgewinn für euer Team</h1><div class="meta">Gemeinsame Schätzung für ein volles Betriebsjahr</div></div>
-    <div class="row noprint">${folienRueckweg()}<button class="btn" data-act="roi-reset">Ausgangswerte laden</button><button class="btn" data-act="print">${I('printer','s')}Drucken</button></div></div>
+    <div class="row noprint"><button class="btn" data-act="roi-reset">Ausgangswerte laden</button><button class="btn" data-act="print">${I('printer','s')}Drucken</button></div></div>
     <div class="of-tot"><div class="acc"><span class="lbl">Mögliche freie Arbeitszeit</span><b>${hsO(Math.round(team.h))} Std.</b><span class="xs t3">pro Jahr bei ${hsO(S.roi.tf)} % der angenommenen Wirkung</span></div>
     <div><span class="lbl">Rechnerischer Kapazitätswert</span><b>${eurO(team.t)}</b><span class="xs t3">Freie Arbeitszeit zu den eingestellten Stundensätzen</span></div>
-    <div><span class="lbl">Finanzielle Amortisation</span><b>Separat prüfen</b><button class="btn sm" data-act="wirtschaft-pruefen">Belegte Einsparungen ansehen</button></div></div>
+    <div><span class="lbl">Finanzielle Einsparung</span><b>Offen</b><span class="xs t3">Erst wenn eine Ausgabe tatsächlich entfällt, entsteht eine Kostensenkung.</span></div></div>
     <section class="box" id="roiIn"><div class="bh"><h2>Welche Annahmen passen zu eurem Alltag?</h2></div><div class="bb">
     Alle Wochenwerte rechnen mit 52 Wochen. Bei Nachunternehmern zählen die Stunden je Gewerk. Tragt für jede Rolle die Zeit ein, die ihr in diesem Bereich für realistisch haltet. Ordnet denselben Handgriff nur einmal zu.</div>
     <div class="tw"><table><thead><tr><th>Bereich</th><th class="r">Personen / Gewerke</th><th class="r">Stunden je Woche / Gewerk</th><th class="r">€ je Stunde</th><th class="r">Std. im Jahr</th><th class="r">Zeitwert im Jahr</th></tr></thead><tbody>${rollen}</tbody></table></div>
@@ -1781,30 +1785,16 @@ function vLeistung(){const row=b=>`<tr><td class="nm">${esc(b[2].replace('Websit
  return `<div class="ph"><div><h1>Leistungsumfang</h1><div class="meta"><span>Gesamtpaket: 20 Bausteine</span><span>${hsO(roiHours().h)} Std. pro Jahr geschätzt</span></div></div><button class="btn acc" data-go="konfig">${I('receipt','s')}Zum Angebot</button></div>
  ${tb('So greift das Gesamtpaket ineinander',OF.B)}
  <section class="box"><div class="bh"><h2>Nicht enthalten</h2></div><div class="bb"><ul class="sm t2" style="padding-left:16px;line-height:1.6">${OF.NEV.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></section>`;}
-// Die Präsentation liest die aktuellen Gesprächswerte aus demselben Modell wie das Angebot.
-const DECK = new URL('https://reflexionheimpartner.hk-growthoperator.de/gespraech-02aedca599/');
-const channel = 'heim-partner-gespraech';
-const sharedExtras = ['ar','ap','ag','ak','ib','pu'];
+// Eingaben im Angebotsrechner bleiben im jeweiligen Termin oder in der Probe.
 const modus = new URLSearchParams(location.search).get('modus') === 'probe' ? 'probe' : 'termin';
 const istProbe = modus === 'probe';
 const notebook = 'hp-demo-angebot-v2-' + modus;
-let wirtschaftOeffnen = false;
 const aufteilung = n => [0,3,4].includes(n);
 const begrenzt = (v,max) => typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= max;
-let foliennummer = 1;
-let ausPraesentation = false;
-let praxisstunden = null;
-let gespraechsziel = '';
-let gespraechsfall = '';
-let erfolgskriterium = '';
-let startprojekt = '';
-let verantwortlich = '';
-let wunschstart = '';
-
 function gespraechMerken() {
   if(window.HPLive?.gast)return;
   try {
-    sessionStorage.setItem(notebook, JSON.stringify({roi:S.roi,cfg:S.cfg,foliennummer,ausPraesentation,praxisstunden,gespraechsziel,gespraechsfall,erfolgskriterium,startprojekt,verantwortlich,wunschstart}));
+    sessionStorage.setItem(notebook, JSON.stringify({roi:S.roi,cfg:S.cfg}));
   } catch { /* Im privaten Modus bleibt der Stand für die laufende Ansicht erhalten. */ }
 }
 function gespraechLaden() {
@@ -1823,114 +1813,43 @@ function gespraechLaden() {
     }
     if(aufteilung(d.cfg?.raten)) S.cfg.raten=d.cfg.raten;
     S.cfg.show=d.cfg?.show===true;
-    if(Number.isInteger(d.foliennummer) && d.foliennummer>=1 && d.foliennummer<=9) foliennummer=d.foliennummer;
-    ausPraesentation=d.ausPraesentation===true;
-    if(begrenzt(d.praxisstunden,1000000)) praxisstunden=d.praxisstunden;
-    if(typeof d.gespraechsfall==='string') gespraechsfall=d.gespraechsfall.slice(0,240);
-    if(typeof d.erfolgskriterium==='string') erfolgskriterium=d.erfolgskriterium.slice(0,300);
-    if(typeof d.startprojekt==='string') startprojekt=d.startprojekt.slice(0,240);
-    if(typeof d.verantwortlich==='string') verantwortlich=d.verantwortlich.slice(0,160);
-    if(typeof d.wunschstart==='string' && /^\d{4}-\d{2}-\d{2}$/.test(d.wunschstart)) wunschstart=d.wunschstart;
-    if(typeof d.gespraechsziel==='string') gespraechsziel=d.gespraechsziel.slice(0,300);
   } catch { /* Ein älterer oder unlesbarer Entwurf verhindert den Demostart nicht. */ }
 }
-function deckKontext() {
-  const r=cfgCalc(), nutzen=roiHours(r), weitere=r.L.filter(x=>!sharedExtras.includes(x.a[0]));
-  const areas=OF.AREA.map(a=>{
-    const id=a[0], v=S.roi.a[id], [annualHours,annualValue]=areaHV(id);
-    return {id,name:a[1],count:v.n,hours:v.s,rate:v.r,period:a[6]==='woche'?'week':'trade',annualHours,annualValue};
-  });
-  return {channel,version:1,type:'context',areas,realization:S.roi.tf,
-    addons:sharedExtras.filter(id=>S.cfg.add[id]),installments:S.cfg.raten,
-    totalHours:nutzen.h,totalValue:nutzen.t,totalSetup:r.net,totalMonthly:r.mon,
-    hasExtras:r.L.length>0,hasOtherExtras:weitere.length>0,
-    otherSetup:weitere.reduce((sum,x)=>sum+x.a[4]*x.q,0),otherMonthly:weitere.reduce((sum,x)=>sum+x.a[5]*x.q,0),
-    otherWebsiteExtra:weitere.some(x=>x.a[8]===1)};
-}
-function folienAdresse() {
-  const u=new URL(DECK);
-  u.searchParams.set('demo','1');
-  if(window.HPLive?.gast)u.searchParams.set('live-view','1');
-  u.searchParams.set('modus',modus);
-  if (wirtschaftOeffnen && foliennummer===7) u.searchParams.set('ansicht','wirtschaft');
-  u.hash='s'+foliennummer;
-  return u.href;
-}
-function vPraes() {
-  return `<section class="hp-gespraech" id="hp-gespraech"><div class="row sb"><h1>${istProbe?'Präsentation · Probe':'Präsentation'}</h1><button class="btn" data-act="praes-full">${I('arrows-out','s')}Vollbild</button></div>
-    <iframe title="Heim &amp; Partner · Gemeinsames Projektgespräch" id="hp-praesentation" src="${esc(folienAdresse())}" allow="fullscreen" allowfullscreen></iframe></section>`;
-}
-function praesHash() { return foliennummer===1?'#praes':'#praes-'+foliennummer; }
 function setGeschaeftsHash(h) { if(location.hash!==h) history.pushState(null,'',h); }
 function routeAusAdresse() {
-  const h=location.hash.slice(1), folie=/^praes(?:-([1-9]))?$/.exec(h);
-  if(folie) return {seite:'praes',folie:Number(folie[1])||1};
+  const h=location.hash.slice(1);
+  if(/^praes(?:-\d+)?$/.test(h)){
+    history.replaceState(null,'',location.pathname+location.search+'#cockpit');
+    return {seite:'cockpit'};
+  }
   if(!h) return {seite:'cockpit'};
   if(['team','nu','quali','lead','auto','events','freigaben','cockpit','vergabe','neu','portal','projekt','crm','objekt','kanaele','leistung','konfig','roi'].includes(h)) return {seite:h};
   return null;
 }
-function fuehrungAusAdresse() {
-  history.replaceState(null,'',location.pathname+location.search);
-  rundgang=TOUR;tourGo(0);
+function fuehrungAusAdresse(){
+  const kurz=location.hash==='#kurzvergabe';
+  rundgang=kurz?GESPRAECHSTOUR:TOUR;
+  tourGo(0);
 }
-function folgeAdresse() {
-  if(location.hash==='#fuehrung'){fuehrungAusAdresse();return;}
+function starteFuehrung(kurz=false){
+  setGeschaeftsHash(kurz?'#kurzvergabe':'#fuehrung');
+  fuehrungAusAdresse();
+}
+function folgeAdresse(){
+  if(window.HPLive?.gast)return;
+  if(['#fuehrung','#kurzvergabe'].includes(location.hash)){fuehrungAusAdresse();return;}
   const ziel=routeAusAdresse();
-  if(!ziel) return;
-  const gleicheSeite=S.route===ziel.seite;
-  if(gleicheSeite && (!ziel.folie || foliennummer===ziel.folie)) return;
-  if(ziel.folie) {
-    foliennummer=ziel.folie;ausPraesentation=true;
-    const frame=document.getElementById('hp-praesentation');
-    if(gleicheSeite && frame){
-      gespraechMerken();
-      frame.contentWindow.location.replace(folienAdresse());
-      return;
-    }
-  }
-  S.route=ziel.seite;S.expand=null;S.tour=-1;
+  if(!ziel || (S.route===ziel.seite && S.tour<0))return;
+  S.route=ziel.seite;S.tour=-1;S.expand=null;
   if(S.route==='neu'&&!S.nw)initNew();
   render();window.scrollTo({top:0});
 }
-function folienRueckweg() { return ausPraesentation?`<button class="btn" data-go="praes">${I('arrow-left','s')}Zur Präsentation</button>`:''; }
-window.addEventListener('message', ev=>{
-  const frame=document.getElementById('hp-praesentation'), m=ev.data;
-  if (S.route!=='praes' || !frame || ev.source!==frame.contentWindow || ev.origin!==DECK.origin || !m || m.channel!==channel || m.version!==1) return;
-  const antworte=()=>frame.contentWindow.postMessage(deckKontext(), DECK.origin);
-  if(m.type==='ready') {antworte();return;}
-  if(window.HPLive?.gast)return;
-  if(m.type==='step') {
-    if(Number.isInteger(m.step) && m.step>=1 && m.step<=9 && m.step!==foliennummer){foliennummer=m.step;wirtschaftOeffnen=false;setGeschaeftsHash(praesHash());gespraechMerken();}
-    return;
-  }
-  if(m.type==='roi'){ausPraesentation=true;go('roi');return;}
-  if(m.type!=='selection' && m.type!=='offer') return;
-  if(!aufteilung(m.installments)||!Array.isArray(m.addons)||m.addons.length>sharedExtras.length||m.addons.some(id=>!sharedExtras.includes(id))) return;
-  for(const id of sharedExtras) S.cfg.add[id]=m.addons.includes(id);
-  S.cfg.raten=m.installments;
-  if(m.type==='selection'){gespraechMerken();antworte();return;}
-  praxisstunden=begrenzt(m.exampleHours,1000000)?m.exampleHours:null;
-  gespraechsziel=typeof m.ziel==='string'?m.ziel.trim().slice(0,300):'';
-  gespraechsfall=typeof m.fall==='string'?m.fall.trim().slice(0,240):'';
-  erfolgskriterium=typeof m.erfolg==='string'?m.erfolg.trim().slice(0,300):'';
-  startprojekt=typeof m.startprojekt==='string'?m.startprojekt.trim().slice(0,240):'';
-  verantwortlich=typeof m.verantwortlich==='string'?m.verantwortlich.trim().slice(0,160):'';
-  wunschstart=typeof m.wunschstart==='string' && /^\d{4}-\d{2}-\d{2}$/.test(m.wunschstart)?m.wunschstart:'';
-  ausPraesentation=true;S.cfg.show=true;
-  go('konfig');
-});
 function angebotsProbe(){return typeof istProbe!=='undefined'?istProbe:new URLSearchParams(location.search).has('probe');}
-function angebotsStartdaten(){return [
- ['Startprojekt',typeof startprojekt==='string'?startprojekt:''],
- ['Projektverantwortung',typeof verantwortlich==='string'?verantwortlich:''],
- ['Gewünschter Start',typeof wunschstart==='string'?wunschstart:'']
-];}
-function kundenfassungEingabe(teilen=document.getElementById('ang-gespraech')?.checked===true){
+function kundenfassungEingabe(){
  const r=cfgCalc(),addons=Object.fromEntries(r.L.map(x=>[x.a[0],x.q]).concat(r.req.map(a=>[a[0],1])));
- const [[,start],[,person],[,datum]]=angebotsStartdaten();
- return {freigabe:true,gespraechFreigabe:teilen,addons,raten:S.cfg.raten,roi:S.roi,...teilen?{gespraech:{gespraechsziel,gespraechsfall,erfolgskriterium,praxisstunden,startprojekt:start,verantwortlich:person,wunschstart:datum}}:{}};
+ return {freigabe:true,gespraechFreigabe:false,addons,raten:S.cfg.raten,roi:S.roi};
 }
-// Die zuletzt freigegebene Fassung bei einem Neuladen im Moderationsfenster wieder anzeigen.
+// Die freigegebene Kundenfassung bleibt beim Neuladen im Moderationsfenster erreichbar.
 const fassungsAblage='hp-freigegebenes-angebot-1';
 let letzteFassung=null;
 if(!istProbe){
@@ -1951,7 +1870,7 @@ async function angebotsFassungOeffnen(button){
  if(angebotsProbe())return;
  const status=document.getElementById('ang-ergebnis');
  const eingabe=kundenfassungEingabe(),inhalt=JSON.stringify(eingabe);
- const steuerelemente=Array.from(document.querySelectorAll('[data-fassung],#ang-gespraech'));
+ const steuerelemente=Array.from(document.querySelectorAll('[data-fassung]'));
  steuerelemente.forEach(el=>el.disabled=true);
  const aktuell=()=>button.isConnected&&status.isConnected&&!angebotsProbe()&&inhalt===JSON.stringify(kundenfassungEingabe());
  try{
@@ -1973,39 +1892,34 @@ document.addEventListener('click',async e=>{
  const b=e.target.closest('[data-fassung]');if(b){await angebotsFassungOeffnen(b);return;}
  if(e.target.closest('[data-kopiere-angebot]')){const f=document.querySelector('#kundenstand input');if(!f)return;f.select();try{await navigator.clipboard.writeText(f.value);e.target.textContent='Link kopiert';}catch{f.focus();f.select();}}
 });
-document.addEventListener('change',e=>{
- if(e.target.id!=='ang-gespraech')return;
- document.getElementById('ang-ergebnis').replaceChildren();
- document.getElementById('ang-gemeinsam').innerHTML=freigegebenerStand(letzteFassung,JSON.stringify(kundenfassungEingabe()));
-});
+
 function angebotsRaten(netto){
   if(!S.cfg.raten) return [['Anzahlung','50 % bei Auftragserteilung',netto/2],['Schlusszahlung','50 % nach Gesamtabnahme',netto/2]];
   const cent=Math.round(netto*100), start=Math.round(cent/2), rest=cent-start, rate=Math.round(rest/S.cfg.raten);
   return [['Anzahlung','50 % bei Auftragserteilung',start/100],...Array.from({length:S.cfg.raten},(_,i)=>['Rate '+(i+1),(i+1)+(i?' Monate':' Monat')+' nach Auftragserteilung',(i===S.cfg.raten-1?rest-i*rate:rate)/100])];
 }
 
-document.addEventListener('click',e=>{const t=e.target.closest('[data-wirkung],[data-act="wirtschaft-pruefen"],[data-add],[data-act="cfg-calc"],[data-act="cfg-back"],[data-act="print"],[data-act="praes-full"],[data-act="roi-reset"]');if(!t)return;const d=t.dataset;
+document.addEventListener('click',e=>{const t=e.target.closest('[data-wirkung],[data-add],[data-act="cfg-calc"],[data-act="cfg-back"],[data-act="print"],[data-act="roi-reset"]');if(!t)return;const d=t.dataset;
  if(d.wirkung && [50,75,100].includes(Number(d.wirkung))){S.roi.tf=Number(d.wirkung);gespraechMerken();render();return;}
- if(d.act==='wirtschaft-pruefen'){wirtschaftOeffnen=true;foliennummer=7;go('praes');return;}
  if(d.act==='roi-reset'){S.roi=roiInit();gespraechMerken();render();return;}
  if(d.add){S.cfg.add[d.add]=!S.cfg.add[d.add];render();return;}
 
  if(d.act==='cfg-calc'){S.cfg.show=true;render();window.scrollTo({top:0});return;}
  if(d.act==='cfg-back'){S.cfg.show=false;render();return;}
  if(d.act==='print'){window.print();return;}
- if(d.act==='praes-full'){const el=document.getElementById('hp-gespraech');if(document.fullscreenElement)document.exitFullscreen();else el&&el.requestFullscreen&&el.requestFullscreen().catch(()=>{});}});
+});
 document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.aqty;if(!k)return;S.cfg.qty[k]=Math.min(50,Math.max(1,Math.floor(+e.target.value||1)));render();});
 document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.roi;if(!k)return;const max=k==='tf'||k==='pct'?100:1000000;const v=Math.min(max,Math.max(0,Number(e.target.value)||0)),[a,f]=k.split('.');if(f)S.roi.a[a][f]=v;else S.roi[a]=v;let pos=null;try{pos=e.target.selectionStart;}catch{}gespraechMerken();render();const n=document.querySelector(`[data-roi="${k}"]`);if(n){n.focus();try{n.setSelectionRange(pos,pos);}catch(_){}}});
 function render(){
   window.HPLive?.geaendert();
-  if(ausPraesentation || ['praes','roi','konfig'].includes(S.route))gespraechMerken();
+  if(['roi','konfig'].includes(S.route))gespraechMerken();
   nav();
-  const V={team:vTeam,nu:vNU,quali:vQuali,lead:vLead,auto:vAuto,events:vEvents,cockpit:vCockpit,freigaben:vFreigaben,vergabe:vVergabe,neu:vNeu,portal:vPortal,projekt:vProjekt,crm:vCRM,objekt:vObjekt,kanaele:vKanaele,praes:vPraes,leistung:vLeistung,konfig:vKonfig,roi:vRoi}[S.route];
+  const V={team:vTeam,nu:vNU,quali:vQuali,lead:vLead,auto:vAuto,events:vEvents,cockpit:vCockpit,freigaben:vFreigaben,vergabe:vVergabe,neu:vNeu,portal:vPortal,projekt:vProjekt,crm:vCRM,objekt:vObjekt,kanaele:vKanaele,leistung:vLeistung,konfig:vKonfig,roi:vRoi}[S.route];
   $('#view').innerHTML=V();tour();roleSync();
   document.querySelectorAll('[data-i]').forEach(e=>{e.outerHTML=I(e.dataset.i);});
 }
 let tt;function toast(m){clearTimeout(tt);document.querySelector('.toast')?.remove();const e=document.createElement('div');e.className='toast';e.setAttribute('role','status');e.innerHTML=I('check-circle')+esc(m);document.body.appendChild(e);tt=setTimeout(()=>e.remove(),2600);}
-function go(r){S.route=r;if(r==='praes')ausPraesentation=true;if(['praes','roi','konfig'].includes(r)||/^#(?:praes|roi|konfig)/.test(location.hash))setGeschaeftsHash(r==='praes'?praesHash():'#'+r);S.expand=null;if(r==='neu'&&!S.nw)initNew();render();window.scrollTo({top:0});}
+function go(r){S.route=r;setGeschaeftsHash('#'+r);S.expand=null;if(r==='neu'&&!S.nw)initNew();render();window.scrollTo({top:0});}
 
 document.addEventListener('click',e=>{
   const t=e.target.closest('[data-go],[data-act],[data-tid],[data-ttab],[data-ptab],[data-exp],[data-ask],[data-remind],[data-lf],[data-adv],[data-slot],[data-nstep]');if(!t)return;
@@ -2022,20 +1936,21 @@ document.addEventListener('click',e=>{
   if(d.slot){S.qr.slot=d.slot;render();return;}
   if(d.nstep!==undefined){if(S.nw.sending<0){S.nw.step=+d.nstep;render();}return;}
   switch(d.act){
-   case 'tour-start':{
-    const o=modal('Demo-Führung','<div class="stack" style="padding:24px"><h2>Demo-Führung</h2><button class="btn acc" data-act="tour-termin">Kundentermin öffnen</button><button class="btn" data-act="tour-probe">Probe starten</button><button class="btn" data-act="tour-komplett">Alle Funktionen erkunden</button></div>');o.querySelector('[data-act="tour-termin"]').focus();break;}
-   case 'tour-termin':
-   case 'tour-probe':{
-     const ziel=d.act==='tour-probe'?'probe':'termin';
-     const u=new URL(location.href);
-     if(u.searchParams.get('modus') !== ziel){u.searchParams.set('modus',ziel);u.hash='fuehrung';location.assign(u.href);return;}
-     closeModal();rundgang=TOUR;tourGo(0);break;
+   case 'tour-start':starteFuehrung();break;
+   case 'tour-optionen':{
+     const o=modal('Weitere Demooptionen','<div class="stack" style="padding:24px"><h2>Weitere Demooptionen</h2><button class="btn" data-act="tour-kurz">Kurzführung Vergabe</button><button class="btn" data-act="tour-probe">Probe starten</button></div>');
+     o.querySelector('[data-act="tour-kurz"]').focus();break;
    }
-   case 'tour-komplett':closeModal();rundgang=TOUR;tourGo(0);break;
-   case 'tour-praes':S.tour=-1;foliennummer=1;go('praes');break;
+   case 'tour-kurz':closeModal();starteFuehrung(true);break;
+   case 'tour-probe':{
+     closeModal();
+     if(istProbe){starteFuehrung();break;}
+     const u=new URL(location.href);u.searchParams.set('modus','probe');u.hash='fuehrung';location.assign(u.href);break;
+   }
+   case 'cockpit-vergleich':S.tour=-1;S.tid='t1';S.ttab='vergleich';S.ana='done';go('vergabe');break;
    case 'tour-next':tourGo(S.tour+1);break;
    case 'tour-prev':tourGo(S.tour-1);break;
-   case 'tour-end':S.tour=-1;render();break;
+   case 'tour-end':S.tour=-1;setGeschaeftsHash('#'+S.route);render();break;
    case 'askall':{const tn=TENDERS.find(x=>x.id===S.tid);let n=0;tn.bidders.forEach(b=>{if((b.status==='angebot'||b.status==='unterlagen')&&missOf(b).length&&!b.asked){b.asked=true;n++;}});render();toast(n+' Rückfragen versendet');break;}
    case 'analyze':{S.ana='run';S.run=0;render();const step=()=>{S.run++;if(S.run<5){render();setTimeout(step,650);}else{S.ana='done';render();}};setTimeout(step,650);break;}
    case 'award':S.awarded=true;render();toast('Vergabe freigegeben und protokolliert');break;
@@ -2089,30 +2004,37 @@ document.addEventListener('change',e=>{const t=e.target;if(t.dataset.nw)S.nw[t.d
   if(t.id==='docFile'&&t.files&&t.files[0])runDoc(t.files[0]);});
 document.addEventListener('keydown',e=>{if(S.tour<0)return;if(e.key==='ArrowRight'&&S.tour<rundgang.length-1&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))tourGo(S.tour+1);if(e.key==='ArrowLeft'&&S.tour>0&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))tourGo(S.tour-1);if(e.key==='Escape'){S.tour=-1;render();}});
 window.HPLiveModell={
-  deckOrigin:DECK.origin,
   lesen(){
     const auswahl=Object.fromEntries(OF.ADD.filter(a=>S.cfg.add[a[0]]).map(a=>[a[0],a[6]?(S.cfg.qty[a[0]]||1):1]));
-    return {seite:S.route,station:S.tour,kurz:rundgang===GESPRAECHSTOUR,tid:S.tid,ttab:S.ttab,ptab:S.ptab,ana:S.ana,vergeben:S.awarded,fertig:S.saved,auswahl,rollen:S.roi.a,wirkung:S.roi.tf,raten:S.cfg.raten,zusammenfassung:S.cfg.show,folie:foliennummer};
+    return {seite:S.route,person:S.user,nuTab:S.nu.tab,neuSchritt:S.nw?.step??0,wfTab:S.wf.tab,station:S.tour,kurz:rundgang===GESPRAECHSTOUR,tid:S.tid,ttab:S.ttab,ptab:S.ptab,ana:S.ana,vergeben:S.awarded,fertig:S.saved,auswahl,rollen:S.roi.a,wirkung:S.roi.tf,raten:S.cfg.raten,zusammenfassung:S.cfg.show};
   },
   zeigen(v){
     if(!window.HPLive?.gast)return;
-    const altesDeck=S.route==='praes'&&document.getElementById('hp-praesentation');
+    const naechsterRundgang=v.kurz?GESPRAECHSTOUR:TOUR;
+    const station=Number.isInteger(v.station)&&v.station>=0&&v.station<naechsterRundgang.length?v.station:-1;
+    const stationGewechselt=station!==S.tour||rundgang!==naechsterRundgang;
+    const ansichtGewechselt=S.route!==v.seite||S.tid!==v.tid||S.ttab!==v.ttab||S.ptab!==v.ptab;
+    rundgang=naechsterRundgang;S.tour=station;
+    if(stationGewechselt&&station>=0)rundgang[station].go();
+    asUser(TEAM.some(u=>u[0]===v.person)?v.person:'dennis');
     S.cfg.add=Object.fromEntries(Object.keys(v.auswahl).map(id=>[id,true]));S.cfg.qty={...v.auswahl};
     S.cfg.raten=v.raten;S.cfg.show=v.zusammenfassung;S.roi.tf=v.wirkung;S.roi.a=v.rollen;
-    S.route=v.seite;S.tid=v.tid;S.ttab=v.ttab;S.ptab=v.ptab;S.ana=v.ana;S.awarded=v.vergeben;S.saved=v.fertig;
-    foliennummer=v.deck.step;rundgang=v.kurz?GESPRAECHSTOUR:TOUR;
-    if(v.station>=0&&v.station<rundgang.length){tourGo(v.station);}
-    else{S.tour=-1;if(altesDeck&&S.route==='praes'){altesDeck.contentWindow.postMessage(deckKontext(),DECK.origin);}
-      else{render();window.scrollTo({top:0});}}
+    S.route=v.seite==='praes'?'cockpit':v.seite;S.tid=v.tid;S.ttab=v.ttab;S.ptab=v.ptab;S.ana=v.ana;S.awarded=v.vergeben;S.saved=v.fertig;
+    if(v.nuTab)S.nu.tab=v.nuTab;
+    if(v.wfTab)S.wf.tab=v.wfTab;
+    if(S.route==='neu'){if(!S.nw)initNew();S.nw.step=v.neuSchritt??0;}
+    render();
+    if(stationGewechselt&&station>=0)fokusAufStation();
+    else if(ansichtGewechselt)window.scrollTo({top:0});
     const ansicht=document.getElementById('view');if(ansicht)ansicht.inert=true;
     const fuehrung=document.getElementById('tour');if(fuehrung)fuehrung.inert=true;
   }
 };
 gespraechLaden();
 const start=routeAusAdresse();
-if(start){S.route=start.seite;if(start.folie){foliennummer=start.folie;ausPraesentation=true;}if(S.route==='neu'&&!S.nw)initNew();}
+if(start){S.route=start.seite;if(S.route==='neu'&&!S.nw)initNew();}
 render();
-if(location.hash==='#fuehrung') fuehrungAusAdresse();
+if(!window.HPLive?.gast && ['#fuehrung','#kurzvergabe'].includes(location.hash))fuehrungAusAdresse();
 window.addEventListener('hashchange',folgeAdresse);
 })();
 </script>
