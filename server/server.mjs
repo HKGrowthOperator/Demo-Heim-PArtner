@@ -77,6 +77,14 @@ function begrenzt(ip, art, max) {
 const token = (id, datei) => crypto.createHmac('sha256', ablage.geheimnis()).update(`${id}/${datei}`).digest('hex').slice(0, 32)
 const tokenOk = (ist, soll) => typeof ist === 'string' && ist.length === soll.length && crypto.timingSafeEqual(Buffer.from(ist), Buffer.from(soll))
 const zahlungsweise = v => v.variante === 'raten' ? `50 % bei Auftragserteilung, Rest in ${v.raten} Monatsraten` : KAT.pay.map(p => `${p.pct} % ${p.wann}`).join(', ')
+function bereit() {
+  const dir = process.env.DATA_DIR || '/data'
+  let schreibbar = false, eigenesVolume = false
+  try { const probe = path.join(dir, '.bereit-' + process.pid); fs.writeFileSync(probe, ''); fs.unlinkSync(probe); schreibbar = true } catch { /* nicht schreibbar */ }
+  try { eigenesVolume = fs.statSync(dir).dev !== fs.statSync('/').dev } catch { /* Ordner fehlt */ }
+  const fehlt = fehltRechnung()
+  return { mailVersand: mailKonfiguriert(), rechnung: fehlt.length === 0, rechnungFehlt: fehlt, ablageSchreibbar: schreibbar, ablageDauerhaft: eigenesVolume, kopieAn: KOPIE_AN.length }
+}
 const fehltRechnung = () => [!hkSteuer() && 'HK_USTID oder HK_STEUERNR', !process.env.HK_IBAN && 'HK_IBAN', !process.env.HK_BANK && 'HK_BANK'].filter(Boolean)
 const rechnungsNr = jahr => `${process.env.INVOICE_PREFIX || 'HKG-RE-'}${jahr}-${String(ablage.naechste('rechnung', jahr, Number(process.env.INVOICE_START || 1))).padStart(4, '0')}`
 const jahrVon = d => Number(new Intl.DateTimeFormat('de-DE', { timeZone: 'Europe/Berlin', year: 'numeric' }).format(d))
@@ -343,6 +351,8 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x')
   try {
     if (url.pathname === '/healthz') return senden_(res, 200, 'ok\n', 'text/plain')
+    // Bereitschaft für die Unterschrift: nur Ja/Nein und Namen fehlender Angaben, keine Werte
+    if (url.pathname === '/api/vertrag/bereit' && req.method === 'GET') return json(res, 200, bereit())
     if (!passwortOk(req)) return senden_(res, 401, 'Passwort erforderlich', 'text/plain', { 'WWW-Authenticate': 'Basic realm="Heim & Partner", charset="UTF-8"' })
     if (req.method === 'POST' && url.pathname === '/api/angebot/stand') {
       if (!/^application\/json(?:;|$)/i.test(req.headers['content-type'] || '')) return json(res, 415, {fehler:'JSON erforderlich.'})
