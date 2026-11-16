@@ -1838,7 +1838,32 @@ function vPraes() {
     <iframe title="Heim &amp; Partner · Gemeinsames Projektgespräch" id="hp-praesentation" src="${esc(folienAdresse())}" allow="fullscreen" allowfullscreen></iframe></section>`;
 }
 function praesHash() { return foliennummer===1?'#praes':'#praes-'+foliennummer; }
-function setGeschaeftsHash(h) { if(location.hash!==h) history.replaceState(null,'',h); }
+function setGeschaeftsHash(h) { if(location.hash!==h) history.pushState(null,'',h); }
+function routeAusAdresse() {
+  const h=location.hash.slice(1), folie=/^praes(?:-([1-9]))?$/.exec(h);
+  if(folie) return {seite:'praes',folie:Number(folie[1])||1};
+  if(!h) return {seite:'cockpit'};
+  if(['team','nu','quali','lead','auto','events','freigaben','cockpit','vergabe','neu','portal','projekt','crm','objekt','kanaele','leistung','konfig','roi'].includes(h)) return {seite:h};
+  return null;
+}
+function folgeAdresse() {
+  const ziel=routeAusAdresse();
+  if(!ziel) return;
+  const gleicheSeite=S.route===ziel.seite;
+  if(gleicheSeite && (!ziel.folie || foliennummer===ziel.folie)) return;
+  if(ziel.folie) {
+    foliennummer=ziel.folie;ausPraesentation=true;
+    const frame=document.getElementById('hp-praesentation');
+    if(gleicheSeite && frame){
+      gespraechMerken();
+      frame.contentWindow.location.replace(folienAdresse());
+      return;
+    }
+  }
+  S.route=ziel.seite;S.expand=null;S.tour=-1;
+  if(S.route==='neu'&&!S.nw)initNew();
+  render();window.scrollTo({top:0});
+}
 function folienRueckweg() { return ausPraesentation?`<button class="btn" data-go="praes">${I('arrow-left','s')}Zur Präsentation</button>`:''; }
 window.addEventListener('message', ev=>{
   const frame=document.getElementById('hp-praesentation'), m=ev.data;
@@ -1846,7 +1871,7 @@ window.addEventListener('message', ev=>{
   const antworte=()=>frame.contentWindow.postMessage(deckKontext(), DECK.origin);
   if(m.type==='ready') {antworte();return;}
   if(m.type==='step') {
-    if(Number.isInteger(m.step) && m.step>=1 && m.step<=9){foliennummer=m.step;setGeschaeftsHash(praesHash());gespraechMerken();}
+    if(Number.isInteger(m.step) && m.step>=1 && m.step<=9 && m.step!==foliennummer){foliennummer=m.step;setGeschaeftsHash(praesHash());gespraechMerken();}
     return;
   }
   if(m.type==='roi'){ausPraesentation=true;go('roi');return;}
@@ -1971,8 +1996,9 @@ document.addEventListener('change',e=>{const t=e.target;if(t.dataset.nw)S.nw[t.d
   if(t.id==='docFile'&&t.files&&t.files[0])runDoc(t.files[0]);});
 document.addEventListener('keydown',e=>{if(S.tour<0)return;if(e.key==='ArrowRight'&&S.tour<rundgang.length-1&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))tourGo(S.tour+1);if(e.key==='ArrowLeft'&&S.tour>0&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))tourGo(S.tour-1);if(e.key==='Escape'){S.tour=-1;render();}});
 gespraechLaden();
-const h=location.hash.slice(1),matched=/^praes(?:-([1-9]))?$/.exec(h);
-if(matched){S.route='praes';foliennummer=Number(matched[1])||1;ausPraesentation=true;}else if(['nu','auto','events','freigaben','cockpit','vergabe','portal','projekt','crm','objekt','kanaele','praes','leistung','konfig','roi'].includes(h))S.route=h;
+const start=routeAusAdresse();
+if(start){S.route=start.seite;if(start.folie){foliennummer=start.folie;ausPraesentation=true;}if(S.route==='neu'&&!S.nw)initNew();}
 render();
+window.addEventListener('hashchange',folgeAdresse);
 })();
 </script>
