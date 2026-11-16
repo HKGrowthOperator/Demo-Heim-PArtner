@@ -2,6 +2,7 @@
 // Liefert site/ aus (wie zuvor nginx) und nimmt Unterschriften für den Vertrag entgegen:
 // Vertrag und Anzahlungsrechnung als PDF, Ablage auf dem Volume, Versand per E-Mail.
 import http from 'node:http'
+import { terminZiel, warteAnsicht } from './termin.mjs'
 import { liveDienst } from './fuehrung.mjs'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -382,6 +383,16 @@ const server = http.createServer(async (req, res) => {
     // Bereitschaft für die Unterschrift: nur Ja/Nein und Namen fehlender Angaben, keine Werte
     if (url.pathname === '/api/vertrag/bereit' && req.method === 'GET') return json(res, 200, bereit())
     if (!passwortOk(req)) return senden_(res, 401, 'Passwort erforderlich', 'text/plain', { 'WWW-Authenticate': 'Basic realm="Heim & Partner", charset="UTF-8"' })
+    if (url.pathname === '/termin/beitreten') {
+      if (!['GET', 'HEAD', 'POST'].includes(req.method)) {
+        return senden_(res, 405, 'Methode nicht erlaubt', 'text/plain', {Allow: 'GET, HEAD, POST'})
+      }
+      const freigabe = req.method === 'POST' ? (await liesFormular(req, 512)).get('einlass') : null
+      return senden_(res, 303, '', 'text/plain', {Location: terminZiel(freigabe)})
+    }
+    if (['GET','HEAD'].includes(req.method) && warteAnsicht(url)) {
+      return statisch(req, res, new URL('/warteraum.html', url))
+    }
     if (await liveAnfrage(req,res,url)) return
     if(url.pathname==='/api/zeichnung/rahmen' && req.method==='GET'){
       const bear=/^Bearer ([^ ]+)$/i.exec(String(req.headers['x-hk-moderation']||req.headers.authorization||''))
