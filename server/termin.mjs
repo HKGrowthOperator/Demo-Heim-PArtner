@@ -1,11 +1,13 @@
-import { createDecipheriv } from 'node:crypto'
+import fs from 'node:fs'
+import path from 'node:path'
+import { createHash, randomUUID } from 'node:crypto'
 
-// Derselbe persönliche Raum wird für weitere Gespräche genutzt. Der öffentliche
-// Einstieg enthält nur die Raumkennung. Den Direkteinlass öffnet der Einladungslink.
-const raum = 'https://us05web.zoom.us/j/3799930721'
-const versiegelt = 'L_yeDIxPriQVySXqfTU22zsstc6vKCL6CxbW4E0Yb5PVPvmDqXTTZ_9dWJLxkLE83HRq8WQ5dwM2B1jW'
 export const einlassAb = Date.parse('2026-11-17T12:20:00+01:00')
-export const ende = Date.parse('2026-11-17T13:30:00+01:00')
+// Auch während einer Verlängerung sollen Teilnehmer wieder beitreten können.
+export const einlassBis = Date.parse('2026-11-17T15:30:00+01:00')
+const dateiname = 'videotermin-20261117.json'
+const soll = '3f9f6ae4b30fd1883539a57d02dae02679ec3fd98531bbdc40e39fe370183e50'
+const pruefwert = wert => createHash('sha256').update(wert).digest('hex')
 
 export function warteAnsicht(url) {
   if (!['/', '/index.html'].includes(url.pathname)) return false
@@ -13,19 +15,33 @@ export function warteAnsicht(url) {
     url.searchParams.get('mitsehen') !== '1' && !url.searchParams.has('probe')
 }
 
-export function terminZiel(einladung, jetzt = Date.now()) {
-  if (jetzt < einlassAb || jetzt >= ende) return '/'
-  if (!einladung) return raum
-  if (!/^[a-zA-Z0-9_-]{43}$/.test(einladung)) return raum
-  try {
-    const paket = Buffer.from(versiegelt, 'base64url')
-    const entschluesseln = createDecipheriv('aes-256-gcm', Buffer.from(einladung, 'base64url'), paket.subarray(0, 12))
-    entschluesseln.setAuthTag(paket.subarray(12, 28))
-    const ziel = new URL(raum)
-    const kennung = Buffer.concat([entschluesseln.update(paket.subarray(28)), entschluesseln.final()]).toString('utf8')
-    ziel.searchParams.set('pwd', kennung)
-    return ziel.href
-  } catch {
-    return raum
+export function speichereTermin(dir, ziel) {
+  if (typeof ziel !== 'string' || pruefwert(ziel) !== soll) {
+    throw Object.assign(new Error('Die Adresse gehört nicht zum freigegebenen Termin.'), {status: 422})
   }
+  const datei = path.join(dir, dateiname)
+  const temp = datei + '.' + randomUUID()
+  try {
+    fs.writeFileSync(temp, JSON.stringify({ziel}), {mode: 0o600, flag: 'wx'})
+    fs.renameSync(temp, datei)
+  } finally {
+    fs.rmSync(temp, {force: true})
+  }
+}
+
+export function leseTermin(dir) {
+  try {
+    const {ziel} = JSON.parse(fs.readFileSync(path.join(dir, dateiname), 'utf8'))
+    return typeof ziel === 'string' && pruefwert(ziel) === soll ? ziel : null
+  } catch (error) {
+    if (error.code === 'ENOENT') return null
+    throw error
+  }
+}
+
+export function terminZiel(dir, jetzt = Date.now()) {
+  if (jetzt < einlassAb || jetzt >= einlassBis) return '/'
+  const ziel = leseTermin(dir)
+  if (!ziel) throw Object.assign(new Error('Der Zugang zum Videogespräch ist noch nicht hinterlegt.'), {status: 503})
+  return ziel
 }
