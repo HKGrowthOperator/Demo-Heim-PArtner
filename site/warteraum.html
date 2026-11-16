@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f6f5ef">
+  <title>Unser Gespräch · Heim &amp; Partner</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f6f5ef;
+      --ink: #24382e;
+      --secondary: #526057;
+      --moss: #224a38;
+      --rule: #c8cec1;
+      --sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      --serif: "Baskerville", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; }
+    h1, p, figure { margin: 0; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+    :is(a, button):focus-visible { outline: 3px solid #bf8440; outline-offset: 5px; }
+    .shell { max-width: 1512px; min-height: 100vh; min-height: 100svh; margin: 0 auto; padding: 0 clamp(20px, 6vw, 92px); display: flex; flex-direction: column; }
+    .mast { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: clamp(18px, 3.6vh, 38px) 0; border-bottom: 1px solid var(--rule); }
+    .name { font-family: var(--serif); font-size: clamp(23px, 2.3vw, 36px); letter-spacing: -.055em; line-height: 1.15; }
+    .name i { font-weight: 400; }
+    .host { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .16em; color: var(--secondary); }
+    .stage { flex: 1; display: grid; grid-template-columns: 1fr minmax(0, .92fr); gap: clamp(28px, 6vw, 110px); align-items: center; padding: clamp(34px, 7vh, 84px) 0; }
+    .details { min-width: 0; }
+    .status { display: flex; align-items: center; gap: 9px; font-size: 12px; line-height: 1.5; color: var(--moss); }
+    .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--moss); box-shadow: 0 0 0 4px #2d614815; margin-inline: 4px; }
+    h1 { font: 400 clamp(60px, 6.45vw, 104px)/1 var(--serif); letter-spacing: -.072em; text-wrap: balance; margin: clamp(17px, 2.6vh, 28px) 0 clamp(16px, 2.7vh, 30px); }
+    .date { font-size: clamp(17px, 1.45vw, 23px); line-height: 1.45; font-weight: 550; }
+    .hours { font-size: 15px; line-height: 1.5; color: var(--secondary); margin-top: 4px; }
+    .countdown { max-width: 440px; border-block: 1px solid var(--rule); margin-top: clamp(25px, 4.8vh, 55px); padding: 15px 0 18px; }
+    .counter-title { color: var(--secondary); font-size: 12px; }
+    .counter { display: flex; gap: clamp(12px, 2.7vw, 40px); margin-top: 9px; align-items: baseline; }
+    .unit { position: relative; flex: 0 1 auto; }
+    .value { display: block; font-weight: 400; font-size: clamp(34px, 3.2vw, 53px); letter-spacing: -.065em; font-variant-numeric: tabular-nums; line-height: 1; }
+    .label { display: block; margin-top: 6px; font-size: 11px; line-height: 1.3; color: var(--secondary); }
+    .buttons { margin-top: clamp(21px, 3.7vh, 40px); }
+    .join { display: inline-flex; gap: 28px; align-items: center; justify-content: space-between; min-height: 52px; padding: 0 22px; border-radius: 6px; color: #fcfcf4; background: var(--moss); text-decoration: none; font-size: 15px; font-weight: 600; transition: background .15s; }
+    .join[aria-disabled="true"] { background: #e0e5db; color: #425446; cursor: default; }
+    .join:hover:not([aria-disabled="true"]) { background: #163528; }
+    .invite-note { color: var(--secondary); font-size: 12px; line-height: 1.5; margin-top: 9px; }
+    .join svg { width: 20px; height: 20px; }
+    .clock-panel { position: relative; isolation: isolate; width: 100%; border-radius: 7px; overflow: hidden; color: #f3efda; background: radial-gradient(ellipse at 36% 26%, #355746, #203f31 62%, #1b352a); border: 1px solid #1f3c30; padding: clamp(18px, 4.3vw, 65px) clamp(16px, 3.1vw, 47px) clamp(16px, 2.1vw, 32px); }
+    .clock-panel::before { content:""; position: absolute; z-index: -1; inset: 0; background-image: linear-gradient(90deg, #efebd505 1px, transparent 1px), linear-gradient(#efebd505 1px, transparent 1px); background-size: 32px 32px; }
+    .dial { display: block; width: 100%; max-width: 490px; margin: auto; height: auto; }
+    .dial circle, .dial path, .dial line { vector-effect: non-scaling-stroke; }
+    .arm { transform-origin: 180px 180px; }
+    .clock-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: clamp(7px, 2vw, 25px); }
+    .local-time { font-variant-numeric: tabular-nums; }
+    .local-time small { display: block; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #ccdac8; }
+    .local-time span { display: block; font-size: 18px; margin-top: 3px; letter-spacing: .01em; }
+    .sound { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 9px; border: 0; color: #e5ecdf; background: transparent; font: inherit; font-size: 12px; cursor: pointer; }
+    .sound:hover { color: #fff; }
+    .sound svg { width: 17px; height: 17px; }
+    .sound[aria-pressed="false"] .waves, .sound[aria-pressed="true"] .mute { display: none; }
+    .phase-message { display: block; margin-top: 9px; font: 400 clamp(23px, 2.2vw, 32px)/1.2 var(--serif); }
+    @media (max-width: 760px) {
+      .shell { max-width: 580px; }
+      .stage { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 30px; }
+      .countdown { max-width: none; margin-top: 21px; padding-block: 12px 14px; }
+      h1 { margin: 13px 0 14px; font-size: clamp(47px, 12.4vw, 73px); }
+      .buttons { margin-top: 17px; }
+      .join { width: 100%; }
+      .clock-panel { display: grid; grid-template-columns: minmax(100px, 1fr) auto; align-items: center; gap: 10px; padding: 12px 21px; }
+      .dial { width: min(100%, 190px); margin: 0; }
+      .clock-foot { align-items: flex-start; flex-direction: column; gap: 7px; margin: 0; }
+      .sound { margin-left: -9px; }
+      .counter { gap: clamp(18px, 7vw, 40px); }
+    }
+    @media (max-width: 350px) {
+      .shell { padding-inline: 16px; }
+      .clock-panel { padding-inline: 14px; }
+      .counter { gap: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::after, *::before { transition: none !important; }
+      #second-hand { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="mast">
+      <span class="name">Heim <i>&amp;</i> Partner</span>
+      <span class="host">HK Growth</span>
+    </header>
+    <main class="stage">
+      <section class="details" aria-labelledby="title">
+        <p class="status" id="status" role="status">Videotermin</p>
+        <h1 id="title">Unser Gespräch.</h1>
+        <p class="date"><time datetime="2026-11-17T12:30:00+01:00" id="start">Dienstag, 17. November 2026</time></p>
+        <p class="hours">12:30 bis <time datetime="2026-11-17T13:30:00+01:00" id="end">13:30 Uhr</time> · Berliner Zeit</p>
+        <div class="countdown" id="countdown" hidden>
+          <p class="counter-title" id="counter-title">Zeit bis zum Beginn</p>
+          <div class="counter" id="counter" role="timer" aria-live="off" aria-labelledby="counter-title">
+            <span class="unit" id="day-unit"><span class="value" id="days">0</span><span class="label" id="day-label">Tage</span></span>
+            <span class="unit"><span class="value" id="hours">00</span><span class="label">Std.</span></span>
+            <span class="unit"><span class="value" id="minutes">00</span><span class="label">Min.</span></span>
+            <span class="unit"><span class="value" id="seconds">00</span><span class="label">Sek.</span></span>
+          </div>
+          <p class="phase-message" id="phase-message" hidden></p>
+        </div>
+        <div class="buttons" id="buttons">
+          <a class="join" id="join" href="/termin/beitreten">Am Call teilnehmen
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+          </a>
+          <p class="invite-note">Der Beitritt öffnet am Dienstag um 12:20 Uhr.</p>
+        </div>
+      </section>
+      <figure class="clock-panel" id="clock-panel" aria-label="Berliner Uhrzeit" hidden>
+        <svg class="dial" viewBox="0 0 360 360" aria-hidden="true">
+          <g fill="none">
+            <circle cx="180" cy="180" r="165" stroke="#a2b5a3" opacity=".6"/>
+            <circle cx="180" cy="180" r="160.5" stroke="#859e8b" opacity=".42"/>
+            <circle cx="180" cy="180" r="124" stroke="#aab8a3" stroke-dasharray="1 5" opacity=".45"/>
+            <path d="M180 10v9m0 322v9M10 180h9m322 0h9" stroke="#d6dcc7"/>
+            <g id="markers"></g>
+          </g>
+          <g text-anchor="middle" dominant-baseline="central" fill="#f3efda" font-family="Georgia, serif" font-size="20">
+            <text x="180" y="68">12</text><text x="292" y="180">3</text><text x="180" y="292">6</text><text x="68" y="180">9</text>
+          </g>
+          <g stroke-linecap="round">
+            <line class="arm" id="hour-hand" x1="180" y1="184" x2="180" y2="108" stroke="#f1edda" stroke-width="5"/>
+            <line class="arm" id="minute-hand" x1="180" y1="187" x2="180" y2="60" stroke="#f1edda" stroke-width="3"/>
+            <g class="arm" id="second-hand" stroke="#e6b775"><line x1="180" y1="208" x2="180" y2="38" stroke-width="1.5"/><circle cx="180" cy="206" r="3" fill="#e6b775"/></g>
+            <circle cx="180" cy="180" r="5.5" fill="#e6b775"/><circle cx="180" cy="180" r="2" fill="#274535"/>
+          </g>
+        </svg>
+        <figcaption class="clock-foot">
+          <div class="local-time"><small>Ortszeit Berlin</small><span id="berlin-time"></span></div>
+          <button id="sound" class="sound" type="button" aria-label="Uhrenticken" aria-pressed="false" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="mute" d="m17 9 5 6m0-6-5 6"/><path class="waves" d="M16 9a4 4 0 0 1 0 6m2.5-9a8 8 0 0 1 0 12"/></svg>
+            <span id="sound-label">Ton aus</span>
+          </button>
+        </figcaption>
+      </figure>
+    </main>
+  </div>
+  <script>
+    (() => {
+      const get = id => document.getElementById(id);
+      const start = Date.parse(get('start').dateTime);
+      const end = Date.parse(get('end').dateTime);
+      const zone = new Intl.DateTimeFormat('de-DE', {
+        timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23'
+      });
+      const join = get('join');
+      const note = document.querySelector('.invite-note');
+      const opens = start - 10 * 60_000;
+      const address = new URL(location.href);
+      const fragment = new URLSearchParams(address.hash.slice(1));
+      if (fragment.has('moderation')) {
+        address.searchParams.set('modus', 'termin');
+        location.replace(address.href);
+        return;
+      }
+      const key = 'hp-termin-20261117';
+      let invitation = fragment.get('einlass');
+      if (invitation && /^[A-Za-z0-9_-]{43}$/.test(invitation)) {
+        try { sessionStorage.setItem(key, invitation); } catch {}
+        history.replaceState(history.state, '', address.pathname + address.search);
+      } else {
+        try { invitation = sessionStorage.getItem(key); } catch { invitation = null; }
+      }
+      if (!/^[A-Za-z0-9_-]{43}$/.test(invitation || '')) invitation = null;
+      let canJoin;
+      function updateJoin(ms) {
+        const enabled = ms >= opens && ms < end;
+        if (enabled === canJoin) return;
+        canJoin = enabled;
+        join.setAttribute('aria-disabled', String(!enabled));
+        if (enabled) join.setAttribute('href', '/termin/beitreten');
+        else join.removeAttribute('href');
+        note.textContent = enabled
+          ? (invitation ? 'Sie gelangen direkt zu Zoom.' : 'Wenn Zoom einen Kenncode anfragt, nutzen Sie den direkten Link in Ihrer Terminbestätigung.')
+          : 'Der Beitritt öffnet am Dienstag um 12:20 Uhr.';
+      }
+      join.addEventListener('click', event => {
+        if (!canJoin) { event.preventDefault(); return; }
+        if (!invitation) return;
+        event.preventDefault();
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.action = '/termin/beitreten';
+        const field = document.createElement('input');
+        field.type = 'hidden'; field.name = 'einlass'; field.value = invitation;
+        form.append(field); document.body.append(form); form.submit(); form.remove();
+      });
+      const pad = value => String(value).padStart(2, '0');
+      const AudioEngine = window.AudioContext || window.webkitAudioContext;
+      let audio;
+      let audible = false;
+      let timeout;
+      let phase;
+      let lastSecond;
+
+      for (let i = 0; i < 60; i++) {
+        const mark = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const major = i % 5 === 0;
+        mark.setAttribute('d', major ? 'M180 30v13' : 'M180 31v5');
+        mark.setAttribute('stroke', major ? '#f1ebd8' : '#b3c5b4');
+        mark.setAttribute('stroke-width', major ? '2' : '1');
+        mark.setAttribute('transform', 'rotate(' + (i * 6) + ' 180 180)');
+        get('markers').appendChild(mark);
+      }
+
+      function tick(second) {
+        if (!audible || !audio || audio.state !== 'running' || document.hidden) return;
+        const t = audio.currentTime;
+        const voice = audio.createOscillator();
+        const gain = audio.createGain();
+        voice.type = 'sine';
+        voice.frequency.setValueAtTime(second % 2 ? 900 : 1150, t);
+        voice.frequency.exponentialRampToValueAtTime(190, t + .036);
+        gain.gain.setValueAtTime(.0001, t);
+        gain.gain.exponentialRampToValueAtTime(.075, t + .002);
+        gain.gain.exponentialRampToValueAtTime(.0001, t + .04);
+        voice.connect(gain).connect(audio.destination);
+        voice.onended = () => { voice.disconnect(); gain.disconnect(); };
+        voice.start(t);
+        voice.stop(t + .045);
+      }
+
+      function switchPhase(nextPhase) {
+        if (nextPhase === phase) return;
+        phase = nextPhase;
+        const before = phase === 'before';
+        const live = phase === 'live';
+        get('status').textContent = before ? 'Videotermin' : live ? 'Der Termin hat begonnen' : 'Termin beendet';
+        get('counter-title').textContent = before ? 'Zeit bis zum Beginn' : 'Unser Termin';
+        get('counter').hidden = !before;
+        get('phase-message').hidden = before;
+        if (!before) get('phase-message').textContent = live ? 'Sie können jetzt teilnehmen.' : 'Vielen Dank für Ihre Zeit.';
+        get('buttons').hidden = phase === 'after';
+      }
+
+      function showTime(now) {
+        const ms = now.getTime();
+        updateJoin(ms);
+        switchPhase(ms < start ? 'before' : ms < end ? 'live' : 'after');
+        if (phase === 'before') {
+          const left = Math.ceil((start - ms) / 1000);
+          const days = Math.floor(left / 86400);
+          get('day-unit').hidden = days === 0;
+          get('days').textContent = String(days);
+          get('day-label').textContent = days === 1 ? 'Tag' : 'Tage';
+          get('hours').textContent = pad(Math.floor(left % 86400 / 3600));
+          get('minutes').textContent = pad(Math.floor(left % 3600 / 60));
+          get('seconds').textContent = pad(left % 60);
+        }
+        const time = zone.format(now);
+        const [hours, minutes, seconds] = time.split(':').map(Number);
+        get('berlin-time').textContent = time.slice(0, 5) + ' Uhr';
+        get('hour-hand').style.transform = 'rotate(' + ((hours % 12) * 30 + minutes / 2) + 'deg)';
+        get('minute-hand').style.transform = 'rotate(' + (minutes * 6 + seconds / 10) + 'deg)';
+        get('second-hand').style.transform = 'rotate(' + (seconds * 6) + 'deg)';
+        if (lastSecond !== undefined && seconds !== lastSecond) tick(seconds);
+        lastSecond = seconds;
+      }
+
+      function resume() {
+        window.clearTimeout(timeout);
+        if (document.hidden) return;
+        const now = new Date();
+        showTime(now);
+        timeout = window.setTimeout(resume, 1005 - now.getMilliseconds());
+      }
+      get('countdown').hidden = false;
+      get('clock-panel').hidden = false;
+      if (AudioEngine) {
+        get('sound').hidden = false;
+        get('sound').addEventListener('click', async () => {
+          if (!audible) {
+            try {
+              if (!audio) audio = new AudioEngine();
+              if (audio.state !== 'running') await audio.resume();
+              audible = audio.state === 'running';
+            } catch { audible = false; }
+          } else {
+            audible = false;
+          }
+          get('sound').setAttribute('aria-pressed', String(audible));
+          get('sound-label').textContent = audible ? 'Ton an' : 'Ton aus';
+        });
+      }
+      document.addEventListener('visibilitychange', resume);
+      window.addEventListener('pageshow', resume);
+      resume();
+    })();
+  </script>
+</body>
+</html>
