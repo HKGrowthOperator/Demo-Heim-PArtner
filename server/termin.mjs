@@ -10,10 +10,9 @@ const dateiname = 'videotermin-20261117.json'
 const soll = '3f9f6ae4b30fd1883539a57d02dae02679ec3fd98531bbdc40e39fe370183e50'
 const pruefwert = wert => createHash('sha256').update(wert).digest('hex')
 
+// Die Startseite öffnet wieder direkt die Demo. Der Warteraum für den Videotermin liegt unter /termin.
 export function warteAnsicht(url) {
-  if (!['/', '/index.html'].includes(url.pathname)) return false
-  return !['termin', 'probe'].includes(url.searchParams.get('modus')) &&
-    url.searchParams.get('mitsehen') !== '1' && !url.searchParams.has('probe')
+  return ['/termin', '/termin/'].includes(url.pathname)
 }
 
 export function speichereTermin(dir, ziel) {
@@ -41,7 +40,7 @@ export function leseTermin(dir) {
 }
 
 export function terminZiel(dir, jetzt = Date.now()) {
-  if (jetzt < einlassAb || jetzt >= einlassBis) return '/'
+  if (jetzt < einlassAb || jetzt >= einlassBis) return '/termin'
   const ziel = leseTermin(dir)
   if (!ziel) throw Object.assign(new Error('Der Zugang zum Videogespräch ist noch nicht hinterlegt.'), {status: 503})
   return ziel
