@@ -382,6 +382,20 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/healthz') return senden_(res, 200, 'ok\n', 'text/plain')
     // Bereitschaft für die Unterschrift: nur Ja/Nein und Namen fehlender Angaben, keine Werte
     if (url.pathname === '/api/vertrag/bereit' && req.method === 'GET') return json(res, 200, bereit())
+    // Versandprobe: schickt eine feste Testmail mit PDF-Anhang nur an die interne Adresse (MAIL_COPY_TO).
+    // Kein Vertrag, keine Rechnung, kein frei wählbarer Empfänger oder Inhalt. Höchstens 3 je Stunde.
+    if (url.pathname === '/api/vertrag/versandprobe' && req.method === 'POST') {
+      if (begrenzt('versandprobe', 'versandprobe', 3)) return json(res, 429, { ok: false, fehler: 'Höchstens drei Versandproben je Stunde.' })
+      if (!mailKonfiguriert()) return json(res, 200, { ok: false, fehler: 'Mailversand ist nicht eingerichtet (RESEND_API_KEY und EMAIL_FROM).' })
+      try {
+        const anhang = await pdf('<!doctype html><html lang="de"><body style="font:12pt sans-serif;padding:20mm"><h1>Versandprobe</h1><p>Dieser Anhang ist ein Test. Es ist kein Vertrag entstanden.</p></body></html>', { fusszeile: 'Versandprobe' })
+        const nr = await senden({ an: KOPIE_AN, antwortAn: KAT.hk.mail, betreff: 'Versandprobe Vertragsversand Heim & Partner',
+          text: 'Dies ist eine Versandprobe vom Vertragsserver. Kommt diese Mail mit PDF-Anhang an, funktioniert der Versand. Es ist kein Vertrag entstanden.',
+          html: '<p>Dies ist eine Versandprobe vom Vertragsserver. Kommt diese Mail mit PDF-Anhang an, funktioniert der Versand. Es ist kein Vertrag entstanden.</p>',
+          anhaenge: [{ name: 'Versandprobe.pdf', buf: anhang }] })
+        return json(res, 200, { ok: true, empfaenger: KOPIE_AN.length, nachricht: nr })
+      } catch (e) { return json(res, 200, { ok: false, fehler: String(e.message || e).slice(0, 200) }) }
+    }
     if (!passwortOk(req)) return senden_(res, 401, 'Passwort erforderlich', 'text/plain', { 'WWW-Authenticate': 'Basic realm="Heim & Partner", charset="UTF-8"' })
     if (url.pathname === '/api/termin/zugang') {
       const bear = /^Bearer ([^ ]+)$/i.exec(String(req.headers.authorization || ''))
