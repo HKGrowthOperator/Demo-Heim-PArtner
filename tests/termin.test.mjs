@@ -14,7 +14,7 @@ test('Öffentliche Einstiege landen im Warteraum, die bisherigen Arbeitslinks ö
 test('Der Zugang gilt nur für die Veranstaltung und fängt fehlende oder falsche Links ab', () => {
   const dir = mkdtempSync(join(tmpdir(), 'terminprobe-'))
   try {
-    for (const zeit of [einlassAb - 1, einlassBis, einlassBis + 1]) assert.equal(terminZiel(dir, zeit), '/')
+    for (const zeit of [Date.parse('2026-11-17T15:30:00+01:00'), einlassAb - 1, einlassBis, einlassBis + 1]) assert.equal(terminZiel(dir, zeit), '/')
     for (const zeit of [einlassAb, einlassAb + 3600000, einlassBis - 1]) assert.throws(() => terminZiel(dir, zeit), {status: 503})
     assert.throws(() => speichereTermin(dir, 'https://example.test/'), {status: 422})
     assert.throws(() => speichereTermin(dir, null), {status: 422})
@@ -24,9 +24,10 @@ test('Der Zugang gilt nur für die Veranstaltung und fängt fehlende oder falsch
 test('Uhr und Einlass beziehen sich auf denselben Termin, vertrauliche Zoom-Parameter fehlen in der Seite', () => {
   const seite = readFileSync(new URL('../site/warteraum.html', import.meta.url), 'utf8')
   const zeit = id => Date.parse(seite.match(new RegExp('<time datetime="([^"]+)" id="' + id + '"'))[1])
-  assert.equal(zeit('start'), Date.parse('2026-11-17T15:30:00+01:00'))
+  assert.equal(zeit('start'), Date.parse('2026-11-18T15:30:00+01:00'))
+  assert.match(seite, /Mittwoch, 18\. November 2026/)
   assert.match(seite, /15:30 bis <time[^>]*>16:30 Uhr<\/time>/)
-  assert.match(seite, /Der Beitritt öffnet am Dienstag um 15:20 Uhr\./)
+  assert.match(seite, /Der Beitritt öffnet am Mittwoch um 15:20 Uhr\./)
   assert.equal(zeit('start') - einlassAb, 10 * 60_000)
   assert.equal(zeit('end') - zeit('start'), 60 * 60_000)
   assert.equal(einlassBis - zeit('end'), 120 * 60_000)
