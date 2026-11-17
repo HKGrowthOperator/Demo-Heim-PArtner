@@ -2,9 +2,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createHash, randomUUID } from 'node:crypto'
 
-export const einlassAb = Date.parse('2026-11-17T12:20:00+01:00')
+export const einlassAb = Date.parse('2026-11-17T15:20:00+01:00')
 // Auch während einer Verlängerung sollen Teilnehmer wieder beitreten können.
-export const einlassBis = Date.parse('2026-11-17T15:30:00+01:00')
+export const einlassBis = Date.parse('2026-11-17T18:30:00+01:00')
 const dateiname = 'videotermin-20261117.json'
 const soll = '3f9f6ae4b30fd1883539a57d02dae02679ec3fd98531bbdc40e39fe370183e50'
 const pruefwert = wert => createHash('sha256').update(wert).digest('hex')

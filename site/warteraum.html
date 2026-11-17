@@ -100,8 +100,8 @@
       <section class="details" aria-labelledby="title">
         <p class="status" id="status" role="status">Videotermin</p>
         <h1 id="title">Unser Gespräch.</h1>
-        <p class="date"><time datetime="2026-11-17T12:30:00+01:00" id="start">Dienstag, 17. November 2026</time></p>
-        <p class="hours">12:30 bis <time datetime="2026-11-17T13:30:00+01:00" id="end">13:30 Uhr</time> · Berliner Zeit</p>
+        <p class="date"><time datetime="2026-11-17T15:30:00+01:00" id="start">Dienstag, 17. November 2026</time></p>
+        <p class="hours">15:30 bis <time datetime="2026-11-17T16:30:00+01:00" id="end">16:30 Uhr</time> · Berliner Zeit</p>
         <div class="countdown" id="countdown" hidden>
           <p class="counter-title" id="counter-title">Zeit bis zum Beginn</p>
           <div class="counter" id="counter" role="timer" aria-live="off" aria-labelledby="counter-title">
@@ -116,7 +116,7 @@
           <a class="join" id="join" href="/termin/beitreten">Am Call teilnehmen
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
           </a>
-          <p class="invite-note">Der Beitritt öffnet am Dienstag um 12:20 Uhr.</p>
+          <p class="invite-note">Der Beitritt öffnet am Dienstag um 15:20 Uhr.</p>
         </div>
       </section>
       <figure class="clock-panel" id="clock-panel" aria-label="Berliner Uhrzeit" hidden>
@@ -166,7 +166,7 @@
         location.replace(address.href);
         return;
       }
-      const closes = Date.parse('2026-11-17T15:30:00+01:00');
+      const closes = Date.parse('2026-11-17T18:30:00+01:00');
       let canJoin;
       function updateJoin(ms) {
         const enabled = ms >= opens && ms < closes;
@@ -175,7 +175,7 @@
         join.setAttribute('aria-disabled', String(!enabled));
         if (enabled) join.setAttribute('href', '/termin/beitreten');
         else join.removeAttribute('href');
-        note.textContent = enabled ? 'Ein Klick öffnet unser Gespräch in Zoom.' : 'Der Beitritt öffnet am Dienstag um 12:20 Uhr.';
+        note.textContent = enabled ? 'Ein Klick öffnet unser Gespräch in Zoom.' : 'Der Beitritt öffnet am Dienstag um 15:20 Uhr.';
       }
       const pad = value => String(value).padStart(2, '0');
       const AudioEngine = window.AudioContext || window.webkitAudioContext;

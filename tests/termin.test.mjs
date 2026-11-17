@@ -24,8 +24,12 @@ test('Der Zugang gilt nur für die Veranstaltung und fängt fehlende oder falsch
 test('Uhr und Einlass beziehen sich auf denselben Termin, vertrauliche Zoom-Parameter fehlen in der Seite', () => {
   const seite = readFileSync(new URL('../site/warteraum.html', import.meta.url), 'utf8')
   const zeit = id => Date.parse(seite.match(new RegExp('<time datetime="([^"]+)" id="' + id + '"'))[1])
+  assert.equal(zeit('start'), Date.parse('2026-11-17T15:30:00+01:00'))
+  assert.match(seite, /15:30 bis <time[^>]*>16:30 Uhr<\/time>/)
+  assert.match(seite, /Der Beitritt öffnet am Dienstag um 15:20 Uhr\./)
   assert.equal(zeit('start') - einlassAb, 10 * 60_000)
-  assert.ok(zeit('end') < einlassBis)
+  assert.equal(zeit('end') - zeit('start'), 60 * 60_000)
+  assert.equal(einlassBis - zeit('end'), 120 * 60_000)
   assert.equal(Date.parse(seite.match(/const closes = Date.parse\('([^']+)'\)/)[1]), einlassBis)
   assert.doesNotMatch(seite, /zoom\.us\/j\/|[?&]pwd=/)
 })
