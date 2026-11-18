@@ -5,7 +5,7 @@ import assert from 'node:assert/strict'
 import { readFileSync, mkdtempSync, rmSync } from 'node:fs'
 import { einlassAb, einlassBis, speichereTermin, terminZiel, warteAnsicht } from '../server/termin.mjs'
 
-test('Die Startseite öffnet die Demo, der Warteraum liegt unter /termin', () => {
+test('Die Startseite öffnet die Demo, die frühere Warteraum-Adresse leitet dorthin', () => {
   const wartet = adresse => warteAnsicht(new URL(adresse, 'https://example.test'))
   for (const url of ['/termin', '/termin/', '/termin?utm_source=email']) assert.ok(wartet(url), url)
   for (const url of ['/', '/index.html', '/?utm_source=email', '/#praes-2', '/?modus=termin', '/?modus=probe', '/?probe=1', '/?mitsehen=1', '/termin/beitreten', '/angebot/', '/vertrag', '/website/', '/healthz']) assert.equal(wartet(url), false, url)
@@ -14,7 +14,7 @@ test('Die Startseite öffnet die Demo, der Warteraum liegt unter /termin', () =>
 test('Der Zugang gilt nur für die Veranstaltung und fängt fehlende oder falsche Links ab', () => {
   const dir = mkdtempSync(join(tmpdir(), 'terminprobe-'))
   try {
-    for (const zeit of [Date.parse('2026-11-17T15:30:00+01:00'), einlassAb - 1, einlassBis, einlassBis + 1]) assert.equal(terminZiel(dir, zeit), '/termin')
+    for (const zeit of [Date.parse('2026-11-17T15:30:00+01:00'), einlassAb - 1, einlassBis, einlassBis + 1]) assert.equal(terminZiel(dir, zeit), '/')
     for (const zeit of [einlassAb, einlassAb + 3600000, einlassBis - 1]) assert.throws(() => terminZiel(dir, zeit), {status: 503})
     assert.throws(() => speichereTermin(dir, 'https://example.test/'), {status: 422})
     assert.throws(() => speichereTermin(dir, null), {status: 422})

@@ -417,7 +417,7 @@ const server = http.createServer(async (req, res) => {
       return senden_(res, 303, '', 'text/plain', {Location: terminZiel(ablage.dir)})
     }
     if (['GET','HEAD'].includes(req.method) && warteAnsicht(url)) {
-      return statisch(req, res, new URL('/warteraum.html', url))
+      res.writeHead(302, {...HEADER, Location: '/'}); return res.end()
     }
     if (await liveAnfrage(req,res,url)) return
     if(url.pathname==='/api/zeichnung/rahmen' && req.method==='GET'){
